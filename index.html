@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINGDOM WARS | 태양계를 정복하라</title>
+    <style>
+        :root { --primary: #ffcc00; --bg: #0b0e14; --text: #ffffff; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        
+        /* Hero Section */
+        .hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('space-bg.jpg'); background-size: cover; text-align: center; padding: 20px; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 10px; color: var(--primary); }
+        
+        /* Features Section */
+        .features { padding: 80px 20px; max-width: 1000px; margin: auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { background: #1c222d; padding: 30px; border-radius: 15px; border: 1px solid #333; }
+        
+        /* Tokenomics Section */
+        .tokenomics { background: #111; padding: 80px 20px; text-align: center; }
+        
+        .cta { padding: 50px 20px; text-align: center; }
+        .btn { background: var(--primary); color: #000; padding: 20px 40px; font-weight: bold; text-decoration: none; border-radius: 50px; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>KINGDOM WARS</h1>
+        <p>태양계를 무대로 한 당신의 국기를 꽂는 우주 메타버스 전략 게임</p>
+        <a href="#play" class="btn">지금 참전하기</a>
+    </header>
+
+    <section class="features">
+        <h2 style="text-align: center; margin-bottom: 50px;">왜 KINGDOM WARS인가?</h2>
+        <div class="grid">
+            <div class="feature-card">
+                <h3>🌍 국가 자부심</h3>
+                <p>가상의 진영은 없습니다. 모든 플레이어는 실제 국기를 들고 참전하며, 당신의 승리는 곧 국가의 영광이 됩니다[cite: 13, 108].</p>
+            </div>
+            <div class="feature-card">
+                <h3>🚀 스페이스 메타버스</h3>
+                <p>단순한 게임을 넘어선 경제 생태계. $KDW 코인을 통해 실제 경제 활동이 가능하며, 크리에이터는 함선 디자인을 판매할 수 있습니다[cite: 12, 106].</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚔️ 턴제 전략 전쟁</h3>
+                <p>복잡한 조작 없이, 깊이 있는 배치와 자동 전투 해결 시스템을 통해 실시간 조작 부담 없는 전략의 묘미를 제공합니다[cite: 13, 17].</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tokenomics">
+        <h2>$KDW 토크노믹스</h2>
+        <p>Base Network 기반의 유틸리티 토큰으로 투명한 P2E 환경을 보장합니다[cite: 17, 127].</p>
+        <div style="margin-top: 30px;">
+            <p>총 공급량: 10억 KDW | 보상 풀: 35% 할당 [cite: 66, 68]</p>
+        </div>
+    </section>
+
+    <section class="cta" id="play">
+        <h2>당신은 어떤 역사를 만드시겠습니까?</h2>
+        <p>달에서 시작하여 목성의 위성까지, 태양계 정복의 서사시가 시작됩니다[cite: 21, 24].</p>
+        <a href="#" class="btn">웹 앱 실행하기</a>
+    </section>
+
+    <footer>
+        <p style="text-align: center; padding: 40px; color: #555;">© 2026 Kingdom Wars. Powered by Supabase & Base Network.</p>
+    </footer>
+
+</body>
+</html>
