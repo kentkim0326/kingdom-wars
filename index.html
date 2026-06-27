@@ -3,210 +3,233 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kingdom Wars | Space Metaverse Strategy Game</title>
-  <meta name="description" content="Kingdom Wars는 실제 국가를 대표해 태양계를 정복하는 2D 모바일 퍼스트 스페이스 메타버스 전략 게임입니다. Stellarium Web으로 실제 태양계 탐험을 경험해보세요." />
-  <meta name="theme-color" content="#0b1020" />
+  <title>KINGDOM WARS | 태양계 정복 전략 게임</title>
+  <meta name="description" content="실제 국가로 태양계를 정복하라! 2D 턴제 PvP · AI 함선 · $KDW P2E" />
   <style>
     :root{
-      --bg:#070b16;
-      --panel:#0d1428;
-      --panel2:#101a33;
-      --line:#24304f;
-      --text:#e8eefc;
-      --muted:#9fb0d0;
-      --accent:#6ce5ff;
-      --accent2:#8b7bff;
-      --good:#58d68d;
-      --warn:#ffd166;
-      --bad:#ff6b6b;
-      --shadow:0 20px 60px rgba(0,0,0,.35)
+      --bg:#0a0e1a;
+      --accent:#00f0ff;
+      --accent2:#ff00aa;
+      --panel:#111827;
+      --text:#e0f0ff;
+      --muted:#88aaff;
+      --good:#22ff88;
+      --warn:#ffdd44;
     }
-    *{box-sizing:border-box} 
-    html{scroll-behavior:smooth} 
-    body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif;background:radial-gradient(circle at top,#142044 0,#070b16 45%,#05070d 100%);color:var(--text);line-height:1.7}
-    a{color:var(--accent)} 
-    img{max-width:100%;display:block} 
-    .wrap{width:min(1200px,92vw);margin:0 auto} 
-    .hero{padding:32px 0 72px;position:relative;overflow:hidden}
-    .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(20px);opacity:.35;pointer-events:none}
-    .hero::before{width:320px;height:320px;background:var(--accent2);top:-120px;right:-80px}
-    .hero::after{width:240px;height:240px;background:var(--accent);bottom:-100px;left:-90px}
-    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-    .brand-badge{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
-    .navlinks{display:flex;flex-wrap:wrap;gap:14px;font-size:.92rem}
-    .navlinks a{text-decoration:none;color:var(--muted)}
-    .navlinks a:hover{color:var(--text)}
-    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;margin-top:22px}
-    .card{background:linear-gradient(180deg,rgba(16,26,51,.96),rgba(9,13,26,.98));border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:var(--shadow)}
-    .hero-copy{padding:34px}
-    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid rgba(255,255,255,.1);border-radius:999px;color:var(--accent);font-size:.88rem;margin-bottom:18px}
-    .eyebrow span{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 18px var(--good)}
-    h1{font-size:clamp(2.2rem,5vw,4.8rem);line-height:1.02;margin:0 0 16px;letter-spacing:-.03em}
-    .lead{font-size:1.08rem;color:var(--muted);max-width:62ch;margin:0 0 24px}
-    .cta-row{display:flex;flex-wrap:wrap;gap:12px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:14px;text-decoration:none;font-weight:700;border:1px solid transparent}
-    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07101f}
-    .btn-secondary{background:transparent;border-color:rgba(255,255,255,.14);color:var(--text)}
-    .hero-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}
-    .stat{padding:16px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
-    .stat b{display:block;font-size:1.3rem}
-    .stat small{color:var(--muted)}
-    .stellarium-container{position:relative;border-radius:20px;overflow:hidden;border:2px solid var(--accent);box-shadow:var(--shadow);aspect-ratio:16/10;background:#000}
-    .stellarium-container iframe{width:100%;height:100%;border:none}
-    .overlay-label{position:absolute;top:16px;left:16px;background:rgba(0,0,0,.6);padding:8px 16px;border-radius:8px;color:var(--accent);font-size:.9rem;z-index:10}
-    section{padding:48px 0 32px} 
-    .section-title{font-size:2.2rem;margin:0 0 20px;color:var(--accent)}
-    .section-lead{color:var(--muted);max-width:75ch;margin:0 auto 32px;text-align:center}
-    .grid-2,.grid-3,.grid-4{display:grid;gap:18px}
-    .grid-2{grid-template-columns:repeat(2,1fr)}
-    .grid-3{grid-template-columns:repeat(3,1fr)}
-    .grid-4{grid-template-columns:repeat(4,1fr)}
-    .panel{padding:28px;border-radius:22px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
-    .panel h3{margin:0 0 12px;font-size:1.25rem;color:var(--accent)}
-    .table-wrap{overflow:auto;border-radius:22px;border:1px solid rgba(255,255,255,.08)}
-    table{width:100%;border-collapse:collapse;min-width:780px;background:rgba(255,255,255,.03)}
-    th,td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    th{background:rgba(255,255,255,.05);color:var(--text)}
-    td{color:var(--muted)}
-    .timeline{display:grid;gap:14px}
-    .step{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:start;padding:18px 20px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
-    .step b{color:var(--accent)}
-    .footer{padding:60px 0;color:var(--muted);font-size:.95rem;text-align:center}
-    .note{padding:16px;border-left:4px solid var(--accent);background:rgba(108,229,255,.08);border-radius:12px}
-    @media (max-width: 980px){
-      .hero-grid,.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
-      .step{grid-template-columns:1fr}
-      .nav{flex-direction:column;align-items:flex-start}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Segoe UI',Roboto,'Noto Sans KR',sans-serif;
+      background:radial-gradient(circle at 50% 20%,#1a2340 0%,#0a0e1a 70%);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+    .scanline{
+      position:fixed;inset:0;
+      background:linear-gradient(transparent 50%,rgba(0,240,255,0.03) 50%);
+      background-size:100% 4px;
+      pointer-events:none;
+      animation:scan 8s linear infinite;
+      z-index:9999;opacity:0.15;
+    }
+    @keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+    
+    header{
+      min-height:100vh;
+      background:linear-gradient(rgba(10,14,26,0.85),rgba(10,14,26,0.95)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
+      position:relative;
+      display:flex;align-items:center;
+    }
+    .nav{
+      position:absolute;top:0;left:0;right:0;
+      padding:20px 5%;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(10,14,26,0.7);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--accent);
+    }
+    .brand{
+      font-size:1.8rem;font-weight:900;letter-spacing:4px;
+      display:flex;align-items:center;gap:12px;
+    }
+    .flag{ font-size:2rem; }
+    
+    .hero-content{
+      max-width:1200px;margin:0 auto;padding:0 5%;
+      display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+    }
+    .hero-text h1{
+      font-size:3.8rem;line-height:1.05;letter-spacing:-2px;
+      background:linear-gradient(90deg,#00f0ff,#ff00aa);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .hero-text .subtitle{
+      font-size:1.35rem;color:var(--muted);margin:16px 0 28px;
+    }
+    .cta{
+      display:flex;gap:16px;flex-wrap:wrap;
+    }
+    .btn{
+      padding:16px 32px;border-radius:50px;font-weight:700;
+      font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;
+      transition:all 0.3s;
+    }
+    .btn-primary{
+      background:linear-gradient(45deg,#00f0ff,#0088ff);
+      color:#000;border:2px solid #00f0ff;
+    }
+    .btn-primary:hover{transform:scale(1.05);box-shadow:0 0 30px #00f0ff;}
+    
+    .game-window{
+      border:3px solid var(--accent);
+      border-radius:12px;
+      background:#000;
+      box-shadow:0 0 40px rgba(0,240,255,0.4);
+      overflow:hidden;
+      position:relative;
+    }
+    .hud{
+      position:absolute;top:0;left:0;right:0;
+      background:rgba(0,0,0,0.7);padding:8px 16px;
+      display:flex;justify-content:space-between;font-size:0.9rem;
+      border-bottom:1px solid var(--accent);
+    }
+    .stellarium-frame{
+      width:100%;height:420px;border:none;
+    }
+    
+    section{padding:80px 5%;max-width:1200px;margin:0 auto}
+    .section-title{
+      font-size:2.6rem;margin-bottom:16px;
+      text-align:center;position:relative;
+    }
+    .section-title::after{
+      content:'';display:block;width:80px;height:3px;
+      background:linear-gradient(to right,transparent,var(--accent),transparent);
+      margin:12px auto;
+    }
+    
+    .grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-top:40px;
+    }
+    .card{
+      background:var(--panel);border:1px solid #334466;
+      border-radius:16px;padding:24px;transition:0.3s;
+    }
+    .card:hover{border-color:var(--accent);transform:translateY(-8px)}
+    
+    .sector-map{
+      height:340px;background:#02050f;
+      border:2px solid #334466;border-radius:12px;
+      position:relative;overflow:hidden;
+      background-image: 
+        linear-gradient(#112244 1px,transparent 1px),
+        linear-gradient(90deg,#112244 1px,transparent 1px);
+      background-size:40px 40px;
+    }
+    .sector{
+      position:absolute;width:68px;height:68px;
+      border:2px solid var(--good);border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:bold;font-size:1.1rem;
+      box-shadow:0 0 15px var(--good);
+    }
+    
+    footer{
+      text-align:center;padding:60px 20px;
+      background:#05070f;border-top:1px solid #334466;
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="wrap">
-      <div class="nav">
-        <div class="brand"><div class="brand-badge"></div><div>KINGDOM WARS</div></div>
-        <nav class="navlinks">
-          <a href="#stellarium">태양계 탐험</a>
-          <a href="#overview">개요</a>
-          <a href="#lore">세계관</a>
-          <a href="#gameplay">게임플레이</a>
-          <a href="#tokenomics">토크노믹스</a>
-          <a href="#roadmap">로드맵</a>
-        </nav>
+  <div class="scanline"></div>
+  
+  <header>
+    <nav class="nav">
+      <div class="brand"><span class="flag">🇰🇷</span> KINGDOM WARS</div>
+      <div style="display:flex;gap:24px;font-weight:600">
+        <a href="#solar" style="color:var(--accent);text-decoration:none">SOLAR MAP</a>
+        <a href="#gameplay" style="color:var(--text);text-decoration:none">GAMEPLAY</a>
+        <a href="#token" style="color:var(--text);text-decoration:none">KDW</a>
       </div>
-      
-      <div class="hero-grid">
-        <div class="card hero-copy">
-          <div class="eyebrow"><span></span> Space Metaverse Strategy Game</div>
-          <h1>태양계를 정복하라.<br>당신의 국기를 꽂아라.</h1>
-          <p class="lead">Kingdom Wars는 실제 국가를 대표하여 달·화성·목성·토성 위성을 점령하는 2D 턴제 전략 게임입니다. AI 생성 함선, P2E, 크리에이터 마켓플레이스와 $KDW 경제가 결합된 진정한 스페이스 메타버스.</p>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="#stellarium">태양계 체험하기</a>
-            <a class="btn btn-secondary" href="#overview">GDD 자세히 보기</a>
-          </div>
-          <div class="hero-meta">
-            <div class="stat"><b>2D Mobile-First PWA</b><small>브라우저에서 바로 플레이</small></div>
-            <div class="stat"><b>실제 국가 PvP</b><small>국기와 국가 자부심</small></div>
-            <div class="stat"><b>AI 함선 + 크리에이터</b><small>Midjourney 스킨 판매</small></div>
-            <div class="stat"><b>$KDW on Base</b><small>P2E + Utility Token</small></div>
-          </div>
+    </nav>
+    
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>CLAIM THE<br>SOLAR SYSTEM</h1>
+        <p class="subtitle">실제 국가 국기를 들고 태양계를 정복하라<br>2D 턴제 전략 · AI 함선 · 국가 PvP · P2E</p>
+        
+        <div class="cta">
+          <a href="#solar" class="btn btn-primary">태양계 정찰하기</a>
+          <a href="#" onclick="alert('런칭 준비 중 — Whitelist 오픈 예정!')" class="btn" style="background:#222;color:#aaa;border:2px solid #555">지금 참전하기</a>
         </div>
         
-        <!-- Stellarium / Solar System Viewer -->
-        <div class="card">
-          <div class="stellarium-container">
-            <div class="overlay-label">Stellarium Web — 실시간 태양계 &amp; 우주 탐험</div>
-            <iframe src="https://stellarium-web.org/" title="Stellarium Web - Solar System View" allow="fullscreen; accelerometer; gyroscope; magnetometer"></iframe>
-          </div>
-          <div style="padding:16px 24px 24px;font-size:0.9rem;color:var(--muted);text-align:center">
-            Stellarium Web을 통해 실제 태양계의 행성 위치와 별자리를 실시간으로 탐험해보세요. 
-            Kingdom Wars의 배경인 2387년 미래 태양계 정복의 영감을 얻으실 수 있습니다.
-          </div>
+        <div style="margin-top:40px;display:flex;gap:32px;font-size:0.95rem">
+          <div><strong style="color:var(--good)">Season 1</strong><br>THE MOON</div>
+          <div><strong>21</strong><br>섹터</div>
+          <div><strong>∞</strong><br>플레이어</div>
+        </div>
+      </div>
+      
+      <!-- In-Game Style Viewer -->
+      <div class="game-window">
+        <div class="hud">
+          <div>🇰🇷 KOREA COMMAND • SECTOR 07</div>
+          <div style="color:var(--good)">HEL-3: 1240 ▲</div>
+        </div>
+        <iframe class="stellarium-frame" src="https://stellarium-web.org/" title="Stellarium Solar System" allowfullscreen></iframe>
+        <div style="position:absolute;bottom:12px;left:12px;right:12px;background:rgba(0,0,0,0.75);padding:8px 14px;border-radius:6px;font-size:0.85rem;text-align:center;border:1px solid var(--accent)">
+          실시간 태양계 뷰 • Kingdom Wars 인게임 스타일
         </div>
       </div>
     </div>
   </header>
 
-  <main class="wrap">
-    <section id="stellarium">
-      <h2 class="section-title" style="text-align:center">태양계 실시간 탐험 — Powered by Stellarium Web</h2>
-      <p class="section-lead">Stellarium Web은 오픈소스 천문 소프트웨어의 웹 버전으로, 정확한 행성 위치, 위성, 별자리를 실시간으로 보여줍니다. Kingdom Wars에서 플레이어가 정복할 태양계의 실제 천문학적 배경을 체험하세요.</p>
-      <div style="text-align:center;margin:20px 0">
-        <a href="https://stellarium-web.org/" target="_blank" class="btn btn-primary">Stellarium Web 전체 화면으로 열기 →</a>
-      </div>
-    </section>
+  <section id="solar">
+    <h2 class="section-title">SOLAR SYSTEM MAP — 실시간 정찰</h2>
+    <p style="text-align:center;max-width:700px;margin:0 auto 40px;color:var(--muted)">
+      Stellarium Web과 연동된 태양계. Kingdom Wars에서 여러분이 점령하게 될 행성들을 미리 탐험해보세요.
+    </p>
+    
+    <div class="sector-map" style="max-width:820px;margin:0 auto">
+      <!-- Fake interactive sectors -->
+      <div class="sector" style="left:15%;top:25%;background:rgba(80,180,255,0.2)">🌕 MOON<br><small>21</small></div>
+      <div class="sector" style="left:45%;top:35%;background:rgba(255,80,80,0.2)">🔴 MARS<br><small>35</small></div>
+      <div class="sector" style="left:68%;top:55%;background:rgba(180,120,255,0.2)">🪐 JUPITER<br><small>50</small></div>
+      <div class="sector" style="left:28%;top:68%;background:rgba(255,200,80,0.2)">🛰️ SATURN<br><small>70</small></div>
+    </div>
+  </section>
 
-    <section id="overview">
-      <h2 class="section-title">1. 게임 개요</h2>
-      <p class="section-lead">Kingdom Wars는 2D 모바일 퍼스트 스페이스 메타버스 전략 게임입니다. 실제 국가 국기를 들고 태양계 영토를 점령하세요.</p>
-      <div class="grid-3">
-        <div class="panel">
-          <h3>핵심 컨셉</h3>
-          <p>달, 화성, 목성·토성 위성에서 영토 전쟁. AI 생성 함선과 모빌슈트로 함대를 구성해 국가 간 PvP.</p>
-        </div>
-        <div class="panel">
-          <h3>메타버스 포지셔닝</h3>
-          <p>$KDW 코인 P2E, 크리에이터가 함선 디자인 제작·판매, 국가 자부심 중심.</p>
-        </div>
-        <div class="panel">
-          <h3>타겟</h3>
-          <p>13~18세 메카 팬 + 30~50대 향수 세대 + 글로벌 국가 자부심</p>
-        </div>
+  <section id="gameplay" style="background:rgba(15,20,40,0.6)">
+    <h2 class="section-title">GAMEPLAY LOOP</h2>
+    <div class="grid">
+      <div class="card">
+        <h3 style="color:var(--accent)">1. TERRITORY</h3>
+        <p>섹터 점령 → 매 턴 자원 생산</p>
       </div>
-    </section>
-
-    <section id="lore">
-      <h2 class="section-title">2. 세계관</h2>
-      <div class="grid-2">
-        <div class="panel">
-          <h3>배경 스토리</h3>
-          <p>서기 2387년. 지구 자원 고갈. 국가들은 국기를 들고 우주로 진출한다.</p>
-        </div>
-        <div class="panel">
-          <h3>행성 진출</h3>
-          <p>시즌 1: 달 (21 섹터) → 시즌 2: 화성 (35) → 목성 위성 → 토성 위성</p>
-        </div>
+      <div class="card">
+        <h3 style="color:var(--accent)">2. FLEET</h3>
+        <p>AI Midjourney 함선 수집·커스터마이징</p>
       </div>
-    </section>
-
-    <section id="gameplay">
-      <h2 class="section-title">핵심 게임플레이 루프</h2>
-      <div class="grid-3">
-        <div class="panel"><h3>영토 → 유닛 → 전투</h3><p>섹터 점령 → 자원 → 함선 건조 → 자동전투 → 반복</p></div>
-        <div class="panel"><h3>턴제 전략</h3><p>비동기 전략 페이즈 + 배치 + 30~60초 시각적 자동전투</p></div>
-        <div class="panel"><h3>성장 경로</h3><p>솔로 → 함대 → 동맹 → 길드 → 국가 황제</p></div>
+      <div class="card">
+        <h3 style="color:var(--accent)">3. BATTLE</h3>
+        <p>턴제 배치 → 자동전투 시네마틱 플레이백</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="tokenomics">
-      <h2 class="section-title">$KDW 토크노믹스</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>카테고리</th><th>비율</th><th>수량</th></tr></thead>
-          <tbody>
-            <tr><td>P2E Reward Pool</td><td>35%</td><td>350M</td></tr>
-            <tr><td>Marketplace</td><td>20%</td><td>200M</td></tr>
-            <tr><td>Team</td><td>15%</td><td>150M</td></tr>
-            <!-- 추가 행 생략 가능 -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+  <section id="token">
+    <h2 class="section-title">$KDW TOKENOMICS</h2>
+    <div class="grid">
+      <div class="card"><strong>35%</strong><br>P2E 보상 풀</div>
+      <div class="card"><strong>20%</strong><br>크리에이터 마켓</div>
+      <div class="card"><strong>Base Network</strong><br>저비용 · 빠른 거래</div>
+    </div>
+  </section>
 
-    <section id="roadmap">
-      <h2 class="section-title">개발 로드맵</h2>
-      <div class="timeline">
-        <div class="step"><div><b>Phase 0</b><br>Month 1-2</div><div>GDD 확정, 함선 아트, KDW 컨트랙트</div></div>
-        <div class="step"><div><b>Phase 3</b><br>Month 7</div><div>PWA 런칭, Season 1: 달</div></div>
-        <!-- 더 많은 단계 추가 가능 -->
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer wrap">
-    <p>KINGDOM WARS GDD v0.2 — Stellarium Web 연동 랜딩 페이지</p>
-    <p style="margin-top:12px;font-size:0.85rem">태양계를 정복하라. 당신의 국기를 꽂아라.</p>
+  <footer>
+    <p style="font-size:2rem;margin-bottom:12px">🇰🇷 🇺🇸 🇯🇵 🇨🇳 🇧🇷 ... 모든 국기가 태양계에</p>
+    <p>KINGDOM WARS — GDD v0.2 • 더 게임스러운 랜딩 페이지</p>
   </footer>
 </body>
 </html>
