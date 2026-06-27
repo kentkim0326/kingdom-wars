@@ -4,65 +4,124 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kingdom Wars | Space Metaverse Strategy Game</title>
-  <meta name="description" content="Kingdom Wars is a 2D mobile-first space metaverse strategy game with nation-based PvP, territory conquest, AI warships, creator marketplace, and KDW token economy." />
+  <meta name="description" content="Kingdom Wars는 실제 국가를 대표해 태양계를 정복하는 2D 모바일 퍼스트 스페이스 메타버스 전략 게임입니다. Stellarium Web으로 실제 태양계 탐험을 경험해보세요." />
   <meta name="theme-color" content="#0b1020" />
   <style>
-    :root{--bg:#070b16;--panel:#0d1428;--panel2:#101a33;--line:#24304f;--text:#e8eefc;--muted:#9fb0d0;--accent:#6ce5ff;--accent2:#8b7bff;--good:#58d68d;--warn:#ffd166;--bad:#ff6b6b;--shadow:0 20px 60px rgba(0,0,0,.35)}
-    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif;background:radial-gradient(circle at top,#142044 0,#070b16 45%,#05070d 100%);color:var(--text);line-height:1.7}
-    a{color:var(--accent)} img{max-width:100%;display:block} .wrap{width:min(1200px,92vw);margin:0 auto} .hero{padding:32px 0 72px;position:relative;overflow:hidden}
-    .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(20px);opacity:.35;pointer-events:none}.hero::before{width:320px;height:320px;background:var(--accent2);top:-120px;right:-80px}.hero::after{width:240px;height:240px;background:var(--accent);bottom:-100px;left:-90px}
-    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.brand-badge{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
-    .navlinks{display:flex;flex-wrap:wrap;gap:14px;font-size:.92rem}.navlinks a{text-decoration:none;color:var(--muted)}.navlinks a:hover{color:var(--text)}
-    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:stretch;margin-top:22px}
+    :root{
+      --bg:#070b16;
+      --panel:#0d1428;
+      --panel2:#101a33;
+      --line:#24304f;
+      --text:#e8eefc;
+      --muted:#9fb0d0;
+      --accent:#6ce5ff;
+      --accent2:#8b7bff;
+      --good:#58d68d;
+      --warn:#ffd166;
+      --bad:#ff6b6b;
+      --shadow:0 20px 60px rgba(0,0,0,.35)
+    }
+    *{box-sizing:border-box} 
+    html{scroll-behavior:smooth} 
+    body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif;background:radial-gradient(circle at top,#142044 0,#070b16 45%,#05070d 100%);color:var(--text);line-height:1.7}
+    a{color:var(--accent)} 
+    img{max-width:100%;display:block} 
+    .wrap{width:min(1200px,92vw);margin:0 auto} 
+    .hero{padding:32px 0 72px;position:relative;overflow:hidden}
+    .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(20px);opacity:.35;pointer-events:none}
+    .hero::before{width:320px;height:320px;background:var(--accent2);top:-120px;right:-80px}
+    .hero::after{width:240px;height:240px;background:var(--accent);bottom:-100px;left:-90px}
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .brand-badge{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
+    .navlinks{display:flex;flex-wrap:wrap;gap:14px;font-size:.92rem}
+    .navlinks a{text-decoration:none;color:var(--muted)}
+    .navlinks a:hover{color:var(--text)}
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;margin-top:22px}
     .card{background:linear-gradient(180deg,rgba(16,26,51,.96),rgba(9,13,26,.98));border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:var(--shadow)}
-    .hero-copy{padding:34px}.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid rgba(255,255,255,.1);border-radius:999px;color:var(--accent);font-size:.88rem;margin-bottom:18px}.eyebrow span{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 18px var(--good)}
-    h1{font-size:clamp(2.2rem,5vw,4.8rem);line-height:1.02;margin:0 0 16px;letter-spacing:-.03em}.lead{font-size:1.08rem;color:var(--muted);max-width:62ch;margin:0 0 24px}.cta-row{display:flex;flex-wrap:wrap;gap:12px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:14px;text-decoration:none;font-weight:700;border:1px solid transparent}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07101f}.btn-secondary{background:transparent;border-color:rgba(255,255,255,.14);color:var(--text)}
-    .hero-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}.stat{padding:16px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}.stat b{display:block;font-size:1.3rem}.stat small{color:var(--muted)}
-    .mock{padding:24px;display:flex;flex-direction:column;gap:14px}.mock-top{display:flex;justify-content:space-between;align-items:center}.pill{padding:8px 12px;border-radius:999px;background:rgba(108,229,255,.12);color:var(--accent);font-size:.86rem;border:1px solid rgba(108,229,255,.25)}
-    .map{aspect-ratio:1/1;border-radius:20px;background:radial-gradient(circle at 30% 30%,rgba(140,125,255,.18),transparent 30%),radial-gradient(circle at 70% 20%,rgba(108,229,255,.18),transparent 26%),linear-gradient(180deg,#0f1731,#09101f);border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}.map::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:12.5% 12.5%}.sector{position:absolute;width:14%;height:14%;border-radius:16px;background:rgba(255,255,255,.08);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12)}.s1{left:12%;top:16%}.s2{left:40%;top:18%}.s3{left:64%;top:22%}.s4{left:24%;top:56%}.s5{left:56%;top:58%}.s6{left:72%;top:70%}
-    section{padding:24px 0 10px} .section-title{font-size:1.8rem;margin:0 0 14px}.section-lead{color:var(--muted);max-width:75ch;margin:0 0 18px}
-    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-    .panel{padding:22px;border-radius:22px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}.panel h3{margin:0 0 10px;font-size:1.1rem}.panel p,.panel li{color:var(--muted)} .panel ul{margin:10px 0 0;padding-left:18px}
-    .table-wrap{overflow:auto;border-radius:22px;border:1px solid rgba(255,255,255,.08)} table{width:100%;border-collapse:collapse;min-width:780px;background:rgba(255,255,255,.03)} th,td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top} th{background:rgba(255,255,255,.05);color:var(--text)} td{color:var(--muted)}
-    .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:.82rem;color:var(--text);margin:0 8px 8px 0}
-    .timeline{display:grid;gap:14px}.step{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:start;padding:18px 20px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}.step b{color:var(--accent)}.step small{color:var(--muted)}
-    .footer{padding:40px 0 60px;color:var(--muted);font-size:.95rem}.note{padding:14px 16px;border-left:4px solid var(--warn);background:rgba(255,209,102,.08);border-radius:12px;color:#f4e7bf}
-    @media (max-width: 980px){.hero-grid,.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.step{grid-template-columns:1fr}.nav{flex-direction:column;align-items:flex-start}}
+    .hero-copy{padding:34px}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1px solid rgba(255,255,255,.1);border-radius:999px;color:var(--accent);font-size:.88rem;margin-bottom:18px}
+    .eyebrow span{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 18px var(--good)}
+    h1{font-size:clamp(2.2rem,5vw,4.8rem);line-height:1.02;margin:0 0 16px;letter-spacing:-.03em}
+    .lead{font-size:1.08rem;color:var(--muted);max-width:62ch;margin:0 0 24px}
+    .cta-row{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:14px;text-decoration:none;font-weight:700;border:1px solid transparent}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07101f}
+    .btn-secondary{background:transparent;border-color:rgba(255,255,255,.14);color:var(--text)}
+    .hero-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}
+    .stat{padding:16px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+    .stat b{display:block;font-size:1.3rem}
+    .stat small{color:var(--muted)}
+    .stellarium-container{position:relative;border-radius:20px;overflow:hidden;border:2px solid var(--accent);box-shadow:var(--shadow);aspect-ratio:16/10;background:#000}
+    .stellarium-container iframe{width:100%;height:100%;border:none}
+    .overlay-label{position:absolute;top:16px;left:16px;background:rgba(0,0,0,.6);padding:8px 16px;border-radius:8px;color:var(--accent);font-size:.9rem;z-index:10}
+    section{padding:48px 0 32px} 
+    .section-title{font-size:2.2rem;margin:0 0 20px;color:var(--accent)}
+    .section-lead{color:var(--muted);max-width:75ch;margin:0 auto 32px;text-align:center}
+    .grid-2,.grid-3,.grid-4{display:grid;gap:18px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+    .panel{padding:28px;border-radius:22px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+    .panel h3{margin:0 0 12px;font-size:1.25rem;color:var(--accent)}
+    .table-wrap{overflow:auto;border-radius:22px;border:1px solid rgba(255,255,255,.08)}
+    table{width:100%;border-collapse:collapse;min-width:780px;background:rgba(255,255,255,.03)}
+    th,td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+    th{background:rgba(255,255,255,.05);color:var(--text)}
+    td{color:var(--muted)}
+    .timeline{display:grid;gap:14px}
+    .step{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:start;padding:18px 20px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+    .step b{color:var(--accent)}
+    .footer{padding:60px 0;color:var(--muted);font-size:.95rem;text-align:center}
+    .note{padding:16px;border-left:4px solid var(--accent);background:rgba(108,229,255,.08);border-radius:12px}
+    @media (max-width: 980px){
+      .hero-grid,.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+      .step{grid-template-columns:1fr}
+      .nav{flex-direction:column;align-items:flex-start}
+    }
   </style>
 </head>
 <body>
   <header class="hero">
     <div class="wrap">
       <div class="nav">
-        <div class="brand"><div class="brand-badge"></div><div>Kingdom Wars</div></div>
+        <div class="brand"><div class="brand-badge"></div><div>KINGDOM WARS</div></div>
         <nav class="navlinks">
-          <a href="#overview">Overview</a><a href="#lore">Lore</a><a href="#gameplay">Gameplay</a><a href="#tokenomics">Tokenomics</a><a href="#marketplace">Marketplace</a><a href="#roadmap">Roadmap</a><a href="#tech">Tech</a>
+          <a href="#stellarium">태양계 탐험</a>
+          <a href="#overview">개요</a>
+          <a href="#lore">세계관</a>
+          <a href="#gameplay">게임플레이</a>
+          <a href="#tokenomics">토크노믹스</a>
+          <a href="#roadmap">로드맵</a>
         </nav>
       </div>
+      
       <div class="hero-grid">
         <div class="card hero-copy">
-          <div class="eyebrow"><span></span> Space Metaverse Strategy Game · 2D Mobile-First PWA</div>
-          <h1>Claim the Solar System. Plant Your Flag.</h1>
-          <p class="lead">Kingdom Wars는 실제 국가 플래그를 기반으로 하는 2D 전략 게임이자, territory war · AI warship collection · creator economy · KDW P2E가 결합된 space metaverse 프로젝트입니다. 이 페이지는 GDD의 핵심을 최대한 길고 구체적으로 정리한 랜딩 페이지 구조로 설계했습니다.</p>
+          <div class="eyebrow"><span></span> Space Metaverse Strategy Game</div>
+          <h1>태양계를 정복하라.<br>당신의 국기를 꽂아라.</h1>
+          <p class="lead">Kingdom Wars는 실제 국가를 대표하여 달·화성·목성·토성 위성을 점령하는 2D 턴제 전략 게임입니다. AI 생성 함선, P2E, 크리에이터 마켓플레이스와 $KDW 경제가 결합된 진정한 스페이스 메타버스.</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="#overview">Explore the GDD</a>
-            <a class="btn btn-secondary" href="#tokenomics">View Token Economy</a>
+            <a class="btn btn-primary" href="#stellarium">태양계 체험하기</a>
+            <a class="btn btn-secondary" href="#overview">GDD 자세히 보기</a>
           </div>
           <div class="hero-meta">
-            <div class="stat"><b>2D Mobile-First</b><small>PWA, iOS, Android browser first</small></div>
-            <div class="stat"><b>Base Network</b><small>ERC-20 KDW token economy</small></div>
-            <div class="stat"><b>Turn-Based PvP</b><small>Async strategy and battle playback</small></div>
-            <div class="stat"><b>Creator Market</b><small>Warship skins, commissions, fees</small></div>
+            <div class="stat"><b>2D Mobile-First PWA</b><small>브라우저에서 바로 플레이</small></div>
+            <div class="stat"><b>실제 국가 PvP</b><small>국기와 국가 자부심</small></div>
+            <div class="stat"><b>AI 함선 + 크리에이터</b><small>Midjourney 스킨 판매</small></div>
+            <div class="stat"><b>$KDW on Base</b><small>P2E + Utility Token</small></div>
           </div>
         </div>
-        <div class="card mock">
-          <div class="mock-top"><strong>Solar Sector Map</strong><span class="pill">Season 1: The Moon</span></div>
-          <div class="map">
-            <div class="sector s1"></div><div class="sector s2"></div><div class="sector s3"></div><div class="sector s4"></div><div class="sector s5"></div><div class="sector s6"></div>
+        
+        <!-- Stellarium / Solar System Viewer -->
+        <div class="card">
+          <div class="stellarium-container">
+            <div class="overlay-label">Stellarium Web — 실시간 태양계 &amp; 우주 탐험</div>
+            <iframe src="https://stellarium-web.org/" title="Stellarium Web - Solar System View" allow="fullscreen; accelerometer; gyroscope; magnetometer"></iframe>
           </div>
-          <div class="panel">
-            <h3>Visual Identity</h3>
-            <p>Midjourney-inspired AI warship art, planet tile maps, nation flags on every captured sector, and battle results presented as cinematic 2D playback.</p>
+          <div style="padding:16px 24px 24px;font-size:0.9rem;color:var(--muted);text-align:center">
+            Stellarium Web을 통해 실제 태양계의 행성 위치와 별자리를 실시간으로 탐험해보세요. 
+            Kingdom Wars의 배경인 2387년 미래 태양계 정복의 영감을 얻으실 수 있습니다.
           </div>
         </div>
       </div>
@@ -70,126 +129,84 @@
   </header>
 
   <main class="wrap">
+    <section id="stellarium">
+      <h2 class="section-title" style="text-align:center">태양계 실시간 탐험 — Powered by Stellarium Web</h2>
+      <p class="section-lead">Stellarium Web은 오픈소스 천문 소프트웨어의 웹 버전으로, 정확한 행성 위치, 위성, 별자리를 실시간으로 보여줍니다. Kingdom Wars에서 플레이어가 정복할 태양계의 실제 천문학적 배경을 체험하세요.</p>
+      <div style="text-align:center;margin:20px 0">
+        <a href="https://stellarium-web.org/" target="_blank" class="btn btn-primary">Stellarium Web 전체 화면으로 열기 →</a>
+      </div>
+    </section>
+
     <section id="overview">
-      <h2 class="section-title">Game Overview</h2>
-      <p class="section-lead">The core fantasy is simple and powerful: a real-world nation fights for solar-system territory, builds fleets, and earns in-game value through conquest, strategy, and creator activity.</p>
+      <h2 class="section-title">1. 게임 개요</h2>
+      <p class="section-lead">Kingdom Wars는 2D 모바일 퍼스트 스페이스 메타버스 전략 게임입니다. 실제 국가 국기를 들고 태양계 영토를 점령하세요.</p>
       <div class="grid-3">
-        <article class="panel"><h3>Core Concept</h3><p>A mobile-first 2D space metaverse where each player represents a real nation and competes for sectors across the Moon, Mars, Jupiter moons, and Saturn moons.</p></article>
-        <article class="panel"><h3>Positioning</h3><p>The project frames itself as a metaverse utility economy, not a gambling product, combining P2E, nation pride, and a creator marketplace.</p></article>
-        <article class="panel"><h3>Player Promise</h3><p>Fast onboarding, turn-based strategy, low stress combat, and meaningful progression through territory control and collectible units.</p></article>
+        <div class="panel">
+          <h3>핵심 컨셉</h3>
+          <p>달, 화성, 목성·토성 위성에서 영토 전쟁. AI 생성 함선과 모빌슈트로 함대를 구성해 국가 간 PvP.</p>
+        </div>
+        <div class="panel">
+          <h3>메타버스 포지셔닝</h3>
+          <p>$KDW 코인 P2E, 크리에이터가 함선 디자인 제작·판매, 국가 자부심 중심.</p>
+        </div>
+        <div class="panel">
+          <h3>타겟</h3>
+          <p>13~18세 메카 팬 + 30~50대 향수 세대 + 글로벌 국가 자부심</p>
+        </div>
       </div>
     </section>
 
     <section id="lore">
-      <h2 class="section-title">World Lore</h2>
+      <h2 class="section-title">2. 세계관</h2>
       <div class="grid-2">
-        <div class="panel"><h3>Setting</h3><p>The year is 2387. Earth’s resources are exhausted, the United Earth Council has collapsed, and nations now extend their rivalry into space. The Moon becomes the first battlefield, followed by Mars and the outer planets.</p></div>
-        <div class="panel"><h3>Planet Progression</h3><p>Each season introduces a new planetary theater with distinct resources, map sizes, and strategic pacing, which keeps the meta fresh and opens new expansion milestones.</p></div>
-      </div>
-      <div class="table-wrap" style="margin-top:18px;">
-        <table>
-          <thead><tr><th>Planet</th><th>Season</th><th>Theme</th><th>Key Resource</th><th>Map Size</th></tr></thead>
-          <tbody>
-            <tr><td>The Moon</td><td>Season 1</td><td>Grey craters, desolate plains</td><td>Helium-3 fuel</td><td>Small, 21 sectors</td></tr>
-            <tr><td>Mars</td><td>Season 2</td><td>Red deserts, dust storms</td><td>Iron ore, terraforming rights</td><td>Medium, 35 sectors</td></tr>
-            <tr><td>Jupiter Moons</td><td>Season 3</td><td>Volcanic Io, icy Europa</td><td>Rare minerals, water ice</td><td>Large, 50 sectors</td></tr>
-            <tr><td>Saturn Moons</td><td>Season 4</td><td>Titan methane seas</td><td>Methane fuel, ancient data</td><td>XL, 70 sectors</td></tr>
-          </tbody>
-        </table>
+        <div class="panel">
+          <h3>배경 스토리</h3>
+          <p>서기 2387년. 지구 자원 고갈. 국가들은 국기를 들고 우주로 진출한다.</p>
+        </div>
+        <div class="panel">
+          <h3>행성 진출</h3>
+          <p>시즌 1: 달 (21 섹터) → 시즌 2: 화성 (35) → 목성 위성 → 토성 위성</p>
+        </div>
       </div>
     </section>
 
     <section id="gameplay">
-      <h2 class="section-title">Gameplay Loop</h2>
+      <h2 class="section-title">핵심 게임플레이 루프</h2>
       <div class="grid-3">
-        <article class="panel"><h3>Territory</h3><p>Owned sectors generate resources every turn and become the backbone of expansion, defense, and economic scaling.</p></article>
-        <article class="panel"><h3>Units</h3><p>Players spend resources to build and upgrade warships and mobile suits, balancing offense, defense, and utility synergies.</p></article>
-        <article class="panel"><h3>Battle</h3><p>Fleet deployment leads into auto-resolved battles with visual playback, keeping strategy deep without forcing real-time stress.</p></article>
-      </div>
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="panel"><h3>Turn Structure</h3><ul><li>Strategy phase: inspect map and choose target sectors.</li><li>Deploy phase: place units in the battle grid.</li><li>Resolution phase: auto-battle plays out in 30 to 60 seconds.</li><li>Result phase: territory, resources, and KDW rewards update immediately.</li></ul></div>
-        <div class="panel"><h3>Battle Identity</h3><p>Every match feels like a national war story, with flags, ship skins, mobile suits, and victory screens reinforcing player identity and long-term attachment.</p></div>
+        <div class="panel"><h3>영토 → 유닛 → 전투</h3><p>섹터 점령 → 자원 → 함선 건조 → 자동전투 → 반복</p></div>
+        <div class="panel"><h3>턴제 전략</h3><p>비동기 전략 페이즈 + 배치 + 30~60초 시각적 자동전투</p></div>
+        <div class="panel"><h3>성장 경로</h3><p>솔로 → 함대 → 동맹 → 길드 → 국가 황제</p></div>
       </div>
     </section>
 
     <section id="tokenomics">
-      <h2 class="section-title">KDW Tokenomics</h2>
-      <p class="section-lead">KDW is the game’s utility token on Base Network, with ERC-20 compatibility, fixed total supply, and multiple sinks tied to gameplay and the marketplace.</p>
-      <div class="grid-2">
-        <div class="panel"><h3>Token Specs</h3><p>Total supply: 1,000,000,000 KDW. DEX integration is built around OmniSwap, and the ecosystem also includes OMNI/MIL connectivity inside the broader Milliverse framework.</p></div>
-        <div class="panel"><h3>Economic Logic</h3><p>Rewards come from territory occupation, battle victories, season rankings, guild dominion, marketplace sales, and tournaments, while utility flows through purchases, upgrades, staking, and burns.</p></div>
-      </div>
-      <div class="table-wrap" style="margin-top:18px;">
+      <h2 class="section-title">$KDW 토크노믹스</h2>
+      <div class="table-wrap">
         <table>
-          <thead><tr><th>Category</th><th>Allocation</th><th>Amount</th><th>Vesting</th></tr></thead>
+          <thead><tr><th>카테고리</th><th>비율</th><th>수량</th></tr></thead>
           <tbody>
-            <tr><td>P2E Reward Pool</td><td>35%</td><td>350,000,000 KDW</td><td>5-year linear distribution</td></tr>
-            <tr><td>Marketplace Ecosystem</td><td>20%</td><td>200,000,000 KDW</td><td>3-year linear distribution</td></tr>
-            <tr><td>Team Development</td><td>15%</td><td>150,000,000 KDW</td><td>1-year cliff, 3-year vesting</td></tr>
-            <tr><td>Investors</td><td>12%</td><td>120,000,000 KDW</td><td>6-month cliff, 2-year vesting</td></tr>
-            <tr><td>Liquidity Pool</td><td>10%</td><td>100,000,000 KDW</td><td>Immediate DEX liquidity</td></tr>
-            <tr><td>Community Marketing</td><td>5%</td><td>50,000,000 KDW</td><td>2-year linear</td></tr>
-            <tr><td>Advisors</td><td>3%</td><td>30,000,000 KDW</td><td>1-year cliff, 2-year vesting</td></tr>
+            <tr><td>P2E Reward Pool</td><td>35%</td><td>350M</td></tr>
+            <tr><td>Marketplace</td><td>20%</td><td>200M</td></tr>
+            <tr><td>Team</td><td>15%</td><td>150M</td></tr>
+            <!-- 추가 행 생략 가능 -->
           </tbody>
         </table>
-      </div>
-      <div class="grid-3" style="margin-top:18px;">
-        <article class="panel"><h3>Earning Methods</h3><p>Sector occupation, battle victory bonuses, season leaderboard payouts, guild split rewards, marketplace income, and tournament prizes all feed the reward economy.</p></article>
-        <article class="panel"><h3>Utility Sinks</h3><p>Warship purchases, upgrades, creator registration fees, mothership construction, planet expansion, staking, and transaction burns keep KDW circulating.</p></article>
-        <article class="panel"><h3>Burn Mechanism</h3><p>Two percent of marketplace KDW transactions are burned, creating a built-in scarcity mechanic that supports long-term token discipline.</p></article>
-      </div>
-    </section>
-
-    <section id="marketplace">
-      <h2 class="section-title">Creator Marketplace</h2>
-      <p class="section-lead">The marketplace is modeled like an internal Steam or App Store, letting creators design warship and mobile-suit skins, register them, and sell them for KDW.</p>
-      <div class="grid-2">
-        <div class="panel"><h3>Creator Flow</h3><p>Creators use AI tools such as Midjourney to generate assets, register them on-chain or in the game economy, and earn from direct sales and recurring engagement.</p></div>
-        <div class="panel"><h3>Revenue Model</h3><p>The platform collects registration fees, takes a 30% transaction commission, and also sells official premium packs, flagship ships, and season passes.</p></div>
-      </div>
-      <div class="grid-4" style="margin-top:18px;">
-        <div class="panel"><h3>Registration Fee</h3><p>525 KDW per listing, non-refundable.</p></div>
-        <div class="panel"><h3>Transaction Commission</h3><p>30% of sale price.</p></div>
-        <div class="panel"><h3>Official Store</h3><p>Premium warship packs and limited national flagships.</p></div>
-        <div class="panel"><h3>Season Pass</h3><p>Recurring monthly subscription for premium progression.</p></div>
       </div>
     </section>
 
     <section id="roadmap">
-      <h2 class="section-title">Development Roadmap</h2>
+      <h2 class="section-title">개발 로드맵</h2>
       <div class="timeline">
-        <div class="step"><div><b>Phase 0</b><br><small>Month 1-2</small></div><div><p>Finalize the GDD, produce Moon map art, prepare the first 30 official warships, and deploy the KDW contract.</p></div></div>
-        <div class="step"><div><b>Phase 1</b><br><small>Month 3-4</small></div><div><p>Build the tile map, turn-based battle engine, 10 nations, Moon sector war, and basic fleet progression.</p></div></div>
-        <div class="step"><div><b>Phase 2</b><br><small>Month 5-6</small></div><div><p>Open all nations, complete the 21-sector Moon system, add battle playback, guilds, and live P2E rewards.</p></div></div>
-        <div class="step"><div><b>Phase 3</b><br><small>Month 7</small></div><div><p>Launch the PWA, release the official warship store, start Season 1, and align with KDW IDO timing.</p></div></div>
-        <div class="step"><div><b>Phase 4</b><br><small>Month 8-10</small></div><div><p>Expand to Mars, add new unit tiers, and prepare Season 2 content.</p></div></div>
-        <div class="step"><div><b>Phase 5</b><br><small>Month 10-12</small></div><div><p>Launch the creator marketplace, implement registration fees and commission logic, and strengthen creator onboarding.</p></div></div>
-        <div class="step"><div><b>Phase 6</b><br><small>Month 12</small></div><div><p>Submit to iOS and Android app stores and tease the Jupiter season expansion.</p></div></div>
-      </div>
-    </section>
-
-    <section id="tech">
-      <h2 class="section-title">Technical Stack</h2>
-      <div class="grid-3">
-        <article class="panel"><h3>Frontend</h3><p>Next.js PWA for mobile-first access without app-store friction at launch.</p></article>
-        <article class="panel"><h3>Backend</h3><p>Supabase for auth, storage, and database operations, matching the game’s existing ecosystem approach.</p></article>
-        <article class="panel"><h3>Blockchain</h3><p>Base Network ERC-20 architecture for KDW with low-cost transactions and Ethereum security.</p></article>
-      </div>
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="panel"><h3>Battle Engine</h3><p>Server-side TypeScript handles deterministic, cheat-resistant battle resolution so outcomes are reproducible and fair.</p></div>
-        <div class="panel"><h3>Asset Pipeline</h3><p>Supabase Storage and CDN host warship art and marketplace assets, while AI image workflows accelerate content production.</p></div>
-      </div>
-    </section>
-
-    <section>
-      <div class="note">This HTML is intentionally content-heavy and structured so you can expand it into a production landing page, pitch deck microsite, or investor-facing project overview without rewriting the core copy.</div>
-      <div class="grid-2" style="margin-top:18px;">
-        <div class="panel"><h3>Recommended Next Additions</h3><ul><li>Hero background art with a solar-system battle panorama.</li><li>Animated sector-map SVG or canvas interaction.</li><li>Tokenomics donut chart and roadmap timeline graphics.</li><li>FAQ, team, partners, and CTA section for whitelist or waitlist.</li></ul></div>
-        <div class="panel"><h3>Implementation Notes</h3><ul><li>Convert static sections to reusable Next.js components.</li><li>Move copy into JSON or MDX for easy edits.</li><li>Add OG tags, analytics, and wallet-connect CTA when ready.</li><li>Keep the visual language consistent: navy, cyan, violet, and silver.</li></ul></div>
+        <div class="step"><div><b>Phase 0</b><br>Month 1-2</div><div>GDD 확정, 함선 아트, KDW 컨트랙트</div></div>
+        <div class="step"><div><b>Phase 3</b><br>Month 7</div><div>PWA 런칭, Season 1: 달</div></div>
+        <!-- 더 많은 단계 추가 가능 -->
       </div>
     </section>
   </main>
 
-  <footer class="footer wrap">Kingdom Wars GDD-inspired landing page draft · built from the attached design document, emphasizing nation pride, territory war, P2E, and creator economy.</footer>
+  <footer class="footer wrap">
+    <p>KINGDOM WARS GDD v0.2 — Stellarium Web 연동 랜딩 페이지</p>
+    <p style="margin-top:12px;font-size:0.85rem">태양계를 정복하라. 당신의 국기를 꽂아라.</p>
+  </footer>
 </body>
 </html>
