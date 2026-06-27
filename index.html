@@ -44,15 +44,15 @@
       position:absolute;top:0;left:0;right:0;
       padding:20px 5%;
       display:flex;justify-content:space-between;align-items:center;
-      background:rgba(10,14,26,0.7);
+      background:rgba(10,14,26,0.8);
       backdrop-filter:blur(12px);
       border-bottom:1px solid var(--accent);
+      z-index:100;
     }
     .brand{
       font-size:1.8rem;font-weight:900;letter-spacing:4px;
       display:flex;align-items:center;gap:12px;
     }
-    .flag{ font-size:2rem; }
     
     .hero-content{
       max-width:1200px;margin:0 auto;padding:0 5%;
@@ -72,7 +72,7 @@
     .btn{
       padding:16px 32px;border-radius:50px;font-weight:700;
       font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;
-      transition:all 0.3s;
+      transition:all 0.3s;cursor:pointer;
     }
     .btn-primary{
       background:linear-gradient(45deg,#00f0ff,#0088ff);
@@ -90,12 +90,43 @@
     }
     .hud{
       position:absolute;top:0;left:0;right:0;
-      background:rgba(0,0,0,0.7);padding:8px 16px;
-      display:flex;justify-content:space-between;font-size:0.9rem;
-      border-bottom:1px solid var(--accent);
+      background:rgba(0,0,0,0.85);padding:10px 16px;
+      display:flex;justify-content:space-between;align-items:center;
+      border-bottom:2px solid var(--accent);
+      z-index:10;
+      font-size:0.95rem;
+    }
+    .hud-left, .hud-right{
+      display:flex;gap:12px;align-items:center;
+    }
+    .hud-btn{
+      padding:6px 14px;
+      background:rgba(0,240,255,0.1);
+      border:1px solid var(--accent);
+      color:var(--accent);
+      border-radius:6px;
+      font-size:0.85rem;
+      cursor:pointer;
+      transition:0.2s;
+    }
+    .hud-btn:hover{
+      background:var(--accent);
+      color:#000;
+      transform:scale(1.05);
+    }
+    .resource{
+      display:flex;align-items:center;gap:6px;
+      color:var(--good);
     }
     .stellarium-frame{
-      width:100%;height:420px;border:none;
+      width:100%;height:460px;border:none;
+    }
+    .action-log{
+      position:absolute;bottom:12px;left:12px;right:12px;
+      background:rgba(0,0,0,0.8);padding:8px 14px;
+      border-radius:6px;font-size:0.8rem;
+      border:1px solid #334466;
+      max-height:68px;overflow:hidden;
     }
     
     section{padding:80px 5%;max-width:1200px;margin:0 auto}
@@ -117,28 +148,6 @@
       border-radius:16px;padding:24px;transition:0.3s;
     }
     .card:hover{border-color:var(--accent);transform:translateY(-8px)}
-    
-    .sector-map{
-      height:340px;background:#02050f;
-      border:2px solid #334466;border-radius:12px;
-      position:relative;overflow:hidden;
-      background-image: 
-        linear-gradient(#112244 1px,transparent 1px),
-        linear-gradient(90deg,#112244 1px,transparent 1px);
-      background-size:40px 40px;
-    }
-    .sector{
-      position:absolute;width:68px;height:68px;
-      border:2px solid var(--good);border-radius:8px;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:bold;font-size:1.1rem;
-      box-shadow:0 0 15px var(--good);
-    }
-    
-    footer{
-      text-align:center;padding:60px 20px;
-      background:#05070f;border-top:1px solid #334466;
-    }
   </style>
 </head>
 <body>
@@ -146,7 +155,7 @@
   
   <header>
     <nav class="nav">
-      <div class="brand"><span class="flag">🇰🇷</span> KINGDOM WARS</div>
+      <div class="brand"><span>🌌</span> KINGDOM WARS</div>
       <div style="display:flex;gap:24px;font-weight:600">
         <a href="#solar" style="color:var(--accent);text-decoration:none">SOLAR MAP</a>
         <a href="#gameplay" style="color:var(--text);text-decoration:none">GAMEPLAY</a>
@@ -157,79 +166,107 @@
     <div class="hero-content">
       <div class="hero-text">
         <h1>CLAIM THE<br>SOLAR SYSTEM</h1>
-        <p class="subtitle">실제 국가 국기를 들고 태양계를 정복하라<br>2D 턴제 전략 · AI 함선 · 국가 PvP · P2E</p>
+        <p class="subtitle">실제 국가로 태양계를 정복하라<br><strong>2D 턴제 전략 · 국가 PvP · AI 함선</strong></p>
         
         <div class="cta">
-          <a href="#solar" class="btn btn-primary">태양계 정찰하기</a>
-          <a href="#" onclick="alert('런칭 준비 중 — Whitelist 오픈 예정!')" class="btn" style="background:#222;color:#aaa;border:2px solid #555">지금 참전하기</a>
-        </div>
-        
-        <div style="margin-top:40px;display:flex;gap:32px;font-size:0.95rem">
-          <div><strong style="color:var(--good)">Season 1</strong><br>THE MOON</div>
-          <div><strong>21</strong><br>섹터</div>
-          <div><strong>∞</strong><br>플레이어</div>
+          <a href="#solar" class="btn btn-primary">태양계 정찰 시작</a>
+          <button onclick="deployFleet()" class="btn" style="background:#222;color:#0ff;border:2px solid #0ff">함대 출격</button>
         </div>
       </div>
       
-      <!-- In-Game Style Viewer -->
+      <!-- 인터랙티브 HUD 게임 윈도우 -->
       <div class="game-window">
         <div class="hud">
-          <div>🇰🇷 KOREA COMMAND • SECTOR 07</div>
-          <div style="color:var(--good)">HEL-3: 1240 ▲</div>
+          <div class="hud-left">
+            <span style="color:#ffaa00">🇰🇷 KOREA COMMAND</span>
+            <span style="color:var(--good)">SECTOR 07</span>
+          </div>
+          
+          <div class="hud-right">
+            <button onclick="showMap()" class="hud-btn">MAP</button>
+            <button onclick="attackSector()" class="hud-btn">ATTACK</button>
+            <button onclick="viewFleet()" class="hud-btn">FLEET</button>
+            <button onclick="claimReward()" class="hud-btn" style="background:var(--good);color:#000">CLAIM $KDW</button>
+          </div>
         </div>
+        
         <iframe class="stellarium-frame" src="https://stellarium-web.org/" title="Stellarium Solar System" allowfullscreen></iframe>
-        <div style="position:absolute;bottom:12px;left:12px;right:12px;background:rgba(0,0,0,0.75);padding:8px 14px;border-radius:6px;font-size:0.85rem;text-align:center;border:1px solid var(--accent)">
-          실시간 태양계 뷰 • Kingdom Wars 인게임 스타일
+        
+        <div class="action-log" id="log">
+          [SYSTEM] 고요의 바다 섹터에서 대한민국 국기가 게양되었습니다.
         </div>
       </div>
     </div>
   </header>
 
   <section id="solar">
-    <h2 class="section-title">SOLAR SYSTEM MAP — 실시간 정찰</h2>
-    <p style="text-align:center;max-width:700px;margin:0 auto 40px;color:var(--muted)">
-      Stellarium Web과 연동된 태양계. Kingdom Wars에서 여러분이 점령하게 될 행성들을 미리 탐험해보세요.
-    </p>
-    
-    <div class="sector-map" style="max-width:820px;margin:0 auto">
-      <!-- Fake interactive sectors -->
-      <div class="sector" style="left:15%;top:25%;background:rgba(80,180,255,0.2)">🌕 MOON<br><small>21</small></div>
-      <div class="sector" style="left:45%;top:35%;background:rgba(255,80,80,0.2)">🔴 MARS<br><small>35</small></div>
-      <div class="sector" style="left:68%;top:55%;background:rgba(180,120,255,0.2)">🪐 JUPITER<br><small>50</small></div>
-      <div class="sector" style="left:28%;top:68%;background:rgba(255,200,80,0.2)">🛰️ SATURN<br><small>70</small></div>
+    <h2 class="section-title">SOLAR SYSTEM COMMAND CENTER</h2>
+    <div style="text-align:center;margin-bottom:40px;color:var(--muted)">
+      Stellarium Web과 연동된 실시간 태양계 — HUD 버튼으로 직접 조작해보세요
     </div>
   </section>
 
   <section id="gameplay" style="background:rgba(15,20,40,0.6)">
-    <h2 class="section-title">GAMEPLAY LOOP</h2>
+    <h2 class="section-title">CORE GAMEPLAY</h2>
     <div class="grid">
       <div class="card">
-        <h3 style="color:var(--accent)">1. TERRITORY</h3>
-        <p>섹터 점령 → 매 턴 자원 생산</p>
+        <h3 style="color:var(--accent)">TERRITORY</h3>
+        <p>섹터 점령 → 매 턴 Helium-3 생산</p>
       </div>
       <div class="card">
-        <h3 style="color:var(--accent)">2. FLEET</h3>
-        <p>AI Midjourney 함선 수집·커스터마이징</p>
+        <h3 style="color:var(--accent)">FLEET</h3>
+        <p>Midjourney AI 함선 수집·커스터마이징</p>
       </div>
       <div class="card">
-        <h3 style="color:var(--accent)">3. BATTLE</h3>
-        <p>턴제 배치 → 자동전투 시네마틱 플레이백</p>
+        <h3 style="color:var(--accent)">BATTLE</h3>
+        <p>턴제 배치 → 자동전투 시네마틱</p>
       </div>
     </div>
   </section>
 
-  <section id="token">
-    <h2 class="section-title">$KDW TOKENOMICS</h2>
-    <div class="grid">
-      <div class="card"><strong>35%</strong><br>P2E 보상 풀</div>
-      <div class="card"><strong>20%</strong><br>크리에이터 마켓</div>
-      <div class="card"><strong>Base Network</strong><br>저비용 · 빠른 거래</div>
-    </div>
-  </section>
-
-  <footer>
-    <p style="font-size:2rem;margin-bottom:12px">🇰🇷 🇺🇸 🇯🇵 🇨🇳 🇧🇷 ... 모든 국기가 태양계에</p>
-    <p>KINGDOM WARS — GDD v0.2 • 더 게임스러운 랜딩 페이지</p>
+  <footer style="text-align:center;padding:60px 20px;background:#05070f;border-top:2px solid var(--accent)">
+    <p style="font-size:2.2rem;margin-bottom:8px">태양계를 정복하라. 당신의 국기를 꽂아라.</p>
+    <p>KINGDOM WARS — GDD v0.2 • Interactive HUD Version</p>
   </footer>
+
+  <script>
+    function deployFleet() {
+      document.getElementById('log').innerHTML = '[COMMAND] 함대 출격 준비 완료. 목표 섹터 선택 대기 중...';
+      setTimeout(() => {
+        alert('🚀 함대가 출격했습니다! (데모)');
+      }, 800);
+    }
+    
+    function attackSector() {
+      document.getElementById('log').innerHTML = '[BATTLE] 적 섹터 공격 개시 — 자동전투 진행 중...';
+      setTimeout(() => {
+        alert('🏆 대한민국 승리! 섹터 점령 성공');
+        document.getElementById('log').innerHTML = '[VICTORY] 고요의 바다에 🇰🇷 국기가 게양되었습니다. +240 KDW';
+      }, 1200);
+    }
+    
+    function viewFleet() {
+      alert('🛸 현재 함대 구성:\n• Taeguk Sovereign (Flagship)\n• 3× Mobile Suit\n• Laser Battery');
+    }
+    
+    function showMap() {
+      alert('🗺️ 전체 태양계 맵으로 이동합니다. (실제 게임에서는 타일맵 표시)');
+    }
+    
+    function claimReward() {
+      document.getElementById('log').innerHTML = '[REWARD] $KDW 380 코인이 지급되었습니다.';
+      alert('💰 $KDW 보상 지급 완료!');
+    }
+    
+    // 페이지 로드 시 랜덤 로그
+    setTimeout(() => {
+      const logs = [
+        '[ALLIANCE] 일본과 한일 연합 함대 형성',
+        '[ENEMY] 러시아 함대 접근 감지',
+        '[SYSTEM] 화성 시즌 오픈 예정'
+      ];
+      document.getElementById('log').innerHTML = logs[Math.floor(Math.random()*logs.length)];
+    }, 4500);
+  </script>
 </body>
 </html>
