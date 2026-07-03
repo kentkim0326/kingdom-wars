@@ -586,44 +586,6 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   50%{transform:translateY(-8px) scale(1.02);filter:drop-shadow(0 0 45px rgba(0,200,255,0.8))}}
 
 #intro-click-layer{pointer-events:all!important;touch-action:manipulation;}
-
-/* CENTER FIX */
-#s-intro {
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  min-height:100vh;text-align:center;
-}
-#s-intro > * { width:100%;max-width:560px;margin-left:auto;margin-right:auto; }
-
-#s-nation {
-  display:flex;flex-direction:column;
-  align-items:center;
-  padding:20px 16px;
-}
-#s-nation .stitle,#s-nation .ssub { text-align:center;width:100%; }
-.nation-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
-  gap:6px;width:100%;max-width:720px;margin:0 auto;
-  max-height:60vh;overflow-y:auto;
-}
-.search-box { display:block;width:100%;max-width:480px;margin:0 auto 10px; }
-.btn-next { display:block;margin:10px auto; }
-
-#s-commander {
-  display:flex;flex-direction:column;
-  align-items:center;
-  padding:20px 16px;
-}
-#s-commander .cmd-title,#s-commander .cmd-sub { text-align:center;width:100%; }
-.cmd-cards { justify-content:center; }
-
-/* 모바일 */
-@media(max-width:480px){
-  .nation-grid { grid-template-columns:repeat(2,1fr);max-width:100%; }
-  .cmd-card { width:140px; }
-}
-
 </style>
 </head>
 <body>
