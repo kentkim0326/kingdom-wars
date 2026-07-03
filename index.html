@@ -1848,7 +1848,19 @@ function setLang(l){
   if(G&&G.nation){if(typeof renderUnits==="function")renderUnits();if(typeof showSelBig==="function")showSelBig();}
 }
 
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));const _e=document.getElementById(id);if(_e)_e.classList.add("active");if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);}
+function show(id){
+  // CSS 무시하고 inline style로 직접 제어
+  document.querySelectorAll(".screen").forEach(function(s){
+    s.classList.remove("active");
+    s.style.setProperty("display","none","important");
+  });
+  var el=document.getElementById(id);
+  if(el){
+    el.classList.add("active");
+    el.style.setProperty("display","flex","important");
+  }
+  if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);
+}
 function goNation(){sfx("click");show("s-nation");renderN(NATIONS)}
 function renderN(list){document.getElementById("ngrid").innerHTML=list.map(n=>`<div class="nc" onclick="selN('${n.e}')"><div class="nf">${n.f}</div><div class="nn">${n.n}</div><div class="ne">${n.e}</div></div>`).join("")}
 function filterN(q){renderN(NATIONS.filter(n=>n.n.includes(q)||n.e.toLowerCase().includes(q.toLowerCase())))}
