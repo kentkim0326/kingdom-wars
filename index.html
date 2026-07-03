@@ -44,7 +44,6 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
 .screen{position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;overflow:visible}
-.screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .45s ease forwards}
 .fu2{animation:fadeUp .45s .1s ease forwards;opacity:0}
@@ -435,7 +434,6 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 /* ════════ MOBILE FIXES ════════ */
 @media(max-width:480px){
   /* Intro full width centering */
-  #s-intro,.screen{width:100%;overflow:visible}
 
   .logo{font-size:clamp(1.6rem,8vw,2.8rem)!important;letter-spacing:3px!important;padding:0 8px}
   .catchphrase{font-size:.72rem!important;padding:0 12px}
