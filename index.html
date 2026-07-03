@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- KW v0.8.1 cache-bust -->
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
@@ -2054,12 +2055,16 @@ function updateSlideshowForScreen(screenId) {
   }
 }
 
-// Patch show() to update slideshow
-const _origShow = window.show;
-window.show = function(id) {
+// Patch show() to update slideshow (lazy - runs after all functions defined)
+const _origShow = function(id) {
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  const el = document.getElementById(id);
+  if(el) el.classList.add("active");
+};
+function show(id) {
   _origShow(id);
   updateSlideshowForScreen(id);
-};
+}
 
 // Swipe support for mobile
 let touchStartX = 0;
