@@ -30,7 +30,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
-.screen{position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;overflow-x:hidden}
+.screen{position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;overflow:visible}
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .45s ease forwards}
@@ -421,7 +421,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 /* ════════ MOBILE FIXES ════════ */
 @media(max-width:480px){
   /* Intro full width centering */
-  #s-intro,.screen{width:100%;overflow-x:hidden}
+  #s-intro,.screen{width:100%;overflow:visible}
 
   .logo{font-size:clamp(1.6rem,8vw,2.8rem)!important;letter-spacing:3px!important;padding:0 8px}
   .catchphrase{font-size:.72rem!important;padding:0 12px}
@@ -683,6 +683,18 @@ body {
 }
 .lang-bar { z-index: 999 !important; }
 
+/* OVERFLOW & TOUCH FIX */
+#s-intro { overflow: visible !important; touch-action: manipulation !important; }
+.intro-inner { overflow: visible !important; touch-action: manipulation !important; }
+.bf-btn, .btn-enter { 
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: rgba(0,200,255,0.3) !important;
+  -webkit-touch-callout: none !important;
+  user-select: none !important;
+  cursor: pointer !important;
+}
+.screen { overflow: visible !important; }
+body { overflow-x: hidden; overflow-y: auto; }
 </style>
 </head>
 <body>
@@ -2230,6 +2242,30 @@ document.addEventListener('touchend', e => {
 // Init
 bgStart(4000);
 updateSlideshowForScreen('s-intro');
+
+// TOUCH FIX for iOS Safari
+(function() {
+  function addTouchFix() {
+    var buttons = ['btn-moon', 'btn-enter-main'];
+    buttons.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      // touchend로 직접 goNation 호출 (iOS Safari는 click 지연 있음)
+      el.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        goNation();
+      }, { passive: false, capture: true });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addTouchFix);
+  } else {
+    addTouchFix();
+  }
+})();
+
 
 // ════ BUTTON EVENT LISTENERS (replaces onclick) ════
 document.addEventListener('DOMContentLoaded', function() {
