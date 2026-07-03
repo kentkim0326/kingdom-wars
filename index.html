@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<!-- KW v0.8.1 cache-bust -->
+<!-- KW v0.8.2 logo+favicon -->
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>KINGDOM WARS</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<meta name="theme-color" content="#03050e"/>
+<meta name="description" content="Kingdom Wars - Conquer the Moon before Elon"/>
+<meta property="og:title" content="KINGDOM WARS"/>
+<meta property="og:description" content="⚡ We will conquer Mars before Elon ⚡"/>
+<meta property="og:image" content="https://raw.githubusercontent.com/kentkim0326/kingdom-wars/main/assets/slide1.jpg"/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
 <style>
 :root{
@@ -563,6 +570,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   .logo{font-size:1.6rem}
 }
 
+
+@keyframes logoFloat{0%,100%{transform:translateY(0) scale(1);filter:drop-shadow(0 0 30px rgba(0,200,255,0.5))}
+  50%{transform:translateY(-8px) scale(1.02);filter:drop-shadow(0 0 45px rgba(0,200,255,0.8))}}
 </style>
 </head>
 <body>
@@ -600,7 +610,11 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 <div class="screen active" id="s-intro">
   <div class="screen-content">
   <div class="fu" style="text-align:center;margin-bottom:18px">
-    <div class="logo">KINGDOM WARS</div>
+    <img src="assets/logo.png" alt="KINGDOM WARS"
+  style="width:min(260px,60vw);height:auto;margin:0 auto 6px;display:block;
+  filter:drop-shadow(0 0 30px rgba(0,200,255,0.5));
+  animation:logoFloat 4s ease-in-out infinite"
+  onerror="this.outerHTML='<div class=logo>KINGDOM WARS</div>'"/>
     <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
   </div>
   <div class="bf-row fu3">
@@ -654,7 +668,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 <div class="screen" id="s-game">
   <div class="hud">
     <div class="hud-l">
-      <span class="hud-brand">👑 KW</span>
+      <img src="assets/logo.png" alt="KW"
+  style="height:22px;width:auto;filter:brightness(0) invert(1) drop-shadow(0 0 6px rgba(0,200,255,0.6));vertical-align:middle"
+  onerror="this.outerHTML='<span class=hud-brand>👑 KW</span>'"/>
       <div class="cmd-hud"><span id="hud-av"></span><span id="hud-cn" style="font-weight:700"></span></div>
       <span id="hflag" style="font-size:.88rem"></span>
       <span class="streak-badge" id="streak-badge" style="display:none">🔥 1일</span>
