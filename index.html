@@ -669,6 +669,20 @@ body {
   padding:60px 20px 40px;
   pointer-events:all !important;
 }
+
+/* ══ Z-INDEX FINAL ══ */
+#bg-slideshow, #bg-overlay { z-index: 0 !important; pointer-events: none !important; }
+.stars { z-index: 1 !important; pointer-events: none !important; }
+.screen { z-index: 10 !important; }
+.intro-inner { z-index: 20 !important; pointer-events: all !important; }
+#btn-moon, #btn-enter-main, .bf-btn, .btn-enter, .lb, .nc, .btn-next { 
+  position: relative; 
+  z-index: 30 !important; 
+  pointer-events: all !important; 
+  cursor: pointer !important;
+}
+.lang-bar { z-index: 999 !important; }
+
 </style>
 </head>
 <body>
@@ -767,7 +781,7 @@ body {
     onerror="this.outerHTML='<div class=&quot;logo&quot;>KINGDOM WARS</div>'"/>
   <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
   <div class="bf-row">
-    <div class="bf-btn open" onclick="goNation()">
+    <div class="bf-btn open" id="btn-moon">
       <span class="bdg open">OPEN</span>
       <div class="bf-icon">🌙</div>
       <div class="bf-title">THE MOON</div>
@@ -787,7 +801,7 @@ body {
     </div>
   </div>
   <div style="text-align:center">
-    <button class="btn-enter" onclick="goNation()">
+    <button class="btn-enter" id="btn-enter-main">
       <span id="i-start">🚀 달 정복 개시</span>
     </button>
     <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
@@ -2216,6 +2230,29 @@ document.addEventListener('touchend', e => {
 // Init
 bgStart(4000);
 updateSlideshowForScreen('s-intro');
+
+// ════ BUTTON EVENT LISTENERS (replaces onclick) ════
+document.addEventListener('DOMContentLoaded', function() {
+  var btnMoon = document.getElementById('btn-moon');
+  var btnEnter = document.getElementById('btn-enter-main');
+  if(btnMoon) btnMoon.addEventListener('click', function(e){ e.stopPropagation(); goNation(); });
+  if(btnEnter) btnEnter.addEventListener('click', function(e){ e.stopPropagation(); goNation(); });
+});
+// Also add immediately (in case DOMContentLoaded already fired)
+(function() {
+  function attachBtns() {
+    var btnMoon = document.getElementById('btn-moon');
+    var btnEnter = document.getElementById('btn-enter-main');
+    if(btnMoon) btnMoon.onclick = function(e){ e.stopPropagation(); goNation(); return false; };
+    if(btnEnter) btnEnter.onclick = function(e){ e.stopPropagation(); goNation(); return false; };
+  }
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachBtns);
+  } else {
+    attachBtns();
+  }
+})();
+
 // ═════════════════════════════════════════════
 
 </script>
