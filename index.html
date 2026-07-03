@@ -634,7 +634,7 @@ body {
   inset: 0;
   z-index: 1;
   pointer-events: none !important;
-  background: linear-gradient(to bottom, rgba(3,5,14,.5) 0%, rgba(3,5,14,.15) 40%, rgba(3,5,14,.7) 100%);
+  background: linear-gradient(to bottom, rgba(3,5,14,.45) 0%, rgba(3,5,14,.1) 40%, rgba(3,5,14,.65) 100%);
   transition: background 0.5s;
 }
 /* Dots */
@@ -666,8 +666,7 @@ body {
 }
 
 /* ══ Z-INDEX FINAL ══ */
-#bg-slideshow, #bg-overlay { z-index: 0 !important; pointer-events: none !important; }
-.stars { z-index: 1 !important; pointer-events: none !important; }
+#bg-slideshow, .stars { z-index: 1 !important; pointer-events: none !important; }
 #btn-moon, #btn-enter-main, .bf-btn, .btn-enter, .lb, .nc, .btn-next { 
   position: relative; 
   z-index: 30 !important; 
@@ -684,7 +683,7 @@ body {
   user-select: none !important;
   cursor: pointer !important;
 }
-body { overflow-x: hidden; overflow-y: hidden; }
+body { overflow-x: hidden; overflow-y: auto; }
 /* ══════════════════════════════════════
    LAYOUT MASTER CSS - 단일 정의
    ══════════════════════════════════════ */
@@ -789,8 +788,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
 }
 
 /* Z-INDEX */
-#bg-slideshow, #bg-overlay { z-index: 0 !important; pointer-events: none !important; }
-.stars { z-index: 1 !important; pointer-events: none !important; }
+#bg-slideshow, .stars { z-index: 1 !important; pointer-events: none !important; }
 .lang-bar { z-index: 999 !important; }
 /* MOBILE 480px */
 @media(max-width: 480px) {
@@ -2581,15 +2579,15 @@ function updateSlideshowForScreen(id) {
   if (!dots || !ov) return;
   if (id === 's-intro') {
     dots.style.display = 'flex';
-    ov.style.background = 'linear-gradient(to bottom,rgba(3,5,14,.45) 0%,rgba(3,5,14,.1) 40%,rgba(3,5,14,.65) 100%)';
+    ov.style.setProperty('background', 'linear-gradient(to bottom,rgba(3,5,14,.45) 0%,rgba(3,5,14,.1) 40%,rgba(3,5,14,.65) 100%)', 'important');
     bgStart(4000);
   } else if (id === 's-game') {
     dots.style.display = 'none';
-    ov.style.background = 'rgba(3,5,14,.87)';
+    ov.style.setProperty('background', 'rgba(3,5,14,.87)', 'important');
     bgStart(8000);
   } else {
     dots.style.display = 'none';
-    ov.style.background = 'rgba(3,5,14,.75)';
+    ov.style.setProperty('background', 'rgba(3,5,14,.75)', 'important');
     bgStart(6000);
   }
 }
