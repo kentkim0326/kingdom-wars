@@ -586,6 +586,17 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   50%{transform:translateY(-8px) scale(1.02);filter:drop-shadow(0 0 45px rgba(0,200,255,0.8))}}
 
 #intro-click-layer{pointer-events:all!important;touch-action:manipulation;}
+/* MOBILE CENTER */
+@media(max-width:500px){
+  .screen-content{overflow:hidden!important;box-sizing:border-box!important;}
+  .bf-row{flex-wrap:nowrap!important;width:100%!important;box-sizing:border-box!important;padding:0!important;gap:6px!important;}
+  .bf-btn{flex:1!important;min-width:0!important;max-width:33%!important;padding:8px 4px!important;}
+  .bf-icon{font-size:1.4rem!important;}
+  .bf-title{font-size:.7rem!important;}
+  .bf-sub{font-size:.5rem!important;}
+  .btn-enter{max-width:calc(100% - 32px)!important;box-sizing:border-box!important;}
+  .catchphrase{font-size:.75rem!important;}
+}
 </style>
 </head>
 <body>
@@ -630,7 +641,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 <!-- INTRO -->
 <div class="screen active" id="s-intro">
   <div class="screen-content">
-  <div class="fu" style="text-align:center;margin-bottom:10px;width:100%;max-width:580px;margin-left:auto;margin-right:auto;">
+  <div class="fu" style="text-align:center;margin-bottom:10px">
     <img src="assets/logo.png" alt="KINGDOM WARS"
   style="width:min(260px,60vw);height:auto;margin:0 auto 6px;display:block;
   filter:drop-shadow(0 0 30px rgba(0,200,255,0.5));
@@ -638,7 +649,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   onerror="this.outerHTML='<div class=logo>KINGDOM WARS</div>'"/>
     <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
   </div>
-  <div class="bf-row fu3" style="max-width:580px;margin-left:auto;margin-right:auto;margin-bottom:22px;">
+  <div class="bf-row fu3">
     <div class="bf-btn open" onclick="goNation()">
       <span class="bdg open">OPEN</span><div class="bf-icon">🌙</div>
       <div class="bf-title">THE MOON</div><div class="bf-sub"><span id="i-moon-sub">49섹터 · 전략 정복전</span></div>
@@ -648,7 +659,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     <div class="bf-btn locked"><span class="bdg soon">SOON</span><div class="bf-icon">🪐</div>
       <div class="bf-title">DEEP SPACE</div><div class="bf-sub"><span id="i-space-sub">심우주 · 120섹터</span></div></div>
   </div>
-  <div class="fu3" style="text-align:center;width:100%;max-width:580px;margin-left:auto;margin-right:auto;">
+  <div class="fu3" style="text-align:center">
     <button class="btn-enter" onclick="goNation()"><span id="i-start">🚀 달 정복 개시</span></button>
     <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
       <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none"><span id="i-guide">📖 게임 가이드</span></a>
@@ -658,16 +669,16 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 </div><!-- /screen-content -->
 
 <!-- NATION -->
-<div class="screen" id="s-nation" style="align-items:center;text-align:center;">
+<div class="screen" id="s-nation">
   <div class="stitle fu"><span id="i-n-title">🌍 국가 선택</span></div>
   <div class="ssub fu2"><span id="i-n-sub">달에 깃발을 꽂을 국가를 선택하세요</span></div>
-  <input class="search-box fu2" style="max-width:480px;margin:0 auto 10px;display:block;" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
-  <div class="nation-grid fu3" id="ngrid" style="max-width:720px;margin:0 auto;"></div>
-  <button class="btn-next" style="display:block;margin:10px auto;" id="btn-next" onclick="goCommander()"><span id="i-n-next">다음 → 사령관 선택</span></button>
+  <input class="search-box fu2" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
+  <div class="nation-grid fu3" id="ngrid"></div>
+  <button class="btn-next" id="btn-next" onclick="goCommander()"><span id="i-n-next">다음 → 사령관 선택</span></button>
 </div>
 
 <!-- COMMANDER -->
-<div class="screen" id="s-commander" style="align-items:center;text-align:center;">
+<div class="screen" id="s-commander">
   <div class="cmd-title fu"><span id="i-c-title">⭐ 사령관 선택</span></div>
   <div class="cmd-sub fu2"><span id="i-c-sub">당신의 분신이 될 사령관을 선택하세요</span></div>
   <div class="cmd-nbadge fu2"><span id="cmd-nf" style="font-size:1.6rem"></span><span id="cmd-nn" style="font-size:.9rem;font-weight:700"></span></div>
