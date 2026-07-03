@@ -51,7 +51,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .btn-enter:hover{transform:scale(1.05);box-shadow:0 0 60px rgba(0,200,255,.6)}
 
 /* ══ NATION ══ */
-#s-nation{padding:22px 16px;align-items:center;background:radial-gradient(ellipse at 50% 0%,#0a1530,#03050e 60%)}
+#s-nation{padding:22px 16px;align-items:center;background:transparent}
 .stitle{font-size:1.4rem;font-weight:900;letter-spacing:4px;text-align:center;color:var(--accent);margin-bottom:4px}
 .ssub{text-align:center;color:var(--muted);margin-bottom:13px;font-size:.82rem}
 .search-box{display:block;width:100%;max-width:370px;margin:0 auto 11px;padding:8px 15px;background:var(--panel);border:1px solid var(--border);border-radius:28px;color:var(--text);font-size:.88rem;outline:none}
@@ -64,7 +64,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .btn-next.show{display:block}
 
 /* ══ COMMANDER ══ */
-#s-commander{padding:22px 16px;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#0a1535 0%,#03050e 70%)}
+#s-commander{padding:22px 16px;align-items:center;justify-content:center;background:transparent}
 .cmd-title{font-size:1.4rem;font-weight:900;letter-spacing:3px;text-align:center;color:var(--accent);margin-bottom:4px}
 .cmd-sub{text-align:center;color:var(--muted);margin-bottom:18px;font-size:.8rem}
 .cmd-nbadge{display:flex;align-items:center;gap:7px;justify-content:center;margin-bottom:18px;padding:7px 16px;background:var(--panel);border:1px solid var(--border);border-radius:28px;width:fit-content;margin-left:auto;margin-right:auto}
@@ -129,7 +129,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .turn-info{display:flex;align-items:center;gap:4px;font-size:.66rem;margin-left:5px;flex-shrink:0}
 .turn-num{color:var(--gold);font-weight:700}
 .btn-et{padding:3px 10px;background:linear-gradient(135deg,#ffd700,#ff8800);color:#000;border:none;border-radius:13px;font-size:.66rem;font-weight:700;cursor:pointer}
-.game-body{display:flex;flex:1;height:calc(100vh - 160px);overflow:hidden}
+.game-body{display:flex;flex:1;height:calc(100vh - 160px);overflow:hidden;position:relative;z-index:1}
 
 /* ══ LEFT PANEL ══ */
 .lpanel{width:188px;min-width:155px;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
@@ -393,9 +393,191 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   .sector{width:52px;height:52px}.sec-ui{width:26px;height:26px}
   .sao{width:250px}.fmbody{padding:12px}
 }
+
+/* ════════ SLIDESHOW ════════ */
+.slideshow-bg{
+  position:fixed;inset:0;z-index:0;overflow:hidden;
+}
+.slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1.2s ease;
+  will-change:opacity;
+}
+.slide.active{opacity:1}
+.slide-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(3,5,14,0.55) 0%,
+    rgba(3,5,14,0.25) 40%,
+    rgba(3,5,14,0.65) 100%
+  );
+}
+/* Intro uses full-screen slides */
+#s-intro{
+  position:relative;
+  background:transparent!important;
+}
+#s-intro .screen-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  min-height:100vh;padding:50px 16px;text-align:center;
+}
+/* Slide dots */
+.slide-dots{
+  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  display:flex;gap:7px;z-index:10;
+}
+.slide-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.5);
+  cursor:pointer;transition:all 0.3s;
+}
+.slide-dot.active{background:var(--accent);border-color:var(--accent);width:20px;border-radius:4px}
+/* Game screen slideshow bg (subtle) */
+.game-slide-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+}
+.game-slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity 2s ease;
+}
+.game-slide.active{opacity:1}
+.game-slide-overlay{
+  position:absolute;inset:0;
+  background:rgba(3,5,14,0.82);
+}
+#s-game{position:relative}
+
+/* ════════ MOBILE FIXES ════════ */
+@media(max-width:480px){
+  /* HUD compact */
+  .hud{padding:3px 6px;gap:3px}
+  .hud-brand{font-size:.72rem;letter-spacing:2px}
+  .cmd-hud{padding:1px 5px;font-size:.6rem}
+  .hud-pill{padding:1px 5px;font-size:.6rem}
+  #bgm-btn{font-size:.56rem;padding:1px 5px}
+  
+  /* Morale bar compact */
+  .morale-bar{padding:2px 6px;gap:4px;flex-wrap:wrap}
+  .morale-pill{min-width:120px;padding:2px 6px}
+  .morale-val{font-size:.6rem}
+  .online-timer{font-size:.56rem}
+  .hourly-bonus,.hourly-hint{display:none}
+  
+  /* Resource bar scroll */
+  .res-bar{padding:2px 6px;gap:3px;overflow-x:auto;flex-wrap:nowrap}
+  .res-item{font-size:.62rem;padding:2px 6px;white-space:nowrap;flex-shrink:0}
+  
+  /* View bar */
+  .view-bar{padding:2px 6px;gap:2px}
+  .vtbtn{padding:3px 8px;font-size:.62rem}
+  #i-map-hint{display:none}
+  .turn-info{margin-left:3px}
+  .btn-et{padding:3px 8px;font-size:.62rem}
+  
+  /* Battle grid - 7 cols fit mobile */
+  .grid-wrap{grid-template-columns:repeat(7,44px);gap:2px;padding:6px}
+  .sector{width:44px;height:44px}
+  .sec-ui{width:22px;height:22px}
+  .sec-nm{font-size:.34rem}
+  .sec-id{font-size:.36rem}
+  
+  /* SAO overlay full-width on mobile */
+  .sao{
+    position:fixed!important;
+    left:50%!important;transform:translateX(-50%)!important;
+    top:auto!important;bottom:0!important;
+    width:100%!important;max-width:100%!important;
+    border-radius:16px 16px 0 0!important;
+    border-bottom:none!important;
+    max-height:70vh;overflow-y:auto;
+  }
+  
+  /* Formation modal */
+  .fmbody{padding:10px;max-height:85vh}
+  .fm-urow{padding:5px 7px;gap:6px}
+  .fm-uimg{width:36px;height:36px}
+  .fm-un{font-size:.7rem}
+  
+  /* Battle modal */
+  .mbody{padding:12px}
+  .bimg{width:56px;height:56px}
+  
+  /* Intro page */
+  #s-intro .screen-content{padding:30px 12px}
+  .logo{font-size:clamp(1.8rem,8vw,3rem);letter-spacing:3px}
+  .catchphrase{font-size:.75rem;letter-spacing:1px;margin-bottom:20px}
+  .intro-moon{width:150px;height:150px;margin-bottom:20px}
+  .bf-row{gap:8px;margin-bottom:18px}
+  .bf-btn{min-width:95px;padding:9px 10px}
+  .bf-icon{font-size:1.5rem}
+  .bf-title{font-size:.78rem}
+  .bf-sub{font-size:.6rem}
+  .btn-enter{padding:11px 32px;font-size:.84rem;letter-spacing:2px}
+  
+  /* Nation page */
+  .nation-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:5px}
+  .nf{font-size:1.3rem}
+  .nn{font-size:.64rem}
+  
+  /* Commander page */
+  .cmd-cards{gap:10px}
+  .cmd-card{width:150px}
+  .cmd-avwrap{height:120px}
+  .cmd-avm{font-size:4.5rem}
+  .cmd-name{font-size:.82rem}
+  
+  /* News ticker */
+  .news-ticker{padding:2px 6px}
+  .news-label{display:none}
+  .news-scroll{font-size:.58rem}
+  
+  /* Bonus modal */
+  .bonus-body{padding:16px 18px}
+  .bonus-icon{font-size:2.4rem}
+  .bonus-title{font-size:.9rem}
+  
+  /* Lang bar */
+  .lang-bar{padding:4px 7px}
+  .lb{padding:2px 5px;font-size:.62rem}
+}
+
+@media(max-width:380px){
+  .grid-wrap{grid-template-columns:repeat(7,40px);gap:1px;padding:5px}
+  .sector{width:40px;height:40px}
+  .sec-ui{width:20px;height:20px}
+  .logo{font-size:1.6rem}
+}
+
 </style>
 </head>
 <body>
+
+<!-- ══ GLOBAL SLIDESHOW BG ══ -->
+<div class="slideshow-bg" id="global-slideshow">
+  <div class="slide active" id="gs0" style="background-image:url('assets/slide1.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs1" style="background-image:url('assets/slide2.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs2" style="background-image:url('assets/slide3.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs3" style="background-image:url('assets/slide4.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs4" style="background-image:url('assets/slide5.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs5" style="background-image:url('assets/slide6.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs6" style="background-image:url('assets/slide7.jpg')"><div class="slide-overlay"></div></div>
+</div>
+<!-- Slide navigation dots (shown on intro) -->
+<div class="slide-dots" id="slide-dots">
+  <div class="slide-dot active" onclick="goSlide(0)"></div>
+  <div class="slide-dot" onclick="goSlide(1)"></div>
+  <div class="slide-dot" onclick="goSlide(2)"></div>
+  <div class="slide-dot" onclick="goSlide(3)"></div>
+  <div class="slide-dot" onclick="goSlide(4)"></div>
+  <div class="slide-dot" onclick="goSlide(5)"></div>
+  <div class="slide-dot" onclick="goSlide(6)"></div>
+</div>
+
 <div class="stars" id="stars"></div>
 <div class="lang-bar">
   <button class="lb active" onclick="setLang('ko')">🇰🇷</button>
@@ -406,7 +588,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 
 <!-- INTRO -->
 <div class="screen active" id="s-intro">
-  <div class="fu" style="text-align:center;margin-bottom:10px;margin-top:35px">
+  <div class="screen-content">
+  <div class="fu" style="text-align:center;margin-bottom:10px;margin-top:0">
     <div class="logo">KINGDOM WARS</div>
     <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
   </div>
@@ -430,6 +613,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     </div>
   </div>
 </div>
+</div><!-- /screen-content -->
 
 <!-- NATION -->
 <div class="screen" id="s-nation">
@@ -1801,6 +1985,90 @@ function log(type,msg){
   const bl=document.getElementById("blog");if(bl)bl.innerHTML=G.logs.slice(0,14).map(l=>`<div class="log-item" style="${cl}"><span class="ts">[${l.ts}]</span>${l.msg.substring(0,52)}</div>`).join("");
   const ml=document.getElementById("minilog");if(ml)ml.innerHTML=G.logs.slice(0,4).map(l=>`<div style="padding:1px 0;border-bottom:1px solid var(--border);font-size:.6rem;${cl}">${l.msg.substring(0,30)}</div>`).join("");
 }
+<script>
+
+// ════════ GLOBAL SLIDESHOW SYSTEM ════════
+const SLIDES_COUNT = 7;
+let curSlide = 0;
+let slideTimer = null;
+let slideSpeed = 4000; // 4 sec per slide on intro
+
+function goSlide(n) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.slide-dot');
+  slides[curSlide]?.classList.remove('active');
+  dots[curSlide]?.classList.remove('active');
+  curSlide = (n + SLIDES_COUNT) % SLIDES_COUNT;
+  slides[curSlide]?.classList.add('active');
+  dots[curSlide]?.classList.add('active');
+}
+
+function nextSlide() { goSlide(curSlide + 1); }
+
+function startSlideshow(speed) {
+  clearInterval(slideTimer);
+  slideSpeed = speed || 4000;
+  slideTimer = setInterval(nextSlide, slideSpeed);
+}
+
+function stopSlideshow() { clearInterval(slideTimer); }
+
+// Show/hide dots based on screen
+function updateSlideshowForScreen(screenId) {
+  const dots = document.getElementById('slide-dots');
+  const bg = document.getElementById('global-slideshow');
+  if (!dots || !bg) return;
+  
+  if (screenId === 's-intro') {
+    dots.style.display = 'flex';
+    bg.style.display = 'block';
+    // Brighter overlay on intro
+    document.querySelectorAll('.slide-overlay').forEach(el => {
+      el.style.background = 'linear-gradient(to bottom,rgba(3,5,14,0.45) 0%,rgba(3,5,14,0.15) 40%,rgba(3,5,14,0.7) 100%)';
+    });
+    startSlideshow(4000);
+  } else if (screenId === 's-nation' || screenId === 's-commander') {
+    dots.style.display = 'none';
+    bg.style.display = 'block';
+    // Darker overlay for readability
+    document.querySelectorAll('.slide-overlay').forEach(el => {
+      el.style.background = 'rgba(3,5,14,0.78)';
+    });
+    startSlideshow(6000);
+  } else if (screenId === 's-game') {
+    dots.style.display = 'none';
+    bg.style.display = 'block';
+    // Very dark for game UI
+    document.querySelectorAll('.slide-overlay').forEach(el => {
+      el.style.background = 'rgba(3,5,14,0.88)';
+    });
+    startSlideshow(8000);
+  } else {
+    dots.style.display = 'none';
+  }
+}
+
+// Patch show() to update slideshow
+const _origShow = window.show;
+window.show = function(id) {
+  _origShow(id);
+  updateSlideshowForScreen(id);
+};
+
+// Swipe support for mobile
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) {
+    if (dx < 0) nextSlide();
+    else goSlide(curSlide - 1);
+  }
+}, {passive:true});
+
+// Init
+updateSlideshowForScreen('s-intro');
+
 </script>
 </body>
 </html>
