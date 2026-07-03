@@ -33,7 +33,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   letter-spacing:2px;margin-bottom:40px;text-shadow:0 0 20px rgba(255,215,0,0.5)}
 .moon-hero{width:180px;height:180px;border-radius:50%;margin:0 auto 32px;
   cursor:pointer;overflow:hidden;box-shadow:0 0 80px rgba(0,200,255,0.4)}
-.moon-hero img{width:100%;height:100%;object-fit:cover}
+.moon-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.moon-hero{box-shadow:0 0 100px rgba(0,200,255,.6),0 0 50px rgba(200,200,180,.25)!important}
 .bf-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
 .bf-btn{padding:12px 20px;border-radius:12px;border:2px solid var(--border);
   background:var(--panel);cursor:pointer;transition:all 0.3s;text-align:center;min-width:120px}
@@ -434,6 +435,14 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   .sec-unit-img{width:30px;height:30px}
   .sector-action-overlay{width:260px}
 }
+
+/* v7 card enhancements */
+.rarity-badge{position:absolute;top:3px;right:3px;font-size:.5rem;font-weight:700;padding:1px 4px;border-radius:4px}
+.r-ur{background:rgba(170,68,255,.4);color:#c77fff}.r-sr{background:rgba(255,215,0,.35);color:var(--gold)}
+.r-r{background:rgba(0,150,255,.3);color:#5af}.r-n{background:rgba(100,140,180,.3);color:#8ab}
+.skill-chip{display:inline-block;padding:1px 5px;border-radius:7px;font-size:.54rem;font-weight:700;
+  margin:1px;border:1px solid rgba(0,200,255,.3);background:rgba(0,200,255,.06);color:var(--teal)}
+.ucard{position:relative}
 </style>
 </head>
 <body>
@@ -1983,6 +1992,320 @@ function addBGMButton() {
 // Init after page loads
 setTimeout(addBGMButton, 500);
 console.log('KW v0.6 Sound + Active AI patch loaded ✅');
+
+</script>
+
+<!-- FORMATION MODAL (v7 patch) -->
+<div id="fmodal-v7" style="position:fixed;inset:0;z-index:850;background:rgba(2,4,12,.95);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center">
+  <div style="background:var(--panel);border:2px solid var(--orange);border-radius:16px;padding:18px;max-width:460px;width:95%;box-shadow:0 0 50px rgba(255,136,0,.3);max-height:90vh;overflow-y:auto">
+    <div style="font-size:1rem;font-weight:900;color:var(--orange);margin-bottom:4px;text-align:center" id="fmv7-title">⚔️ 출격 편성</div>
+    <div style="font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:12px" id="fmv7-sub">공격에 보낼 유닛을 선택하세요</div>
+    <!-- Enemy info -->
+    <div style="background:rgba(255,50,50,.08);border:1px solid rgba(255,50,50,.3);border-radius:8px;padding:9px;margin-bottom:12px;display:flex;align-items:center;gap:10px" id="fmv7-enemy"></div>
+    <!-- Unit list -->
+    <div id="fmv7-units" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
+    <!-- Summary -->
+    <div id="fmv7-summary" style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:12px"></div>
+    <!-- Buttons -->
+    <div style="display:flex;gap:8px">
+      <button onclick="closeFMv7()" style="padding:10px 16px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;font-size:.8rem" id="fmv7-cancel">취소</button>
+      <button id="fmv7-launch" onclick="launchFMv7()" style="flex:1;padding:10px;background:linear-gradient(135deg,var(--red),#aa0000);color:#fff;font-weight:900;border:none;border-radius:8px;cursor:pointer;font-size:.84rem">🚀 출격!</button>
+    </div>
+  </div>
+</div>
+<script>
+
+// ════════════════════════════════════════════
+// KW v0.7 PATCH: FORMATION SYSTEM + i18n + CARD UI
+// ════════════════════════════════════════════
+
+// i18n labels (simplified — key strings)
+const FM_T = {
+  ko:{title:"⚔️ 출격 편성",sub:"공격에 보낼 유닛을 선택하세요",cancel:"취소",launch:"🚀 출격!",
+      total:"총 전투력",cost:"비용",winrate:"예상 승률",no_unit:"유닛 없음",no_he3:"He-3 부족",
+      direct:"정면 돌격",smart:"정밀 타격",surround:"포위 공격"},
+  en:{title:"⚔️ Formation",sub:"Choose units to send into battle",cancel:"Cancel",launch:"🚀 Launch!",
+      total:"Total Power",cost:"Cost",winrate:"Est. Win Rate",no_unit:"No units",no_he3:"Not enough He-3",
+      direct:"Direct Assault",smart:"Precision Strike",surround:"Surround Attack"},
+  ja:{title:"⚔️ 出撃編成",sub:"攻撃に送るユニットを選択",cancel:"キャンセル",launch:"🚀 出撃！",
+      total:"総戦闘力",cost:"コスト",winrate:"勝率予測",no_unit:"ユニットなし",no_he3:"He-3不足",
+      direct:"正面突撃",smart:"精密打撃",surround:"包囲攻撃"},
+  zh:{title:"⚔️ 出击编队",sub:"选择要派出的单位",cancel:"取消",launch:"🚀 出击！",
+      total:"总战斗力",cost:"费用",winrate:"预计胜率",no_unit:"无单位",no_he3:"He-3不足",
+      direct:"正面突击",smart:"精确打击",surround:"包围攻击"},
+};
+function fmT(k){const l=typeof LANG!=="undefined"?LANG:"ko";return(FM_T[l]||FM_T.ko)[k]||k}
+
+// Formation state
+let FMv7 = {secIdx:null, mode:"direct", qty:{}}; // unitId -> quantity
+
+function openFMv7(secIdx, mode){
+  SFX&&SFX.play("click");
+  FMv7 = {secIdx, mode, qty:{}};
+  const s = G.sectors[secIdx];
+  if(!s || s.owner!=="enemy" && s.own!=="enemy") return;
+  const own = s.owner||s.own;
+  const flag = s.flag, name = s.name;
+  const pow = s.power||s.pow, hp = s.hp;
+  const ui = s.unitImg||s.ui||"", ue = s.unitEmoji||s.ue||"🚀";
+  const ct = s.ctype||s.ct||"destroyer";
+
+  // Update titles
+  document.getElementById("fmv7-title").textContent = fmT("title");
+  document.getElementById("fmv7-sub").textContent = fmT("sub");
+  document.getElementById("fmv7-cancel").textContent = fmT("cancel");
+
+  // Enemy info
+  document.getElementById("fmv7-enemy").innerHTML = `
+    <img src="${ui}" alt="" style="width:48px;height:48px;object-fit:contain;border-radius:6px;border:1px solid var(--border)" onerror="this.style.display='none'"/>
+    <div>
+      <div style="font-weight:700;font-size:.82rem">${flag} ${name}</div>
+      <div style="font-size:.72rem;color:var(--red)">⚔️ ${pow} | HP ${hp}%</div>
+      <div style="font-size:.66rem;color:var(--muted);margin-top:2px">${SNAMES&&SNAMES[secIdx]||"섹터 "+secIdx}</div>
+    </div>`;
+
+  renderFMv7Units();
+  updateFMv7Summary();
+  document.getElementById("fmodal-v7").style.display = "flex";
+}
+
+function closeFMv7(){
+  document.getElementById("fmodal-v7").style.display = "none";
+  SFX&&SFX.play("click");
+}
+
+// Get available units from all unit arrays
+function getFMAvailable(){
+  const lists = [];
+  if(typeof SHIPS!=="undefined")lists.push(...SHIPS);
+  if(typeof MECHS!=="undefined")lists.push(...MECHS);
+  if(typeof ACES!=="undefined")lists.push(...ACES);
+  // Also check old-style ALL_UNITS
+  if(typeof ALL_UNITS!=="undefined")lists.push(...ALL_UNITS.filter(u=>!lists.find(x=>x.id===u.id)));
+  return lists.filter(u=>u.count>0);
+}
+
+function getUnitName(u){
+  if(Array.isArray(u.name)){const l=typeof LANG!=="undefined"?LANG:"ko";const i=["ko","en","ja","zh"].indexOf(l);return u.name[i]||u.name[0]}
+  return u.name;
+}
+
+function getCounterModFM(a,d){
+  const COUNTER={
+    fighter:{strong:["destroyer"],weak:["laser_mech","drone"]},
+    destroyer:{strong:["mothership"],weak:["fighter"]},
+    mothership:{strong:["sector"],weak:["destroyer"]},
+    laser_mech:{strong:["fighter","drone"],weak:["armor_mech","missile_mech"]},
+    missile_mech:{strong:["armor_mech","destroyer"],weak:["laser_mech","ace"]},
+    armor_mech:{strong:["laser_mech"],weak:["missile_mech","ace"]},
+    melee_mech:{strong:["laser_mech","armor_mech"],weak:["fighter","missile_mech"]},
+    drone:{strong:["armor_mech"],weak:["laser_mech","missile_mech"]},
+    ace:{strong:["missile_mech","melee_mech"],weak:["drone"]},
+  };
+  if(!a||!d)return{mod:1,lbl:"⚖️"};
+  const c=COUNTER[a];if(!c)return{mod:1,lbl:"⚖️"};
+  if(c.strong.includes(d))return{mod:1.35,lbl:"✅ +35%"};
+  if(c.weak.includes(d))  return{mod:0.60,lbl:"❌ -40%"};
+  return{mod:1,lbl:"⚖️"};
+}
+
+function renderFMv7Units(){
+  const avail = getFMAvailable();
+  const s = G.sectors[FMv7.secIdx];
+  const ct = s ? (s.ctype||s.ct||"destroyer") : "destroyer";
+  document.getElementById("fmv7-units").innerHTML = avail.map(u => {
+    const qty = FMv7.qty[u.id]||0;
+    const cm = getCounterModFM(u.ctype||u.cType, ct);
+    const cost = u.cost?.he3||0;
+    const rarity = u.rarity||"R";
+    const rcolor = rarity==="UR"?"#c77fff":rarity==="SR"?"var(--gold)":"#5af";
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--border);border-radius:8px;background:rgba(0,0,0,.2)">
+      <img src="${u.img}" alt="" style="width:44px;height:44px;object-fit:contain;border-radius:5px;border:1px solid var(--border)" onerror="this.style.display='none'"/>
+      <div style="flex:1">
+        <div style="font-size:.76rem;font-weight:700">${u.emoji||""} ${getUnitName(u)} <span style="font-size:.54rem;color:${rcolor};border:1px solid ${rcolor};border-radius:4px;padding:1px 3px">${rarity}</span></div>
+        <div style="font-size:.64rem;color:var(--gold)">⚔️${u.power||u.pow} | ⚡${cost}/기</div>
+        <div style="font-size:.6rem;color:${cm.mod>1?"var(--green)":cm.mod<1?"var(--red)":"var(--muted)"}">${cm.lbl}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:5px">
+        <button onclick="fmv7Qty('${u.id}',-1)" style="width:22px;height:22px;border:1px solid var(--border);border-radius:50%;background:var(--panel);color:var(--text);cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center">−</button>
+        <span style="font-size:.8rem;font-weight:700;min-width:14px;text-align:center;color:var(--gold)">${qty}</span>
+        <button onclick="fmv7Qty('${u.id}',1)" style="width:22px;height:22px;border:1px solid var(--border);border-radius:50%;background:var(--panel);color:var(--text);cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center">+</button>
+        <span style="font-size:.58rem;color:var(--muted)">/${u.count}</span>
+      </div>
+    </div>`;
+  }).join("")||`<div style="color:var(--muted);text-align:center;padding:12px">${fmT("no_unit")}</div>`;
+}
+
+function fmv7Qty(id, delta){
+  const avail = getFMAvailable();
+  const u = [...(typeof SHIPS!=="undefined"?SHIPS:[]),(typeof MECHS!=="undefined"?MECHS:[]),(typeof ACES!=="undefined"?ACES:[])].flat().find(x=>x.id===id);
+  if(!u)return;
+  const cur = FMv7.qty[id]||0;
+  const nv = Math.max(0, Math.min(u.count, cur+delta));
+  if(nv===0) delete FMv7.qty[id]; else FMv7.qty[id]=nv;
+  SFX&&SFX.play("click");renderFMv7Units();updateFMv7Summary();
+}
+
+function getAdjMine(i){
+  const adj=[];const col=i%7,row=Math.floor(i/7);
+  [[-1,0],[1,0],[0,-1],[0,1]].forEach(([dc,dr])=>{
+    const ni=(row+dr)*7+(col+dc);
+    if(ni>=0&&ni<21&&col+dc>=0&&col+dc<7){const s=G.sectors[ni];if(s&&(s.owner==="me"||s.own==="me"))adj.push(ni);}
+  });return adj;
+}
+
+function updateFMv7Summary(){
+  const s = G.sectors[FMv7.secIdx];if(!s)return;
+  const ct = s.ctype||s.ct||"destroyer";
+  const sPow = s.power||s.pow||100;
+  let totalPow=0,totalCost=0,entries=[];
+  const allUnits = [...(typeof SHIPS!=="undefined"?SHIPS:[]),(typeof MECHS!=="undefined"?MECHS:[]),(typeof ACES!=="undefined"?ACES:[])].flat();
+  for(const[id,qty] of Object.entries(FMv7.qty)){
+    const u=allUnits.find(x=>x.id===id);if(!u||qty<=0)continue;
+    const cm=getCounterModFM(u.ctype||u.cType,ct);
+    const mp=Math.floor((u.power||u.pow||0)*cm.mod*qty);
+    totalPow+=mp;totalCost+=(u.cost?.he3||0)*qty;
+    entries.push(`${u.emoji||""}×${qty}(${mp})`);
+  }
+  const adj=getAdjMine(FMv7.secIdx);
+  let modPow=totalPow;
+  if(FMv7.mode==="smart")modPow=Math.floor(modPow*1.2);
+  if(FMv7.mode==="surround")modPow=Math.floor(modPow*(1+adj.length*0.15));
+  const stCrater=(typeof SEC_TYPES!=="undefined"&&SEC_TYPES[FMv7.secIdx]==="crater")?1.5:1;
+  const defPow=Math.floor(sPow*stCrater);
+  const winPct=totalPow>0?Math.min(99,Math.round(modPow/(modPow+defPow)*100)):0;
+  const winColor=winPct>=65?"var(--green)":winPct>=45?"var(--gold)":"var(--red)";
+  const modeLabel=FMv7.mode==="smart"?fmT("smart"):FMv7.mode==="surround"?fmT("surround"):fmT("direct");
+  document.getElementById("fmv7-summary").innerHTML=`
+    <div style="display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px"><span style="color:var(--muted)">${fmT("total")}</span><span style="color:var(--gold)">⚔️${modPow}</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px"><span style="color:var(--muted)">${fmT("cost")}</span><span style="color:var(--orange)">⚡${totalCost}</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px"><span style="color:var(--muted)">vs 방어</span><span style="color:var(--red)">⚔️${defPow}</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px"><span style="color:var(--muted)">전략</span><span>${modeLabel}</span></div>
+    <div style="font-size:1rem;font-weight:900;text-align:center;color:${winColor};margin-top:5px">${fmT("winrate")}: ${winPct}%</div>`;
+  const btn=document.getElementById("fmv7-launch");
+  if(totalCost>G.he3){btn.disabled=true;btn.textContent=fmT("no_he3");}
+  else if(totalPow===0){btn.disabled=true;btn.textContent=fmT("no_unit");}
+  else{btn.disabled=false;btn.textContent=fmT("launch");}
+}
+
+function launchFMv7(){
+  const s=G.sectors[FMv7.secIdx];if(!s||(s.owner!=="enemy"&&s.own!=="enemy"))return;
+  const ct=s.ctype||s.ct||"destroyer";
+  const allUnits=[...(typeof SHIPS!=="undefined"?SHIPS:[]),(typeof MECHS!=="undefined"?MECHS:[]),(typeof ACES!=="undefined"?ACES:[])].flat();
+  let totalPow=0,totalCost=0,repUnit=null;
+  for(const[id,qty] of Object.entries(FMv7.qty)){
+    const u=allUnits.find(x=>x.id===id);if(!u||qty<=0)continue;
+    const cm=getCounterModFM(u.ctype||u.cType,ct);
+    totalPow+=Math.floor((u.power||u.pow||0)*cm.mod*qty);
+    totalCost+=(u.cost?.he3||0)*qty;
+    if(!repUnit)repUnit=u;
+  }
+  if(!repUnit||totalPow===0)return;
+  if(totalCost>G.he3){SFX&&SFX.play("click");return}
+  // Deduct costs and units
+  G.he3-=totalCost;
+  for(const[id,qty] of Object.entries(FMv7.qty)){
+    const u=allUnits.find(x=>x.id===id);if(u)u.count=Math.max(0,u.count-qty);
+  }
+  FMv7.qty={};
+  // Apply mode bonuses
+  const adj=getAdjMine(FMv7.secIdx);
+  if(FMv7.mode==="smart")totalPow=Math.floor(totalPow*1.2);
+  if(FMv7.mode==="surround")totalPow=Math.floor(totalPow*(1+adj.length*0.15));
+  const attPow=totalPow+Math.floor(Math.random()*60);
+  const stCrater=(typeof SEC_TYPES!=="undefined"&&SEC_TYPES[FMv7.secIdx]==="crater")?1.5:1;
+  const sPow=(s.power||s.pow||100);
+  const defPow=Math.floor(sPow*stCrater)+Math.floor(Math.random()*60);
+  const won=Math.random()<attPow/(attPow+defPow);
+  closeFMv7();
+  // Update UI
+  if(typeof renderUnits==="function")renderUnits();
+  if(typeof showSelBig==="function")showSelBig();
+  else if(typeof showSelUnitInfo==="function")showSelUnitInfo();
+  if(typeof updateResUI==="function")updateResUI();
+
+  // Trigger battle modal
+  SFX&&SFX.play("attack");
+  const modeLabel=FMv7.mode==="smart"?fmT("smart"):FMv7.mode==="surround"?fmT("surround"):fmT("direct");
+  const modeColor=FMv7.mode==="smart"?"var(--gold)":FMv7.mode==="surround"?"var(--purple)":"var(--red)";
+  const btEl=document.getElementById("btag-el")||document.getElementById("battle-tag-el");
+  if(btEl)btEl.innerHTML=`<span style="display:inline-block;padding:2px 9px;border-radius:11px;font-size:.68rem;font-weight:700;background:${modeColor}22;border:1px solid ${modeColor};color:${modeColor};margin-bottom:10px">${modeLabel}</span>`;
+  const setEl=(id,val)=>{const el=document.getElementById(id);if(el)el[typeof val==="object"?"innerHTML":"textContent"]=val};
+  setEl("b-aflag",G.nation?.f||"");setEl("b-aimg","");
+  document.getElementById("b-aimg")&&(document.getElementById("b-aimg").src=repUnit.img);
+  setEl("b-aname",`${G.nation?.n||""} 연합함대`);setEl("b-apow",`PWR: ${attPow}`);
+  setEl("b-amod",`<span style="color:var(--orange)">⚡He-3 -${totalCost}</span>`);
+  setEl("b-dflag",s.flag);
+  document.getElementById("b-dimg")&&(document.getElementById("b-dimg").src=s.ui||s.unitImg||"");
+  setEl("b-dname",s.name);setEl("b-dpow",`PWR: ${defPow}`);
+  setEl("b-dmod",stCrater>1?'<span style="color:var(--orange)">🏔️+50%</span>':"");
+  ["b-abar","b-dbar"].forEach(id=>{const el=document.getElementById(id);if(el)el.style.width="100%"});
+  ["b-ahp","b-dhp"].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent="100%"});
+  const bresult=document.getElementById("bresult");if(bresult)bresult.style.display="none";
+  const bclose=document.getElementById("bclose");if(bclose)bclose.style.display="none";
+  const pb=document.getElementById("prisoner-box");if(pb)pb.classList.remove("show");
+  const bal=document.getElementById("b-al");if(bal)bal.textContent=G.nation?.n||"";
+  const bdl=document.getElementById("b-dl");if(bdl)bdl.textContent=s.name;
+  const bmodal=document.getElementById("bmodal");if(bmodal)bmodal.classList.add("show");
+
+  let ah=100,dh=100,step=0;
+  const iv=setInterval(()=>{
+    step++;SFX&&SFX.play("btick");
+    if(won){dh=Math.max(0,dh-Math.floor(Math.random()*22+8));ah=Math.max(25,ah-Math.floor(Math.random()*7));}
+    else{ah=Math.max(0,ah-Math.floor(Math.random()*22+10));dh=Math.max(30,dh-Math.floor(Math.random()*6));}
+    const ab=document.getElementById("b-abar");if(ab)ab.style.width=ah+"%";
+    const db=document.getElementById("b-dbar");if(db)db.style.width=dh+"%";
+    const ahp=document.getElementById("b-ahp");if(ahp)ahp.textContent=ah+"%";
+    const dhp=document.getElementById("b-dhp");if(dhp)dhp.textContent=dh+"%";
+    if(step>=5){clearInterval(iv);
+      if(won){SFX&&SFX.play("win");}else{SFX&&SFX.play("lose");}
+      // Use existing showResult or showBattleResult
+      if(typeof showResult==="function")showResult(won,FMv7.secIdx,s,repUnit,FMv7.mode);
+      else if(typeof showBattleResult==="function")showBattleResult(won,FMv7.secIdx,s,repUnit,FMv7.mode);
+      else{
+        const r=document.getElementById("bresult");const sname=SNAMES?SNAMES[FMv7.secIdx]:"섹터";
+        if(r){r.className="result "+(won?"win":"lose");r.innerHTML=won?`🏆 승리! ${G.nation?.f||""} ${sname} 점령!`:`💥 패배... ${s.flag} ${s.name}`;r.style.display="block";}
+        if(bclose)bclose.style.display="inline-block";
+        if(won){
+          G.sectors[FMv7.secIdx]={own:"me",owner:"me",flag:G.nation?.f,name:G.nation?.n,hp:85,
+            ui:repUnit.img,unitImg:repUnit.img,ue:repUnit.emoji,unitEmoji:repUnit.emoji,
+            ct:repUnit.ctype,ctype:repUnit.ctype,pow:repUnit.power||repUnit.pow,power:repUnit.power||repUnit.pow};
+          G.wins++;if(typeof refresh==="function")refresh(FMv7.secIdx);
+          if(typeof updateResUI==="function")updateResUI();
+        }
+      }
+    }
+  },500);
+}
+
+// ── PATCH: Wire formation into SAO attack buttons ──
+// Override executeBattle to open formation modal instead
+const _origExecuteBattle2 = window.executeBattle;
+window.executeBattle = function(secIdx, mode) {
+  openFMv7(secIdx, mode);
+};
+// Also patch showSAO attack buttons if they call executeBattle directly
+console.log("KW v7 Formation patch loaded ✅");
+
+// ── PATCH: i18n for existing UI elements ──
+const I18N_SEARCH = {
+  ko:"🔍 국가 검색...", en:"🔍 Search nation...", ja:"🔍 国家検索...", zh:"🔍 搜索国家..."
+};
+// Watch for lang changes (if setLang exists, patch it)
+if(typeof setLang === "undefined"){
+  window.setLang = function(l){
+    document.querySelectorAll(".lb").forEach(b=>{
+      b.classList.toggle("active",b.getAttribute("onclick")&&b.getAttribute("onclick").includes("'"+l+"'"));
+    });
+    const ns=document.getElementById("nsearch");if(ns)ns.placeholder=I18N_SEARCH[l]||I18N_SEARCH.ko;
+    // Update FM modal texts
+    if(typeof FMv7!=="undefined"){
+      const fmTitle=document.getElementById("fmv7-title");const fmSub=document.getElementById("fmv7-sub");
+      if(fmTitle)fmTitle.textContent=fmT("title");if(fmSub)fmSub.textContent=fmT("sub");
+    }
+    window._currentLang=l;
+  }
+}
 
 </script>
 </body>
