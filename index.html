@@ -684,7 +684,7 @@ body {
 .lang-bar { z-index: 999 !important; }
 
 /* OVERFLOW & TOUCH FIX */
-#s-intro { overflow: visible !important; touch-action: manipulation !important; }
+#s-intro { overflow: visible !important; touch-action: manipulation !important; isolation: isolate; }
 .intro-inner { overflow: visible !important; touch-action: manipulation !important; }
 .bf-btn, .btn-enter { 
   touch-action: manipulation !important;
@@ -752,12 +752,12 @@ body { overflow-x: hidden; overflow-y: auto; }
     onerror="this.outerHTML='<div class=&quot;logo&quot;>KINGDOM WARS</div>'"/>
   <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
   <div class="bf-row">
-    <div class="bf-btn open" id="btn-moon">
+    <a href="javascript:void(0)" class="bf-btn open" id="btn-moon" role="button">
       <span class="bdg open">OPEN</span>
       <div class="bf-icon">🌙</div>
       <div class="bf-title">THE MOON</div>
       <div class="bf-sub"><span id="i-moon-sub">49섹터 · 전략 정복전</span></div>
-    </div>
+    </a>
     <div class="bf-btn locked">
       <span class="bdg soon">SOON</span>
       <div class="bf-icon">🔴</div>
@@ -772,9 +772,9 @@ body { overflow-x: hidden; overflow-y: auto; }
     </div>
   </div>
   <div style="text-align:center">
-    <button class="btn-enter" id="btn-enter-main">
+    <a href="javascript:void(0)" class="btn-enter" id="btn-enter-main" role="button" style="display:inline-block;text-decoration:none">
       <span id="i-start">🚀 달 정복 개시</span>
-    </button>
+    </a>
     <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
       <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none">
         <span id="i-guide">📖 게임 가이드</span>
@@ -2202,53 +2202,30 @@ document.addEventListener('touchend', e => {
 bgStart(4000);
 updateSlideshowForScreen('s-intro');
 
-// TOUCH FIX for iOS Safari
-(function() {
-  function addTouchFix() {
-    var buttons = ['btn-moon', 'btn-enter-main'];
-    buttons.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      // touchend로 직접 goNation 호출 (iOS Safari는 click 지연 있음)
-      el.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        goNation();
-      }, { passive: false, capture: true });
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', addTouchFix);
-  } else {
-    addTouchFix();
-  }
-})();
 
 
-// ════ BUTTON EVENT LISTENERS (replaces onclick) ════
-document.addEventListener('DOMContentLoaded', function() {
-  var btnMoon = document.getElementById('btn-moon');
-  var btnEnter = document.getElementById('btn-enter-main');
-  if(btnMoon) btnMoon.addEventListener('click', function(e){ e.stopPropagation(); goNation(); });
-  if(btnEnter) btnEnter.addEventListener('click', function(e){ e.stopPropagation(); goNation(); });
-});
-// Also add immediately (in case DOMContentLoaded already fired)
-(function() {
-  function attachBtns() {
-    var btnMoon = document.getElementById('btn-moon');
-    var btnEnter = document.getElementById('btn-enter-main');
-    if(btnMoon) btnMoon.onclick = function(e){ e.stopPropagation(); goNation(); return false; };
-    if(btnEnter) btnEnter.onclick = function(e){ e.stopPropagation(); goNation(); return false; };
-  }
-  if(document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', attachBtns);
-  } else {
-    attachBtns();
-  }
-})();
+
+
 
 // ═════════════════════════════════════════════
+
+
+// ══ SIMPLE CLICK HANDLER ══
+function _goN(e) {
+  if(e) { e.preventDefault(); e.stopPropagation(); }
+  goNation();
+  return false;
+}
+(function attachAll() {
+  ['btn-moon','btn-enter-main'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.onclick = _goN;
+    el.addEventListener('click', _goN, false);
+    el.addEventListener('touchend', _goN, {passive:false, capture:false});
+    el.addEventListener('pointerup', _goN, false);
+  });
+})();
 
 </script>
 </body>
