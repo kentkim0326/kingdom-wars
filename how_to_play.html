@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KINGDOM WARS — How to Play</title>
+<style>
+:root{
+  --bg:#03050e;--panel:#07091a;--border:#1a2a4a;
+  --accent:#00c8ff;--gold:#ffd700;--red:#ff3a3a;--green:#00ff88;
+  --purple:#aa44ff;--orange:#ff8800;--text:#d0e8ff;--muted:#4a6a8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI','Noto Sans CJK KR','Noto Sans JP','Noto Sans SC',sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7}
+
+/* STARS */
+.stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0.1}50%{opacity:0.8}}
+
+/* LAYOUT */
+.page{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:20px 16px 60px}
+
+/* TOP NAV */
+.topnav{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;background:rgba(3,5,14,0.97);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:10px}
+.nav-brand{font-weight:900;letter-spacing:4px;font-size:1.1rem;color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* LANGUAGE TOGGLE */
+.lang-bar{display:flex;gap:4px;background:var(--panel);border:1px solid var(--border);
+  border-radius:24px;padding:3px}
+.lang-btn{padding:5px 14px;border-radius:20px;border:none;background:transparent;
+  color:var(--muted);font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.2s;
+  font-family:inherit}
+.lang-btn.active{background:var(--accent);color:#000}
+.lang-btn:hover:not(.active){color:var(--accent)}
+
+.btn-play{padding:8px 22px;background:linear-gradient(135deg,#0066aa,#00c8ff);
+  color:#000;font-weight:900;font-size:0.9rem;border:none;border-radius:24px;
+  cursor:pointer;letter-spacing:1px;text-decoration:none;display:inline-block}
+.btn-back{padding:8px 18px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);font-size:0.85rem;border-radius:20px;cursor:pointer;text-decoration:none}
+
+/* HERO */
+.hero{text-align:center;padding:50px 20px 40px;position:relative}
+.hero-logo{font-size:clamp(2.2rem,7vw,4rem);font-weight:900;letter-spacing:6px;
+  background:linear-gradient(135deg,#00c8ff,#fff,#ffd700);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.hero-catch{font-size:clamp(0.9rem,2.5vw,1.2rem);color:var(--gold);font-weight:700;
+  letter-spacing:2px;margin-bottom:20px;text-shadow:0 0 20px rgba(255,215,0,0.4)}
+.hero-desc{font-size:1rem;color:var(--muted);max-width:600px;margin:0 auto 30px}
+.hero-moon{width:120px;height:120px;border-radius:50%;margin:0 auto 24px;
+  background:radial-gradient(circle at 35% 35%,#d0d0d0,#888,#555);
+  box-shadow:0 0 60px rgba(0,200,255,0.3)}
+
+/* SECTION */
+.section{margin-bottom:40px}
+.section-title{font-size:1.4rem;font-weight:900;color:var(--accent);margin-bottom:16px;
+  padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px}
+.section-num{background:var(--accent);color:#000;width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:900;flex-shrink:0}
+
+/* STEP CARDS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.step-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  padding:18px;transition:border-color 0.2s}
+.step-card:hover{border-color:var(--accent)}
+.step-icon{font-size:2.2rem;margin-bottom:10px}
+.step-title{font-size:0.95rem;font-weight:700;color:var(--accent);margin-bottom:6px}
+.step-desc{font-size:0.85rem;color:var(--text);line-height:1.6}
+.step-tip{margin-top:8px;padding:7px 10px;background:rgba(0,200,255,0.06);
+  border-left:3px solid var(--accent);border-radius:0 6px 6px 0;
+  font-size:0.78rem;color:var(--muted)}
+
+/* COUNTER TABLE */
+.counter-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.counter-table th{background:var(--panel);color:var(--accent);padding:10px 12px;
+  text-align:left;font-weight:700;border:1px solid var(--border)}
+.counter-table td{padding:9px 12px;border:1px solid var(--border);vertical-align:top}
+.counter-table tr:nth-child(even) td{background:rgba(0,200,255,0.03)}
+.tag-strong{color:var(--green);font-weight:700}
+.tag-weak{color:var(--red);font-weight:700}
+
+/* RESOURCE CARDS */
+.res-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.res-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px}
+.res-icon{font-size:1.8rem;margin-bottom:8px}
+.res-name{font-size:0.95rem;font-weight:700;margin-bottom:4px}
+.res-how{font-size:0.8rem;color:var(--muted);margin-top:6px}
+.res-use{font-size:0.8rem;color:var(--gold);margin-top:4px}
+
+/* UNIT SIZE VISUAL */
+.size-demo{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end}
+.size-item{text-align:center}
+.size-grid{display:inline-grid;gap:3px;margin-bottom:6px}
+.size-cell{width:30px;height:30px;border:1px solid var(--border);border-radius:4px;
+  background:rgba(0,70,170,0.3)}
+.size-cell.active{background:rgba(0,150,255,0.6);border-color:var(--accent)}
+.size-cell.shadow{background:rgba(0,100,200,0.2);border:1px dashed rgba(0,150,255,0.3)}
+.size-label{font-size:0.72rem;color:var(--muted)}
+.size-name{font-size:0.8rem;font-weight:700;color:var(--text)}
+
+/* FLOW DIAGRAM */
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.flow-step{background:var(--panel);border:1px solid var(--border);border-radius:8px;
+  padding:8px 14px;font-size:0.8rem;text-align:center;min-width:100px}
+.flow-arrow{color:var(--accent);font-size:1.2rem;flex-shrink:0}
+
+/* VIEW EXPLAINER */
+.views-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.view-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:14px;text-align:center}
+.view-icon{font-size:2rem;margin-bottom:8px}
+.view-name{font-size:0.88rem;font-weight:700;color:var(--accent);margin-bottom:6px}
+.view-desc{font-size:0.78rem;color:var(--muted)}
+
+/* TIPS */
+.tips{display:flex;flex-direction:column;gap:10px}
+.tip{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;
+  background:var(--panel);border:1px solid var(--border);border-radius:10px}
+.tip-icon{font-size:1.4rem;flex-shrink:0}
+.tip-text{font-size:0.85rem;line-height:1.6}
+.tip-text strong{color:var(--gold)}
+
+/* FAQ */
+.faq-item{border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.faq-q{padding:12px 16px;cursor:pointer;font-size:0.88rem;font-weight:600;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--panel);transition:background 0.2s}
+.faq-q:hover{background:rgba(0,200,255,0.06)}
+.faq-a{padding:0 16px;font-size:0.83rem;color:var(--muted);max-height:0;overflow:hidden;
+  transition:max-height 0.3s ease,padding 0.2s}
+.faq-item.open .faq-a{max-height:200px;padding:12px 16px}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-arrow{transition:transform 0.2s;color:var(--accent)}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,rgba(0,50,100,0.4),rgba(50,0,100,0.3));
+  border:2px solid var(--accent);border-radius:16px;padding:36px;text-align:center;
+  margin-top:40px}
+.cta-title{font-size:1.8rem;font-weight:900;margin-bottom:10px;
+  background:linear-gradient(135deg,#00c8ff,#fff,#ffd700);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cta-desc{color:var(--muted);margin-bottom:24px;font-size:0.95rem}
+.btn-play-big{padding:16px 50px;background:linear-gradient(135deg,#0066aa,#00c8ff);
+  color:#000;font-weight:900;font-size:1.1rem;border:none;border-radius:40px;
+  cursor:pointer;letter-spacing:2px;box-shadow:0 0 40px rgba(0,200,255,0.4);
+  transition:all 0.3s;text-decoration:none;display:inline-block}
+.btn-play-big:hover{transform:scale(1.05);box-shadow:0 0 70px rgba(0,200,255,0.7)}
+
+/* LANG HIDDEN */
+[data-lang]{display:none}
+[data-lang].active{display:block}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<!-- TOP NAV -->
+<div class="topnav">
+  <div class="nav-brand">👑 KINGDOM WARS</div>
+  <div class="nav-right">
+    <div class="lang-bar">
+      <button class="lang-btn active" onclick="setLang('ko')">🇰🇷 한국어</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
+      <button class="lang-btn" onclick="setLang('ja')">🇯🇵 日本語</button>
+      <button class="lang-btn" onclick="setLang('zh')">🇨🇳 中文</button>
+    </div>
+    <a class="btn-play" href="index.html">🚀 게임 시작</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-moon"></div>
+  <div class="hero-logo">KINGDOM WARS</div>
+  <div class="hero-catch">⚡ We will conquer Mars before Elon ⚡</div>
+
+  <!-- KO -->
+  <div data-lang="ko" class="active">
+    <div class="hero-desc">실제 국가의 함선과 로봇으로 달을 정복하는 우주 전략 게임.<br>
+    섹터를 점령하고, 자원을 수집하고, 적 함대를 격파하라.</div>
+  </div>
+  <!-- EN -->
+  <div data-lang="en">
+    <div class="hero-desc">A space strategy game where you conquer the Moon with real nations' warships and mechs.<br>
+    Claim sectors, collect resources, and destroy enemy fleets.</div>
+  </div>
+  <!-- JA -->
+  <div data-lang="ja">
+    <div class="hero-desc">実際の国家の宇宙艦隊とロボットで月を征服する宇宙戦略ゲーム。<br>
+    セクターを占領し、資源を収集し、敵艦隊を撃破せよ。</div>
+  </div>
+  <!-- ZH -->
+  <div data-lang="zh">
+    <div class="hero-desc">用真实国家的战舰和机甲征服月球的太空战略游戏。<br>
+    占领扇区，收集资源，摧毁敌方舰队。</div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══ SECTION 1: BASIC FLOW ══ -->
+<div class="section">
+
+  <!-- KO -->
+  <div data-lang="ko" class="active">
+    <div class="section-title"><span class="section-num">1</span>기본 게임 흐름</div>
+    <div class="flow">
+      <div class="flow-step">🌍<br>국가 선택</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🛸<br>유닛 선택</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🌑<br>섹터 선택</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🚀<br>배치 또는 공격</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">⚡<br>자원 수집</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🔄<br>턴 종료</div>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-icon">🌍</div>
+        <div class="step-title">① 국가 선택</div>
+        <div class="step-desc">36개국 중 자국을 선택하세요. 내 국기가 점령 섹터에 게양됩니다. 어느 나라든 선택 가능합니다.</div>
+        <div class="step-tip">💡 한국 선택 시 🇰🇷 태극기가 달에 게양됩니다!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🛸</div>
+        <div class="step-title">② 유닛 선택</div>
+        <div class="step-desc">왼쪽 패널에서 함선 · 메카 · 에이스 탭을 선택하세요. 유닛마다 상성(강한 적/약한 적)이 다릅니다.</div>
+        <div class="step-tip">💡 상성 유리한 유닛 선택 시 공격력 +35%!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🌑</div>
+        <div class="step-title">③ 섹터 클릭</div>
+        <div class="step-desc">전투 맵(⚔️)에서 달 표면의 섹터를 클릭하세요. 오른쪽 패널에 섹터 정보(자원 종류, 소유국, 적 전투력)가 표시됩니다.</div>
+        <div class="step-tip">💡 💠섹터는 He-3, 💜섹터는 레골리스, 🩵섹터는 H₂O 생산!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🚀</div>
+        <div class="step-title">④ 배치 또는 공격</div>
+        <div class="step-desc"><strong>빈 섹터</strong> → "유닛 배치" 버튼 클릭<br><strong>적 섹터</strong> → "공격 개시" 버튼 클릭<br>전투 결과창에서 HP 막대가 실시간으로 줄어듭니다.</div>
+        <div class="step-tip">💡 크레이터🏔️ 섹터를 공격할 때는 방어력 +50%!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">⚡</div>
+        <div class="step-title">⑤ 자원 수집</div>
+        <div class="step-desc">오른쪽 "자원 수집" 버튼을 클릭하면 내 섹터에서 자원이 수집됩니다. 점령 섹터가 많을수록 더 많은 자원!</div>
+        <div class="step-tip">💡 H₂O 부족 시 유닛 HP가 자동 감소합니다!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🔄</div>
+        <div class="step-title">⑥ 턴 종료</div>
+        <div class="step-desc">"턴 종료" 버튼을 누르면 자원 자동 수집 + 적이 이동합니다. 5턴마다 랜덤 이벤트 발생!</div>
+        <div class="step-tip">💡 소행성 충돌, 태양풍, UN 평화 협정 등 이벤트 발생!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EN -->
+  <div data-lang="en">
+    <div class="section-title"><span class="section-num">1</span>Basic Game Flow</div>
+    <div class="flow">
+      <div class="flow-step">🌍<br>Pick Nation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🛸<br>Pick Unit</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🌑<br>Pick Sector</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🚀<br>Deploy or Attack</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">⚡<br>Collect</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🔄<br>End Turn</div>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-icon">🌍</div>
+        <div class="step-title">① Choose Your Nation</div>
+        <div class="step-desc">Pick from 36 nations. Your flag will be planted on every sector you conquer. Any country works!</div>
+        <div class="step-tip">💡 Choose USA 🇺🇸 and plant the Stars & Stripes on the Moon!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🛸</div>
+        <div class="step-title">② Select a Unit</div>
+        <div class="step-desc">Use the left panel tabs: Fleet · Mech · Ace. Each unit has counter relationships — strong against some, weak against others.</div>
+        <div class="step-tip">💡 Counter advantage = +35% attack power!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🌑</div>
+        <div class="step-title">③ Click a Sector</div>
+        <div class="step-desc">In Battle Map view (⚔️), click any sector on the Moon grid. The right panel shows sector info: resource type, owner, enemy power.</div>
+        <div class="step-tip">💡 💠 = He-3 mine, 💜 = Regolith, 🩵 = H₂O ice!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🚀</div>
+        <div class="step-title">④ Deploy or Attack</div>
+        <div class="step-desc"><strong>Empty sector</strong> → click "Deploy Unit"<br><strong>Enemy sector</strong> → click "Attack"<br>Watch the battle modal — HP bars animate in real time!</div>
+        <div class="step-tip">💡 Crater 🏔️ sectors have +50% defense — attack carefully!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">⚡</div>
+        <div class="step-title">⑤ Collect Resources</div>
+        <div class="step-desc">Click "Collect Resources" on the right panel. More sectors = more resources per collection. He-3, Regolith, and H₂O are all gathered.</div>
+        <div class="step-tip">💡 Low H₂O = your units slowly lose HP each turn!</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🔄</div>
+        <div class="step-title">⑥ End Turn</div>
+        <div class="step-desc">Press "End Turn" — auto-collects resources and triggers enemy movement. Random events fire every 5 turns!</div>
+        <div class="step-tip">💡 Events: asteroid collision, solar wind, UN peace treaty!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JA -->
+  <div data-lang="ja">
+    <div class="section-title"><span class="section-num">1</span>基本ゲームの流れ</div>
+    <div class="flow">
+      <div class="flow-step">🌍<br>国家選択</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🛸<br>ユニット選択</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🌑<br>セクター選択</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🚀<br>配置または攻撃</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">⚡<br>資源収集</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🔄<br>ターン終了</div>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-icon">🌍</div>
+        <div class="step-title">① 国家を選択</div>
+        <div class="step-desc">36カ国から自国を選択します。占領したセクターに自国旗が掲揚されます。どの国でも選択可能です。</div>
+        <div class="step-tip">💡 日本を選ぶと🇯🇵日の丸が月に掲揚されます！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🛸</div>
+        <div class="step-title">② ユニットを選択</div>
+        <div class="step-desc">左パネルのタブで艦隊・メカ・エースを選択。各ユニットには相性（得意な敵・苦手な敵）があります。</div>
+        <div class="step-tip">💡 相性有利なユニットで攻撃力+35%！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🌑</div>
+        <div class="step-title">③ セクターをクリック</div>
+        <div class="step-desc">戦闘マップ(⚔️)で月面のセクターをクリック。右パネルに資源種類・所有国・敵戦闘力が表示されます。</div>
+        <div class="step-tip">💡 💠=He-3鉱脈、💜=レゴリス、🩵=H₂O氷！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🚀</div>
+        <div class="step-title">④ 配置または攻撃</div>
+        <div class="step-desc"><strong>空きセクター</strong>→「ユニット配置」ボタン<br><strong>敵セクター</strong>→「攻撃開始」ボタン<br>戦闘モーダルでHPバーがリアルタイム変化！</div>
+        <div class="step-tip">💡 クレーター🏔️セクターは防御+50%！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">⚡</div>
+        <div class="step-title">⑤ 資源収集</div>
+        <div class="step-desc">右の「資源収集」ボタンで自セクターから資源を収集。占領セクターが多いほど収集量が増加！</div>
+        <div class="step-tip">💡 H₂O不足でユニットHPが自動減少します！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🔄</div>
+        <div class="step-title">⑥ ターン終了</div>
+        <div class="step-desc">「ターン終了」を押すと資源自動収集＋敵が移動。5ターンごとにランダムイベント発生！</div>
+        <div class="step-tip">💡 小惑星衝突、太陽風、UN平和協定などのイベント！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZH -->
+  <div data-lang="zh">
+    <div class="section-title"><span class="section-num">1</span>基本游戏流程</div>
+    <div class="flow">
+      <div class="flow-step">🌍<br>选择国家</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🛸<br>选择单位</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🌑<br>选择扇区</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🚀<br>部署或攻击</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">⚡<br>收集资源</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🔄<br>结束回合</div>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-icon">🌍</div>
+        <div class="step-title">① 选择国家</div>
+        <div class="step-desc">从36个国家中选择您的国家。您的国旗将插在每个被占领的扇区上。任何国家都可以选择！</div>
+        <div class="step-tip">💡 选择中国🇨🇳，将五星红旗插上月球！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🛸</div>
+        <div class="step-title">② 选择单位</div>
+        <div class="step-desc">使用左侧面板的标签：舰队·机甲·王牌。每个单位都有相克关系——对某些敌人强，对某些敌人弱。</div>
+        <div class="step-tip">💡 克制优势 = 攻击力+35%！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🌑</div>
+        <div class="step-title">③ 点击扇区</div>
+        <div class="step-desc">在战斗地图(⚔️)中点击月面网格上的扇区。右侧面板显示资源类型、所有者、敌方战斗力。</div>
+        <div class="step-tip">💡 💠=氦-3矿、💜=月壤、🩵=H₂O冰！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🚀</div>
+        <div class="step-title">④ 部署或攻击</div>
+        <div class="step-desc"><strong>空扇区</strong>→点击"部署单位"<br><strong>敌方扇区</strong>→点击"发起攻击"<br>战斗弹窗实时显示HP条变化！</div>
+        <div class="step-tip">💡 陨石坑🏔️扇区防御+50%！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">⚡</div>
+        <div class="step-title">⑤ 收集资源</div>
+        <div class="step-desc">点击右侧"资源收集"按钮，从您的扇区收集资源。占领扇区越多，每次收集越多！</div>
+        <div class="step-tip">💡 H₂O不足时，单位HP每回合自动减少！</div>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🔄</div>
+        <div class="step-title">⑥ 结束回合</div>
+        <div class="step-desc">按"结束回合"——自动收集资源并触发敌方移动。每5回合触发随机事件！</div>
+        <div class="step-tip">💡 事件：小行星碰撞、太阳风、联合国和平协议！</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 2: 4 VIEWS ══ -->
+<div class="section">
+  <div data-lang="ko" class="active"><div class="section-title"><span class="section-num">2</span>4가지 뷰 시스템</div></div>
+  <div data-lang="en"><div class="section-title"><span class="section-num">2</span>4 View System</div></div>
+  <div data-lang="ja"><div class="section-title"><span class="section-num">2</span>4つのビューシステム</div></div>
+  <div data-lang="zh"><div class="section-title"><span class="section-num">2</span>4种视图系统</div></div>
+
+  <div class="views-grid">
+    <div class="view-card">
+      <div class="view-icon">🛸</div>
+      <div class="view-name" data-lang="ko" style="display:block">내 함선 뷰</div>
+      <div class="view-name" data-lang="en">My Ship View</div>
+      <div class="view-name" data-lang="ja">自艦ビュー</div>
+      <div class="view-name" data-lang="zh">我的舰船视图</div>
+      <div class="view-desc" data-lang="ko" style="display:block">선택한 유닛이 우주 공간에서 떠다닙니다. 전투력·승리수·별명 확인</div>
+      <div class="view-desc" data-lang="en">Selected unit floats in space. Shows combat power, win count, nickname</div>
+      <div class="view-desc" data-lang="ja">選択ユニットが宇宙空間に浮かびます。戦闘力・勝利数・ニックネーム確認</div>
+      <div class="view-desc" data-lang="zh">选中单位在太空中漂浮。显示战斗力、胜利数、昵称</div>
+    </div>
+    <div class="view-card">
+      <div class="view-icon">🌙</div>
+      <div class="view-name" data-lang="ko" style="display:block">달 전체 뷰</div>
+      <div class="view-name" data-lang="en">Full Moon View</div>
+      <div class="view-name" data-lang="ja">月全体ビュー</div>
+      <div class="view-name" data-lang="zh">全月视图</div>
+      <div class="view-desc" data-lang="ko" style="display:block">실제 달 사진 위에 섹터 점 오버레이. 색깔로 내/적 영토 파악. 점 클릭 → 섹터 줌</div>
+      <div class="view-desc" data-lang="en">Real moon photo with sector dots overlay. Color shows territory. Click dot → sector zoom</div>
+      <div class="view-desc" data-lang="ja">実際の月写真にセクタードット重畳。色で領土確認。点クリック→セクターズーム</div>
+      <div class="view-desc" data-lang="zh">真实月球照片上的扇区点覆盖。颜色显示领土。点击→扇区缩放</div>
+    </div>
+    <div class="view-card">
+      <div class="view-icon">⚔️</div>
+      <div class="view-name" data-lang="ko" style="display:block">전투 맵 ← 메인</div>
+      <div class="view-name" data-lang="en">Battle Map ← MAIN</div>
+      <div class="view-name" data-lang="ja">戦闘マップ ← メイン</div>
+      <div class="view-name" data-lang="zh">战斗地图 ← 主界面</div>
+      <div class="view-desc" data-lang="ko" style="display:block">🔑 핵심 플레이 화면! 21개 섹터 그리드. 여기서 유닛 배치, 공격 모두 가능</div>
+      <div class="view-desc" data-lang="en">🔑 Main play screen! 21-sector grid. Deploy units & attack from here</div>
+      <div class="view-desc" data-lang="ja">🔑 メインプレイ画面！21セクターグリッド。ユニット配置・攻撃はここから</div>
+      <div class="view-desc" data-lang="zh">🔑 主要游戏界面！21扇区网格。在这里部署单位和发动攻击</div>
+    </div>
+    <div class="view-card">
+      <div class="view-icon">🔍</div>
+      <div class="view-name" data-lang="ko" style="display:block">섹터 줌 뷰</div>
+      <div class="view-name" data-lang="en">Sector Zoom View</div>
+      <div class="view-name" data-lang="ja">セクターズームビュー</div>
+      <div class="view-name" data-lang="zh">扇区缩放视图</div>
+      <div class="view-desc" data-lang="ko" style="display:block">선택 섹터 근접 확인. 상성 분석표, 내 유닛 vs 적 유닛 대결 구도</div>
+      <div class="view-desc" data-lang="en">Close-up of selected sector. Counter analysis, my unit vs enemy unit matchup</div>
+      <div class="view-desc" data-lang="ja">選択セクターの近接表示。相性分析、自ユニットvs敵ユニット対決</div>
+      <div class="view-desc" data-lang="zh">选中扇区近景。克制分析，我方单位vs敌方单位对决</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 3: UNIT SIZES ══ -->
+<div class="section">
+  <div data-lang="ko" class="active"><div class="section-title"><span class="section-num">3</span>유닛 크기 시스템</div></div>
+  <div data-lang="en"><div class="section-title"><span class="section-num">3</span>Unit Size System</div></div>
+  <div data-lang="ja"><div class="section-title"><span class="section-num">3</span>ユニットサイズシステム</div></div>
+  <div data-lang="zh"><div class="section-title"><span class="section-num">3</span>单位尺寸系统</div></div>
+
+  <div data-lang="ko" class="active" style="margin-bottom:14px;font-size:0.85rem;color:var(--muted)">큰 함선일수록 여러 칸을 점령합니다. 더 많은 자원을 확보할 수 있지만 배치 공간이 필요합니다.</div>
+  <div data-lang="en" style="margin-bottom:14px;font-size:0.85rem;color:var(--muted)">Larger ships occupy more grid cells. More territory, but requires open space to deploy.</div>
+  <div data-lang="ja" style="margin-bottom:14px;font-size:0.85rem;color:var(--muted)">大型艦ほど多くのマスを占領します。より多くの領土を確保できますが、配置スペースが必要です。</div>
+  <div data-lang="zh" style="margin-bottom:14px;font-size:0.85rem;color:var(--muted)">舰船越大，占领的格子越多。可以获得更多领土，但需要足够的部署空间。</div>
+
+  <div class="size-demo">
+    <div class="size-item">
+      <div class="size-grid" style="grid-template-columns:repeat(2,30px)">
+        <div class="size-cell active"></div>
+        <div class="size-cell"></div>
+        <div class="size-cell"></div>
+        <div class="size-cell"></div>
+      </div>
+      <div class="size-name">🚀 전투기 / Fighter</div>
+      <div class="size-label">1×1칸 / 1 cell</div>
+    </div>
+    <div class="size-item">
+      <div class="size-grid" style="grid-template-columns:repeat(2,30px)">
+        <div class="size-cell active"></div>
+        <div class="size-cell active"></div>
+        <div class="size-cell"></div>
+        <div class="size-cell"></div>
+      </div>
+      <div class="size-name">🛸 구축함 / Destroyer</div>
+      <div class="size-label">1×2칸 / 2 cells</div>
+    </div>
+    <div class="size-item">
+      <div class="size-grid" style="grid-template-columns:repeat(2,30px)">
+        <div class="size-cell active"></div>
+        <div class="size-cell shadow"></div>
+        <div class="size-cell active"></div>
+        <div class="size-cell shadow"></div>
+      </div>
+      <div class="size-name">🌠 순양함 / Cruiser</div>
+      <div class="size-label">1×2칸 / 2 cells</div>
+    </div>
+    <div class="size-item">
+      <div class="size-grid" style="grid-template-columns:repeat(2,30px)">
+        <div class="size-cell active"></div>
+        <div class="size-cell active"></div>
+        <div class="size-cell active"></div>
+        <div class="size-cell active"></div>
+      </div>
+      <div class="size-name">🌌 모선 / Mothership</div>
+      <div class="size-label">2×2칸 / 4 cells</div>
+    </div>
+    <div class="size-item">
+      <div class="size-grid" style="grid-template-columns:repeat(2,30px)">
+        <div class="size-cell active" style="background:rgba(170,68,255,0.6);border-color:var(--purple)"></div>
+        <div class="size-cell"></div>
+        <div class="size-cell"></div>
+        <div class="size-cell"></div>
+      </div>
+      <div class="size-name">🤖 메카 / Mech</div>
+      <div class="size-label">1×1칸 / 1 cell</div>
+    </div>
+    <div class="size-item">
+      <div class="size-grid" style="grid-template-columns:repeat(2,30px)">
+        <div class="size-cell active" style="background:rgba(255,215,0,0.6);border-color:var(--gold)"></div>
+        <div class="size-cell"></div>
+        <div class="size-cell"></div>
+        <div class="size-cell"></div>
+      </div>
+      <div class="size-name">⭐ 에이스 / Ace</div>
+      <div class="size-label">1×1칸 / 1 cell</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 4: COUNTER SYSTEM ══ -->
+<div class="section">
+  <div data-lang="ko" class="active"><div class="section-title"><span class="section-num">4</span>상성 시스템 (스타크래프트 DNA)</div></div>
+  <div data-lang="en"><div class="section-title"><span class="section-num">4</span>Counter System (StarCraft DNA)</div></div>
+  <div data-lang="ja"><div class="section-title"><span class="section-num">4</span>相性システム（スタークラフト DNA）</div></div>
+  <div data-lang="zh"><div class="section-title"><span class="section-num">4</span>克制系统（星际争霸 DNA）</div></div>
+
+  <table class="counter-table">
+    <tr>
+      <th data-lang="ko" style="display:table-cell">유닛</th>
+      <th data-lang="en">Unit</th>
+      <th data-lang="ja">ユニット</th>
+      <th data-lang="zh">单位</th>
+      <th data-lang="ko" style="display:table-cell" class="tag-strong">✅ 강한 상대</th>
+      <th data-lang="en" class="tag-strong">✅ Strong vs</th>
+      <th data-lang="ja" class="tag-strong">✅ 得意</th>
+      <th data-lang="zh" class="tag-strong">✅ 克制</th>
+      <th data-lang="ko" style="display:table-cell" class="tag-weak">❌ 약한 상대</th>
+      <th data-lang="en" class="tag-weak">❌ Weak vs</th>
+      <th data-lang="ja" class="tag-weak">❌ 苦手</th>
+      <th data-lang="zh" class="tag-weak">❌ 被克</th>
+    </tr>
+    <tr>
+      <td>🚀 전투기 Fighter</td>
+      <td class="tag-strong">구축함 Destroyer (+35%)</td>
+      <td class="tag-weak">레이저 메카 Laser Mech (-40%)</td>
+    </tr>
+    <tr>
+      <td>🛸 구축함 Destroyer</td>
+      <td class="tag-strong">모선 Mothership (+35%)</td>
+      <td class="tag-weak">전투기 군집 Fighter swarm (-40%)</td>
+    </tr>
+    <tr>
+      <td>🌌 모선 Mothership</td>
+      <td class="tag-strong">섹터 폭격 Sector bombing (+35%)</td>
+      <td class="tag-weak">구축함 어뢰 Destroyer (-40%)</td>
+    </tr>
+    <tr>
+      <td>🎯 레이저 메카 Laser Mech</td>
+      <td class="tag-strong">전투기/드론 Fighter/Drone (+35%)</td>
+      <td class="tag-weak">장갑 메카 Armor Mech (-40%)</td>
+    </tr>
+    <tr>
+      <td>💣 미사일 메카 Missile Mech</td>
+      <td class="tag-strong">장갑/구축함 Armor/Destroyer (+35%)</td>
+      <td class="tag-weak">레이저 메카 Laser Mech (-40%)</td>
+    </tr>
+    <tr>
+      <td>⭐ 에이스 Ace</td>
+      <td class="tag-strong">미사일/격투 Missile/Melee (+35%)</td>
+      <td class="tag-weak">드론 군집 Drone swarm (-40%)</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ══ SECTION 5: RESOURCES ══ -->
+<div class="section">
+  <div data-lang="ko" class="active"><div class="section-title"><span class="section-num">5</span>자원 시스템</div></div>
+  <div data-lang="en"><div class="section-title"><span class="section-num">5</span>Resource System</div></div>
+  <div data-lang="ja"><div class="section-title"><span class="section-num">5</span>資源システム</div></div>
+  <div data-lang="zh"><div class="section-title"><span class="section-num">5</span>资源系统</div></div>
+
+  <div class="res-cards">
+    <div class="res-card" style="border-color:rgba(0,200,255,0.4)">
+      <div class="res-icon">⚡</div>
+      <div class="res-name" style="color:var(--accent)">헬륨-3 (He-3)</div>
+      <div data-lang="ko" class="active" style="font-size:0.82rem">기본 에너지 자원</div>
+      <div data-lang="en" style="font-size:0.82rem">Basic energy resource</div>
+      <div data-lang="ja" style="font-size:0.82rem">基本エネルギー資源</div>
+      <div data-lang="zh" style="font-size:0.82rem">基本能源资源</div>
+      <div class="res-how">
+        <div data-lang="ko" class="active">💠 모든 섹터 점령 시 기본 생산</div>
+        <div data-lang="en">💠 Produced by all occupied sectors</div>
+        <div data-lang="ja">💠 占領した全セクターで基本生産</div>
+        <div data-lang="zh">💠 所有占领扇区基本生产</div>
+      </div>
+      <div class="res-use">
+        <div data-lang="ko" class="active">→ 함선 구매, 유닛 배치 비용</div>
+        <div data-lang="en">→ Ship purchase, unit deploy cost</div>
+        <div data-lang="ja">→ 艦購入、ユニット配置コスト</div>
+        <div data-lang="zh">→ 舰船购买、单位部署费用</div>
+      </div>
+    </div>
+    <div class="res-card" style="border-color:rgba(170,68,255,0.4)">
+      <div class="res-icon">💎</div>
+      <div class="res-name" style="color:var(--purple)">레골리스 결정체</div>
+      <div data-lang="ko" class="active" style="font-size:0.82rem">희귀 업그레이드 자원</div>
+      <div data-lang="en" style="font-size:0.82rem">Rare upgrade resource</div>
+      <div data-lang="ja" style="font-size:0.82rem">希少アップグレード資源</div>
+      <div data-lang="zh" style="font-size:0.82rem">稀有升级资源</div>
+      <div class="res-how">
+        <div data-lang="ko" class="active">💜 레골리스 광산 섹터에서만 생산 (격전지!)</div>
+        <div data-lang="en">💜 Only from Regolith mine sectors (hotspot!)</div>
+        <div data-lang="ja">💜 レゴリス鉱山セクターのみ生産（激戦地！）</div>
+        <div data-lang="zh">💜 仅从月壤矿山扇区生产（激战区！）</div>
+      </div>
+      <div class="res-use">
+        <div data-lang="ko" class="active">→ 기술 연구 비용 (🔬 기술 탭)</div>
+        <div data-lang="en">→ Tech research cost (🔬 Tech tab)</div>
+        <div data-lang="ja">→ 技術研究コスト（🔬技術タブ）</div>
+        <div data-lang="zh">→ 科技研究费用（🔬科技标签）</div>
+      </div>
+    </div>
+    <div class="res-card" style="border-color:rgba(0,255,204,0.4)">
+      <div class="res-icon">🌊</div>
+      <div class="res-name" style="color:var(--teal,#00ffcc)">H₂O 얼음</div>
+      <div data-lang="ko" class="active" style="font-size:0.82rem">유닛 유지 자원 ⚠️ 중요!</div>
+      <div data-lang="en" style="font-size:0.82rem">Unit maintenance ⚠️ Critical!</div>
+      <div data-lang="ja" style="font-size:0.82rem">ユニット維持資源 ⚠️ 重要！</div>
+      <div data-lang="zh" style="font-size:0.82rem">单位维持资源 ⚠️ 重要！</div>
+      <div class="res-how">
+        <div data-lang="ko" class="active">🩵 H₂O 얼음 섹터, 남극 고원에서 생산</div>
+        <div data-lang="en">🩵 From H₂O ice sectors & south polar regions</div>
+        <div data-lang="ja">🩵 H₂O氷セクター・南極高原で生産</div>
+        <div data-lang="zh">🩵 H₂O冰扇区和南极高原生产</div>
+      </div>
+      <div class="res-use">
+        <div data-lang="ko" class="active">→ 부족 시 매 턴 유닛 HP -5% 자동 감소!</div>
+        <div data-lang="en">→ Low H₂O = -5% HP to all units each turn!</div>
+        <div data-lang="ja">→ 不足するとターンごとにユニットHP -5%！</div>
+        <div data-lang="zh">→ 不足时每回合单位HP -5%！</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 6: TIPS ══ -->
+<div class="section">
+  <div data-lang="ko" class="active"><div class="section-title"><span class="section-num">6</span>승리 전략 팁</div></div>
+  <div data-lang="en"><div class="section-title"><span class="section-num">6</span>Winning Strategy Tips</div></div>
+  <div data-lang="ja"><div class="section-title"><span class="section-num">6</span>勝利の戦略ヒント</div></div>
+  <div data-lang="zh"><div class="section-title"><span class="section-num">6</span>制胜策略技巧</div></div>
+
+  <div class="tips">
+    <div class="tip">
+      <div class="tip-icon">🗺️</div>
+      <div class="tip-text">
+        <div data-lang="ko" class="active"><strong>먼저 💠He-3 섹터를 점령하라</strong> — 자원 생산이 빠를수록 더 많은 유닛을 살 수 있습니다. 게임 초반 자원 확보가 핵심입니다.</div>
+        <div data-lang="en"><strong>Claim 💠He-3 sectors first</strong> — faster resource production means more units. Early economy wins wars.</div>
+        <div data-lang="ja"><strong>まず💠He-3セクターを占領せよ</strong> — 資源生産が速いほど多くのユニットを購入できます。序盤の経済確保が勝利の鍵！</div>
+        <div data-lang="zh"><strong>先占领💠He-3扇区</strong> — 资源生产越快，购买的单位越多。前期经济是制胜关键。</div>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">⚡</div>
+      <div class="tip-text">
+        <div data-lang="ko" class="active"><strong>상성을 무조건 확인하라</strong> — 유닛 선택 시 오른쪽 패널에 "✅ 강함 / ❌ 약함"이 표시됩니다. 상성 유리 시 +35%, 불리 시 -40% 전투력이 적용됩니다.</div>
+        <div data-lang="en"><strong>Always check counters</strong> — right panel shows "✅ Strong / ❌ Weak". Counter advantage = +35%, disadvantage = -40% power.</div>
+        <div data-lang="ja"><strong>必ず相性を確認せよ</strong> — 右パネルに「✅得意/❌苦手」が表示。有利+35%、不利-40%が適用されます。</div>
+        <div data-lang="zh"><strong>务必检查克制关系</strong> — 右侧面板显示"✅克制/❌被克"。克制优势+35%，劣势-40%。</div>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🏔️</div>
+      <div class="tip-text">
+        <div data-lang="ko" class="active"><strong>크레이터 섹터로 방어선을 구축하라</strong> — 크레이터 섹터는 점선 테두리로 표시되며 방어력 +50%입니다. 중요 자원 섹터 인근에 배치하면 효과적.</div>
+        <div data-lang="en"><strong>Use crater sectors as defensive walls</strong> — dashed border = +50% defense. Place units here to protect key resource sectors.</div>
+        <div data-lang="ja"><strong>クレーターセクターで防衛線を構築せよ</strong> — 破線枠のセクターは防御+50%。重要資源セクター付近に配置が効果的。</div>
+        <div data-lang="zh"><strong>用陨石坑扇区构建防线</strong> — 虚线边框=防御+50%。在重要资源扇区附近部署最有效。</div>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🌊</div>
+      <div class="tip-text">
+        <div data-lang="ko" class="active"><strong>H₂O를 절대 0으로 만들지 마라</strong> — 수분이 50 미만이 되면 경고가 뜨고 모든 내 유닛이 매 턴 HP -5%를 받습니다. 🩵 섹터 확보를 우선시하세요.</div>
+        <div data-lang="en"><strong>Never let H₂O hit zero</strong> — below 50 triggers warning and all your units lose -5% HP per turn. Prioritize 🩵 ice sectors!</div>
+        <div data-lang="ja"><strong>H₂Oを絶対に0にするな</strong> — 50未満になると警告が出て全ユニットがターンごとにHP-5%。🩵セクター確保を優先！</div>
+        <div data-lang="zh"><strong>绝对不要让H₂O归零</strong> — 低于50触发警告，所有单位每回合HP-5%。优先占领🩵冰扇区！</div>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🏆</div>
+      <div class="tip-text">
+        <div data-lang="ko" class="active"><strong>유닛에 별명이 붙으면 절대 잃지 마라</strong> — 3승 이상 유닛은 "달의 악몽" 같은 별명을 얻습니다. 포로로 잡히면 상대에게 협상 카드가 됩니다!</div>
+        <div data-lang="en"><strong>Don't lose nicknamed units</strong> — 3+ win units earn names like "Moon's Nightmare". If captured, they become your enemy's bargaining chip!</div>
+        <div data-lang="ja"><strong>ニックネームが付いたユニットを失うな</strong> — 3勝以上のユニットは「月の悪夢」などの別名を得ます。捕虜になると交渉カードに！</div>
+        <div data-lang="zh"><strong>不要失去有昵称的单位</strong> — 3胜以上的单位获得"月球噩梦"等称号。被俘后成为对方的谈判筹码！</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FAQ ══ -->
+<div class="section">
+  <div data-lang="ko" class="active"><div class="section-title"><span class="section-num">7</span>자주 묻는 질문</div></div>
+  <div data-lang="en"><div class="section-title"><span class="section-num">7</span>FAQ</div></div>
+  <div data-lang="ja"><div class="section-title"><span class="section-num">7</span>よくある質問</div></div>
+  <div data-lang="zh"><div class="section-title"><span class="section-num">7</span>常见问题</div></div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span data-lang="ko" style="display:inline">전투는 어떻게 하나요?</span>
+      <span data-lang="en">How do I fight?</span>
+      <span data-lang="ja">どうやって戦闘しますか？</span>
+      <span data-lang="zh">怎么战斗？</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">
+      <div data-lang="ko" style="display:block">① 왼쪽에서 유닛 선택 → ② ⚔️전투 맵 탭 클릭 → ③ <span style="color:var(--red)">빨간색(적) 섹터</span> 클릭 → ④ 오른쪽 "공격 개시" 버튼 클릭 → 전투 모달 자동 시작!</div>
+      <div data-lang="en">① Pick unit (left panel) → ② Click ⚔️Battle Map tab → ③ Click a <span style="color:var(--red)">red (enemy)</span> sector → ④ Click "Attack" button (right panel) → battle starts!</div>
+      <div data-lang="ja">①左でユニット選択 → ②⚔️戦闘マップタブ → ③<span style="color:var(--red)">赤（敵）</span>セクタークリック → ④右の「攻撃開始」→ 戦闘モーダル自動起動！</div>
+      <div data-lang="zh">①左侧选择单位 → ②点击⚔️战斗地图标签 → ③点击<span style="color:var(--red)">红色（敌方）</span>扇区 → ④右侧点击"发起攻击" → 战斗自动开始！</div>
+    </div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span data-lang="ko" style="display:inline">유닛을 어떻게 배치하나요?</span>
+      <span data-lang="en">How do I deploy a unit?</span>
+      <span data-lang="ja">ユニットをどうやって配置しますか？</span>
+      <span data-lang="zh">如何部署单位？</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">
+      <div data-lang="ko" style="display:block">① 왼쪽 패널에서 유닛 선택 → ② ⚔️전투 맵에서 <span style="color:var(--muted)">빈 섹터(어두운 칸)</span> 클릭 → ③ 오른쪽 "유닛 배치" 버튼 클릭. He-3 자원이 충분해야 합니다!</div>
+      <div data-lang="en">① Select unit (left) → ② Click an <span style="color:var(--muted)">empty (dark)</span> sector in ⚔️Battle Map → ③ Click "Deploy Unit" button (right). Make sure you have enough He-3!</div>
+      <div data-lang="ja">①左パネルでユニット選択 → ②⚔️戦闘マップで<span style="color:var(--muted)">空きセクター（暗いマス）</span>をクリック → ③右の「ユニット配置」ボタン。He-3が必要！</div>
+      <div data-lang="zh">①左侧面板选择单位 → ②在⚔️战斗地图中点击<span style="color:var(--muted)">空扇区（暗格）</span> → ③点击右侧"部署单位"按钮。需要足够的He-3！</div>
+    </div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span data-lang="ko" style="display:inline">내 함선이 안 보여요</span>
+      <span data-lang="en">My ship is not showing</span>
+      <span data-lang="ja">自艦が表示されません</span>
+      <span data-lang="zh">看不到我的舰船</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">
+      <div data-lang="ko" style="display:block">왼쪽 패널에서 유닛을 먼저 클릭한 다음, 상단 토글에서 "🛸 내 함선" 탭을 클릭하세요. 유닛이 선택되어 있어야 함선 이미지가 표시됩니다.</div>
+      <div data-lang="en">First click a unit in the left panel, then click the "🛸 My Ship" toggle tab at the top. A unit must be selected for the ship image to appear.</div>
+      <div data-lang="ja">左パネルでユニットをクリックしてから、上部の「🛸自艦」タブをクリック。ユニット選択が必要です。</div>
+      <div data-lang="zh">先在左侧面板点击一个单位，然后点击顶部的"🛸我的舰船"标签。必须选择单位才能显示舰船图像。</div>
+    </div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span data-lang="ko" style="display:inline">자원은 어떻게 모으나요?</span>
+      <span data-lang="en">How do I collect resources?</span>
+      <span data-lang="ja">資源はどうやって集めますか？</span>
+      <span data-lang="zh">如何收集资源？</span>
+      <span class="faq-arrow">▼</span>
+    </div>
+    <div class="faq-a">
+      <div data-lang="ko" style="display:block">두 가지 방법: ① 오른쪽 패널 "⚡ 자원 수집" 버튼 클릭 (수동) ② "턴 종료" 버튼 클릭 시 자동 수집. 내 섹터가 많을수록, 레골리스/H₂O 광산 섹터일수록 더 많이 수집됩니다.</div>
+      <div data-lang="en">Two ways: ① Click "⚡ Collect Resources" button (manual) ② Auto-collected when you click "End Turn". More sectors + resource-type sectors = more per collection.</div>
+      <div data-lang="ja">2つの方法：①右パネルの「⚡資源収集」ボタン（手動）②「ターン終了」で自動収集。セクターが多いほど、資源型セクターが多いほど収集量増加。</div>
+      <div data-lang="zh">两种方式：①点击右侧"⚡资源收集"按钮（手动）②点击"结束回合"自动收集。扇区越多、资源型扇区越多，收集越多。</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-box">
+  <div class="cta-title">
+    <span data-lang="ko" style="display:inline">지금 달을 정복하러 가세요!</span>
+    <span data-lang="en">Conquer the Moon now!</span>
+    <span data-lang="ja">今すぐ月を征服せよ！</span>
+    <span data-lang="zh">现在去征服月球！</span>
+  </div>
+  <div class="cta-desc">
+    <span data-lang="ko" style="display:inline">⚡ We will conquer Mars before Elon ⚡</span>
+    <span data-lang="en">⚡ We will conquer Mars before Elon ⚡</span>
+    <span data-lang="ja">⚡ We will conquer Mars before Elon ⚡</span>
+    <span data-lang="zh">⚡ We will conquer Mars before Elon ⚡</span>
+  </div>
+  <a class="btn-play-big" href="index.html">🚀 게임 시작 / Play Now</a>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// STARS
+(()=>{const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*1.8+0.4;s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${Math.random()*4+2}s;animation-delay:${Math.random()*4}s;opacity:${Math.random()*0.35+0.1}`;c.appendChild(s);}})();
+
+let LANG = 'ko';
+
+function setLang(lang) {
+  LANG = lang;
+  // Update buttons
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(
+      lang==='ko'?'한국어':lang==='en'?'EN':lang==='ja'?'日本語':'中文'));
+  });
+  // Update play button text
+  const playBtn = document.querySelector('.btn-play');
+  if(playBtn) playBtn.textContent = '🚀 ' + {ko:'게임 시작',en:'Play Now',ja:'ゲーム開始',zh:'开始游戏'}[lang];
+
+  // Show/hide all lang elements
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    const isActive = el.getAttribute('data-lang') === lang;
+    el.classList.toggle('active', isActive);
+    // For inline elements (th, span inside td)
+    if(el.tagName==='TH'||el.tagName==='SPAN') {
+      el.style.display = isActive ? (el.tagName==='TH'?'table-cell':'inline') : 'none';
+    }
+  });
+}
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+
+// init
+setLang('ko');
+</script>
+</body>
+</html>
