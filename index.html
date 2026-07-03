@@ -46,8 +46,8 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 
 to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .45s ease forwards}
-.fu2{animation:fadeUp .45s .1s ease forwards;opacity:0}
-.fu3{animation:fadeUp .45s .2s ease forwards;opacity:0}
+.fu2{animation:fadeUp .45s .1s ease both}
+.fu3{animation:fadeUp .45s .2s ease both}
 
 /* ══ LANG BAR ══ */
 .lang-bar{position:fixed;top:0;right:0;z-index:999;display:flex;gap:2px;padding:5px 9px;
@@ -1082,6 +1082,10 @@ body { overflow-x: hidden; overflow-y: auto; }
   }
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.fu2, .fu3 { opacity: 1 !important; }
+/* 단 초기 로드시에는 애니메이션 적용 */
+.screen:not(.active) .fu2,
+.screen:not(.active) .fu3 { opacity: 0 !important; }
 </style>
 </head>
 <body>
@@ -1895,12 +1899,15 @@ function show(id){
   if(el){
     el.classList.add("active");
     el.style.setProperty("display","flex","important");
-    // 애니메이션 재시작 (fu, fu2, fu3)
-    el.querySelectorAll(".fu,.fu2,.fu3").forEach(function(a){
-      a.style.animation="none";
-      a.offsetHeight; // reflow 강제
-      a.style.animation="";
-    });
+    // 애니메이션 재시작
+    setTimeout(function(){
+      el.querySelectorAll(".fu,.fu2,.fu3").forEach(function(a){
+        var orig = a.style.animation;
+        a.style.animation = "none";
+        void a.offsetHeight;
+        a.style.animation = orig || "";
+      });
+    }, 10);
   }
   if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);
 }
