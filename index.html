@@ -1887,7 +1887,6 @@ function setLang(l){
 }
 
 function show(id){
-  // CSS 무시하고 inline style로 직접 제어
   document.querySelectorAll(".screen").forEach(function(s){
     s.classList.remove("active");
     s.style.setProperty("display","none","important");
@@ -1896,6 +1895,12 @@ function show(id){
   if(el){
     el.classList.add("active");
     el.style.setProperty("display","flex","important");
+    // 애니메이션 재시작 (fu, fu2, fu3)
+    el.querySelectorAll(".fu,.fu2,.fu3").forEach(function(a){
+      a.style.animation="none";
+      a.offsetHeight; // reflow 강제
+      a.style.animation="";
+    });
   }
   if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);
 }
