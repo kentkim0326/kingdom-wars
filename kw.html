@@ -1102,6 +1102,35 @@ body { overflow-x: hidden; overflow-y: auto; }
 </style>
 </head>
 <body>
+<script>
+// SELF-UPDATE: 구버전 감지시 최신 버전으로 교체
+(function(){
+  var CURRENT_SIZE = 143634;
+  var actualSize = document.documentElement.outerHTML.length;
+  if(actualSize < CURRENT_SIZE * 0.95) {
+    // 구버전 감지 - 최신 버전으로 교체
+    fetch(location.href + '?t=' + Date.now(), {cache:'no-store'})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        var p = new DOMParser();
+        var d = p.parseFromString(t, 'text/html');
+        // 모든 screen 요소를 최신 버전으로 교체
+        ['s-intro','s-nation','s-commander','s-game'].forEach(function(id){
+          var oldEl = document.getElementById(id);
+          var newEl = d.getElementById(id);
+          if(oldEl && newEl) {
+            oldEl.innerHTML = newEl.innerHTML;
+          }
+        });
+        // style 교체
+        var oldStyle = document.querySelector('style');
+        var newStyle = d.querySelector('style');
+        if(oldStyle && newStyle) oldStyle.innerHTML = newStyle.innerHTML;
+        console.log('Self-updated to latest version');
+      });
+  }
+})();
+</script>
 <div id="bg-slideshow">
   <div class="bg-slide on" style="background-image:url('assets/slide1.jpg')"></div>
   <div class="bg-slide" style="background-image:url('assets/slide2.jpg')"></div>
