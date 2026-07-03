@@ -697,7 +697,7 @@ body {
 .lang-bar { z-index: 999 !important; }
 
 /* OVERFLOW & TOUCH FIX */
-#s-intro { overflow: visible !important; touch-action: manipulation !important; isolation: isolate; }
+#s-intro { overflow: visible !important; touch-action: manipulation !important; position: relative !important; isolation: isolate; }
 .intro-inner { overflow: visible !important; touch-action: manipulation !important; pointer-events: none; }
 .bf-btn, .btn-enter { 
   touch-action: manipulation !important;
@@ -795,7 +795,8 @@ body { overflow-x: hidden; overflow-y: auto; }
       </a>
     </div>
   </div>
-</div>
+<!-- transparent click layer, Kaikas-proof -->
+<div id="intro-click-layer" style="position:absolute;inset:0;z-index:500;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;"></div>
 </div>
 
 <!-- NATION -->
