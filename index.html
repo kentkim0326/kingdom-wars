@@ -7,6 +7,8 @@
 <title>KINGDOM WARS</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 <meta name="theme-color" content="#03050e"/>
 <meta name="description" content="Kingdom Wars - Conquer the Moon before Elon"/>
 <meta property="og:title" content="KINGDOM WARS"/>
@@ -586,6 +588,10 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="slide" id="gs4" style="background-image:url('assets/slide5.jpg')"><div class="slide-overlay"></div></div>
   <div class="slide" id="gs5" style="background-image:url('assets/slide6.jpg')"><div class="slide-overlay"></div></div>
   <div class="slide" id="gs6" style="background-image:url('assets/slide7.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs7" style="background-image:url('assets/slide8.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs8" style="background-image:url('assets/slide9.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs9" style="background-image:url('assets/slide10.jpg')"><div class="slide-overlay"></div></div>
+  <div class="slide" id="gs10" style="background-image:url('assets/slide11.jpg')"><div class="slide-overlay"></div></div>
 </div>
 <!-- Slide navigation dots (shown on intro) -->
 <div class="slide-dots" id="slide-dots">
@@ -596,6 +602,10 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="slide-dot" onclick="goSlide(4)"></div>
   <div class="slide-dot" onclick="goSlide(5)"></div>
   <div class="slide-dot" onclick="goSlide(6)"></div>
+  <div class="slide-dot" onclick="goSlide(7)"></div>
+  <div class="slide-dot" onclick="goSlide(8)"></div>
+  <div class="slide-dot" onclick="goSlide(9)"></div>
+  <div class="slide-dot" onclick="goSlide(10)"></div>
 </div>
 
 <div class="stars" id="stars"></div>
@@ -609,7 +619,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 <!-- INTRO -->
 <div class="screen active" id="s-intro">
   <div class="screen-content">
-  <div class="fu" style="text-align:center;margin-bottom:18px">
+  <div class="fu" style="text-align:center;margin-bottom:10px">
     <img src="assets/logo.png" alt="KINGDOM WARS"
   style="width:min(260px,60vw);height:auto;margin:0 auto 6px;display:block;
   filter:drop-shadow(0 0 30px rgba(0,200,255,0.5));
@@ -1350,7 +1360,7 @@ function setLang(l){
   if(G&&G.nation){if(typeof renderUnits==="function")renderUnits();if(typeof showSelBig==="function")showSelBig();}
 }
 
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active")}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));const _e=document.getElementById(id);if(_e)_e.classList.add("active");if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);}
 function goNation(){sfx("click");show("s-nation");renderN(NATIONS)}
 function renderN(list){document.getElementById("ngrid").innerHTML=list.map(n=>`<div class="nc" onclick="selN('${n.e}')"><div class="nf">${n.f}</div><div class="nn">${n.n}</div><div class="ne">${n.e}</div></div>`).join("")}
 function filterN(q){renderN(NATIONS.filter(n=>n.n.includes(q)||n.e.toLowerCase().includes(q.toLowerCase())))}
@@ -2011,7 +2021,7 @@ function log(type,msg){
 
 // ════ SLIDESHOW SYSTEM ════
 // ════════ GLOBAL SLIDESHOW SYSTEM ════════
-const SLIDES_COUNT = 7;
+const SLIDES_COUNT = 11;
 let curSlide = 0;
 let slideTimer = null;
 let slideSpeed = 4000; // 4 sec per slide on intro
@@ -2071,16 +2081,7 @@ function updateSlideshowForScreen(screenId) {
   }
 }
 
-// Patch show() to update slideshow (lazy - runs after all functions defined)
-const _origShow = function(id) {
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  const el = document.getElementById(id);
-  if(el) el.classList.add("active");
-};
-function show(id) {
-  _origShow(id);
-  updateSlideshowForScreen(id);
-}
+// show() already calls updateSlideshowForScreen — no re-definition needed
 
 // Swipe support for mobile
 let touchStartX = 0;
