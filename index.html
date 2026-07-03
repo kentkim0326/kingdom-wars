@@ -1904,15 +1904,22 @@ function setLang(l){
 }
 
 function show(id){
+  // 1. 모든 screen을 body 직속으로 이동 (구버전 HTML 구조 수정)
   document.querySelectorAll(".screen").forEach(function(s){
-    s.classList.remove("active");
+    if(s.parentElement!==document.body){
+      document.body.appendChild(s);
+    }
     s.style.setProperty("display","none","important");
+    s.classList.remove("active");
   });
+  // 2. 대상 화면 표시
   var el=document.getElementById(id);
   if(el){
+    if(el.parentElement!==document.body){
+      document.body.appendChild(el);
+    }
     el.classList.add("active");
     el.style.setProperty("display","flex","important");
-
   }
   if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);
 }
