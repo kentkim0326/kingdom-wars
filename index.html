@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>KINGDOM WARS v0.4 — We will conquer Mars before Elon</title>
+<title>KINGDOM WARS — We will conquer Mars before Elon</title>
 <style>
 :root{
   --bg:#03050e;--panel:#07091a;--border:#1a2a4a;
@@ -15,147 +15,227 @@
 body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
-@keyframes twinkle{0%,100%{opacity:0.12}50%{opacity:0.9}}
+@keyframes twinkle{0%,100%{opacity:0.1}50%{opacity:0.85}}
 .screen{position:relative;z-index:1;min-height:100vh;display:none;flex-direction:column}
 .screen.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp 0.5s ease forwards}
+.fu2{animation:fadeUp 0.5s 0.15s ease forwards;opacity:0}
+.fu3{animation:fadeUp 0.5s 0.3s ease forwards;opacity:0}
 
 /* ══ INTRO ══ */
-#s-intro{align-items:center;justify-content:center;text-align:center;padding:40px 20px;
+#s-intro{align-items:center;justify-content:center;text-align:center;padding:40px 16px;
   background:radial-gradient(ellipse at 50% 30%,#0a1530 0%,#03050e 70%)}
 .logo{font-size:clamp(2rem,7vw,4.5rem);font-weight:900;letter-spacing:6px;
   background:linear-gradient(135deg,#00c8ff,#fff,#ffd700);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
-.catchphrase{font-size:clamp(0.85rem,2.2vw,1.2rem);color:var(--gold);font-weight:700;
-  letter-spacing:2px;margin-bottom:44px;text-shadow:0 0 20px rgba(255,215,0,0.5)}
-.moon-hero{width:200px;height:200px;margin:0 auto 40px;cursor:pointer;position:relative}
-.moon-hero img{width:100%;height:100%;border-radius:50%;
-  box-shadow:0 0 80px rgba(0,200,255,0.4);object-fit:cover}
-.moon-hero::after{content:'클릭하여 정복 개시';position:absolute;bottom:-28px;left:50%;
-  transform:translateX(-50%);font-size:0.72rem;color:var(--muted);white-space:nowrap;letter-spacing:2px}
-.bf-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.catchphrase{font-size:clamp(0.82rem,2vw,1.15rem);color:var(--gold);font-weight:700;
+  letter-spacing:2px;margin-bottom:40px;text-shadow:0 0 20px rgba(255,215,0,0.5)}
+.moon-hero{width:180px;height:180px;border-radius:50%;margin:0 auto 36px;
+  cursor:pointer;overflow:hidden;box-shadow:0 0 80px rgba(0,200,255,0.4)}
+.moon-hero img{width:100%;height:100%;object-fit:cover}
+.bf-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:34px}
 .bf-btn{padding:14px 22px;border-radius:12px;border:2px solid var(--border);
-  background:var(--panel);cursor:pointer;transition:all 0.3s;text-align:center;min-width:130px}
+  background:var(--panel);cursor:pointer;transition:all 0.3s;text-align:center;min-width:128px}
 .bf-btn.open{border-color:var(--accent)}.bf-btn.open:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,200,255,0.3)}
 .bf-btn.locked{opacity:0.4;cursor:not-allowed}
-.bf-icon-big{font-size:2.2rem;margin-bottom:5px}.bf-title{font-weight:700;font-size:0.95rem;margin-bottom:3px}
+.bf-icon{font-size:2.2rem;margin-bottom:5px}.bf-title{font-weight:700;font-size:0.95rem;margin-bottom:3px}
 .bf-sub{font-size:0.72rem;color:var(--muted)}
 .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:0.62rem;font-weight:700;margin-bottom:5px}
 .badge.open{background:var(--green);color:#000}.badge.soon{background:var(--muted);color:#000}
-.btn-enter{padding:16px 56px;background:linear-gradient(135deg,#0066aa,#00c8ff);
-  color:#000;font-weight:900;font-size:1.1rem;border:none;border-radius:50px;
+.btn-enter{padding:16px 54px;background:linear-gradient(135deg,#0066aa,#00c8ff);
+  color:#000;font-weight:900;font-size:1.05rem;border:none;border-radius:50px;
   cursor:pointer;letter-spacing:3px;box-shadow:0 0 40px rgba(0,200,255,0.4);transition:all 0.3s}
 .btn-enter:hover{transform:scale(1.05);box-shadow:0 0 70px rgba(0,200,255,0.7)}
+.guide-link{margin-top:14px;font-size:0.8rem;color:var(--muted)}
+.guide-link a{color:var(--accent);text-decoration:none}
 
 /* ══ NATION ══ */
-#s-nation{padding:28px 20px;align-items:center;background:radial-gradient(ellipse at 50% 0%,#0a1530,#03050e 60%)}
-.stitle{font-size:1.7rem;font-weight:900;letter-spacing:4px;text-align:center;color:var(--accent);margin-bottom:5px}
-.ssub{text-align:center;color:var(--muted);margin-bottom:20px;font-size:0.88rem}
-.search-box{display:block;width:100%;max-width:400px;margin:0 auto 18px;
-  padding:11px 18px;background:var(--panel);border:1px solid var(--border);
-  border-radius:30px;color:var(--text);font-size:0.95rem;outline:none}
+#s-nation{padding:26px 16px;align-items:center;background:radial-gradient(ellipse at 50% 0%,#0a1530,#03050e 60%)}
+.stitle{font-size:1.6rem;font-weight:900;letter-spacing:4px;text-align:center;color:var(--accent);margin-bottom:5px}
+.ssub{text-align:center;color:var(--muted);margin-bottom:18px;font-size:0.86rem}
+.search-box{display:block;width:100%;max-width:400px;margin:0 auto 16px;
+  padding:10px 18px;background:var(--panel);border:1px solid var(--border);
+  border-radius:30px;color:var(--text);font-size:0.92rem;outline:none}
 .search-box:focus{border-color:var(--accent)}
-.nation-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));
-  gap:9px;width:100%;max-width:860px;max-height:52vh;overflow-y:auto;padding:4px;
+.nation-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:8px;width:100%;max-width:860px;max-height:50vh;overflow-y:auto;padding:4px;
   scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.nc{border:2px solid var(--border);border-radius:10px;padding:13px 8px;
+.nc{border:2px solid var(--border);border-radius:10px;padding:12px 8px;
   text-align:center;cursor:pointer;transition:all 0.2s;background:var(--panel)}
 .nc:hover{border-color:var(--accent);transform:translateY(-2px)}
 .nc.sel{border-color:var(--gold);background:rgba(255,215,0,0.08)}
-.nf{font-size:1.7rem;margin-bottom:3px}.nn{font-size:0.76rem;font-weight:600}.ne{font-size:0.63rem;color:var(--muted)}
-.btn-ok{margin-top:18px;padding:13px 48px;background:linear-gradient(135deg,#ffd700,#ffaa00);
+.nf{font-size:1.7rem;margin-bottom:3px}.nn{font-size:0.74rem;font-weight:600}.ne{font-size:0.62rem;color:var(--muted)}
+.btn-next{margin-top:16px;padding:12px 46px;background:linear-gradient(135deg,#0066aa,#00c8ff);
   color:#000;font-weight:900;font-size:0.95rem;border:none;border-radius:30px;cursor:pointer;display:none}
-.btn-ok.show{display:block}
+.btn-next.show{display:block}
+
+/* ══ COMMANDER SELECT ══ */
+#s-commander{padding:30px 16px;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 30%,#0a1535 0%,#03050e 70%)}
+.cmd-title{font-size:1.6rem;font-weight:900;letter-spacing:3px;text-align:center;color:var(--accent);margin-bottom:6px}
+.cmd-sub{text-align:center;color:var(--muted);margin-bottom:28px;font-size:0.86rem}
+.cmd-nation-badge{display:flex;align-items:center;gap:10px;justify-content:center;
+  margin-bottom:30px;padding:10px 22px;background:var(--panel);border:1px solid var(--border);
+  border-radius:30px;width:fit-content;margin-left:auto;margin-right:auto}
+.cmd-nation-flag{font-size:1.8rem}
+.cmd-nation-name{font-size:1rem;font-weight:700}
+.cmd-cards{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+.cmd-card{
+  width:200px;border:2px solid var(--border);border-radius:16px;
+  background:var(--panel);cursor:pointer;transition:all 0.3s;overflow:hidden;
+  text-align:center;padding-bottom:16px;
+}
+.cmd-card:hover{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,200,255,0.2)}
+.cmd-card.sel-m{border-color:#5af;box-shadow:0 0 30px rgba(80,160,255,0.4)}
+.cmd-card.sel-f{border-color:#f9a;box-shadow:0 0 30px rgba(255,150,180,0.4)}
+.cmd-avatar{
+  width:100%;height:180px;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,rgba(0,30,60,0.8),rgba(0,10,30,0.95));
+}
+.cmd-avatar-silhouette{
+  font-size:7rem;filter:drop-shadow(0 0 20px rgba(0,200,255,0.6));
+  animation:cmdFloat 3s ease-in-out infinite;
+}
+@keyframes cmdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.cmd-gender{font-size:0.65rem;letter-spacing:2px;color:var(--muted);margin:10px 0 4px;text-transform:uppercase}
+.cmd-name{font-size:1rem;font-weight:900;margin-bottom:4px}
+.cmd-title-text{font-size:0.72rem;color:var(--gold);font-style:italic;margin-bottom:10px}
+.cmd-skills{padding:0 12px}
+.cmd-skill{display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--muted);
+  padding:3px 0;border-bottom:1px solid rgba(26,42,74,0.4)}
+.cmd-skill:last-child{border-bottom:none}
+.cmd-skill-icon{font-size:0.9rem;flex-shrink:0}
+.btn-cmd-confirm{padding:13px 46px;background:linear-gradient(135deg,#ffd700,#ffaa00);
+  color:#000;font-weight:900;font-size:1rem;border:none;border-radius:30px;cursor:pointer;display:none}
+.btn-cmd-confirm.show{display:block}
+.cmd-vs{font-size:1.4rem;color:var(--muted);align-self:center}
+/* Gender accent colors */
+.cmd-card.male .cmd-avatar{background:linear-gradient(180deg,rgba(0,40,80,0.9),rgba(0,15,40,0.98))}
+.cmd-card.female .cmd-avatar{background:linear-gradient(180deg,rgba(60,0,60,0.9),rgba(20,0,30,0.98))}
+.cmd-card.male .cmd-name{color:#5af}
+.cmd-card.female .cmd-name{color:#f9a}
+/* Starter pack display */
+.starter-pack{
+  background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.2);
+  border-radius:12px;padding:14px 20px;margin-top:20px;text-align:center;max-width:500px;
+}
+.starter-title{font-size:0.72rem;letter-spacing:2px;color:var(--accent);margin-bottom:10px}
+.starter-items{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.starter-item{text-align:center;font-size:0.78rem}
+.starter-item .si-icon{font-size:1.4rem;margin-bottom:3px}
+.starter-item .si-val{color:var(--gold);font-weight:700}
+.starter-item .si-lbl{color:var(--muted);font-size:0.65rem}
 
 /* ══ GAME ══ */
 #s-game{flex-direction:column}
 .hud{display:flex;align-items:center;justify-content:space-between;
   padding:6px 12px;background:rgba(3,5,14,0.97);border-bottom:1px solid var(--border);
   flex-wrap:wrap;gap:6px;position:sticky;top:0;z-index:200}
-.hud-brand{font-weight:900;letter-spacing:3px;font-size:0.92rem;color:var(--accent)}
-.hud-info{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.hud-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hud-brand{font-weight:900;letter-spacing:3px;font-size:0.9rem;color:var(--accent)}
+.hud-right{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .hud-res{display:flex;align-items:center;gap:4px;background:var(--panel);
   border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:0.78rem}
 .rv{color:var(--gold);font-weight:700}
+/* Commander badge in HUD */
+.cmd-hud-badge{display:flex;align-items:center;gap:6px;padding:3px 10px;
+  background:var(--panel);border:1px solid var(--border);border-radius:20px;font-size:0.78rem}
+.cmd-hud-avatar{font-size:1.1rem}
+.cmd-hud-name{font-weight:700;font-size:0.78rem}
 
 /* RESOURCE BAR */
-.res-bar{display:flex;gap:8px;padding:6px 12px;background:rgba(3,5,14,0.95);
+.res-bar{display:flex;gap:7px;padding:5px 12px;background:rgba(3,5,14,0.95);
   border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
-.res-item{display:flex;align-items:center;gap:5px;background:var(--panel);
-  border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:0.78rem;cursor:help;
-  position:relative;transition:border-color 0.2s}
-.res-item:hover{border-color:var(--accent)}
-.res-icon{font-size:1rem}.res-val{font-weight:700}.res-rate{font-size:0.65rem;color:var(--green)}
+.res-item{display:flex;align-items:center;gap:4px;background:var(--panel);
+  border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:0.76rem;cursor:help}
+.res-icon{font-size:0.95rem}
+.res-rate{font-size:0.63rem;color:var(--green)}
+
+/* NEWS TICKER */
+.news-ticker{display:flex;align-items:center;gap:8px;padding:4px 12px;
+  background:rgba(0,10,30,0.9);border-bottom:1px solid rgba(0,200,255,0.15);overflow:hidden}
+.news-label{color:var(--accent);font-size:0.66rem;font-weight:700;letter-spacing:2px;
+  white-space:nowrap;border:1px solid var(--accent);padding:2px 8px;border-radius:10px;flex-shrink:0}
+.news-scroll{display:flex;gap:40px;animation:scrollNews 55s linear infinite;font-size:0.7rem;color:var(--muted);overflow:hidden}
+.news-scroll:hover{animation-play-state:paused}
+@keyframes scrollNews{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* EVENT TICKER */
-.event-ticker{
-  padding:5px 14px;background:rgba(255,136,0,0.12);border-bottom:1px solid rgba(255,136,0,0.3);
-  font-size:0.75rem;color:var(--orange);display:flex;align-items:center;gap:8px;
-  animation:slideIn 0.4s ease;display:none;
-}
+.event-ticker{display:none;align-items:center;gap:8px;padding:5px 12px;
+  background:rgba(255,136,0,0.12);border-bottom:1px solid rgba(255,136,0,0.3);
+  font-size:0.73rem;color:var(--orange);animation:slideIn 0.4s ease}
 .event-ticker.show{display:flex}
 @keyframes slideIn{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
 
 /* VIEW BAR */
-.view-bar{display:flex;align-items:center;gap:6px;padding:6px 12px;
+.view-bar{display:flex;align-items:center;gap:5px;padding:5px 12px;
   background:rgba(3,5,14,0.95);border-bottom:1px solid var(--border);overflow-x:auto}
-.vtbtn{padding:5px 14px;border:1px solid var(--border);border-radius:20px;
-  background:transparent;color:var(--muted);font-size:0.75rem;cursor:pointer;
+.vtbtn{padding:5px 13px;border:1px solid var(--border);border-radius:20px;
+  background:transparent;color:var(--muted);font-size:0.73rem;cursor:pointer;
   white-space:nowrap;transition:all 0.2s;font-weight:600;letter-spacing:1px}
 .vtbtn.active{background:var(--accent);color:#000;border-color:var(--accent)}
 .vtbtn:hover:not(.active){border-color:var(--accent);color:var(--accent)}
-.view-hint{font-size:0.68rem;color:var(--muted);margin-left:auto;white-space:nowrap}
-.turn-info{display:flex;align-items:center;gap:8px;font-size:0.75rem;margin-left:8px}
+.view-hint{font-size:0.66rem;color:var(--muted);margin-left:auto;white-space:nowrap;display:none}
+.turn-info{display:flex;align-items:center;gap:6px;font-size:0.73rem;margin-left:6px;flex-shrink:0}
 .turn-num{color:var(--gold);font-weight:700}
-.btn-end-turn{padding:5px 14px;background:linear-gradient(135deg,#ffd700,#ff8800);
-  color:#000;border:none;border-radius:20px;font-size:0.75rem;font-weight:700;
-  cursor:pointer;letter-spacing:1px;transition:all 0.2s}
-.btn-end-turn:hover{transform:scale(1.05);box-shadow:0 0 15px rgba(255,215,0,0.5)}
+.btn-end-turn{padding:5px 13px;background:linear-gradient(135deg,#ffd700,#ff8800);
+  color:#000;border:none;border-radius:20px;font-size:0.73rem;font-weight:700;cursor:pointer;transition:all 0.2s}
+.btn-end-turn:hover{transform:scale(1.05)}
 
-.game-body{display:flex;flex:1;height:calc(100vh - 130px);overflow:hidden}
+.game-body{display:flex;flex:1;height:calc(100vh - 145px);overflow:hidden}
 
 /* LEFT PANEL */
-.lpanel{width:195px;min-width:160px;background:var(--panel);border-right:1px solid var(--border);
+.lpanel{width:200px;min-width:170px;background:var(--panel);border-right:1px solid var(--border);
   display:flex;flex-direction:column;overflow-y:auto}
 .ps{padding:10px;border-bottom:1px solid var(--border)}
-.plabel{font-size:0.62rem;letter-spacing:2px;color:var(--muted);margin-bottom:7px;text-transform:uppercase}
+.plabel{font-size:0.6rem;letter-spacing:2px;color:var(--muted);margin-bottom:6px;text-transform:uppercase}
 .unit-tabs{display:flex;border-bottom:1px solid var(--border)}
-.utab{flex:1;padding:6px 3px;text-align:center;font-size:0.65rem;cursor:pointer;
+.utab{flex:1;padding:6px 2px;text-align:center;font-size:0.62rem;cursor:pointer;
   color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s}
 .utab.active{color:var(--accent);border-bottom-color:var(--accent)}
 .unit-list{padding:8px}
-.ucard{border:1px solid var(--border);border-radius:8px;margin-bottom:7px;
+.ucard{border:1px solid var(--border);border-radius:8px;margin-bottom:6px;
   cursor:pointer;transition:all 0.2s;overflow:hidden;background:rgba(0,200,255,0.02)}
 .ucard:hover,.ucard.sel{border-color:var(--accent);background:rgba(0,200,255,0.08)}
 .ucard.sel{box-shadow:0 0 12px rgba(0,200,255,0.3)}
-.ucard-img{width:100%;height:76px;object-fit:cover;object-position:center top;display:block}
-.ucard-body{padding:6px 7px}
-.ucard-name{font-size:0.74rem;font-weight:700;margin-bottom:2px}
-.ucard-row{display:flex;justify-content:space-between;font-size:0.64rem;flex-wrap:wrap;gap:2px}
+.ucard-img{width:100%;height:72px;object-fit:cover;object-position:center top;display:block}
+.ucard-body{padding:5px 6px}
+.ucard-name{font-size:0.72rem;font-weight:700;margin-bottom:1px}
+.ucard-row{display:flex;justify-content:space-between;font-size:0.62rem;flex-wrap:wrap;gap:2px}
 .ucard-pow{color:var(--gold)}.ucard-cnt{color:var(--muted)}
-.utype{display:inline-block;padding:1px 5px;border-radius:10px;font-size:0.56rem;font-weight:700;margin-bottom:2px}
+.utype{display:inline-block;padding:1px 5px;border-radius:10px;font-size:0.55rem;font-weight:700;margin-bottom:1px}
 .type-fleet{background:rgba(0,150,255,0.2);color:#5af;border:1px solid rgba(0,150,255,0.3)}
 .type-mech{background:rgba(170,68,255,0.2);color:#c77fff;border:1px solid rgba(170,68,255,0.3)}
 .type-ace{background:rgba(255,215,0,0.2);color:var(--gold);border:1px solid rgba(255,215,0,0.3)}
-/* Counter badge */
-.counter-badge{font-size:0.55rem;padding:1px 5px;border-radius:8px;margin-left:3px}
-.strong{background:rgba(0,255,136,0.2);color:var(--green);border:1px solid rgba(0,255,136,0.3)}
-.weak{background:rgba(255,50,50,0.2);color:var(--red);border:1px solid rgba(255,50,50,0.3)}
-.btn-buy{width:100%;padding:7px;margin-top:5px;border:1px solid var(--border);border-radius:6px;
-  background:rgba(0,200,255,0.04);color:var(--accent);font-size:0.72rem;cursor:pointer}
+/* Hangar capacity badge */
+.hangar-badge{display:inline-block;padding:1px 5px;border-radius:8px;font-size:0.55rem;
+  background:rgba(255,136,0,0.15);color:var(--orange);border:1px solid rgba(255,136,0,0.3)}
+.counter-hint{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:6px;
+  padding:5px 7px;margin-top:5px;font-size:0.66rem}
+.ch-strong{color:var(--green)}.ch-weak{color:var(--red)}
+.btn-buy{width:100%;padding:6px;margin-top:5px;border:1px solid var(--border);border-radius:6px;
+  background:rgba(0,200,255,0.04);color:var(--accent);font-size:0.7rem;cursor:pointer}
 .btn-buy:hover{background:rgba(0,200,255,0.14);border-color:var(--accent)}
 
-/* TECH TREE MINI */
-.tech-tree{padding:8px}
-.tech-path{margin-bottom:8px}
-.tech-path-title{font-size:0.62rem;font-weight:700;margin-bottom:5px;color:var(--accent)}
-.tech-node{display:flex;align-items:center;gap:6px;padding:5px 7px;border:1px solid var(--border);
-  border-radius:6px;margin-bottom:3px;cursor:pointer;transition:all 0.2s;font-size:0.68rem}
-.tech-node:hover{border-color:var(--accent)}
-.tech-node.done{border-color:var(--green);background:rgba(0,255,136,0.05)}
-.tech-node.locked{opacity:0.4;cursor:not-allowed}
-.tech-cost{color:var(--gold);font-size:0.62rem;margin-left:auto}
+/* HANGAR PANEL */
+.hangar-panel{padding:10px;border-bottom:1px solid var(--border)}
+.hangar-ship{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:7px}
+.hangar-ship-name{font-size:0.75rem;font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.hangar-slots{display:flex;gap:4px;flex-wrap:wrap}
+.hangar-slot{width:28px;height:28px;border:1px solid var(--border);border-radius:5px;
+  display:flex;align-items:center;justify-content:center;font-size:0.9rem;
+  cursor:pointer;transition:all 0.2s;position:relative;background:rgba(0,200,255,0.03)}
+.hangar-slot.filled{background:rgba(0,100,200,0.2);border-color:rgba(0,150,255,0.5)}
+.hangar-slot.empty{border-style:dashed;opacity:0.5}
+.hangar-slot.empty:hover{opacity:1;border-color:var(--accent)}
+.hangar-slot-tip{position:absolute;bottom:105%;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,0.9);border:1px solid var(--accent);border-radius:6px;
+  padding:4px 8px;font-size:0.6rem;white-space:nowrap;display:none;z-index:20;pointer-events:none}
+.hangar-slot:hover .hangar-slot-tip{display:block}
 
-/* CENTER */
+/* CENTER VIEWS */
 .mwrap{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .view{flex:1;display:none;position:relative;overflow:auto}
 .view.active{display:flex;flex-direction:column}
@@ -163,23 +243,36 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 /* SHIP VIEW */
 .ship-view{flex:1;background:radial-gradient(ellipse at 30% 40%,#0a1535 0%,#03050e 70%);
   display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.ship-scene{text-align:center;position:relative;z-index:2}
-.my-ship-img{max-width:460px;width:88%;filter:drop-shadow(0 0 40px rgba(0,200,255,0.6));
-  animation:shipFloat 4s ease-in-out infinite}
-@keyframes shipFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-16px) rotate(1deg)}}
-.ship-flag-badge{position:absolute;top:16px;left:50%;transform:translateX(-50%);
-  background:rgba(0,0,0,0.8);border:2px solid var(--gold);border-radius:30px;
-  padding:7px 18px;font-size:1rem;display:flex;align-items:center;gap:8px;
-  box-shadow:0 0 20px rgba(255,215,0,0.3)}
-.ship-stats{margin-top:22px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.ship-stat{background:rgba(0,0,0,0.6);border:1px solid var(--border);border-radius:10px;padding:9px 16px;text-align:center}
-.ship-stat-val{font-size:1.2rem;font-weight:700;color:var(--gold)}
-.ship-stat-lbl{font-size:0.68rem;color:var(--muted);margin-top:2px}
+.ship-view-bg{position:absolute;inset:0;
+  background:url('assets/bg_moon.png') center/cover no-repeat;opacity:0.25;pointer-events:none}
+.ship-scene{text-align:center;position:relative;z-index:2;width:100%}
+.cmd-display{display:flex;align-items:center;justify-content:center;gap:30px;flex-wrap:wrap;padding:20px}
+.cmd-portrait{text-align:center}
+.cmd-portrait-avatar{font-size:5rem;display:block;margin-bottom:8px;
+  filter:drop-shadow(0 0 20px rgba(0,200,255,0.5));animation:shipFloat 3s ease-in-out infinite}
+@keyframes shipFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.cmd-portrait-name{font-size:1rem;font-weight:700;margin-bottom:3px}
+.cmd-portrait-title{font-size:0.78rem;color:var(--gold);font-style:italic}
+.cmd-ship-section{text-align:center}
+.cmd-ship-img{max-width:340px;width:85%;filter:drop-shadow(0 0 30px rgba(0,200,255,0.5));
+  animation:shipFloat 4s 0.5s ease-in-out infinite}
+.cmd-ship-name{font-size:0.88rem;font-weight:700;color:var(--accent);margin-top:8px}
+.ship-stats{margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.ship-stat{background:rgba(0,0,0,0.6);border:1px solid var(--border);border-radius:10px;padding:8px 14px;text-align:center}
+.ship-stat-val{font-size:1.1rem;font-weight:700;color:var(--gold)}
+.ship-stat-lbl{font-size:0.65rem;color:var(--muted);margin-top:2px}
+/* Hangar display in ship view */
+.ship-hangar-display{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.hangar-mech-slot{width:44px;height:44px;border:1px solid var(--border);border-radius:8px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:1.2rem;background:rgba(0,0,0,0.4);cursor:help;position:relative}
+.hangar-mech-slot.loaded{border-color:rgba(0,150,255,0.5);background:rgba(0,80,180,0.2)}
+.hangar-mech-slot.empty-slot{border-style:dashed;opacity:0.35}
 
 /* MOON VIEW */
 .moon-view{flex:1;display:flex;align-items:center;justify-content:center;
-  background:#03050e;padding:20px;position:relative}
-.moon-container{position:relative;width:min(68vw,68vh);height:min(68vw,68vh);cursor:crosshair}
+  background:#03050e;padding:16px;position:relative}
+.moon-container{position:relative;width:min(66vw,66vh);height:min(66vw,66vh);cursor:crosshair}
 .moon-full-img{width:100%;height:100%;border-radius:50%;object-fit:cover;
   box-shadow:0 0 80px rgba(200,200,180,0.15)}
 .moon-grid-overlay{position:absolute;inset:0;border-radius:50%;overflow:hidden}
@@ -187,290 +280,317 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   transition:all 0.2s;border-radius:50%}
 .moon-sector-dot:hover{transform:translate(-50%,-50%) scale(1.8);z-index:10}
 .moon-tooltip{position:absolute;background:rgba(0,0,0,0.92);border:1px solid var(--accent);
-  border-radius:8px;padding:8px 12px;font-size:0.73rem;white-space:nowrap;
+  border-radius:7px;padding:7px 11px;font-size:0.71rem;white-space:nowrap;
   pointer-events:none;z-index:20;display:none;transform:translate(-50%,-130%)}
-.moon-legend{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-  display:flex;gap:10px;font-size:0.68rem;color:var(--muted);
-  background:rgba(0,0,0,0.75);padding:5px 12px;border-radius:20px;border:1px solid var(--border)}
+.moon-legend{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;font-size:0.66rem;color:var(--muted);
+  background:rgba(0,0,0,0.75);padding:4px 10px;border-radius:20px;border:1px solid var(--border)}
 
 /* BATTLE MAP */
 .battle-view{flex:1;overflow:auto;position:relative;
   background:linear-gradient(180deg,#06080f 0%,#040610 100%)}
 .battle-view::before{content:'';position:absolute;inset:0;pointer-events:none;
   background-image:
-    radial-gradient(circle at 25% 35%, rgba(180,175,155,0.07) 0%, transparent 30%),
-    radial-gradient(circle at 68% 22%, rgba(170,165,145,0.05) 0%, transparent 22%),
-    radial-gradient(circle at 45% 68%, rgba(160,165,175,0.06) 0%, transparent 25%),
-    radial-gradient(circle at 80% 72%, rgba(175,170,155,0.04) 0%, transparent 20%)}
+    radial-gradient(circle at 25% 35%,rgba(180,175,155,0.07) 0%,transparent 30%),
+    radial-gradient(circle at 68% 22%,rgba(170,165,145,0.05) 0%,transparent 22%),
+    radial-gradient(circle at 45% 68%,rgba(160,165,175,0.06) 0%,transparent 25%)}
 .moon-surface-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;pointer-events:none}
 .grid-wrap{position:relative;z-index:1;display:inline-grid;
-  grid-template-columns:repeat(7,94px);gap:4px;padding:22px;position:relative;}
-
-/* SECTOR TILE */
-.sector{width:94px;height:94px;border:1px solid rgba(40,70,120,0.45);border-radius:8px;
+  grid-template-columns:repeat(7,92px);gap:4px;padding:20px}
+.sector{width:92px;height:92px;border:1px solid rgba(40,70,120,0.45);border-radius:8px;
   cursor:pointer;position:relative;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background:rgba(5,10,22,0.55);backdrop-filter:blur(3px);
-  transition:all 0.2s;overflow:hidden}
+  background:rgba(5,10,22,0.55);backdrop-filter:blur(3px);transition:all 0.2s;overflow:hidden}
 .sector:hover{border-color:var(--accent);background:rgba(0,200,255,0.1);transform:scale(1.04);z-index:2}
 .sector.mine{background:rgba(0,70,170,0.28);border-color:rgba(0,150,255,0.65)}
 .sector.enemy{background:rgba(150,20,20,0.22);border-color:rgba(210,40,40,0.55)}
 .sector.sel{border-color:var(--gold)!important;background:rgba(255,215,0,0.12)!important;
   box-shadow:0 0 20px rgba(255,215,0,0.4);z-index:3}
-/* Sector type indicators */
 .sector.res-he3{border-top:3px solid var(--accent)}
 .sector.res-reg{border-top:3px solid var(--purple)}
 .sector.res-h2o{border-top:3px solid var(--teal)}
 .sector.crater{border-style:dashed}
 .sec-id{position:absolute;top:2px;left:4px;font-size:0.48rem;color:rgba(100,140,180,0.5)}
-.sec-type-icon{position:absolute;top:2px;right:4px;font-size:0.7rem}
-.sec-unit-img{width:52px;height:52px;object-fit:contain;border-radius:4px}
-.sec-flag{font-size:1rem}
-.sec-name{font-size:0.48rem;color:var(--muted);text-align:center;padding:0 2px;line-height:1.2;margin-top:1px}
+.sec-type-icon{position:absolute;top:2px;right:4px;font-size:0.68rem}
+.sec-unit-img{width:50px;height:50px;object-fit:contain;border-radius:4px}
+.sec-flag{font-size:0.95rem}
+.sec-name{font-size:0.46rem;color:var(--muted);text-align:center;padding:0 2px;margin-top:1px}
 .sec-hp-bar{position:absolute;bottom:3px;left:4px;right:4px;height:3px;
   background:rgba(0,0,0,0.4);border-radius:2px;overflow:hidden}
 .sec-hp-fill{height:100%;border-radius:2px;transition:width 0.3s}
-/* XP rank badge */
-.rank-badge{position:absolute;bottom:5px;right:4px;font-size:0.55rem;
-  background:rgba(0,0,0,0.7);border-radius:4px;padding:1px 3px;color:var(--gold)}
+.sec-hangar{position:absolute;bottom:5px;right:3px;font-size:0.5rem;color:var(--orange)}
+.size-badge{position:absolute;top:2px;right:22px;font-size:0.46rem;
+  background:rgba(0,0,0,0.7);border-radius:3px;padding:1px 3px;color:var(--gold)}
 
 /* ZOOM VIEW */
 .zoom-view{flex:1;display:flex;align-items:center;justify-content:center;
   background:radial-gradient(ellipse at 50% 50%,#08101e 0%,#03050e 100%);
-  padding:18px;gap:24px;flex-wrap:wrap}
-.zoom-left{flex:1;min-width:260px;max-width:440px}
-.zoom-sector-card{background:var(--panel);border:2px solid var(--accent);border-radius:16px;
-  padding:18px;text-align:center;box-shadow:0 0 40px rgba(0,200,255,0.2);position:relative}
-.zoom-moon-patch{width:100%;height:170px;border-radius:10px;object-fit:cover;
-  margin-bottom:12px;border:1px solid var(--border);filter:brightness(0.85) contrast(1.15)}
-.zoom-sec-name{font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:6px}
-.zoom-sec-info{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
-.zsstat{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:7px;padding:7px 5px}
-.zsstat-val{font-size:0.9rem;font-weight:700;color:var(--gold)}
-.zsstat-lbl{font-size:0.58rem;color:var(--muted);margin-top:1px}
-.zoom-right{flex:1;min-width:260px;max-width:380px}
-/* Counter display */
-.counter-display{background:var(--panel);border:1px solid var(--border);border-radius:10px;
-  padding:10px;margin-bottom:10px}
-.counter-title{font-size:0.65rem;color:var(--accent);margin-bottom:6px;letter-spacing:1px}
-.counter-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:0.72rem}
-.combatants{display:flex;flex-direction:column;gap:10px}
-.combatant-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
-  padding:12px;display:flex;align-items:center;gap:10px}
+  padding:16px;gap:20px;flex-wrap:wrap}
+.zoom-left{flex:1;min-width:240px;max-width:420px}
+.zoom-sector-card{background:var(--panel);border:2px solid var(--accent);border-radius:14px;
+  padding:16px;text-align:center;box-shadow:0 0 40px rgba(0,200,255,0.2)}
+.zoom-moon-patch{width:100%;height:160px;border-radius:9px;object-fit:cover;
+  margin-bottom:10px;border:1px solid var(--border);filter:brightness(0.85) contrast(1.15)}
+.zoom-sec-name{font-size:0.95rem;font-weight:700;color:var(--accent);margin-bottom:6px}
+.zoom-sec-info{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.zsstat{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:7px;padding:7px 4px}
+.zsstat-val{font-size:0.88rem;font-weight:700;color:var(--gold)}
+.zsstat-lbl{font-size:0.56rem;color:var(--muted);margin-top:1px}
+.zoom-right{flex:1;min-width:240px;max-width:360px}
+.counter-display-z{background:var(--panel);border:1px solid var(--border);border-radius:9px;
+  padding:9px;margin-bottom:9px}
+.counter-title{font-size:0.63rem;color:var(--accent);margin-bottom:5px;letter-spacing:1px}
+.counter-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:0.7rem}
+.combatants{display:flex;flex-direction:column;gap:9px}
+.combatant-card{background:var(--panel);border:1px solid var(--border);border-radius:9px;
+  padding:11px;display:flex;align-items:center;gap:9px}
 .combatant-card.mine-side{border-color:rgba(0,150,255,0.5)}
 .combatant-card.enemy-side{border-color:rgba(220,40,40,0.5)}
-.combatant-img{width:56px;height:56px;object-fit:contain;border-radius:7px;
+.combatant-img{width:54px;height:54px;object-fit:contain;border-radius:6px;
   background:rgba(0,0,0,0.3);border:1px solid var(--border)}
 .combatant-info{flex:1}
-.combatant-name{font-size:0.82rem;font-weight:700;margin-bottom:3px}
+.combatant-name{font-size:0.8rem;font-weight:700;margin-bottom:3px}
 .combatant-xp{font-size:0.62rem;color:var(--gold)}
 .combatant-hp-track{height:5px;background:rgba(0,0,0,0.4);border-radius:3px;overflow:hidden;margin-top:4px}
 .combatant-hp-fill{height:100%;border-radius:3px}
+/* Hangar in combatant */
+.combatant-mechs{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
+.cm-slot{font-size:0.85rem;width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(0,150,255,0.3);border-radius:4px;background:rgba(0,60,120,0.2)}
 
 /* RIGHT PANEL */
-.rpanel{width:222px;min-width:185px;background:var(--panel);border-left:1px solid var(--border);
+.rpanel{width:218px;min-width:180px;background:var(--panel);border-left:1px solid var(--border);
   display:flex;flex-direction:column;overflow-y:auto}
 .rcard{padding:10px;border-bottom:1px solid var(--border)}
-.rtitle{font-size:0.62rem;letter-spacing:2px;color:var(--accent);margin-bottom:8px;text-transform:uppercase}
-.rrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:0.77rem}
+.rtitle{font-size:0.6rem;letter-spacing:2px;color:var(--accent);margin-bottom:7px;text-transform:uppercase}
+.rrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:0.76rem}
 .rk{color:var(--muted)}.rv2{font-weight:600}
-.abtn{width:100%;padding:8px;margin-bottom:6px;border:1px solid var(--border);border-radius:7px;
+.abtn{width:100%;padding:8px;margin-bottom:5px;border:1px solid var(--border);border-radius:7px;
   background:rgba(0,200,255,0.04);color:var(--accent);font-size:0.78rem;font-weight:700;
   cursor:pointer;transition:all 0.2s;letter-spacing:1px}
 .abtn:hover{background:rgba(0,200,255,0.14);border-color:var(--accent)}
 .abtn.atk{border-color:var(--red);color:var(--red)}.abtn.atk:hover{background:rgba(255,50,50,0.12)}
 .abtn.res{border-color:var(--gold);color:var(--gold)}.abtn.res:hover{background:rgba(255,215,0,0.08)}
-.abtn.tech{border-color:var(--purple);color:var(--purple)}.abtn.tech:hover{background:rgba(170,68,255,0.1)}
-.unit-preview{width:100%;height:105px;object-fit:contain;border-radius:7px;
-  border:1px solid var(--border);background:rgba(0,0,0,0.3);margin-bottom:8px}
-/* Counter hint */
-.counter-hint{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:6px;
-  padding:6px 8px;margin-bottom:6px;font-size:0.68rem}
-.ch-strong{color:var(--green)}.ch-weak{color:var(--red)}
-.log-item{font-size:0.68rem;padding:4px 0;border-bottom:1px solid rgba(26,42,74,0.4);line-height:1.4}
+.abtn.hng{border-color:var(--orange);color:var(--orange)}.abtn.hng:hover{background:rgba(255,136,0,0.1)}
+.unit-preview{width:100%;height:100px;object-fit:contain;border-radius:7px;
+  border:1px solid var(--border);background:rgba(0,0,0,0.3);margin-bottom:7px}
+.log-item{font-size:0.68rem;padding:3px 0;border-bottom:1px solid rgba(26,42,74,0.4);line-height:1.4}
 .log-item .ts{color:var(--muted);font-size:0.6rem;margin-right:3px}
-.log-win{color:var(--green)}.log-lose{color:var(--red)}.log-sys{color:var(--accent)}.log-info{color:var(--gold)}
-.log-event{color:var(--orange)}
+.log-win{color:var(--green)}.log-lose{color:var(--red)}.log-sys{color:var(--accent)}
+.log-info{color:var(--gold)}.log-event{color:var(--orange)}
 
 /* BATTLE MODAL */
 .modal{position:fixed;inset:0;z-index:999;background:rgba(2,4,12,0.93);
   backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center}
 .modal.show{display:flex}
 .mbody{background:var(--panel);border:2px solid var(--accent);border-radius:18px;
-  padding:24px;max-width:560px;width:95%;text-align:center;box-shadow:0 0 80px rgba(0,200,255,0.35)}
-.mtitle{font-size:1.2rem;font-weight:900;letter-spacing:3px;color:var(--accent);margin-bottom:16px}
+  padding:22px;max-width:540px;width:95%;text-align:center;box-shadow:0 0 80px rgba(0,200,255,0.35)}
+.mtitle{font-size:1.2rem;font-weight:900;letter-spacing:3px;color:var(--accent);margin-bottom:14px}
 .counter-alert{background:rgba(255,136,0,0.1);border:1px solid var(--orange);
-  border-radius:8px;padding:8px;margin-bottom:14px;font-size:0.78rem;color:var(--orange);display:none}
+  border-radius:7px;padding:7px;margin-bottom:12px;font-size:0.76rem;color:var(--orange);display:none}
 .counter-alert.show{display:block}
-.bvs{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px}
-.bside{padding:12px;border:1px solid var(--border);border-radius:10px;background:rgba(0,0,0,0.3)}
-.bflag{font-size:1.7rem;margin-bottom:4px}
-.bimg{width:85px;height:85px;object-fit:contain;border-radius:7px;
-  margin:0 auto 6px;display:block;background:rgba(0,0,0,0.2)}
-.bname{font-size:0.7rem;color:var(--muted);margin-bottom:2px}
-.bpow{font-size:0.9rem;color:var(--gold);font-weight:700}
-.bmod{font-size:0.68rem;margin-top:2px}
+.bvs{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:14px}
+.bside{padding:10px;border:1px solid var(--border);border-radius:10px;background:rgba(0,0,0,0.3)}
+.bflag{font-size:1.6rem;margin-bottom:3px}
+.bimg{width:80px;height:80px;object-fit:contain;border-radius:7px;margin:0 auto 6px;display:block}
+.bname{font-size:0.68rem;color:var(--muted);margin-bottom:2px}
+.bpow{font-size:0.88rem;color:var(--gold);font-weight:700}
+.bmod{font-size:0.65rem;margin-top:2px}
+/* Mechs in battle */
+.battle-mechs{display:flex;gap:4px;justify-content:center;margin-top:6px;flex-wrap:wrap}
+.bm-slot{font-size:1rem;width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(0,150,255,0.3);border-radius:5px;background:rgba(0,60,120,0.2)}
 .vstext{font-size:1.7rem;font-weight:900;color:var(--red)}
 .hpwrap{margin-bottom:14px}
 .hplabel{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);margin-bottom:2px}
 .hptrack{height:10px;background:rgba(0,0,0,0.4);border-radius:5px;overflow:hidden;margin-bottom:6px}
 .hpfill{height:100%;border-radius:5px;transition:width 0.55s ease}
 .prisoner-box{background:rgba(255,165,0,0.08);border:1px solid orange;
-  border-radius:8px;padding:10px;margin-top:7px;font-size:0.78rem;display:none}
+  border-radius:8px;padding:9px;margin-top:6px;font-size:0.76rem;display:none}
 .prisoner-box.show{display:block}
-.result{padding:12px;border-radius:8px;font-size:0.95rem;font-weight:700;margin-bottom:10px;display:none}
+.result{padding:11px;border-radius:8px;font-size:0.9rem;font-weight:700;margin-bottom:10px;display:none}
 .result.win{background:rgba(0,255,136,0.1);border:2px solid var(--green);color:var(--green)}
 .result.lose{background:rgba(255,50,50,0.1);border:2px solid var(--red);color:var(--red)}
 .btn-close{padding:10px 32px;background:linear-gradient(135deg,#0066aa,#00c8ff);
   color:#000;font-weight:900;border:none;border-radius:28px;cursor:pointer;font-size:0.88rem;letter-spacing:2px}
 
 /* EVENT MODAL */
-.event-modal{position:fixed;inset:0;z-index:998;display:none;align-items:center;justify-content:center}
-.event-modal.show{display:flex}
-.event-body{background:var(--panel);border:2px solid var(--orange);border-radius:18px;
-  padding:28px;max-width:420px;width:92%;text-align:center;
+.emodal{position:fixed;inset:0;z-index:998;display:none;align-items:center;justify-content:center}
+.emodal.show{display:flex}
+.ebody{background:var(--panel);border:2px solid var(--orange);border-radius:16px;
+  padding:26px;max-width:400px;width:92%;text-align:center;
   box-shadow:0 0 60px rgba(255,136,0,0.4);animation:eventPop 0.5s ease}
 @keyframes eventPop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-.event-icon{font-size:3.5rem;margin-bottom:12px}
-.event-title{font-size:1.2rem;font-weight:900;color:var(--orange);margin-bottom:8px}
-.event-desc{font-size:0.88rem;color:var(--text);margin-bottom:16px;line-height:1.6}
-.event-effect{background:rgba(255,136,0,0.1);border:1px solid rgba(255,136,0,0.3);
-  border-radius:8px;padding:10px;margin-bottom:16px;font-size:0.82rem;color:var(--gold)}
-.btn-event-ok{padding:10px 30px;background:var(--orange);color:#000;
-  font-weight:900;border:none;border-radius:24px;cursor:pointer;font-size:0.9rem}
+.ev-icon{font-size:3.2rem;margin-bottom:10px}
+.ev-title{font-size:1.1rem;font-weight:900;color:var(--orange);margin-bottom:7px}
+.ev-desc{font-size:0.84rem;color:var(--text);margin-bottom:12px;line-height:1.6}
+.ev-effect{background:rgba(255,136,0,0.1);border:1px solid rgba(255,136,0,0.3);
+  border-radius:7px;padding:9px;margin-bottom:14px;font-size:0.8rem;color:var(--gold)}
+.btn-ev-ok{padding:9px 28px;background:var(--orange);color:#000;
+  font-weight:900;border:none;border-radius:22px;cursor:pointer;font-size:0.88rem}
 
-/* MULTI-CELL UNITS */
-.sector.occupied-2h{grid-column:span 2;width:192px;}
-.sector.occupied-2v{grid-row:span 2;height:192px;}
-.sector.occupied-4{grid-column:span 2;grid-row:span 2;width:192px;height:192px;}
-.sector.occupied-4 .sec-unit-img{width:110px;height:110px;}
-.sector.occupied-2h .sec-unit-img{width:90px;height:70px;}
-/* SPACE NEWS TICKER */
-.news-ticker{
-  display:flex;align-items:center;gap:10px;padding:5px 14px;
-  background:rgba(0,10,30,0.9);border-bottom:1px solid rgba(0,200,255,0.2);
-  overflow:hidden;white-space:nowrap;
-}
-.news-label{color:var(--accent);font-size:0.68rem;font-weight:700;
-  letter-spacing:2px;white-space:nowrap;border:1px solid var(--accent);
-  padding:2px 8px;border-radius:10px;margin-right:6px;flex-shrink:0}
-.news-scroll{display:flex;gap:40px;animation:scrollNews 60s linear infinite;font-size:0.72rem;color:var(--muted)}
-.news-scroll:hover{animation-play-state:paused}
-@keyframes scrollNews{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.news-item{white-space:nowrap;cursor:pointer}
-.news-item:hover{color:var(--accent)}
-/* SHIP VIEW ENHANCED */
-.ship-view-bg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse at 20% 30%, rgba(0,100,200,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(100,0,200,0.06) 0%, transparent 40%),
-    url('assets/bg_moon.png') center/cover no-repeat;
-  opacity:0.3;
-}
-/* UNIT SIZE BADGES */
-.size-badge{position:absolute;top:2px;right:4px;font-size:0.5rem;
-  background:rgba(0,0,0,0.7);border-radius:4px;padding:1px 4px;color:var(--gold)}
 /* NICKNAME POPUP */
-.nickname-popup{position:fixed;top:100px;right:20px;z-index:997;
-  background:var(--panel);border:2px solid var(--gold);border-radius:12px;
-  padding:14px 18px;font-size:0.82rem;display:none;animation:slideRight 0.4s ease;
-  box-shadow:0 0 30px rgba(255,215,0,0.3);max-width:240px}
+.nickname-popup{position:fixed;top:90px;right:16px;z-index:997;
+  background:var(--panel);border:2px solid var(--gold);border-radius:11px;
+  padding:12px 16px;font-size:0.8rem;display:none;max-width:220px;
+  animation:slideRight 0.4s ease;box-shadow:0 0 30px rgba(255,215,0,0.3)}
 .nickname-popup.show{display:block}
 @keyframes slideRight{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
 
+/* HANGAR MODAL */
+.hmodal{position:fixed;inset:0;z-index:997;background:rgba(2,4,12,0.9);
+  backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+.hmodal.show{display:flex}
+.hmbody{background:var(--panel);border:2px solid var(--orange);border-radius:16px;
+  padding:22px;max-width:500px;width:95%;box-shadow:0 0 50px rgba(255,136,0,0.3)}
+.hm-title{font-size:1.1rem;font-weight:900;color:var(--orange);margin-bottom:14px;text-align:center}
+.hm-ship-info{display:flex;align-items:center;gap:12px;padding:10px;
+  background:rgba(0,0,0,0.3);border-radius:9px;margin-bottom:14px}
+.hm-ship-img{width:60px;height:60px;object-fit:contain;border-radius:6px}
+.hm-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.hm-slot{border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;
+  cursor:pointer;transition:all 0.2s;min-height:70px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center}
+.hm-slot.filled{border-color:rgba(0,150,255,0.5);background:rgba(0,60,120,0.2)}
+.hm-slot.empty-slot{border-style:dashed}
+.hm-slot.empty-slot:hover{border-color:var(--accent);background:rgba(0,200,255,0.05)}
+.hm-slot-icon{font-size:1.6rem;margin-bottom:4px}
+.hm-slot-name{font-size:0.58rem;color:var(--muted)}
+.hm-mech-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.hm-mech-btn{border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;
+  cursor:pointer;transition:all 0.2s;background:var(--panel)}
+.hm-mech-btn:hover{border-color:var(--purple);background:rgba(170,68,255,0.08)}
+.hm-mech-btn img{width:40px;height:40px;object-fit:contain;border-radius:5px;display:block;margin:0 auto 4px}
+.hm-mech-name{font-size:0.62rem;font-weight:700}
+.hm-mech-pow{font-size:0.58rem;color:var(--gold)}
+.hm-mech-cnt{font-size:0.55rem;color:var(--muted)}
+.btn-hm-close{width:100%;padding:9px;background:rgba(0,200,255,0.08);border:1px solid var(--border);
+  border-radius:8px;color:var(--accent);font-weight:700;cursor:pointer;font-size:0.85rem}
+
 @media(max-width:700px){
   .lpanel,.rpanel{display:none}
-  .grid-wrap{grid-template-columns:repeat(7,60px);gap:3px;padding:10px}
-  .sector{width:60px;height:60px}
-  .sec-unit-img{width:34px;height:34px}
+  .grid-wrap{grid-template-columns:repeat(7,58px);gap:3px;padding:10px}
+  .sector{width:58px;height:58px}
+  .sec-unit-img{width:32px;height:32px}
 }
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 
-<!-- INTRO -->
+<!-- ══ INTRO ══ -->
 <div class="screen active" id="s-intro">
-  <div style="margin-bottom:10px">
+  <div class="fu" style="margin-bottom:10px;text-align:center">
     <div class="logo">KINGDOM WARS</div>
     <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
   </div>
-  <div class="moon-hero" onclick="goNation()">
-    <img src="assets/moon_real.png" alt="Moon" onerror="this.style.background='radial-gradient(circle at 35% 35%,#d0d0d0,#888,#555)'"/>
+  <div class="moon-hero fu2" onclick="goNation()" style="margin:0 auto 34px">
+    <img src="assets/moon_real.png" alt="Moon" onerror="this.style.background='radial-gradient(circle at 35% 35%,#ccc,#888,#555)'"/>
   </div>
-  <div class="bf-row">
+  <div class="bf-row fu3">
     <div class="bf-btn open" onclick="goNation()">
       <span class="badge open">OPEN</span>
-      <div class="bf-icon-big">🌙</div>
+      <div class="bf-icon">🌙</div>
       <div class="bf-title">THE MOON</div>
       <div class="bf-sub">고요의 바다 · 21섹터</div>
     </div>
     <div class="bf-btn locked">
       <span class="badge soon">SOON</span>
-      <div class="bf-icon-big">🔴</div>
+      <div class="bf-icon">🔴</div>
       <div class="bf-title">MARS</div>
       <div class="bf-sub">화성 사막 · 35섹터</div>
     </div>
     <div class="bf-btn locked">
       <span class="badge soon">SOON</span>
-      <div class="bf-icon-big">🪐</div>
+      <div class="bf-icon">🪐</div>
       <div class="bf-title">DEEP SPACE</div>
       <div class="bf-sub">심우주 · 50섹터</div>
     </div>
   </div>
-  <button class="btn-enter" onclick="goNation()">🚀 달 정복 개시</button>
-  <p style="margin-top:16px;color:var(--muted);font-size:0.8rem">일론이 가기 전에 우리가 먼저</p>
-</div>
-
-<!-- NATION -->
-<div class="screen" id="s-nation">
-  <div class="stitle">🌍 국가 선택</div>
-  <div class="ssub">당신의 국기를 달에 꽂을 국가를 선택하세요</div>
-  <input class="search-box" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
-  <div class="nation-grid" id="ngrid"></div>
-  <button class="btn-ok" id="btn-ok" onclick="goGame()">✅ 이 국가로 출전</button>
-</div>
-
-<!-- GAME -->
-<div class="screen" id="s-game">
-  <div class="hud">
-    <div class="hud-info">
-      <span class="hud-brand">👑 KW</span>
-      <a href="how_to_play.html" target="_blank" style="padding:4px 12px;border:1px solid var(--muted);border-radius:14px;color:var(--muted);font-size:0.7rem;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--muted)';this.style.color='var(--muted)'">📖 가이드</a>
-      <span id="hflag" style="font-size:1.1rem"></span>
-      <span id="hname" style="font-weight:700;font-size:0.86rem"></span>
-      <span style="color:var(--muted);font-size:0.7rem">🌙 달 — 고요의 바다</span>
+  <div class="fu3" style="text-align:center">
+    <button class="btn-enter" onclick="goNation()">🚀 달 정복 개시</button>
+    <div class="guide-link" style="margin-top:14px">
+      <a href="how_to_play.html" target="_blank">📖 게임 가이드 보기</a> &nbsp;|&nbsp; 일론이 가기 전에 우리가 먼저
     </div>
-    <div class="hud-info">
-      <div class="hud-res">🏳️<span class="rv" id="rs">0</span><span style="color:var(--muted);font-size:0.66rem">섹터</span></div>
-      <div class="hud-res">⚔️<span class="rv" id="rw">0</span><span style="color:var(--muted);font-size:0.66rem">승리</span></div>
+  </div>
+</div>
+
+<!-- ══ NATION SELECT ══ -->
+<div class="screen" id="s-nation">
+  <div class="stitle fu">🌍 국가 선택</div>
+  <div class="ssub fu2">달에 깃발을 꽂을 국가를 선택하세요</div>
+  <input class="search-box fu2" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
+  <div class="nation-grid fu3" id="ngrid"></div>
+  <button class="btn-next" id="btn-next" onclick="goCommander()">다음 → 사령관 선택</button>
+</div>
+
+<!-- ══ COMMANDER SELECT ══ -->
+<div class="screen" id="s-commander">
+  <div class="cmd-title fu">⭐ 사령관 선택</div>
+  <div class="cmd-sub fu2">당신의 분신이 될 사령관을 선택하세요</div>
+  <div class="cmd-nation-badge fu2">
+    <span class="cmd-nation-flag" id="cmd-nation-flag">🌍</span>
+    <span class="cmd-nation-name" id="cmd-nation-name">국가명</span>
+  </div>
+  <div class="cmd-cards fu3" id="cmd-cards"></div>
+  <div class="starter-pack fu3">
+    <div class="starter-title">🎁 스타터 패키지 (모든 사령관 공통 지급)</div>
+    <div class="starter-items">
+      <div class="starter-item"><div class="si-icon">🚀</div><div class="si-val">전투기 ×3</div><div class="si-lbl">즉시 배치 가능</div></div>
+      <div class="starter-item"><div class="si-icon">🪙</div><div class="si-val">1,200</div><div class="si-lbl">코인</div></div>
+      <div class="starter-item"><div class="si-icon">⚡</div><div class="si-val">2,400</div><div class="si-lbl">He-3</div></div>
+      <div class="starter-item"><div class="si-icon">💎</div><div class="si-val">80</div><div class="si-lbl">레골리스</div></div>
+      <div class="starter-item"><div class="si-icon">🌊</div><div class="si-val">120</div><div class="si-lbl">H₂O</div></div>
+    </div>
+  </div>
+  <button class="btn-cmd-confirm" id="btn-cmd-confirm" onclick="goGame()">🚀 출전!</button>
+</div>
+
+<!-- ══ GAME ══ -->
+<div class="screen" id="s-game">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-left">
+      <span class="hud-brand">👑 KW</span>
+      <div class="cmd-hud-badge">
+        <span class="cmd-hud-avatar" id="hud-avatar"></span>
+        <span class="cmd-hud-name" id="hud-cname"></span>
+      </div>
+      <span id="hflag" style="font-size:1rem"></span>
+      <a href="how_to_play.html" target="_blank" style="padding:3px 10px;border:1px solid var(--muted);border-radius:14px;color:var(--muted);font-size:0.68rem;text-decoration:none">📖 가이드</a>
+    </div>
+    <div class="hud-right">
+      <div class="hud-res">🏳️<span class="rv" id="rs">0</span></div>
+      <div class="hud-res">⚔️<span class="rv" id="rw">0</span>승</div>
     </div>
   </div>
 
-  <!-- 3 RESOURCES BAR -->
+  <!-- RESOURCE BAR -->
   <div class="res-bar">
-    <div class="res-item" title="헬륨-3: 기본 에너지 자원. 섹터 점령 시 생산">
-      <span class="res-icon">⚡</span>
-      <span class="rv" id="res-he3">2,400</span>
-      <span style="color:var(--muted);font-size:0.66rem">He-3</span>
+    <div class="res-item" title="헬륨-3: 기본 에너지 자원">
+      <span class="res-icon">⚡</span><span class="rv" id="res-he3">2,400</span>
+      <span style="color:var(--muted);font-size:0.64rem">He-3</span>
       <span class="res-rate" id="rate-he3">+0/턴</span>
     </div>
-    <div class="res-item" title="레골리스 결정체: 희귀 업그레이드 자원. 특정 섹터만 생산">
-      <span class="res-icon">💎</span>
-      <span class="rv" id="res-reg" style="color:var(--purple)">80</span>
-      <span style="color:var(--muted);font-size:0.66rem">레골리스</span>
+    <div class="res-item" title="레골리스: 기술 연구 자원">
+      <span class="res-icon">💎</span><span class="rv" id="res-reg" style="color:var(--purple)">80</span>
+      <span style="color:var(--muted);font-size:0.64rem">레골리스</span>
       <span class="res-rate" id="rate-reg">+0/턴</span>
     </div>
-    <div class="res-item" title="수분(H₂O 얼음): 유닛 회복 자원. 없으면 유닛 HP 감소">
-      <span class="res-icon">🌊</span>
-      <span class="rv" id="res-h2o" style="color:var(--teal)">120</span>
-      <span style="color:var(--muted);font-size:0.66rem">H₂O</span>
+    <div class="res-item" title="H₂O: 부족시 유닛 HP 감소!">
+      <span class="res-icon">🌊</span><span class="rv" id="res-h2o" style="color:var(--teal)">120</span>
+      <span style="color:var(--muted);font-size:0.64rem">H₂O</span>
       <span class="res-rate" id="rate-h2o">+0/턴</span>
     </div>
-    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
-      <div class="hud-res">🪙<span class="rv" id="rc">1,200</span></div>
+    <div class="res-item" style="margin-left:auto">
+      <span class="res-icon">🪙</span><span class="rv" id="rc">1,200</span>
     </div>
+  </div>
+
+  <!-- NEWS TICKER -->
+  <div class="news-ticker" id="news-ticker">
+    <span class="news-label">🛸 SPACE NEWS</span>
+    <div class="news-scroll" id="news-scroll"></div>
   </div>
 
   <!-- EVENT TICKER -->
@@ -478,136 +598,130 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     <span>⚠️</span><span id="event-ticker-text"></span>
   </div>
 
-  <!-- VIEW TOGGLE -->
+  <!-- VIEW BAR -->
   <div class="view-bar">
     <button class="vtbtn" id="vt0" onclick="switchView(0)">🛸 내 함선</button>
     <button class="vtbtn active" id="vt1" onclick="switchView(1)">🌙 달 전체</button>
     <button class="vtbtn" id="vt2" onclick="switchView(2)">⚔️ 전투 맵</button>
     <button class="vtbtn" id="vt3" onclick="switchView(3)">🔍 섹터 줌</button>
     <div class="turn-info">
-      <span style="color:var(--muted)">턴</span>
+      <span style="color:var(--muted);font-size:0.7rem">턴</span>
       <span class="turn-num" id="turn-num">1</span>
       <button class="btn-end-turn" onclick="endTurn()">턴 종료 ▶</button>
     </div>
-    <span class="view-hint" id="view-hint">달 전체 보기 — 섹터 점을 클릭하면 줌 이동</span>
   </div>
 
   <div class="game-body">
     <!-- LEFT -->
     <div class="lpanel">
+      <!-- Commander mini-card -->
+      <div class="ps">
+        <div class="plabel">사령관</div>
+        <div id="lpanel-commander" style="text-align:center;padding:8px 0">
+          <div id="lp-avatar" style="font-size:2.5rem;margin-bottom:4px"></div>
+          <div id="lp-name" style="font-size:0.78rem;font-weight:700"></div>
+          <div id="lp-title" style="font-size:0.65rem;color:var(--gold);font-style:italic"></div>
+        </div>
+      </div>
+      <!-- Unit tabs -->
       <div class="unit-tabs">
         <div class="utab active" onclick="switchTab('fleet',this)">🚀 함선</div>
         <div class="utab" onclick="switchTab('mech',this)">🤖 메카</div>
         <div class="utab" onclick="switchTab('ace',this)">⭐ 에이스</div>
-        <div class="utab" onclick="switchTab('tech',this)">🔬 기술</div>
       </div>
-      <div id="unit-content">
-        <div class="unit-list" id="ulist"></div>
-        <div class="ps">
-          <button class="btn-buy" onclick="buyUnit()">+ 유닛 구매 (500🪙)</button>
-        </div>
+      <div class="unit-list" id="ulist"></div>
+      <div class="ps">
+        <button class="btn-buy" onclick="buyUnit()">+ 유닛 구매 (500🪙)</button>
+      </div>
+      <!-- Hangar panel -->
+      <div class="hangar-panel" id="hangar-panel">
+        <div class="plabel">격납고 (배치된 함선)</div>
+        <div id="hangar-list"><div style="font-size:0.72rem;color:var(--muted);text-align:center;padding:10px 0">함선 배치 후 표시</div></div>
       </div>
       <div class="ps" style="flex:1">
         <div class="plabel">전황</div>
-        <div id="minilog" style="font-size:0.66rem;color:var(--muted);line-height:1.7"></div>
+        <div id="minilog" style="font-size:0.65rem;color:var(--muted);line-height:1.7"></div>
       </div>
     </div>
 
-    <!-- CENTER VIEWS -->
+    <!-- CENTER -->
     <div class="mwrap">
       <!-- VIEW 0: SHIP -->
       <div class="view" id="view-0">
         <div class="ship-view">
-          <div class="ship-scene">
-            <div class="ship-flag-badge">
-              <span id="sv-flag"></span>
-              <span id="sv-name" style="font-weight:700"></span>
-              <span id="sv-ship-name" style="color:var(--gold)"></span>
-              <span id="sv-rank" style="color:var(--muted);font-size:0.8rem"></span>
-            </div>
-            <img class="my-ship-img" id="sv-img" src="" alt="함선" onerror="this.textContent='🛸';this.style.fontSize='6rem'"/>
-            <div class="ship-stats">
-              <div class="ship-stat"><div class="ship-stat-val" id="sv-power">—</div><div class="ship-stat-lbl">전투력</div></div>
-              <div class="ship-stat"><div class="ship-stat-val" id="sv-sectors">0</div><div class="ship-stat-lbl">점령 섹터</div></div>
-              <div class="ship-stat"><div class="ship-stat-val" id="sv-wins">0</div><div class="ship-stat-lbl">승리</div></div>
-              <div class="ship-stat"><div class="ship-stat-val" id="sv-nickname" style="font-size:0.9rem">—</div><div class="ship-stat-lbl">함선 별명</div></div>
-            </div>
+          <div class="ship-view-bg"></div>
+          <div class="cmd-display" id="cmd-display">
+            <!-- populated by updateShipView -->
           </div>
         </div>
       </div>
-
       <!-- VIEW 1: MOON -->
       <div class="view active" id="view-1">
         <div class="moon-view">
           <div class="moon-container" id="moon-container">
             <img class="moon-full-img" src="assets/moon_real.png" alt="Moon"
-              onerror="this.style.background='radial-gradient(circle at 35% 35%,#c8c8c8,#888,#555)'"/>
+              onerror="this.style.background='radial-gradient(circle at 35% 35%,#ccc,#888,#555)'"/>
             <div class="moon-grid-overlay" id="moon-overlay"></div>
             <div class="moon-tooltip" id="moon-tooltip"></div>
           </div>
           <div class="moon-legend">
-            <span>🔵 내 영토</span><span>🔴 적 영토</span><span>⚫ 중립</span>
-            <span>💠 He-3</span><span>💜 레골리스</span><span>🩵 H₂O</span>
+            <span>🔵 내</span><span>🔴 적</span><span>💠 He-3</span><span>💜 레골리스</span><span>🩵 H₂O</span>
           </div>
         </div>
       </div>
-
-      <!-- VIEW 2: BATTLE MAP -->
+      <!-- VIEW 2: BATTLE -->
       <div class="view" id="view-2">
         <div class="battle-view">
           <img class="moon-surface-img" src="assets/moon_real.png" alt="" onerror="this.style.display='none'"/>
           <div class="grid-wrap" id="grid"></div>
         </div>
       </div>
-
       <!-- VIEW 3: ZOOM -->
       <div class="view" id="view-3">
         <div class="zoom-view">
           <div class="zoom-left">
             <div class="zoom-sector-card">
-              <img class="zoom-moon-patch" src="assets/moon_real.png" alt="sector" id="zoom-patch"
-                onerror="this.style.background='radial-gradient(#333,#111)'"/>
+              <img class="zoom-moon-patch" src="assets/moon_real.png" id="zoom-patch"
+                onerror="this.style.background='#111'"/>
               <div class="zoom-sec-name" id="zoom-sname">섹터 선택 안됨</div>
               <div class="zoom-sec-info">
                 <div class="zsstat"><div class="zsstat-val" id="zoom-owner">—</div><div class="zsstat-lbl">소유국</div></div>
                 <div class="zsstat"><div class="zsstat-val" id="zoom-hp">—</div><div class="zsstat-lbl">HP</div></div>
                 <div class="zsstat"><div class="zsstat-val" id="zoom-res">—</div><div class="zsstat-lbl">자원</div></div>
               </div>
-              <button class="abtn" style="margin-bottom:6px" onclick="deployUnit()">🚀 유닛 배치</button>
+              <button class="abtn" style="margin-bottom:5px" onclick="deployUnit()">🚀 유닛 배치</button>
+              <button class="abtn hng" style="margin-bottom:5px" onclick="openHangar()">🛠️ 메카 탑재</button>
               <button class="abtn atk" onclick="startBattle()">⚔️ 공격</button>
             </div>
           </div>
           <div class="zoom-right">
-            <div id="counter-display-zoom" class="counter-display" style="display:none">
+            <div class="counter-display-z" id="counter-display-z" style="display:none">
               <div class="counter-title">⚡ 상성 분석</div>
               <div id="counter-content"></div>
             </div>
-            <div class="rtitle" style="margin-bottom:8px">⚔️ 전투 현황</div>
+            <div class="rtitle" style="margin-bottom:7px">⚔️ 전투 현황</div>
             <div class="combatants" id="combatants">
-              <div style="color:var(--muted);font-size:0.8rem;text-align:center;padding:20px 0">섹터를 선택하세요</div>
+              <div style="color:var(--muted);font-size:0.78rem;text-align:center;padding:16px 0">섹터를 선택하세요</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT PANEL -->
+    <!-- RIGHT -->
     <div class="rpanel">
       <div class="rcard">
         <div class="rtitle">선택 유닛</div>
-        <div id="sel-unit-info">
-          <div style="color:var(--muted);font-size:0.76rem;text-align:center;padding:12px 0">유닛 선택하세요</div>
-        </div>
+        <div id="sel-unit-info"><div style="color:var(--muted);font-size:0.74rem;text-align:center;padding:10px 0">유닛 선택하세요</div></div>
       </div>
       <div class="rcard">
         <div class="rtitle">섹터 정보</div>
-        <div id="sec-info">
-          <div style="color:var(--muted);font-size:0.76rem;text-align:center;padding:12px 0">섹터를 선택하세요</div>
-        </div>
+        <div id="sec-info"><div style="color:var(--muted);font-size:0.74rem;text-align:center;padding:10px 0">섹터를 선택하세요</div></div>
       </div>
       <div class="rcard">
         <div class="rtitle">액션</div>
         <button class="abtn" onclick="deployUnit()">🚀 유닛 배치</button>
+        <button class="abtn hng" onclick="openHangar()">🛠️ 메카 탑재</button>
         <button class="abtn atk" onclick="startBattle()">⚔️ 공격 개시</button>
         <button class="abtn res" onclick="collect()">⚡ 자원 수집</button>
       </div>
@@ -631,6 +745,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
         <div class="bname" id="b-aname"></div>
         <div class="bpow" id="b-apow"></div>
         <div class="bmod" id="b-amod"></div>
+        <div class="battle-mechs" id="b-amechs"></div>
       </div>
       <div class="vstext">VS</div>
       <div class="bside">
@@ -639,6 +754,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
         <div class="bname" id="b-dname"></div>
         <div class="bpow" id="b-dpow"></div>
         <div class="bmod" id="b-dmod"></div>
+        <div class="battle-mechs" id="b-dmechs"></div>
       </div>
     </div>
     <div class="hpwrap">
@@ -657,13 +773,32 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 </div>
 
 <!-- EVENT MODAL -->
-<div class="event-modal" id="event-modal">
-  <div class="event-body">
-    <div class="event-icon" id="ev-icon"></div>
-    <div class="event-title" id="ev-title"></div>
-    <div class="event-desc" id="ev-desc"></div>
-    <div class="event-effect" id="ev-effect"></div>
-    <button class="btn-event-ok" onclick="closeEvent()">확인</button>
+<div class="emodal" id="emodal">
+  <div class="ebody">
+    <div class="ev-icon" id="ev-icon"></div>
+    <div class="ev-title" id="ev-title"></div>
+    <div class="ev-desc" id="ev-desc"></div>
+    <div class="ev-effect" id="ev-effect"></div>
+    <button class="btn-ev-ok" onclick="closeEvent()">확인</button>
+  </div>
+</div>
+
+<!-- HANGAR MODAL -->
+<div class="hmodal" id="hmodal">
+  <div class="hmbody">
+    <div class="hm-title">🛠️ 메카 격납고 — 함선에 탑재</div>
+    <div class="hm-ship-info" id="hm-ship-info">
+      <img class="hm-ship-img" id="hm-ship-img" src="" alt=""/>
+      <div>
+        <div id="hm-ship-name" style="font-weight:700;font-size:0.9rem"></div>
+        <div id="hm-ship-cap" style="font-size:0.76rem;color:var(--orange);margin-top:3px"></div>
+      </div>
+    </div>
+    <div class="rtitle" style="margin-bottom:8px">현재 탑재 현황</div>
+    <div class="hm-slots" id="hm-slots"></div>
+    <div class="rtitle" style="margin-bottom:8px">탑재할 메카 선택</div>
+    <div class="hm-mech-list" id="hm-mech-list"></div>
+    <button class="btn-hm-close" onclick="closeHangar()">완료</button>
   </div>
 </div>
 
@@ -674,136 +809,159 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 </div>
 
 <script>
-const A='https://raw.githubusercontent.com/kentkim0326/kingdom-wars/main/assets/';
+const A = 'https://raw.githubusercontent.com/kentkim0326/kingdom-wars/main/assets/';
 
-// ── COUNTER SYSTEM ──────────────────────────────────
-// strong[x] = types that x beats (+30% bonus)
-// weak[x]   = types that beat x (-40% penalty)
-const COUNTER = {
-  fighter:  {strong:['destroyer'],    weak:['laser_mech','drone']},
-  destroyer:{strong:['mothership'],   weak:['fighter','torpedo']},
-  mothership:{strong:['sector'],      weak:['destroyer','torpedo']},
-  laser_mech:{strong:['fighter','drone'], weak:['armor_mech','missile_mech']},
-  missile_mech:{strong:['armor_mech','destroyer'],weak:['laser_mech','ace']},
-  armor_mech:{strong:['laser_mech'],  weak:['missile_mech','ace']},
-  melee_mech:{strong:['laser_mech','armor_mech'], weak:['fighter','missile_mech']},
-  drone:    {strong:['armor_mech'],   weak:['laser_mech','missile_mech']},
-  ace:      {strong:['missile_mech','melee_mech'], weak:['drone']},
+// ── COMMANDER DATA ────────────────────────────────────
+const COMMANDERS = {
+  '🇰🇷':[
+    {gender:'male',avatar:'🧑‍🚀',name:'이준혁',title:'"철의 장군"',
+     skills:['⚡ 레이저 공격력 +15%','🛡️ 크레이터 방어 +20%','🔍 적 정보 선공개']},
+    {gender:'female',avatar:'👩‍🚀',name:'김서연',title:'"달의 여왕"',
+     skills:['💨 전투기 속도 +20%','💎 레골리스 수집 +25%','⭐ 에이스 전투력 +30%']},
+  ],
+  '🇺🇸':[
+    {gender:'male',avatar:'🧑‍✈️',name:'Commander Blake',title:'"Eagle"',
+     skills:['🚀 모선 전투력 +20%','💰 코인 생산 +15%','🎯 미사일 정확도 +25%']},
+    {gender:'female',avatar:'👩‍✈️',name:'Admiral Sarah',title:'"Valkyrie"',
+     skills:['🛡️ 전체 방어 +10%','⚡ He-3 생산 +20%','🏆 포로 협상 성공률 +30%']},
+  ],
+  '🇯🇵':[
+    {gender:'male',avatar:'🥷',name:'大和司令',title:'"鋼の将"',
+     skills:['⚔️ 근접 메카 +25%','🎋 기술 연구 속도 +20%','🌸 사기 항상 최대']},
+    {gender:'female',avatar:'👘',name:'月姫サクラ',title:'"月の女神"',
+     skills:['🌙 달 전체 시야 개방','💎 레골리스 +30%','✨ 에이스 영구 소생 확률 +20%']},
+  ],
+  '🇨🇳':[
+    {gender:'male',avatar:'🐉',name:'赵龙将军',title:'"龙之将"',
+     skills:['👥 병력 2배 효과','🏯 요새 건설 무료','⚡ He-3 생산 +30%']},
+    {gender:'female',avatar:'🏮',name:'李嫦娥',title:'"月神"',
+     skills:['🌙 달 자원 생산 +25%','🔮 랜덤 이벤트 예고','💫 아군 HP 자동 회복']},
+  ],
+  '🇷🇺':[
+    {gender:'male',avatar:'🐻',name:'Иван Волков',title:'"Железный"',
+     skills:['🏔️ 크레이터 특화 +35%','❄️ H₂O 소비 -30%','💥 폭격 범위 +1칸']},
+    {gender:'female',avatar:'🦊',name:'Наташа',title:'"Волчица"',
+     skills:['🕵️ 스파이 작전 가능','🎯 저격 메카 +30%','💎 레골리스 채굴 +20%']},
+  ],
+  // Default for other nations
+  '_default':[
+    {gender:'male',avatar:'🧑‍🚀',name:'Commander',title:'"전사"',
+     skills:['⚔️ 전투력 +10%','⚡ 자원 생산 +10%','🛡️ 방어력 +10%']},
+    {gender:'female',avatar:'👩‍🚀',name:'Admiral',title:'"지휘관"',
+     skills:['💨 기동력 +15%','💎 희귀 자원 +15%','⭐ 에이스 전투력 +20%']},
+  ],
 };
 
-function getCounterMod(attType, defType) {
-  if (!attType || !defType) return {mod:1, label:''};
-  const c = COUNTER[attType];
-  if (!c) return {mod:1, label:''};
-  if (c.strong.includes(defType)) return {mod:1.35, label:'✅ 상성 유리 +35%'};
-  if (c.weak.includes(defType))   return {mod:0.60, label:'❌ 상성 불리 -40%'};
-  return {mod:1, label:'⚖️ 중립'};
+// ── COUNTER SYSTEM ────────────────────────────────────
+const COUNTER = {
+  fighter:     {strong:['destroyer'],          weak:['laser_mech','drone']},
+  destroyer:   {strong:['mothership'],         weak:['fighter','torpedo']},
+  mothership:  {strong:['sector'],             weak:['destroyer']},
+  laser_mech:  {strong:['fighter','drone'],    weak:['armor_mech','missile_mech']},
+  missile_mech:{strong:['armor_mech','destroyer'], weak:['laser_mech','ace']},
+  armor_mech:  {strong:['laser_mech'],         weak:['missile_mech','ace']},
+  melee_mech:  {strong:['laser_mech','armor_mech'], weak:['fighter','missile_mech']},
+  drone:       {strong:['armor_mech'],         weak:['laser_mech','missile_mech']},
+  ace:         {strong:['missile_mech','melee_mech'], weak:['drone']},
+};
+function getCounterMod(a,d){
+  if(!a||!d) return{mod:1,label:''};
+  const c=COUNTER[a];if(!c) return{mod:1,label:''};
+  if(c.strong.includes(d)) return{mod:1.35,label:'✅ 상성 유리 +35%'};
+  if(c.weak.includes(d))   return{mod:0.60,label:'❌ 상성 불리 -40%'};
+  return{mod:1,label:'⚖️ 중립'};
 }
 
-// ── UNIT DATA ────────────────────────────────────────
-const UNITS = {
-  fleet:[
-    {id:'f1',name:'전투기',ctype:'fighter',type:'fleet',emoji:'🚀',img:A+'ship3.png',power:80,count:3,size:1,
-      cost:{he3:0,reg:0,coin:0},desc:'빠른 선제 (1칸)',strong:'구축함에 강함',weak:'레이저에 약함'},
-    {id:'f2',name:'구축함',ctype:'destroyer',type:'fleet',emoji:'🛸',img:A+'ship6.png',power:200,count:1,size:2,
-      cost:{he3:200,reg:0,coin:500},desc:'균형 주력 (2칸)',strong:'모선 공략',weak:'전투기 군집에 약함'},
-    {id:'f3',name:'순양함',ctype:'destroyer',type:'fleet',emoji:'🌠',img:A+'ship1.png',power:450,count:1,size:2,
-      cost:{he3:400,reg:20,coin:800},desc:'강력 화력 (2칸)',strong:'모선 공략',weak:'어뢰에 약함'},
-    {id:'f4',name:'모선',ctype:'mothership',type:'fleet',emoji:'🌌',img:A+'ship2.png',power:900,count:0,size:4,
-      cost:{he3:800,reg:50,coin:2000},desc:'초거대 함선 (4칸)',strong:'섹터 폭격',weak:'구축함에 약함'},
-  ],
-  mech:[
-    {id:'m1',name:'레이저 메카',ctype:'laser_mech',type:'mech',emoji:'🎯',img:A+'mech1.png',power:180,count:2,size:1,
-      cost:{he3:150,reg:10,coin:400},desc:'원거리 레이저',strong:'전투기/드론에 강함',weak:'장갑 메카에 약함'},
-    {id:'m2',name:'미사일 메카',ctype:'missile_mech',type:'mech',emoji:'💣',img:A+'mech3.png',power:250,count:1,size:1,
-      cost:{he3:200,reg:15,coin:500},desc:'미사일 포격',strong:'장갑/구축함 관통',weak:'레이저에 약함'},
-    {id:'m3',name:'공중 강습',ctype:'fighter',type:'mech',emoji:'🦅',img:A+'mech5.png',power:160,count:2,size:1,
-      cost:{he3:100,reg:5,coin:300},desc:'고기동 강습',strong:'구축함 기습',weak:'레이저에 약함'},
-    {id:'m4',name:'드론 군집',ctype:'drone',type:'mech',emoji:'🐝',img:A+'ship4.png',power:120,count:0,size:1,
-      cost:{he3:80,reg:3,coin:200},desc:'수적 압박',strong:'장갑 메카 압박',weak:'레이저/미사일에 약함'},
-  ],
-  ace:[
-    {id:'a1',name:'에이스 파일럿',ctype:'ace',type:'ace',emoji:'⭐',img:A+'mech4.png',power:350,count:1,size:1,
-      cost:{he3:300,reg:30,coin:800},desc:'에이스 전투기',strong:'미사일/격투에 강함',weak:'드론 군집에 약함'},
-    {id:'a2',name:'사무라이 여왕',ctype:'ace',type:'ace',emoji:'👑',img:A+'mech2.png',power:500,count:0,size:1,
-      cost:{he3:500,reg:60,coin:1500},desc:'전설급 영웅',strong:'모든 메카 제압',weak:'드론에 약함'},
-    {id:'a3',name:'거대 메카',ctype:'armor_mech',type:'ace',emoji:'🗿',img:A+'mech3.png',power:400,count:0,size:2,
-      cost:{he3:400,reg:40,coin:1000},desc:'초대형 장갑',strong:'레이저 흡수',weak:'미사일에 약함'},
-  ],
-};
-
-// ── SECTOR TYPES ──────────────────────────────────────
-const SEC_TYPES = [
-  'he3','neutral','reg','neutral','h2o',  // row 1
-  'crater','he3','neutral','reg','neutral','crater','h2o',  // row 2
-  'neutral','he3','reg','neutral','h2o','neutral','crater','he3','reg','neutral', // rows 3
+// ── SHIP DATA (with hangar capacity) ──────────────────
+const SHIPS = [
+  {id:'f1',name:'전투기',ctype:'fighter',emoji:'🚀',img:A+'ship3.png',power:80,count:3,size:1,hangar:0,
+   cost:{he3:0,reg:0,coin:0},desc:'빠른 단독 공격. 격납 불가',strong:'구축함에 강함',weak:'레이저에 약함'},
+  {id:'f2',name:'구축함',ctype:'destroyer',emoji:'🛸',img:A+'ship6.png',power:200,count:1,size:2,hangar:2,
+   cost:{he3:200,reg:0,coin:500},desc:'메카 2기 탑재 가능',strong:'모선 공략',weak:'전투기 군집'},
+  {id:'f3',name:'순양함',ctype:'destroyer',emoji:'🌠',img:A+'ship1.png',power:320,count:0,size:2,hangar:4,
+   cost:{he3:400,reg:20,coin:1200},desc:'메카 4기 탑재 가능',strong:'모선 공략',weak:'어뢰'},
+  {id:'f4',name:'전투함',ctype:'destroyer',emoji:'🏛️',img:A+'ship5.png',power:520,count:0,size:4,hangar:6,
+   cost:{he3:700,reg:35,coin:2500},desc:'메카 6기 탑재 가능',strong:'섹터 폭격',weak:'드론'},
+  {id:'f5',name:'모선',ctype:'mothership',emoji:'🌌',img:A+'ship2.png',power:800,count:0,size:4,hangar:12,
+   cost:{he3:1200,reg:60,coin:6000},desc:'메카 12기 탑재! 이동 기지',strong:'전 섹터 폭격',weak:'구축함'},
 ];
-const SEC_RES = {
-  he3:     {icon:'💠', color:'#00c8ff', label:'He-3 광맥',  prod:{he3:150,reg:0,h2o:0}},
-  reg:     {icon:'💜', color:'#aa44ff', label:'레골리스 광산', prod:{he3:50,reg:20,h2o:0}},
-  h2o:     {icon:'🩵', color:'#00ffcc', label:'H₂O 얼음',   prod:{he3:50,reg:0,h2o:30}},
-  crater:  {icon:'🏔️', color:'#888',   label:'크레이터 요새 (+50%방어)', prod:{he3:80,reg:0,h2o:0}},
-  neutral: {icon:'',  color:'',        label:'일반 섹터',   prod:{he3:100,reg:0,h2o:10}},
-};
 
+const MECHS = [
+  {id:'m1',name:'레이저 메카',ctype:'laser_mech',emoji:'🎯',img:A+'mech1.png',power:180,count:2,
+   cost:{he3:150,reg:10,coin:400},desc:'원거리 레이저',strong:'전투기/드론',weak:'장갑 메카'},
+  {id:'m2',name:'미사일 메카',ctype:'missile_mech',emoji:'💣',img:A+'mech3.png',power:250,count:1,
+   cost:{he3:200,reg:15,coin:500},desc:'미사일 포격',strong:'장갑/구축함',weak:'레이저 메카'},
+  {id:'m3',name:'공중 강습',ctype:'fighter',emoji:'🦅',img:A+'mech5.png',power:160,count:2,
+   cost:{he3:100,reg:5,coin:300},desc:'고기동 강습',strong:'구축함 기습',weak:'레이저 메카'},
+  {id:'m4',name:'격투 메카',ctype:'melee_mech',emoji:'🥊',img:A+'mech2.png',power:200,count:0,
+   cost:{he3:150,reg:8,coin:350},desc:'근접 백병전',strong:'레이저/장갑',weak:'전투기/미사일'},
+  {id:'m5',name:'장갑 메카',ctype:'armor_mech',emoji:'🗿',img:A+'mech3.png',power:280,count:0,
+   cost:{he3:250,reg:18,coin:550},desc:'중장갑 방어',strong:'레이저 흡수',weak:'미사일 관통'},
+];
+
+const ACES = [
+  {id:'a1',name:'에이스 파일럿',ctype:'ace',emoji:'⭐',img:A+'mech4.png',power:350,count:1,
+   cost:{he3:300,reg:30,coin:800},desc:'함선 탑승 에이스',strong:'미사일/격투 제압',weak:'드론 군집'},
+];
+
+// Combined for lookup
+const ALL_UNITS = [...SHIPS,...MECHS,...ACES];
+
+const SEC_TYPES=['he3','neutral','reg','neutral','h2o','crater','he3','neutral','reg','neutral',
+  'crater','h2o','neutral','he3','reg','neutral','h2o','neutral','crater','he3','reg'];
+const SEC_RES={
+  he3:    {icon:'💠',color:'#00c8ff',label:'He-3 광맥',  prod:{he3:150,reg:0,h2o:0}},
+  reg:    {icon:'💜',color:'#aa44ff',label:'레골리스 광산',prod:{he3:50,reg:20,h2o:0}},
+  h2o:    {icon:'🩵',color:'#00ffcc',label:'H₂O 얼음',  prod:{he3:50,reg:0,h2o:30}},
+  crater: {icon:'🏔️',color:'#888',  label:'크레이터 요새',prod:{he3:80,reg:0,h2o:0}},
+  neutral:{icon:'',  color:'',      label:'일반 섹터',   prod:{he3:100,reg:0,h2o:10}},
+};
 const SNAMES=['고요의 바다 A','고요의 바다 B','폭풍의 바다 A','폭풍의 바다 B','위기의 바다',
   '샤클턴','풍요의 바다','코페르니쿠스','티코 크레이터','플라톤','아리스타르코스',
   '비의 바다 A','비의 바다 B','구름의 바다','지식의 바다','프톨레마이오스',
   '달 뒷면 A','달 뒷면 B','남극 고원','북극 고원','아이트켄 분지'];
-
 const SEC_POS=[[35,28],[50,25],[65,30],[72,38],[68,48],[55,52],[42,50],[30,44],[22,36],[28,28],
   [45,38],[58,36],[65,22],[50,40],[38,55],[25,50],[35,62],[50,65],[62,60],[70,55],[48,72]];
 
-// ── UNIT NICKNAMES ────────────────────────────────────
-const NICKNAMES_3W  =['달의 악몽','샤클턴의 저주','고요의 살인마','폭풍의 선두자','첫 번째 정복자'];
-const NICKNAMES_5W  =['철의 군주','헬륨 사냥꾼','무적의 함대','달의 전설','불멸의 전사'];
-const NICKNAMES_10W =['태양계의 왕','달의 지배자','전설의 에이스','무패의 함선','우주 패권자'];
+const ENEMY_UNITS=[
+  {img:A+'ship4.png',emoji:'💀',ctype:'destroyer'},{img:A+'ship5.png',emoji:'🛸',ctype:'destroyer'},
+  {img:A+'mech3.png',emoji:'💣',ctype:'missile_mech'},{img:A+'mech5.png',emoji:'🦅',ctype:'fighter'},
+];
 
-function getNickname(wins) {
-  if (wins>=10) return NICKNAMES_10W[Math.floor(Math.random()*NICKNAMES_10W.length)];
-  if (wins>=5)  return NICKNAMES_5W[Math.floor(Math.random()*NICKNAMES_5W.length)];
-  if (wins>=3)  return NICKNAMES_3W[Math.floor(Math.random()*NICKNAMES_3W.length)];
+const NICKNAMES_3W=['달의 악몽','샤클턴의 저주','고요의 살인마','폭풍의 선두자','첫 번째 정복자'];
+const NICKNAMES_5W=['철의 군주','헬륨 사냥꾼','무적의 함대','달의 전설','불멸의 전사'];
+const NICKNAMES_10W=['태양계의 왕','달의 지배자','전설의 에이스','무패의 함선','우주 패권자'];
+function getNickname(w){
+  if(w>=10)return NICKNAMES_10W[Math.floor(Math.random()*NICKNAMES_10W.length)];
+  if(w>=5) return NICKNAMES_5W[Math.floor(Math.random()*NICKNAMES_5W.length)];
+  if(w>=3) return NICKNAMES_3W[Math.floor(Math.random()*NICKNAMES_3W.length)];
   return null;
 }
 
-// ── EVENTS ───────────────────────────────────────────
-const EVENTS = [
-  {icon:'☄️',title:'소행성 충돌!',desc:'달의 특정 구역에 소행성이 충돌했습니다. 해당 섹터는 1턴간 교란 상태입니다.',
-   effect:'모든 공격 정확도 -20%',apply:G=>G.eventMod={accuracy:-0.2,turns:1}},
-  {icon:'🌑',title:'달 먼지 폭풍',desc:'거대한 먼지 폭풍이 달 표면을 휩쓸고 있습니다. 시야가 제한됩니다.',
-   effect:'이번 턴 자원 생산 -30%',apply:G=>G.prodMod=0.7},
-  {icon:'☀️',title:'태양풍 발생',desc:'강력한 태양풍이 달 표면을 강타합니다. 에너지 무기가 강화됩니다.',
-   effect:'레이저/에너지 유닛 전투력 +30% (1턴)',apply:G=>G.energyBuff=1.3},
-  {icon:'🛰️',title:'정찰위성 발사',desc:'UN 우주정찰대가 위성을 발사했습니다. 전 섹터 정보가 공개됩니다.',
-   effect:'3턴간 모든 적 위치 공개',apply:G=>G.fullVision=3},
-  {icon:'💥',title:'우주 쓰레기 충돌',desc:'고속 우주 쓰레기가 달 궤도를 통과 중입니다.',
-   effect:'랜덤 섹터 1개 피해 -20 HP',apply:(G,S)=>{const keys=Object.keys(S);if(keys.length)S[keys[Math.floor(Math.random()*keys.length)]].hp=Math.max(1,S[keys[Math.floor(Math.random()*keys.length)]].hp-20)}},
-  {icon:'🏆',title:'UN 평화 협정',desc:'UN이 긴급 평화 협정을 선포했습니다. 3턴간 전투가 금지됩니다.',
-   effect:'3턴간 자원 생산 +50%',apply:G=>G.peaceTurns=3},
-  {icon:'🌊',title:'H₂O 빙하 발견',desc:'예상치 못한 대규모 H₂O 빙하가 발견되었습니다!',
-   effect:'H₂O +200 즉시 획득',apply:G=>G.h2o+=200},
-  {icon:'💎',title:'레골리스 광맥 발견',desc:'새로운 레골리스 결정체 광맥이 발견되었습니다!',
-   effect:'레골리스 +50 즉시 획득',apply:G=>G.reg+=50},
-];
+const SPACE_NEWS=['🚀 SpaceX Starship 7차 시험비행 성공 — 화성 유인 탐사 2027년 목표',
+  '🌙 NASA 아르테미스 III 달 착륙 2026년 예정 — 최초 여성 달 탐험',
+  '🔴 ESA 화성 샘플 귀환 미션 승인 — 2031년 지구 귀환',
+  '🛸 중국 창어 7호 달 남극 탐사 완료 — 수분 존재 확인',
+  '⚡ 달 헬륨-3 매장량 100만 톤 추산 — 지구 에너지 1만년분',
+  '🪐 NASA 유로파 클리퍼 목성 도착 — 외계생명 가능성 탐사 시작',
+  '🛰️ 스타링크 위성 7,000기 돌파 — 글로벌 위성 인터넷 서비스 확대',
+  '💥 소행성 베뉴 샘플 분석 — 생명의 기원 단서 아미노산 발견',
+  '🌌 제임스 웹 망원경 — 우주 최초 은하 관측 성공',
+  '🔬 달 토양에서 산소 추출 성공 — 달 기지 건설 현실화',
+  '🚀 블루오리진 뉴글렌 로켓 상업 운용 개시',
+  '⚔️ UN 우주 군사화 금지 조약 논의 재개 — 미·중·러 입장 충돌',
+  '🏗️ NASA 달 게이트웨이 우주정거장 2027년 착공 예정',
+  '💫 민간 우주관광 가격 급락 — 2028년 일반인 달 궤도 비행 가능'];
 
-// ── TECH TREE ─────────────────────────────────────────
-const TECH = {
-  fire:[
-    {id:'t_f1',name:'레이저 강화',cost:{reg:15},done:false,effect:'에너지 유닛 +20%',locked:false},
-    {id:'t_f2',name:'미사일 사거리',cost:{reg:25},done:false,effect:'미사일 사거리 +1섹터',locked:true},
-    {id:'t_f3',name:'핵융합 폭탄',cost:{reg:50},done:false,effect:'광역 폭격 스킬 해금',locked:true},
-  ],
-  def:[
-    {id:'t_d1',name:'실드 강화',cost:{reg:15},done:false,effect:'방어 유닛 HP +30%',locked:false},
-    {id:'t_d2',name:'크레이터 요새화',cost:{reg:25},done:false,effect:'크레이터 방어 +80%',locked:true},
-    {id:'t_d3',name:'위상 방어막',cost:{reg:50},done:false,effect:'전투 중 실드 회복',locked:true},
-  ],
-  sci:[
-    {id:'t_s1',name:'채굴 효율',cost:{reg:10},done:false,effect:'자원 생산 +25%',locked:false},
-    {id:'t_s2',name:'정찰 드론',cost:{reg:20},done:false,effect:'적 섹터 정보 스캔',locked:true},
-    {id:'t_s3',name:'나노봇 수리',cost:{reg:40},done:false,effect:'전투 중 HP 회복',locked:true},
-  ],
-};
+const EVENTS=[
+  {icon:'☄️',title:'소행성 충돌!',desc:'달에 소행성이 충돌했습니다.',effect:'모든 공격 정확도 -20% (1턴)',apply:G=>{G.eventMod={accuracy:-0.2,turns:1}}},
+  {icon:'🌑',title:'달 먼지 폭풍',desc:'거대한 먼지 폭풍이 달 표면을 휩쓸고 있습니다.',effect:'이번 턴 자원 생산 -30%',apply:G=>{G.prodMod=0.7}},
+  {icon:'☀️',title:'태양풍 발생',desc:'강력한 태양풍이 달 표면을 강타합니다.',effect:'에너지 유닛 전투력 +30% (1턴)',apply:G=>{G.energyBuff=1.3}},
+  {icon:'🛰️',title:'정찰위성 발사',desc:'정찰위성이 발사되었습니다.',effect:'3턴간 모든 적 위치 공개',apply:G=>{G.fullVision=3}},
+  {icon:'🏆',title:'UN 평화 협정',desc:'UN이 긴급 평화 협정을 선포했습니다.',effect:'3턴간 자원 생산 +50%',apply:G=>{G.peaceTurns=3}},
+  {icon:'🌊',title:'H₂O 빙하 발견',desc:'대규모 H₂O 빙하가 발견되었습니다!',effect:'H₂O +200 즉시 획득',apply:G=>{G.h2o+=200}},
+  {icon:'💎',title:'레골리스 광맥 발견',desc:'새로운 레골리스 결정체 광맥!',effect:'레골리스 +50 즉시 획득',apply:G=>{G.reg+=50}},
+];
 
 const NATIONS=[
   {f:'🇰🇷',n:'대한민국',e:'Korea'},{f:'🇺🇸',n:'미국',e:'USA'},{f:'🇨🇳',n:'중국',e:'China'},
@@ -822,42 +980,96 @@ const NATIONS=[
   {f:'🇳🇬',n:'나이지리아',e:'Nigeria'},{f:'🇮🇱',n:'이스라엘',e:'Israel'},
 ];
 
-const ENEMY_UNITS=[
-  {img:A+'ship4.png',emoji:'💀',ctype:'destroyer'},{img:A+'ship5.png',emoji:'🛸',ctype:'destroyer'},
-  {img:A+'mech3.png',emoji:'💣',ctype:'missile_mech'},{img:A+'mech5.png',emoji:'🦅',ctype:'fighter'},
-  {img:A+'ship6.png',emoji:'🌠',ctype:'laser_mech'},
-];
-
+// ── STATE ─────────────────────────────────────────────
 let G={
-  nation:null,tab:'fleet',selUnit:null,selSec:null,
-  he3:2400,reg:80,h2o:120,coins:1200,
-  sectors:{},logs:[],prisoners:[],currentView:1,
-  turn:1,wins:0,unitWins:{},unitNicknames:{},
-  eventMod:null,prodMod:1,energyBuff:1,fullVision:0,peaceTurns:0,
-  techDone:{},
+  nation:null, commander:null,
+  tab:'fleet', selUnit:null, selSec:null,
+  he3:2400, reg:80, h2o:120, coins:1200,
+  sectors:{}, logs:[], prisoners:[],
+  currentView:1, turn:1, wins:0,
+  unitWins:{}, unitNicknames:{},
+  eventMod:null, prodMod:1, energyBuff:1, fullVision:0, peaceTurns:0,
+  // Hangar: sectorIdx -> array of mech IDs
+  hangars:{},
 };
 
-// ── STARS ──
+// ── STARS ──────────────────────────────────────────────
 (()=>{const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*1.8+0.4;s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${Math.random()*4+2}s;animation-delay:${Math.random()*4}s;opacity:${Math.random()*0.35+0.1}`;c.appendChild(s);}})();
 
 // ── NAVIGATION ────────────────────────────────────────
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
 function goNation(){show('s-nation');renderN(NATIONS)}
-function renderN(list){document.getElementById('ngrid').innerHTML=list.map(n=>`<div class="nc" onclick="selN('${n.e}')"><div class="nf">${n.f}</div><div class="nn">${n.n}</div><div class="ne">${n.e}</div></div>`).join('')}
+function renderN(list){
+  document.getElementById('ngrid').innerHTML=list.map(n=>
+    `<div class="nc" onclick="selN('${n.e}')"><div class="nf">${n.f}</div><div class="nn">${n.n}</div><div class="ne">${n.e}</div></div>`
+  ).join('');
+}
 function filterN(q){renderN(NATIONS.filter(n=>n.n.includes(q)||n.e.toLowerCase().includes(q.toLowerCase())))}
-function selN(en){G.nation=NATIONS.find(n=>n.e===en);document.querySelectorAll('.nc').forEach(c=>c.classList.toggle('sel',c.querySelector('.ne').textContent===en));document.getElementById('btn-ok').classList.add('show')}
+function selN(en){
+  G.nation=NATIONS.find(n=>n.e===en);
+  document.querySelectorAll('.nc').forEach(c=>c.classList.toggle('sel',c.querySelector('.ne').textContent===en));
+  document.getElementById('btn-next').classList.add('show');
+}
 
+function goCommander(){
+  if(!G.nation) return;
+  show('s-commander');
+  document.getElementById('cmd-nation-flag').textContent=G.nation.f;
+  document.getElementById('cmd-nation-name').textContent=G.nation.n;
+  renderCommanderCards();
+}
+
+function renderCommanderCards(){
+  const cmds=COMMANDERS[G.nation.f]||COMMANDERS['_default'];
+  const container=document.getElementById('cmd-cards');
+  container.innerHTML='';
+  cmds.forEach((cmd,idx)=>{
+    const card=document.createElement('div');
+    card.className=`cmd-card ${cmd.gender}`;
+    card.innerHTML=`
+      <div class="cmd-avatar">
+        <span class="cmd-avatar-silhouette">${cmd.avatar}</span>
+      </div>
+      <div class="cmd-gender">${cmd.gender==='male'?'♂ 남성 사령관':'♀ 여성 사령관'}</div>
+      <div class="cmd-name">${cmd.name}</div>
+      <div class="cmd-title-text">${cmd.title}</div>
+      <div class="cmd-skills">
+        ${cmd.skills.map(s=>`<div class="cmd-skill"><span class="cmd-skill-icon">${s.split(' ')[0]}</span><span>${s.slice(s.indexOf(' ')+1)}</span></div>`).join('')}
+      </div>`;
+    card.onclick=()=>selCommander(idx,card,cmd);
+    container.appendChild(card);
+    if(cmds.length===2&&idx===0){
+      const vs=document.createElement('div');vs.className='cmd-vs';vs.textContent='VS';
+      container.appendChild(vs);
+    }
+  });
+}
+
+function selCommander(idx,card,cmd){
+  G.commander=cmd;
+  document.querySelectorAll('.cmd-card').forEach(c=>c.classList.remove('sel-m','sel-f'));
+  card.classList.add(cmd.gender==='male'?'sel-m':'sel-f');
+  document.getElementById('btn-cmd-confirm').classList.add('show');
+}
+
+// ── GAME INIT ─────────────────────────────────────────
 function goGame(){
-  if(!G.nation)return;
+  if(!G.nation||!G.commander) return;
   initEnemies();
-  document.getElementById('hflag').textContent=G.nation.f;
-  document.getElementById('hname').textContent=G.nation.n;
-  switchTab('fleet',document.querySelector('.utab'));
-  buildGrid();buildMoonOverlay();updateResUI();
-  log('sys',`[입장] ${G.nation.f} ${G.nation.n} 달 진입`);
+  initNewseTicker();
+  buildGrid();
+  buildMoonOverlay();
+  updateResUI();
+  updateHUD();
+  // Default select first ship
+  G.selUnit=SHIPS[0];
+  renderUnits();
+  showSelUnitInfo();
+  log('sys',`[입장] ${G.nation.f} ${G.commander.name} 사령관, 달 진입!`);
+  log('info',`[사령관] ${G.commander.title} 스킬 발동 준비`);
   log('info','⚡ We will conquer Mars before Elon');
-  log('info','[자원] 💠He-3 광맥 💜레골리스 🩵H₂O 얼음 섹터 확인');
   show('s-game');
+  updateShipView();
 }
 
 function initEnemies(){
@@ -870,60 +1082,98 @@ function initEnemies(){
   });
 }
 
+function initNewseTicker(){
+  const items=[...SPACE_NEWS,...SPACE_NEWS];
+  document.getElementById('news-scroll').innerHTML=items.map(n=>`<span style="white-space:nowrap">${n}</span>`).join('');
+}
+
+// ── HUD & RESOURCES ───────────────────────────────────
+function updateHUD(){
+  if(!G.nation||!G.commander) return;
+  document.getElementById('hud-avatar').textContent=G.commander.avatar;
+  document.getElementById('hud-cname').textContent=`${G.commander.name} ${G.commander.title}`;
+  document.getElementById('hflag').textContent=G.nation.f;
+  // Left panel commander
+  document.getElementById('lp-avatar').textContent=G.commander.avatar;
+  document.getElementById('lp-name').textContent=G.commander.name;
+  document.getElementById('lp-title').textContent=G.commander.title;
+}
+function updateResUI(){
+  const owned=Object.keys(G.sectors).filter(k=>G.sectors[k].owner==='me');
+  let rhe=0,rreg=0,rh2o=0;
+  owned.forEach(k=>{const st=SEC_TYPES[k]||'neutral';const p=SEC_RES[st].prod;rhe+=p.he3;rreg+=p.reg;rh2o+=p.h2o;});
+  rhe=Math.floor(rhe*G.prodMod);rreg=Math.floor(rreg*G.prodMod);rh2o=Math.floor(rh2o*G.prodMod);
+  document.getElementById('res-he3').textContent=G.he3.toLocaleString();
+  document.getElementById('res-reg').textContent=G.reg;
+  document.getElementById('res-h2o').textContent=G.h2o;
+  document.getElementById('rc').textContent=G.coins.toLocaleString();
+  document.getElementById('rs').textContent=owned.length;
+  document.getElementById('rw').textContent=G.wins;
+  document.getElementById('rate-he3').textContent=`+${rhe}/턴`;
+  document.getElementById('rate-reg').textContent=`+${rreg}/턴`;
+  document.getElementById('rate-h2o').textContent=`+${rh2o}/턴`;
+}
+
 // ── VIEWS ─────────────────────────────────────────────
-const VIEW_HINTS=['내 함선 — 선택 유닛이 우주를 항해합니다','달 전체 — 점 클릭 시 섹터 줌','전투 맵 — 섹터 클릭하여 배치/공격','섹터 줌 — 상세 정보 및 상성 분석'];
 function switchView(v){
   G.currentView=v;
   document.querySelectorAll('.view').forEach((el,i)=>el.classList.toggle('active',i===v));
   document.querySelectorAll('.vtbtn').forEach((el,i)=>el.classList.toggle('active',i===v));
-  document.getElementById('view-hint').textContent=VIEW_HINTS[v];
+  if(v===0)updateShipView();
   if(v===1)buildMoonOverlay();
   if(v===3&&G.selSec!=null)updateZoom(G.selSec);
-  if(v===0)updateShipView();
 }
 
 function updateShipView(){
-  if(!G.nation) return;
-  // Auto-pick first available unit if none selected
-  if(!G.selUnit){
-    const all=[...UNITS.fleet,...UNITS.mech,...UNITS.ace];
-    G.selUnit = all.find(u=>u.count>0) || UNITS.fleet[0];
-  }
-  const u=G.selUnit;
-  document.getElementById('sv-flag').textContent=G.nation.f;
-  document.getElementById('sv-name').textContent=G.nation.n;
-  document.getElementById('sv-ship-name').textContent=u?u.name:'유닛 미선택';
-  const imgEl=document.getElementById('sv-img');
-  if(u&&u.img){imgEl.src=u.img;imgEl.style.display='block';}
-  else{imgEl.style.display='none';}
-  document.getElementById('sv-power').textContent=u?u.power:'—';
-  document.getElementById('sv-sectors').textContent=Object.values(G.sectors).filter(s=>s.owner==='me').length;
-  document.getElementById('sv-wins').textContent=G.wins;
-  const nick=u?G.unitNicknames[u.id]:null;
-  document.getElementById('sv-nickname').textContent=nick||'별명 없음';
-  document.getElementById('sv-rank').textContent=`#${Math.floor(Math.random()*50+1)}`;
+  if(!G.nation||!G.commander) return;
+  const u=G.selUnit||SHIPS[0];
+  const hangar=G.selSec!=null?G.hangars[G.selSec]||[]:[];
+  const mechPow=hangar.reduce((sum,id)=>{const m=ALL_UNITS.find(x=>x.id===id);return sum+(m?m.power:0)},0);
+  document.getElementById('cmd-display').innerHTML=`
+    <div class="cmd-portrait">
+      <span class="cmd-portrait-avatar" style="color:${G.commander.gender==='female'?'#f9a':'#5af'}">${G.commander.avatar}</span>
+      <div class="cmd-portrait-name" style="color:${G.commander.gender==='female'?'#f9a':'#5af'}">${G.commander.name}</div>
+      <div class="cmd-portrait-title">${G.commander.title}</div>
+    </div>
+    <div class="cmd-ship-section">
+      <img class="cmd-ship-img" src="${u.img}" alt="${u.name}"
+        onerror="this.style.fontSize='5rem';this.textContent='${u.emoji}'"/>
+      <div class="cmd-ship-name">${u.emoji} ${u.name} ${u.hangar>0?`| 격납 ${u.hangar}기`:''}</div>
+      <div class="ship-stats">
+        <div class="ship-stat"><div class="ship-stat-val">${u.power+mechPow}</div><div class="ship-stat-lbl">총 전투력</div></div>
+        <div class="ship-stat"><div class="ship-stat-val">${u.power}</div><div class="ship-stat-lbl">함선 기본</div></div>
+        ${mechPow>0?`<div class="ship-stat"><div class="ship-stat-val" style="color:var(--purple)">+${mechPow}</div><div class="ship-stat-lbl">탑재 메카</div></div>`:''}
+        <div class="ship-stat"><div class="ship-stat-val">${Object.values(G.sectors).filter(s=>s.owner==='me').length}</div><div class="ship-stat-lbl">점령 섹터</div></div>
+        <div class="ship-stat"><div class="ship-stat-val">${G.wins}</div><div class="ship-stat-lbl">승리</div></div>
+      </div>
+      ${u.hangar>0?`
+      <div style="margin-top:12px;font-size:0.7rem;color:var(--orange);margin-bottom:6px">🛠️ 격납고 (${hangar.length}/${u.hangar})</div>
+      <div class="ship-hangar-display">
+        ${Array.from({length:u.hangar}).map((_,si)=>{
+          const mid=hangar[si];const m=mid?ALL_UNITS.find(x=>x.id===mid):null;
+          return`<div class="hangar-mech-slot ${m?'loaded':'empty-slot'}" title="${m?m.name:'빈 격납 슬롯'}">
+            ${m?m.emoji:'<span style="font-size:0.6rem;color:rgba(100,140,180,0.3)">●</span>'}
+          </div>`;
+        }).join('')}
+      </div>`:''}
+    </div>`;
 }
 
 // ── MOON OVERLAY ──────────────────────────────────────
 function buildMoonOverlay(){
   const ov=document.getElementById('moon-overlay');if(!ov)return;ov.innerHTML='';
   for(let i=0;i<21;i++){
-    const [px,py]=SEC_POS[i];const dx=px-50,dy=py-50;
+    const[px,py]=SEC_POS[i];const dx=px-50,dy=py-50;
     if(dx*dx+dy*dy>46*46)continue;
-    const s=G.sectors[i];
-    const st=SEC_TYPES[i]||'neutral';const sinfo=SEC_RES[st];
-    const dot=document.createElement('div');
-    dot.className='moon-sector-dot';
-    // Size based on resource type
+    const s=G.sectors[i];const st=SEC_TYPES[i]||'neutral';const si=SEC_RES[st];
+    const dot=document.createElement('div');dot.className='moon-sector-dot';
     const sz=st==='reg'?16:st==='h2o'?14:12;
-    const color=s?s.owner==='me'?'rgba(0,150,255,0.85)':'rgba(220,40,40,0.85)':(sinfo.color||'rgba(100,140,180,0.5)');
-    dot.style.cssText=`left:${px}%;top:${py}%;width:${sz}px;height:${sz}px;background:${color};border:2px solid rgba(255,255,255,0.4);box-shadow:0 0 ${sz}px ${color}`;
-    dot.title=SNAMES[i];
+    const col=s?s.owner==='me'?'rgba(0,150,255,0.85)':'rgba(220,40,40,0.85)':(si.color||'rgba(100,140,180,0.5)');
+    dot.style.cssText=`left:${px}%;top:${py}%;width:${sz}px;height:${sz}px;background:${col};border:2px solid rgba(255,255,255,0.4);box-shadow:0 0 ${sz}px ${col}`;
     dot.onclick=e=>{e.stopPropagation();G.selSec=i;switchView(3)};
     dot.onmouseenter=()=>{
-      const tt=document.getElementById('moon-tooltip');
-      const s2=G.sectors[i];
-      tt.innerHTML=`<strong>${SNAMES[i]}</strong><br>${sinfo.label}<br>${s2?`${s2.flag} ${s2.name} HP:${s2.hp}%`:'미점령'}`;
+      const tt=document.getElementById('moon-tooltip');const s2=G.sectors[i];
+      tt.innerHTML=`<strong>${SNAMES[i]}</strong><br>${si.label}<br>${s2?`${s2.flag} ${s2.name} HP:${s2.hp}%`:'미점령'}`;
       tt.style.left=px+'%';tt.style.top=py+'%';tt.style.display='block';
     };
     dot.onmouseleave=()=>document.getElementById('moon-tooltip').style.display='none';
@@ -934,50 +1184,48 @@ function buildMoonOverlay(){
 // ── ZOOM VIEW ─────────────────────────────────────────
 function updateZoom(i){
   const s=G.sectors[i];const name=SNAMES[i];
-  const st=SEC_TYPES[i]||'neutral';const sinfo=SEC_RES[st];
-  const [px,py]=SEC_POS[i]||[50,50];
+  const st=SEC_TYPES[i]||'neutral';const si=SEC_RES[st];
+  const[px,py]=SEC_POS[i]||[50,50];
   document.getElementById('zoom-patch').style.objectPosition=`${px}% ${py}%`;
   document.getElementById('zoom-sname').textContent=name;
   document.getElementById('zoom-owner').textContent=s?`${s.flag} ${s.name}`:'미점령';
   document.getElementById('zoom-hp').textContent=s?s.hp+'%':'—';
-  document.getElementById('zoom-res').textContent=sinfo.label;
-
-  // Counter analysis
-  const cdz=document.getElementById('counter-display-zoom');
+  document.getElementById('zoom-res').textContent=si.label;
+  // Counter
+  const cdz=document.getElementById('counter-display-z');
   const cc=document.getElementById('counter-content');
   if(G.selUnit&&s&&s.ctype){
-    const cm=getCounterMod(G.selUnit.ctype,s.ctype);
-    cdz.style.display='block';
-    cc.innerHTML=`
-      <div class="counter-row"><span class="rk">내 유닛</span><span>${G.selUnit.emoji} ${G.selUnit.name} (${G.selUnit.ctype})</span></div>
+    const cm=getCounterMod(G.selUnit.ctype,s.ctype);cdz.style.display='block';
+    cc.innerHTML=`<div class="counter-row"><span class="rk">내 유닛</span><span>${G.selUnit.emoji} ${G.selUnit.name}</span></div>
       <div class="counter-row"><span class="rk">적 유닛</span><span>${s.unitEmoji||'?'} (${s.ctype})</span></div>
-      <div class="counter-row"><span class="rk">상성</span><span style="color:${cm.mod>1?'var(--green)':cm.mod<1?'var(--red)':'var(--muted)'}">${cm.label||'⚖️ 중립'}</span></div>
-      <div class="counter-row"><span class="rk">배율</span><span style="font-weight:700;color:var(--gold)">×${cm.mod.toFixed(2)}</span></div>`;
-  } else {cdz.style.display='none'}
-
+      <div class="counter-row"><span class="rk">상성</span><span style="color:${cm.mod>1?'var(--green)':cm.mod<1?'var(--red)':'var(--muted)'}">${cm.label||'⚖️ 중립'}</span></div>`;
+  }else{cdz.style.display='none';}
   // Combatants
   const cb=document.getElementById('combatants');const u=G.selUnit;
+  const myHangar=G.hangars[i]||[];
+  const myMechPow=myHangar.reduce((sum,id)=>{const m=ALL_UNITS.find(x=>x.id===id);return sum+(m?m.power:0)},0);
   if(!s){
     cb.innerHTML=u?`<div class="combatant-card mine-side">
       <img class="combatant-img" src="${u.img}" alt="" onerror="this.style.display='none'"/>
       <div class="combatant-info">
         <div class="combatant-name">${G.nation?.f||''} ${u.name}</div>
-        <div class="combatant-xp">⭐ 전투력 ${u.power} | 배치 준비</div>
+        <div class="combatant-xp">⚔️ ${u.power} ${myMechPow?`+ 메카 ${myMechPow}`:''} | 배치 준비</div>
         <div class="combatant-hp-track"><div class="combatant-hp-fill" style="width:100%;background:var(--accent)"></div></div>
       </div></div>
-      <div style="color:var(--muted);font-size:0.78rem;text-align:center;padding:10px">섹터 미점령 — 유닛 배치 가능</div>`:'<div style="color:var(--muted);font-size:0.8rem;text-align:center;padding:20px">유닛을 선택하세요</div>';
+      <div style="color:var(--muted);font-size:0.76rem;text-align:center;padding:8px">섹터 미점령 — 유닛 배치 가능</div>`
+    :'<div style="color:var(--muted);font-size:0.78rem;text-align:center;padding:16px">유닛을 선택하세요</div>';
   }else{
-    const wins=G.unitWins[u?.id]||0;const nick=G.unitNicknames[u?.id];
+    const wins=u?G.unitWins[u.id]||0:0;const nick=u?G.unitNicknames[u.id]:null;
     cb.innerHTML=`
       ${u?`<div class="combatant-card mine-side">
         <img class="combatant-img" src="${u.img}" alt="" onerror="this.style.display='none'"/>
         <div class="combatant-info">
-          <div class="combatant-name">${G.nation?.f||''} ${u.name}${nick?` "
-${nick}"`:''}</div>
-          <div class="combatant-xp">⚔️ ${u.power} | 🏆 ${wins}승</div>
+          <div class="combatant-name">${G.nation?.f||''} ${u.name}${nick?` "${nick}"`:''}</div>
+          <div class="combatant-xp">⚔️ ${u.power+myMechPow} | 🏆${wins}승</div>
           <div class="combatant-hp-track"><div class="combatant-hp-fill" style="width:100%;background:var(--accent)"></div></div>
+          ${myHangar.length?`<div class="combatant-mechs">${myHangar.map(id=>{const m=ALL_UNITS.find(x=>x.id===id);return m?`<div class="cm-slot" title="${m.name}">${m.emoji}</div>`:''}).join('')}</div>`:''}
         </div></div>`:''}
-      <div style="text-align:center;font-size:1.3rem;color:var(--red);padding:3px">⚔️</div>
+      <div style="text-align:center;font-size:1.2rem;color:var(--red);padding:3px">⚔️</div>
       <div class="combatant-card enemy-side">
         <img class="combatant-img" src="${s.unitImg||''}" alt="" onerror="this.style.display='none'"/>
         <div class="combatant-info">
@@ -990,106 +1238,147 @@ ${nick}"`:''}</div>
 
 // ── UNIT TABS ─────────────────────────────────────────
 function switchTab(tab,el){
-  G.tab=tab;
-  document.querySelectorAll('.utab').forEach(t=>t.classList.remove('active'));
-  if(el)el.classList.add('active');
-  if(tab==='tech'){renderTech();}else{renderUnits();}
+  G.tab=tab;document.querySelectorAll('.utab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');renderUnits();
 }
-
+function getUnitList(){return G.tab==='fleet'?SHIPS:G.tab==='mech'?MECHS:ACES;}
 function renderUnits(){
-  const list=UNITS[G.tab]||[];
-  const uc=document.getElementById('unit-content');
-  uc.innerHTML=`<div class="unit-list" id="ulist">${list.map(u=>{
+  const list=getUnitList();
+  document.getElementById('ulist').innerHTML=list.map(u=>{
     const wins=G.unitWins[u.id]||0;const nick=G.unitNicknames[u.id];
     return`<div class="ucard ${G.selUnit?.id===u.id?'sel':''}" onclick="selUnit('${u.id}')">
       <img class="ucard-img" src="${u.img}" alt="${u.name}" onerror="this.style.display='none'"/>
       <div class="ucard-body">
-        <span class="utype type-${u.type==='fleet'?'fleet':u.type==='ace'?'ace':'mech'}">${u.type==='fleet'?'함선':u.type==='ace'?'에이스':'메카'}</span>
-        ${wins>=3?`<span style="font-size:0.55rem;color:var(--gold)">🏆${wins}승${nick?` "${nick}"`:''}</span>`:''}
+        <span class="utype type-${G.tab==='fleet'?'fleet':G.tab==='ace'?'ace':'mech'}">${G.tab==='fleet'?'함선':G.tab==='ace'?'에이스':'메카'}</span>
+        ${u.hangar>0?`<span class="hangar-badge">격납 ${u.hangar}기</span>`:''}
+        ${wins>=3?`<span style="font-size:0.52rem;color:var(--gold);display:block">🏆${wins}승${nick?` "${nick}"`:''}</span>`:''}
         <div class="ucard-name">${u.emoji} ${u.name}</div>
         <div class="ucard-row">
           <span class="ucard-pow">⚔️${u.power}</span>
           <span class="ucard-cnt">×${u.count}</span>
         </div>
-        <div style="font-size:0.6rem;color:var(--muted);margin-top:1px">
-          <span class="counter-badge strong">✅ ${u.strong||''}</span>
-        </div>
       </div></div>`;
-  }).join('')}</div>
-  <div class="ps"><button class="btn-buy" onclick="buyUnit()">+ 유닛 구매 (500🪙)</button></div>`;
+  }).join('');
   showSelUnitInfo();
+  updateHangarPanel();
 }
-
-function renderTech(){
-  const uc=document.getElementById('unit-content');
-  uc.innerHTML=`<div class="tech-tree">
-    <div class="tech-path">
-      <div class="tech-path-title">🔥 화력 트리</div>
-      ${TECH.fire.map(t=>`<div class="tech-node ${G.techDone[t.id]?'done':t.locked?'locked':''}"
-        onclick="${!t.locked&&!G.techDone[t.id]?`researchTech('${t.id}','fire')`:''}">
-        <span>${G.techDone[t.id]?'✅':'🔬'}</span>
-        <div><div style="font-size:0.72rem;font-weight:700">${t.name}</div>
-        <div style="font-size:0.6rem;color:var(--muted)">${t.effect}</div></div>
-        <span class="tech-cost">💜${t.cost.reg}</span>
-      </div>`).join('')}
-    </div>
-    <div class="tech-path">
-      <div class="tech-path-title">🛡️ 방어 트리</div>
-      ${TECH.def.map(t=>`<div class="tech-node ${G.techDone[t.id]?'done':t.locked?'locked':''}"
-        onclick="${!t.locked&&!G.techDone[t.id]?`researchTech('${t.id}','def')`:''}">
-        <span>${G.techDone[t.id]?'✅':'🔬'}</span>
-        <div><div style="font-size:0.72rem;font-weight:700">${t.name}</div>
-        <div style="font-size:0.6rem;color:var(--muted)">${t.effect}</div></div>
-        <span class="tech-cost">💜${t.cost.reg}</span>
-      </div>`).join('')}
-    </div>
-    <div class="tech-path">
-      <div class="tech-path-title">🔬 과학 트리</div>
-      ${TECH.sci.map(t=>`<div class="tech-node ${G.techDone[t.id]?'done':t.locked?'locked':''}"
-        onclick="${!t.locked&&!G.techDone[t.id]?`researchTech('${t.id}','sci')`:''}">
-        <span>${G.techDone[t.id]?'✅':'🔬'}</span>
-        <div><div style="font-size:0.72rem;font-weight:700">${t.name}</div>
-        <div style="font-size:0.6rem;color:var(--muted)">${t.effect}</div></div>
-        <span class="tech-cost">💜${t.cost.reg}</span>
-      </div>`).join('')}
-    </div>
-  </div>`;
-}
-
-function researchTech(id, tree){
-  const node=TECH[tree].find(t=>t.id===id);
-  if(!node||node.locked||G.techDone[id])return;
-  if(G.reg<node.cost.reg){log('lose',`[기술] 레골리스 부족 (필요: ${node.cost.reg})`);return}
-  G.reg-=node.cost.reg;G.techDone[id]=true;node.done=true;
-  // Unlock next
-  const idx=TECH[tree].indexOf(node);
-  if(idx+1<TECH[tree].length)TECH[tree][idx+1].locked=false;
-  updateResUI();renderTech();
-  log('info',`[연구] ✅ ${node.name} 완료: ${node.effect}`);
-}
-
 function selUnit(id){
-  let found=null;
-  for(const tab of Object.values(UNITS)){const u=tab.find(x=>x.id===id);if(u){found=u;break}}
-  G.selUnit=found;renderUnits();showSelUnitInfo();
+  const found=ALL_UNITS.find(x=>x.id===id);G.selUnit=found;renderUnits();showSelUnitInfo();
   if(G.currentView===0)updateShipView();
   if(G.currentView===3&&G.selSec!=null)updateZoom(G.selSec);
+  if(found)log('sys',`[선택] ${found.emoji} ${found.name}`);
 }
-
 function showSelUnitInfo(){
-  const el=document.getElementById('sel-unit-info');
-  if(!G.selUnit){el.innerHTML='<div style="color:var(--muted);font-size:0.76rem;text-align:center;padding:12px 0">유닛 선택하세요</div>';return}
+  const el=document.getElementById('sel-unit-info');if(!G.selUnit){el.innerHTML='<div style="color:var(--muted);font-size:0.74rem;text-align:center;padding:10px 0">유닛 선택하세요</div>';return}
   const u=G.selUnit;const wins=G.unitWins[u.id]||0;const nick=G.unitNicknames[u.id];
+  const typeName=u.hangar!=null?'함선':'메카';
   el.innerHTML=`
     <img class="unit-preview" src="${u.img}" alt="${u.name}" onerror="this.style.display='none'"/>
     <div class="rrow"><span class="rk">유닛</span><span class="rv2">${u.emoji} ${u.name}</span></div>
     <div class="rrow"><span class="rk">전투력</span><span class="rv2" style="color:var(--gold)">⚔️ ${u.power}</span></div>
     <div class="rrow"><span class="rk">보유/승리</span><span class="rv2">×${u.count} | 🏆${wins}</span></div>
+    ${u.hangar!=null&&u.hangar>0?`<div class="rrow"><span class="rk">격납고</span><span class="rv2" style="color:var(--orange)">메카 ${u.hangar}기</span></div>`:''}
     ${nick?`<div class="rrow"><span class="rk">별명</span><span class="rv2" style="color:var(--gold)">"${nick}"</span></div>`:''}
     <div class="counter-hint">
-      <div class="ch-strong">✅ 강함: ${u.strong||'—'}</div>
-      <div class="ch-weak">❌ 약함: ${u.weak||'—'}</div>
+      <div class="ch-strong">✅ ${u.strong||'—'}</div>
+      <div class="ch-weak">❌ ${u.weak||'—'}</div>
     </div>`;
+}
+
+// ── HANGAR PANEL (left) ───────────────────────────────
+function updateHangarPanel(){
+  const deployed=Object.keys(G.sectors).filter(k=>G.sectors[k].owner==='me');
+  const hp=document.getElementById('hangar-list');
+  if(!deployed.length){hp.innerHTML='<div style="font-size:0.7rem;color:var(--muted);text-align:center;padding:8px">함선 배치 후 표시</div>';return}
+  hp.innerHTML=deployed.map(k=>{
+    const s=G.sectors[k];if(!s||s.owner!=='me')return'';
+    const ship=ALL_UNITS.find(x=>x.id===s.unitId)||(s.hangar?{hangar:s.hangar,name:s.unitName}:null);
+    const cap=s.hangar||0;if(!cap)return'';
+    const hangar=G.hangars[k]||[];
+    return`<div class="hangar-ship">
+      <div class="hangar-ship-name">${s.unitEmoji} ${s.unitName} <span style="color:var(--muted);font-size:0.62rem">#${parseInt(k)+1}</span></div>
+      <div class="hangar-slots">
+        ${Array.from({length:cap}).map((_,si)=>{
+          const mid=hangar[si];const m=mid?ALL_UNITS.find(x=>x.id===mid):null;
+          return`<div class="hangar-slot ${m?'filled':'empty'}" 
+            onclick="openHangarForSector(${k})"
+            title="${m?m.name:'빈 슬롯 — 클릭하여 메카 탑재'}">
+            <span>${m?m.emoji:'+'}</span>
+            <div class="hangar-slot-tip">${m?m.name:'메카 탑재'}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── HANGAR MODAL ──────────────────────────────────────
+let hangarTargetSec=null;
+function openHangar(){
+  if(G.selSec==null){log('sys','[오류] 섹터를 먼저 선택하세요');return}
+  const s=G.sectors[G.selSec];
+  if(!s||s.owner!=='me'){log('sys','[오류] 내 함선이 있는 섹터만 가능');return}
+  if(!s.hangar||s.hangar<=0){log('sys','[오류] 이 함선은 메카 탑재 불가 (전투기는 격납 없음)');return}
+  openHangarForSector(G.selSec);
+}
+function openHangarForSector(secIdx){
+  hangarTargetSec=secIdx;
+  const s=G.sectors[secIdx];if(!s)return;
+  const cap=s.hangar||0;
+  const hangar=G.hangars[secIdx]||[];
+  document.getElementById('hm-ship-img').src=s.unitImg||'';
+  document.getElementById('hm-ship-name').textContent=`${s.unitEmoji} ${s.unitName}`;
+  document.getElementById('hm-ship-cap').textContent=`격납 용량: ${hangar.length}/${cap}기`;
+  // Slots
+  document.getElementById('hm-slots').innerHTML=Array.from({length:cap}).map((_,si)=>{
+    const mid=hangar[si];const m=mid?ALL_UNITS.find(x=>x.id===mid):null;
+    return`<div class="hm-slot ${m?'filled':'empty-slot'}" onclick="${m?`ejectMech(${si})`:''}">
+      <div class="hm-slot-icon">${m?m.emoji:'⊕'}</div>
+      <div class="hm-slot-name">${m?m.name:'비어있음'}</div>
+      ${m?`<div style="font-size:0.55rem;color:var(--red);margin-top:3px">클릭으로 제거</div>`:''}
+    </div>`;
+  }).join('');
+  // Available mechs
+  const availMechs=[...MECHS,...ACES].filter(m=>m.count>0);
+  document.getElementById('hm-mech-list').innerHTML=availMechs.length?availMechs.map(m=>`
+    <div class="hm-mech-btn" onclick="loadMech('${m.id}')">
+      <img src="${m.img}" alt="${m.name}" onerror="this.style.display='none'"/>
+      <div class="hm-mech-name">${m.emoji} ${m.name}</div>
+      <div class="hm-mech-pow">⚔️${m.power}</div>
+      <div class="hm-mech-cnt">보유 ×${m.count}</div>
+    </div>`).join(''):'<div style="color:var(--muted);font-size:0.8rem;text-align:center;padding:12px">보유 메카 없음</div>';
+  document.getElementById('hmodal').classList.add('show');
+}
+function loadMech(mechId){
+  const secIdx=hangarTargetSec;if(secIdx==null)return;
+  const s=G.sectors[secIdx];if(!s)return;
+  const cap=s.hangar||0;
+  if(!G.hangars[secIdx])G.hangars[secIdx]=[];
+  const hangar=G.hangars[secIdx];
+  if(hangar.length>=cap){log('lose','[오류] 격납고 가득 참');return}
+  const m=ALL_UNITS.find(x=>x.id===mechId);if(!m||m.count<=0)return;
+  m.count--;hangar.push(mechId);
+  // Update sector power
+  const mechPow=hangar.reduce((sum,id)=>{const mu=ALL_UNITS.find(x=>x.id===id);return sum+(mu?mu.power:0)},0);
+  s.totalPower=(s.basePower||s.power)+mechPow;
+  openHangarForSector(secIdx); // refresh modal
+  renderUnits();updateResUI();
+  log('win',`[격납] ${m.emoji} ${m.name} → ${SNAMES[secIdx]} 탑재 (${hangar.length}/${cap})`);
+  if(G.currentView===0)updateShipView();
+}
+function ejectMech(slotIdx){
+  const secIdx=hangarTargetSec;if(secIdx==null)return;
+  const hangar=G.hangars[secIdx];if(!hangar||!hangar[slotIdx])return;
+  const mechId=hangar[slotIdx];const m=ALL_UNITS.find(x=>x.id===mechId);
+  if(m)m.count++;
+  hangar.splice(slotIdx,1);
+  openHangarForSector(secIdx);renderUnits();
+  log('sys',`[격납] ${m?m.emoji:''} 탈재 완료`);
+}
+function closeHangar(){
+  document.getElementById('hmodal').classList.remove('show');
+  updateHangarPanel();
+  if(G.currentView===0)updateShipView();
+  if(G.currentView===3&&G.selSec!=null)updateZoom(G.selSec);
 }
 
 // ── GRID ─────────────────────────────────────────────
@@ -1101,198 +1390,183 @@ function buildGrid(){
   }
 }
 function renderSec(el,i){
-  const s=G.sectors[i];const name=SNAMES[i];
-  const short=name.length>7?name.slice(0,7)+'…':name;
-  const isSel=G.selSec===i;
-  const st=SEC_TYPES[i]||'neutral';const sinfo=SEC_RES[st];
-  const wins=s&&s.unitId?G.unitWins[s.unitId]||0:0;
-  const typeClass=st==='he3'?'res-he3':st==='reg'?'res-reg':st==='h2o'?'res-h2o':st==='crater'?'crater':'';
-  el.className=`sector ${typeClass}${isSel?' sel':s?s.owner==='me'?' mine':' enemy':''}`;
+  const s=G.sectors[i];const name=SNAMES[i];const short=name.length>7?name.slice(0,7)+'…':name;
+  const isSel=G.selSec===i;const st=SEC_TYPES[i]||'neutral';const si=SEC_RES[st];
+  const hangar=G.hangars[i]||[];const hangarCount=hangar.length;
+  const tc=st==='he3'?'res-he3':st==='reg'?'res-reg':st==='h2o'?'res-h2o':st==='crater'?'crater':'';
+  el.className=`sector ${tc}${isSel?' sel':s?s.owner==='me'?' mine':' enemy':''}`;
   el.innerHTML=s?`
     <span class="sec-id">${String(i+1).padStart(2,'0')}</span>
-    <span class="sec-type-icon">${sinfo.icon||''}</span>
+    <span class="sec-type-icon">${si.icon||''}</span>
     <img class="sec-unit-img" src="${s.unitImg||''}" alt=""
-      onerror="this.style.display='none';document.getElementById('se${i}').style.display='block'"/>
-    <span id="se${i}" style="display:none;font-size:1.3rem">${s.unitEmoji||'🚀'}</span>
+      onerror="this.style.display='none';this.nextElementSibling&&(this.nextElementSibling.style.display='block')"/>
+    <span style="display:none;font-size:1.2rem">${s.unitEmoji||'🚀'}</span>
     <span class="sec-flag">${s.flag}</span>
     <div class="sec-name">${short}</div>
-    ${wins>=3?`<span class="rank-badge">🏆${wins}</span>`:''}
+    ${hangarCount>0?`<div class="sec-hangar">🛠️${hangarCount}</div>`:''}
     <div class="sec-hp-bar"><div class="sec-hp-fill" style="width:${s.hp}%;background:${s.owner==='me'?'var(--green)':'var(--red)'}"></div></div>`
   :`
     <span class="sec-id">${String(i+1).padStart(2,'0')}</span>
-    <span class="sec-type-icon">${sinfo.icon||''}</span>
-    <div style="font-size:1rem;color:rgba(80,120,180,0.3);margin-bottom:2px">🌑</div>
-    <div style="font-size:0.48rem;color:rgba(80,120,180,0.4)">${short}</div>
-    <div style="font-size:0.44rem;color:${sinfo.color||'rgba(50,80,120,0.4)'};margin-top:1px">${sinfo.label||'미점령'}</div>`;
+    <span class="sec-type-icon">${si.icon||''}</span>
+    <div style="font-size:0.95rem;color:rgba(80,120,180,0.3);margin-bottom:2px">🌑</div>
+    <div style="font-size:0.46rem;color:rgba(80,120,180,0.42)">${short}</div>
+    <div style="font-size:0.42rem;color:${si.color||'rgba(50,80,120,0.4)'};margin-top:1px">${si.label||'미점령'}</div>`;
 }
-function refresh(i){const el=document.getElementById(`s${i}`);if(el)renderSec(el,i);buildMoonOverlay()}
+function refresh(i){const el=document.getElementById(`s${i}`);if(el)renderSec(el,i);buildMoonOverlay();updateHangarPanel();}
 function clickSec(i){
   G.selSec=i;for(let j=0;j<21;j++)renderSec(document.getElementById(`s${j}`),j);
   showSecInfo(i);if(G.currentView===3)updateZoom(i);
+  // Auto-switch to battle map if on moon view
+  if(G.currentView===1)switchView(2);
 }
 function showSecInfo(i){
-  const s=G.sectors[i];const name=SNAMES[i];
-  const st=SEC_TYPES[i]||'neutral';const sinfo=SEC_RES[st];
-  const el=document.getElementById('sec-info');
+  const s=G.sectors[i];const name=SNAMES[i];const st=SEC_TYPES[i]||'neutral';const si=SEC_RES[st];
+  const hangar=G.hangars[i]||[];const el=document.getElementById('sec-info');
   if(!s){el.innerHTML=`
     <div class="rrow"><span class="rk">섹터</span><span class="rv2" style="font-size:0.7rem">${name}</span></div>
-    <div class="rrow"><span class="rk">자원</span><span class="rv2" style="color:${sinfo.color||'var(--gold)'}">${sinfo.label}</span></div>
-    <div class="rrow"><span class="rk">He-3</span><span class="rv2">+${sinfo.prod.he3}/턴</span></div>
-    ${sinfo.prod.reg?`<div class="rrow"><span class="rk">레골리스</span><span class="rv2" style="color:var(--purple)">+${sinfo.prod.reg}/턴</span></div>`:''}
-    ${sinfo.prod.h2o?`<div class="rrow"><span class="rk">H₂O</span><span class="rv2" style="color:var(--teal)">+${sinfo.prod.h2o}/턴</span></div>`:''}
-    ${st==='crater'?`<div class="rrow"><span class="rk">요새</span><span class="rv2" style="color:var(--orange)">방어 +50%</span></div>`:''}`;
-  }else if(s.owner==='me'){el.innerHTML=`
+    <div class="rrow"><span class="rk">자원</span><span class="rv2" style="color:${si.color||'var(--gold)'}">${si.label}</span></div>
+    <div class="rrow"><span class="rk">He-3</span><span class="rv2">+${si.prod.he3}/턴</span></div>
+    ${si.prod.reg?`<div class="rrow"><span class="rk">레골리스</span><span class="rv2" style="color:var(--purple)">+${si.prod.reg}/턴</span></div>`:''}
+    ${si.prod.h2o?`<div class="rrow"><span class="rk">H₂O</span><span class="rv2" style="color:var(--teal)">+${si.prod.h2o}/턴</span></div>`:''}
+    ${st==='crater'?'<div class="rrow"><span class="rk">요새</span><span class="rv2" style="color:var(--orange)">방어 +50%</span></div>':''}`;}
+  else if(s.owner==='me'){const mechPow=hangar.reduce((sum,id)=>{const m=ALL_UNITS.find(x=>x.id===id);return sum+(m?m.power:0)},0);
+    el.innerHTML=`
     <div class="rrow"><span class="rk">섹터</span><span class="rv2" style="font-size:0.7rem">${name}</span></div>
     <div class="rrow"><span class="rk">소유</span><span class="rv2" style="color:var(--green)">${G.nation.f} 내 영토</span></div>
-    <div class="rrow"><span class="rk">유닛</span><span class="rv2">${s.unitEmoji} ${s.unitName||''}</span></div>
-    <div class="rrow"><span class="rk">HP</span><span class="rv2" style="color:var(--green)">${s.hp}%</span></div>
-    <div class="rrow"><span class="rk">자원</span><span class="rv2" style="color:${sinfo.color||'var(--gold)'}">${sinfo.label}</span></div>`;}
+    <div class="rrow"><span class="rk">함선</span><span class="rv2">${s.unitEmoji} ${s.unitName||''}</span></div>
+    <div class="rrow"><span class="rk">함선전투력</span><span class="rv2" style="color:var(--gold)">⚔️${s.power}</span></div>
+    ${mechPow?`<div class="rrow"><span class="rk">메카전투력</span><span class="rv2" style="color:var(--purple)">+${mechPow}</span></div>`:''}
+    ${s.hangar>0?`<div class="rrow"><span class="rk">격납</span><span class="rv2" style="color:var(--orange)">${hangar.length}/${s.hangar}기</span></div>`:''}
+    <div class="rrow"><span class="rk">HP</span><span class="rv2" style="color:var(--green)">${s.hp}%</span></div>`;}
   else{el.innerHTML=`
     <div class="rrow"><span class="rk">섹터</span><span class="rv2" style="font-size:0.7rem">${name}</span></div>
     <div class="rrow"><span class="rk">점령국</span><span class="rv2">${s.flag} ${s.name}</span></div>
-    <div class="rrow"><span class="rk">유닛</span><span class="rv2">${s.unitEmoji||'?'} (${s.ctype||'?'})</span></div>
-    <div class="rrow"><span class="rk">전투력</span><span class="rv2" style="color:var(--red)">⚔️ ${s.power}</span></div>
+    <div class="rrow"><span class="rk">유닛</span><span class="rv2">${s.unitEmoji||'?'}</span></div>
+    <div class="rrow"><span class="rk">전투력</span><span class="rv2" style="color:var(--red)">⚔️${s.power}</span></div>
     <div class="rrow"><span class="rk">HP</span><span class="rv2" style="color:var(--red)">${s.hp}%</span></div>`;}
 }
 
-// ── ACTIONS ───────────────────────────────────────────
+// ── DEPLOY ────────────────────────────────────────────
 function deployUnit(){
-  const i=G.selSec;
-  if(i==null){log('sys','[오류] 섹터 선택 필요');return}
-  if(G.sectors[i]?.owner==='enemy'){log('lose','[오류] 적 영토 — 공격 버튼 사용');return}
-  if(!G.selUnit){log('sys','[오류] 유닛 선택 필요');return}
-  if(G.selUnit.count<=0){log('lose','[오류] 보유 유닛 없음');return}
-  // Check resource cost
+  const i=G.selSec;if(i==null){log('sys','[오류] ⚔️전투 맵에서 섹터를 클릭 후 배치');return}
+  if(G.sectors[i]?.owner==='enemy'){log('lose','[오류] 적 영토 — 공격 개시 버튼 사용');return}
+  if(!G.selUnit){log('sys','[오류] 왼쪽에서 유닛을 먼저 선택하세요');return}
+  if(G.selUnit.count<=0){log('lose','[오류] 보유 유닛 없음 — 유닛 구매 필요');return}
   const u=G.selUnit;
-  if(G.he3<u.cost.he3){log('lose',`[오류] He-3 부족 (필요: ${u.cost.he3})`);return}
-  if(G.reg<u.cost.reg){log('lose',`[오류] 레골리스 부족 (필요: ${u.cost.reg})`);return}
-  G.he3-=u.cost.he3;G.reg-=u.cost.reg;
+  if(G.he3<(u.cost?.he3||0)){log('lose',`[오류] He-3 부족 (필요: ${u.cost.he3})`);return}
+  G.he3-=(u.cost?.he3||0);G.reg-=(u.cost?.reg||0);
+  const hangarCap=u.hangar||0;
   G.sectors[i]={owner:'me',flag:G.nation.f,name:G.nation.n,
-    hp:100,unitImg:u.img,unitEmoji:u.emoji,unitName:u.name,ctype:u.ctype,power:u.power,unitId:u.id};
-  u.count--;renderUnits();refresh(i);showSecInfo(i);updateResUI();
+    hp:100,unitImg:u.img,unitEmoji:u.emoji,unitName:u.name,
+    ctype:u.ctype,power:u.power,unitId:u.id,
+    hangar:hangarCap,basePower:u.power,totalPower:u.power};
+  u.count--;
+  if(!G.hangars[i])G.hangars[i]=[];
+  renderUnits();refresh(i);showSecInfo(i);updateResUI();
   if(G.currentView===3)updateZoom(i);
   if(G.currentView===0)updateShipView();
-  log('win',`[배치] ${u.emoji} ${u.name} → ${SNAMES[i]}`);
+  const sizeStr=u.size===4?'(2×2칸)':u.size===2?'(1×2칸)':'(1×1칸)';
+  log('win',`[배치] ${u.emoji} ${u.name} ${sizeStr} → ${SNAMES[i]}`);
   log('info',`[영토] ${G.nation.f} 국기 게양!`);
+  if(hangarCap>0)log('info',`[격납고] 메카 ${hangarCap}기 탑재 가능 — 왼쪽 격납고 패널 확인`);
 }
 
 function collect(){
-  const owned=Object.values(G.sectors).filter(s=>s.owner==='me');
+  const owned=Object.keys(G.sectors).filter(k=>G.sectors[k].owner==='me');
   if(!owned.length){log('sys','[오류] 점령 섹터 없음');return}
   let gainHe=0,gainReg=0,gainH2o=0;
-  owned.forEach(s=>{
-    const st=SEC_TYPES[Object.keys(G.sectors).find(k=>G.sectors[k]===s)]||'neutral';
-    const p=SEC_RES[st].prod;
-    gainHe+=p.he3;gainReg+=p.reg;gainH2o+=p.h2o;
-  });
+  owned.forEach(k=>{const st=SEC_TYPES[k]||'neutral';const p=SEC_RES[st].prod;gainHe+=p.he3;gainReg+=p.reg;gainH2o+=p.h2o;});
   gainHe=Math.floor(gainHe*G.prodMod);gainReg=Math.floor(gainReg*G.prodMod);gainH2o=Math.floor(gainH2o*G.prodMod);
-  G.he3+=gainHe;G.reg+=gainReg;G.h2o+=gainH2o;
-  updateResUI();
+  G.he3+=gainHe;G.reg+=gainReg;G.h2o+=gainH2o;updateResUI();
   log('win',`[수집] ⚡+${gainHe} 💎+${gainReg} 🌊+${gainH2o} (${owned.length}섹터)`);
 }
 
 function buyUnit(){
   if(G.coins<500){log('lose','[오류] 코인 부족');return}
   G.coins-=500;
-  const all=[...UNITS.fleet.slice(0,3),...UNITS.mech.slice(0,3),...UNITS.ace.slice(0,1)];
-  const u=all[Math.floor(Math.random()*all.length)];u.count++;
+  const buyable=[...SHIPS.slice(0,3),...MECHS.slice(0,3),...ACES];
+  const u=buyable[Math.floor(Math.random()*buyable.length)];u.count++;
   renderUnits();updateResUI();log('win',`[구매] ${u.emoji} ${u.name} 획득`);
 }
 
 // ── TURN END ──────────────────────────────────────────
 function endTurn(){
   G.turn++;document.getElementById('turn-num').textContent=G.turn;
-  // Auto collect
   collect();
-  // H2O check — if low, units take damage
-  if(G.h2o<50){
-    log('lose','[경고] H₂O 부족! 유닛 HP -5%');
+  if(G.h2o<50){log('lose','[경고] H₂O 부족! 유닛 HP -5%');
     Object.values(G.sectors).filter(s=>s.owner==='me').forEach(s=>s.hp=Math.max(10,s.hp-5));
-    for(let i=0;i<21;i++){const el=document.getElementById(`s${i}`);if(el)renderSec(el,i);}
-  }
-  // Temp buffs expire
+    buildGrid();}
   if(G.energyBuff>1)G.energyBuff=1;
   if(G.prodMod!==1)G.prodMod=1;
   if(G.fullVision>0)G.fullVision--;
   if(G.peaceTurns>0)G.peaceTurns--;
-  // Enemy random move
   if(Math.random()<0.3){
     const free=[];for(let i=0;i<21;i++)if(!G.sectors[i])free.push(i);
     if(free.length){
       const idx=free[Math.floor(Math.random()*free.length)];
       const n=NATIONS[Math.floor(Math.random()*NATIONS.length)];
       const eu=ENEMY_UNITS[Math.floor(Math.random()*ENEMY_UNITS.length)];
-      if(G.selSec!==idx){
-        G.sectors[idx]={owner:'enemy',flag:n.f,name:n.n,hp:Math.floor(Math.random()*40+60),
-          unitImg:eu.img,unitEmoji:eu.emoji,ctype:eu.ctype,power:Math.floor(Math.random()*200+80)};
-        refresh(idx);log('sys',`[경보] ${n.f} ${n.n} → ${SNAMES[idx]}`);
-      }
+      G.sectors[idx]={owner:'enemy',flag:n.f,name:n.n,hp:Math.floor(Math.random()*40+60),
+        unitImg:eu.img,unitEmoji:eu.emoji,ctype:eu.ctype,power:Math.floor(Math.random()*200+80)};
+      refresh(idx);log('sys',`[경보] ${n.f} ${n.n} → ${SNAMES[idx]}`);
     }
   }
-  // Event every 5 turns
   if(G.turn%5===0)triggerEvent();
-  updateResUI();
-  log('sys',`[턴 ${G.turn}] 턴 종료`);
+  updateResUI();log('sys',`[턴 ${G.turn}] 종료`);
 }
 
 // ── EVENTS ────────────────────────────────────────────
 function triggerEvent(){
-  const ev=EVENTS[Math.floor(Math.random()*EVENTS.length)];
-  ev.apply(G, G.sectors);
+  const ev=EVENTS[Math.floor(Math.random()*EVENTS.length)];ev.apply(G);
   document.getElementById('ev-icon').textContent=ev.icon;
   document.getElementById('ev-title').textContent=ev.title;
   document.getElementById('ev-desc').textContent=ev.desc;
   document.getElementById('ev-effect').textContent=ev.effect;
-  document.getElementById('event-modal').classList.add('show');
+  document.getElementById('emodal').classList.add('show');
   log('event',`[이벤트] ${ev.icon} ${ev.title}`);
 }
 function closeEvent(){
-  document.getElementById('event-modal').classList.remove('show');
-  // Show ticker
+  document.getElementById('emodal').classList.remove('show');
   const t=document.getElementById('event-ticker');
-  const title=document.getElementById('ev-title').textContent;
-  document.getElementById('event-ticker-text').textContent=`${title} — 효과 적용됨`;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),5000);
+  document.getElementById('event-ticker-text').textContent=document.getElementById('ev-title').textContent+' — 효과 적용됨';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),5000);
 }
 
 // ── BATTLE ────────────────────────────────────────────
 function startBattle(){
-  const i=G.selSec;
-  if(i==null){log('sys','[오류] 섹터 선택 필요');return}
+  const i=G.selSec;if(i==null){log('sys','[오류] ⚔️전투 맵에서 적 섹터(빨간칸)를 클릭 후 공격');return}
   const s=G.sectors[i];
-  if(!s||s.owner!=='enemy'){log('sys','[오류] 적 섹터만 공격 가능');return}
-  if(!G.selUnit){log('sys','[오류] 공격 유닛 선택 필요');return}
+  if(!s||s.owner!=='enemy'){log('sys','[오류] 적 섹터(빨간칸)만 공격 가능');return}
+  if(!G.selUnit){log('sys','[오류] 왼쪽에서 공격할 유닛을 선택하세요');return}
   if(G.peaceTurns>0){log('lose','[오류] UN 평화 협정 기간 — 전투 불가');return}
 
   const u=G.selUnit;
   const cm=getCounterMod(u.ctype,s.ctype);
-  let attPow=Math.floor((u.power+Math.floor(Math.random()*60))*cm.mod);
-  // Energy buff
-  if(G.energyBuff>1&&(u.ctype==='laser_mech'))attPow=Math.floor(attPow*G.energyBuff);
-  // Crater defense
+  // Add hangar mech power
+  const myHangar=G.hangars[G.selSec]||[];// attacker's hangar if attacking from owned sector - use unit's own hangar
+  const mechPow=0; // attacker uses selected unit only (mechs boost defending sector)
+  let attPow=Math.floor((u.power+mechPow+Math.floor(Math.random()*60))*cm.mod);
+  if(G.energyBuff>1&&u.ctype==='laser_mech')attPow=Math.floor(attPow*G.energyBuff);
   const st=SEC_TYPES[i]||'neutral';
   let defPow=s.power+Math.floor(Math.random()*60);
-  if(st==='crater')defPow=Math.floor(defPow*(G.techDone['t_d2']?1.8:1.5));
-
+  if(st==='crater')defPow=Math.floor(defPow*1.5);
   const won=Math.random()<attPow/(attPow+defPow);
 
-  // Counter alert
   const ca=document.getElementById('counter-alert');
-  if(cm.mod!==1){
-    ca.textContent=cm.label;ca.classList.add('show');
-  }else{ca.classList.remove('show')}
+  if(cm.mod!==1){ca.textContent=cm.label;ca.classList.add('show');}else{ca.classList.remove('show');}
 
   document.getElementById('b-aflag').textContent=G.nation.f;
   document.getElementById('b-aimg').src=u.img;
   document.getElementById('b-aname').textContent=`${G.nation.n} — ${u.name}`;
   document.getElementById('b-apow').textContent=`PWR: ${attPow}`;
   document.getElementById('b-amod').innerHTML=cm.mod!==1?`<span style="color:${cm.mod>1?'var(--green)':'var(--red)'}">${cm.label}</span>`:'';
+  document.getElementById('b-amechs').innerHTML='';
   document.getElementById('b-dflag').textContent=s.flag;
   document.getElementById('b-dimg').src=s.unitImg||'';
   document.getElementById('b-dname').textContent=s.name;
   document.getElementById('b-dpow').textContent=`PWR: ${defPow}`;
-  document.getElementById('b-dmod').innerHTML=st==='crater'?`<span style="color:var(--orange)">🏔️ 요새 방어 +50%</span>`:'';
+  document.getElementById('b-dmod').innerHTML=st==='crater'?`<span style="color:var(--orange)">🏔️ 요새 +50%</span>`:'';
+  document.getElementById('b-dmechs').innerHTML='';
   ['b-abar','b-dbar'].forEach(id=>document.getElementById(id).style.width='100%');
   ['b-ahp','b-dhp'].forEach(id=>document.getElementById(id).textContent='100%');
   document.getElementById('bresult').style.display='none';
@@ -1305,8 +1579,8 @@ function startBattle(){
   let ah=100,dh=100,step=0;
   const iv=setInterval(()=>{
     step++;
-    if(won){dh=Math.max(0,dh-Math.floor(Math.random()*22+8));ah=Math.max(25,ah-Math.floor(Math.random()*7))}
-    else{ah=Math.max(0,ah-Math.floor(Math.random()*22+10));dh=Math.max(30,dh-Math.floor(Math.random()*6))}
+    if(won){dh=Math.max(0,dh-Math.floor(Math.random()*22+8));ah=Math.max(25,ah-Math.floor(Math.random()*7));}
+    else{ah=Math.max(0,ah-Math.floor(Math.random()*22+10));dh=Math.max(30,dh-Math.floor(Math.random()*6));}
     document.getElementById('b-abar').style.width=ah+'%';
     document.getElementById('b-dbar').style.width=dh+'%';
     document.getElementById('b-ahp').textContent=ah+'%';
@@ -1318,38 +1592,30 @@ function startBattle(){
 function showResult(won,i,s,u){
   const r=document.getElementById('bresult');const sname=SNAMES[i];
   if(won){
-    r.className='result win';
-    // Resource plunder
-    const st=SEC_TYPES[i]||'neutral';const prod=SEC_RES[st].prod;
-    const plunder=Math.floor(prod.he3*0.3)||50;G.he3+=plunder;
-    r.innerHTML=`🏆 승리! ${G.nation.f} ${sname} 점령!<br>⚡ He-3 +${plunder} 약탈`;
+    const st=SEC_TYPES[i]||'neutral';const plunder=Math.floor(SEC_RES[st].prod.he3*0.3)||50;G.he3+=plunder;
+    r.className='result win';r.innerHTML=`🏆 승리! ${G.nation.f} ${sname} 점령!<br>⚡ He-3 +${plunder} 약탈`;
+    const hangarCap=u.hangar||0;
     G.sectors[i]={owner:'me',flag:G.nation.f,name:G.nation.n,
-      hp:85,unitImg:u.img,unitEmoji:u.emoji,unitName:u.name,ctype:u.ctype,power:u.power,unitId:u.id};
-    G.wins++;G.unitWins[u.id]=(G.unitWins[u.id]||0)+1;
-    document.getElementById('rw').textContent=G.wins;
-    // Nickname check
-    const wins=G.unitWins[u.id];
-    const nick=getNickname(wins);
-    if(nick&&!G.unitNicknames[u.id]){
-      G.unitNicknames[u.id]=nick;
-      showNickname(`${u.name}이(가) 별명을 얻었습니다: "${nick}" (${wins}승)`);
-    }
-    // Prisoner 30%
+      hp:85,unitImg:u.img,unitEmoji:u.emoji,unitName:u.name,
+      ctype:u.ctype,power:u.power,unitId:u.id,
+      hangar:hangarCap,basePower:u.power,totalPower:u.power};
+    if(!G.hangars[i])G.hangars[i]=[];
+    G.wins++;document.getElementById('rw').textContent=G.wins;
+    G.unitWins[u.id]=(G.unitWins[u.id]||0)+1;
+    const wins=G.unitWins[u.id];const nick=getNickname(wins);
+    if(nick&&!G.unitNicknames[u.id]){G.unitNicknames[u.id]=nick;showNickname(`${u.name}이(가) 별명 획득: "${nick}" (${wins}승)`);}
     if(Math.random()<0.3){
       const pb=document.getElementById('prisoner-box');
       document.getElementById('prisoner-info').textContent=`${s.flag} ${s.name}의 유닛 포획`;
-      G.prisoners.push({flag:s.flag,name:s.name});pb.classList.add('show');
+      pb.classList.add('show');
     }
-    refresh(i);updateResUI();
-    log('win',`[승리] ${G.nation.f} ${sname} 점령! He-3+${plunder} 약탈`);
+    refresh(i);updateResUI();log('win',`[승리] ${G.nation.f} ${sname} 점령! He-3+${plunder}`);
   }else{
-    r.className='result lose';
-    r.innerHTML=`💥 패배... ${s.flag} ${s.name} 수비 성공`;
+    r.className='result lose';r.innerHTML=`💥 패배... ${s.flag} ${s.name} 수비 성공`;
     log('lose',`[패배] ${s.flag} ${s.name}의 ${sname} 수비 성공`);
   }
   r.style.display='block';document.getElementById('bclose').style.display='inline-block';
 }
-
 function closeBattle(){
   document.getElementById('bmodal').classList.remove('show');
   if(G.selSec!=null){showSecInfo(G.selSec);if(G.currentView===3)updateZoom(G.selSec);}
@@ -1359,26 +1625,7 @@ function closeBattle(){
 function showNickname(text){
   const el=document.getElementById('nickname-popup');
   document.getElementById('nickname-text').textContent=text;
-  el.classList.add('show');setTimeout(()=>el.classList.remove('show'),4000);
-}
-
-// ── RESOURCES UI ──────────────────────────────────────
-function updateResUI(){
-  const owned=Object.values(G.sectors).filter(s=>s.owner==='me');
-  let rhe=0,rreg=0,rh2o=0;
-  owned.forEach(s=>{
-    const idx=Object.keys(G.sectors).find(k=>G.sectors[k]===s);
-    const st=SEC_TYPES[idx]||'neutral';const p=SEC_RES[st].prod;
-    rhe+=p.he3;rreg+=p.reg;rh2o+=p.h2o;
-  });
-  document.getElementById('res-he3').textContent=G.he3.toLocaleString();
-  document.getElementById('res-reg').textContent=G.reg;
-  document.getElementById('res-h2o').textContent=G.h2o;
-  document.getElementById('rc').textContent=G.coins.toLocaleString();
-  document.getElementById('rs').textContent=owned.length;
-  document.getElementById('rate-he3').textContent=`+${rhe}/턴`;
-  document.getElementById('rate-reg').textContent=`+${rreg}/턴`;
-  document.getElementById('rate-h2o').textContent=`+${rh2o}/턴`;
+  el.classList.add('show');setTimeout(()=>el.classList.remove('show'),4500);
 }
 
 // ── LOGS ──────────────────────────────────────────────
@@ -1386,12 +1633,12 @@ function log(type,msg){
   const now=new Date();const ts=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   G.logs.unshift({type,msg,ts});if(G.logs.length>30)G.logs.pop();
   const cls={win:'log-win',lose:'log-lose',sys:'log-sys',info:'log-info',event:'log-event'}[type]||'';
-  const mk=l=>`<div class="log-item ${cls}"><span class="ts">[${l.ts}]</span>${l.msg.substring(0,46)}</div>`;
+  const mk=l=>`<div class="log-item ${cls}"><span class="ts">[${l.ts}]</span>${l.msg.substring(0,48)}</div>`;
   const bl=document.getElementById('blog');if(bl)bl.innerHTML=G.logs.slice(0,10).map(mk).join('');
   const ml=document.getElementById('minilog');
   if(ml)ml.innerHTML=G.logs.slice(0,4).map(l=>`<div style="padding:2px 0;border-bottom:1px solid var(--border);
     color:${l.type==='win'?'var(--green)':l.type==='lose'?'var(--red)':l.type==='event'?'var(--orange)':l.type==='info'?'var(--gold)':'var(--accent)'};
-    font-size:0.65rem">${l.msg.substring(0,35)}…</div>`).join('');
+    font-size:0.64rem">${l.msg.substring(0,34)}…</div>`).join('');
 }
 </script>
 </body>
