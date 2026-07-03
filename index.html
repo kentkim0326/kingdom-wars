@@ -43,7 +43,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
-.screen{position:relative;z-index:10;min-height:100vh;display:none !important;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;overflow:visible;box-sizing:border-box}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .45s ease forwards}
 .fu2{animation:fadeUp .45s .1s ease forwards;opacity:0}
@@ -692,19 +692,8 @@ body { overflow-x: hidden; overflow-y: auto; }
    ══════════════════════════════════════ */
 
 /* SCREEN BASE */
-.screen {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  overflow: visible;
-  box-sizing: border-box;
-}
-.screen.active{display:flex !important}
+
+
 
 /* INTRO SCREEN */
 /* INTRO INNER */
@@ -899,6 +888,8 @@ body { overflow-x: hidden; overflow-y: auto; }
 @media(max-width:380px){
   .nation-grid{grid-template-columns:repeat(2,1fr);gap:4px}
 }
+.screen{position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;overflow:visible;box-sizing:border-box}
+.screen.active{display:flex}
 </style>
 </head>
 <body>
