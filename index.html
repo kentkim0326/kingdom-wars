@@ -634,7 +634,7 @@ body {
   inset: 0;
   z-index: 1;
   pointer-events: none !important;
-  transition: background 0.5s;
+  /* no transition */
 }
 /* Dots */
 #bg-dots {
@@ -2575,20 +2575,18 @@ function bgStart(spd) { clearInterval(bgTimer); bgTimer = setInterval(bgNext, sp
 function updateSlideshowForScreen(id) {
   const dots = document.getElementById('bg-dots');
   const ov = document.getElementById('bg-overlay');
-  if (!dots || !ov) return;
-  if (id === 's-intro') {
-    dots.style.display = 'flex';
-    ov.style.setProperty('background', 'linear-gradient(to bottom,rgba(3,5,14,.45) 0%,rgba(3,5,14,.1) 40%,rgba(3,5,14,.65) 100%)', 'important');
-    bgStart(4000);
-  } else if (id === 's-game') {
-    dots.style.display = 'none';
-    ov.style.setProperty('background', 'rgba(3,5,14,.82)', 'important');
-    bgStart(8000);
+  if (dots) dots.style.display = id === 's-intro' ? 'flex' : 'none';
+  if (!ov) return;
+  // 게임화면만 어둡게, 나머지는 동일한 밝기
+  if (id === 's-game') {
+    ov.style.background = 'rgba(3,5,14,.82)';
   } else {
-    dots.style.display = 'none';
-    ov.style.setProperty('background', 'rgba(3,5,14,.55)', 'important');
-    bgStart(6000);
+    ov.style.background = 'linear-gradient(to bottom,rgba(3,5,14,.4) 0%,rgba(3,5,14,.1) 40%,rgba(3,5,14,.6) 100%)';
   }
+  // 슬라이드 속도만 조절 (멈추지 않음)
+  if (id === 's-intro') bgStart(4000);
+  else if (id === 's-game') bgStart(8000);
+  else bgStart(6000);
 }
 // Swipe
 let _t0 = 0;
