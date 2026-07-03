@@ -75,16 +75,16 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 .btn-enter:hover{transform:scale(1.05);box-shadow:0 0 60px rgba(0,200,255,.6)}
 
 /* ══ NATION ══ */
-#s-nation{padding:22px 16px;align-items:center;background:transparent;width:100%}
-.stitle{font-size:1.4rem;font-weight:900;letter-spacing:4px;text-align:center;color:var(--accent);margin-bottom:4px}
-.ssub{text-align:center;color:var(--muted);margin-bottom:13px;font-size:.82rem}
-.search-box{display:block;width:100%;max-width:370px;margin:0 auto 11px;padding:8px 15px;background:var(--panel);border:1px solid var(--border);border-radius:28px;color:var(--text);font-size:.88rem;outline:none}
+#s-nation{padding:16px;display:flex;flex-direction:column;align-items:center;background:transparent;width:100%;box-sizing:border-box}
+.stitle{font-size:1.4rem;font-weight:900;letter-spacing:4px;text-align:center;color:var(--accent);margin-bottom:4px;width:100%}
+.ssub{text-align:center;color:var(--muted);margin-bottom:13px;font-size:.82rem;width:100%}
+.search-box{display:block;width:100%;max-width:480px;margin:0 auto 11px;padding:8px 15px;background:var(--panel);border:1px solid var(--border);border-radius:28px;color:var(--text);font-size:.88rem;outline:none}
 .search-box:focus{border-color:var(--accent)}
-.nation-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px;width:100%;max-width:820px;max-height:46vh;overflow-y:auto;padding:3px;scrollbar-width:thin}
-.nc{border:2px solid var(--border);border-radius:8px;padding:9px 6px;text-align:center;cursor:pointer;transition:all .2s;background:var(--panel)}
+.nation-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;width:100%;max-width:720px;margin:0 auto;max-height:46vh;overflow-y:auto;padding:3px;scrollbar-width:thin}
+.nc{border:2px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;background:var(--panel)}
 .nc:hover{border-color:var(--accent);transform:translateY(-2px)}.nc.sel{border-color:var(--gold);background:rgba(255,215,0,.08)}
 .nf{font-size:1.55rem;margin-bottom:2px}.nn{font-size:.7rem;font-weight:600}.ne{font-size:.58rem;color:var(--muted)}
-.btn-next{margin-top:13px;padding:10px 38px;background:linear-gradient(135deg,#0066aa,#00c8ff);color:#000;font-weight:900;font-size:.88rem;border:none;border-radius:26px;cursor:pointer;display:none}
+.btn-next{display:block;margin:13px auto 0;padding:10px 38px;background:linear-gradient(135deg,#0066aa,#00c8ff);color:#000;font-weight:900;font-size:.88rem;border:none;border-radius:26px;cursor:pointer;display:none}
 .btn-next.show{display:block}
 
 /* ══ COMMANDER ══ */
@@ -413,6 +413,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 
 @media(max-width:700px){
   .lpanel,.rpanel{display:none}
+  .nation-grid{grid-template-columns:repeat(3,1fr);gap:5px}
   .grid-wrap{grid-template-columns:repeat(7,52px);gap:2px;padding:8px}
   .sector{width:52px;height:52px}.sec-ui{width:26px;height:26px}
   .sao{width:250px}.fmbody{padding:12px}
@@ -508,7 +509,16 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
   .btn-enter{padding:11px 32px;font-size:.84rem;letter-spacing:2px}
   
   /* Nation page */
-  .nation-grid{grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:5px}
+  /* Nation screen mobile */
+  #s-nation{padding:12px 10px}
+  .nation-grid{grid-template-columns:repeat(2,1fr);gap:6px;max-width:100%}
+  .nc{padding:10px 6px}
+  .nf{font-size:1.4rem}
+  .nn{font-size:.68rem}
+  .ne{font-size:.56rem}
+  .search-box{max-width:100%;font-size:.82rem}
+  .stitle{font-size:1.1rem;letter-spacing:2px}
+  .btn-next{width:calc(100% - 20px);max-width:320px}
   /* Grid center */
   .battle-view{justify-content:center}
   .grid-wrap{margin:0 auto}
@@ -538,6 +548,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 }
 
 @media(max-width:380px){
+  .nation-grid{grid-template-columns:repeat(2,1fr);gap:4px}
   .grid-wrap{grid-template-columns:repeat(7,40px);gap:1px;padding:5px}
   .sector{width:40px;height:40px}
   .sec-ui{width:20px;height:20px}
