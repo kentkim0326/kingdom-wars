@@ -940,6 +940,109 @@ body { overflow-x: hidden; overflow-y: hidden; }
   pointer-events:none;
 }
 #intro-click-layer{position:absolute;inset:0;z-index:9999;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;pointer-events:all !important;}
+
+/* ════════════════════════════════════════
+   FINAL OVERRIDE - 최우선 적용
+   ════════════════════════════════════════ */
+
+/* 모든 screen은 기본 hidden */
+.screen { display: none !important; }
+.screen.active { display: flex !important; }
+
+/* 각 screen 레이아웃 */
+#s-intro {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+#s-nation {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 100vh;
+  padding: 60px 16px 20px !important;
+  overflow-y: auto !important;
+}
+#s-commander {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 100vh;
+  padding: 60px 16px 20px !important;
+  overflow-y: auto !important;
+}
+#s-game {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+/* 클릭 레이어 */
+#intro-click-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  pointer-events: all !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  touch-action: manipulation !important;
+}
+
+/* 모바일 공통 */
+@media(max-width: 480px) {
+  /* Nation */
+  #s-nation { padding: 50px 10px 16px !important; }
+  .stitle { font-size: 1.1rem !important; letter-spacing: 2px !important; text-align: center; width: 100%; }
+  .ssub { text-align: center; width: 100%; font-size: .78rem; }
+  .search-box { width: 100% !important; max-width: 100% !important; font-size: .82rem; }
+  .nation-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    max-height: 55vh !important;
+  }
+  .nc { padding: 10px 4px !important; }
+  .nf { font-size: 1.3rem !important; }
+  .nn { font-size: .66rem !important; }
+  .btn-next { width: calc(100% - 20px) !important; max-width: 320px !important; margin: 10px auto !important; display: block !important; }
+
+  /* Commander */
+  #s-commander { padding: 50px 10px 16px !important; }
+  .cmd-title { font-size: 1.1rem !important; text-align: center; width: 100%; }
+  .cmd-sub { text-align: center; width: 100%; font-size: .76rem; }
+  .cmd-cards { gap: 8px !important; justify-content: center !important; }
+  .cmd-card { width: 140px !important; }
+  .cmd-avwrap { height: 110px !important; }
+  .cmd-name { font-size: .78rem !important; }
+  .sp-pack { padding: 10px !important; }
+  .btn-cmd-ok { width: calc(100% - 20px) !important; display: block !important; margin: 10px auto !important; }
+
+  /* Intro */
+  #s-intro { height: 100dvh !important; }
+  .intro-inner { padding: 40px 14px 28px !important; }
+  .intro-logo { width: min(150px, 42vw) !important; }
+  .catchphrase { font-size: .72rem !important; margin-bottom: 14px !important; }
+  .bf-btn { min-width: 78px !important; padding: 7px 5px !important; flex: 1 !important; max-width: 115px !important; }
+  .bf-title { font-size: .7rem !important; }
+  .bf-sub { font-size: .54rem !important; }
+  .bf-icon { font-size: 1.3rem !important; }
+  .btn-enter { padding: 11px 28px !important; font-size: .86rem !important; letter-spacing: 1px !important; }
+}
+
+@media(max-width: 380px) {
+  .nation-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .cmd-card { width: 125px !important; }
+  .bf-btn { min-width: 68px !important; max-width: 100px !important; }
+}
+
 </style>
 </head>
 <body>
