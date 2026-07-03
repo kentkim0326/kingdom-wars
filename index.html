@@ -685,7 +685,7 @@ body {
   cursor: pointer !important;
 }
 body { overflow-x: hidden; overflow-y: hidden; }
-#intro-click-layer { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+#intro-click-layer{position:absolute;inset:0;z-index:9999 !important;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;pointer-events:all !important;}
 
 /* ══════════════════════════════════════
    LAYOUT MASTER CSS - 단일 정의
@@ -794,7 +794,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
 #bg-slideshow, #bg-overlay { z-index: 0 !important; pointer-events: none !important; }
 .stars { z-index: 1 !important; pointer-events: none !important; }
 .lang-bar { z-index: 999 !important; }
-#intro-click-layer { z-index: 500; touch-action: manipulation; }
+#intro-click-layer{position:absolute;inset:0;z-index:9999 !important;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;pointer-events:all !important;}
 
 /* MOBILE 480px */
 @media(max-width: 480px) {
