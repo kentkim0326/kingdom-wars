@@ -25,14 +25,12 @@
   --text:#d0e8ff;--muted:#4a6a8a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;background-color:var(--bg)}
-body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(to bottom,rgba(3,5,14,0.45) 0%,rgba(3,5,14,0.15) 40%,rgba(3,5,14,0.65) 100%);
-  transition:background 0.5s ease;}
+body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;background:#03050e;}
+
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
-.screen{position:relative;z-index:5;min-height:100vh;display:none;flex-direction:column;overflow-x:hidden}
+.screen{position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;overflow-x:hidden}
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .45s ease forwards}
@@ -411,54 +409,13 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
 .slideshow-bg,.slide,.slide-overlay{
   pointer-events:none!important;
 }
-.slideshow-bg{
-  position:fixed;inset:0;z-index:0;overflow:hidden;
-}
-.slide{
-  position:absolute;inset:0;
-  background-size:cover;background-position:center;
-  opacity:0;transition:opacity 1.2s ease;
-}
-.slide.active{opacity:1}
-.slide-overlay{
-  position:absolute;inset:0;
-  pointer-events:none;
-  background:linear-gradient(
-    to bottom,
-    rgba(3,5,14,0.55) 0%,
-    rgba(3,5,14,0.25) 40%,
-    rgba(3,5,14,0.65) 100%
-  );
-}
+
+
+
+
 /* Intro uses full-screen slides */
 
 
-/* Slide dots */
-.slide-dots{
-  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
-  display:flex;gap:7px;z-index:10;
-  pointer-events:all;
-}
-.slide-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.5);
-  cursor:pointer;transition:all 0.3s;
-}
-.slide-dot.active{background:var(--accent);border-color:var(--accent);width:20px;border-radius:4px}
-/* Game screen slideshow bg (subtle) */
-.game-slide-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-}
-.game-slide{
-  position:absolute;inset:0;
-  background-size:cover;background-position:center;
-  opacity:0;transition:opacity 2s ease;
-}
-.game-slide.active{opacity:1}
-.game-slide-overlay{
-  position:absolute;inset:0;
-  background:rgba(3,5,14,0.82);
-}
 #s-game{position:relative}
 
 /* ════════ MOBILE FIXES ════════ */
@@ -587,16 +544,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:transparent!important;
   padding:0;
 }
-.intro-inner{pointer-events:all!important;position:relative;z-index:100;
-  position:relative;z-index:3;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;
-  width:100%;max-width:520px;
-  margin:0 auto;
-  padding:60px 20px 40px;
-  pointer-events:all;
-}
+
 .intro-logo{
   width:min(220px,52vw);
   height:auto;
@@ -615,16 +563,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   min-height:100vh;width:100%;padding:0;
   position:relative;background:transparent!important;
 }
-.intro-inner{pointer-events:all!important;position:relative;z-index:100;
-  position:relative;z-index:5;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;
-  width:100%;max-width:540px;
-  margin:0 auto;
-  padding:60px 24px 40px;
-  pointer-events:all;
-}
+
 .intro-logo{
   width:min(200px,50vw);height:auto;
   display:block;margin:0 auto 12px;
@@ -686,9 +625,129 @@ body {
   border-radius: 4px;
 }
 
+
+/* ══ SAFE SLIDESHOW CSS ══ */
+#bg-slideshow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none !important;
+  overflow: hidden;
+}
+#bg-slideshow .bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  pointer-events: none !important;
+}
+#bg-slideshow .bg-slide.on { opacity: 1; }
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none !important;
+  background: linear-gradient(to bottom, rgba(3,5,14,.5) 0%, rgba(3,5,14,.15) 40%, rgba(3,5,14,.7) 100%);
+  transition: background 0.5s;
+}
+/* Dots */
+#bg-dots {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 7px;
+  z-index: 200;
+  pointer-events: all !important;
+}
+.bg-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.5);
+  cursor: pointer;
+  transition: all .3s;
+  pointer-events: all !important;
+}
+.bg-dot.on {
+  background: #00c8ff;
+  border-color: #00c8ff;
+  width: 20px;
+  border-radius: 4px;
+}
+
+.intro-inner{
+  position:relative;z-index:20;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  width:100%;max-width:540px;
+  margin:0 auto;
+  padding:60px 20px 40px;
+  pointer-events:all !important;
+}
 </style>
 </head>
-<body id="main-body">
+<body>
+<div id="bg-slideshow">
+  <div class="bg-slide on" style="background-image:url('assets/slide1.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide2.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide3.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide4.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide5.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide6.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide7.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide8.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide9.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide10.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide11.jpg')"></div>
+</div>
+<div id="bg-overlay"></div>
+<div id="bg-dots">
+  <div class="bg-dot on" onclick="bgGoSlide(0)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(1)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(2)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(3)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(4)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(5)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(6)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(7)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(8)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(9)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(10)"></div>
+</div>
+
+<div id="bg-slideshow">
+  <div class="bg-slide on" style="background-image:url('assets/slide1.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide2.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide3.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide4.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide5.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide6.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide7.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide8.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide9.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide10.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide11.jpg')"></div>
+</div>
+<div id="bg-overlay"></div>
+<div id="bg-dots">
+  <div class="bg-dot on" onclick="bgGoSlide(0)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(1)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(2)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(3)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(4)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(5)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(6)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(7)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(8)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(9)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(10)"></div>
+</div>
+
 
   <div class="slide-dot" onclick="goSlide(1)"></div>
   <div class="slide-dot" onclick="goSlide(2)"></div>
@@ -703,9 +762,7 @@ body {
 </div>
 
 <div class="stars" id="stars"></div>
-<div id="slide-dots-new">
-  <div class="sdot active" onclick="goSlide(0)"></div>
-  <div class="sdot" onclick="goSlide(1)"></div>
+<div class="sdot" onclick="goSlide(1)"></div>
   <div class="sdot" onclick="goSlide(2)"></div>
   <div class="sdot" onclick="goSlide(3)"></div>
   <div class="sdot" onclick="goSlide(4)"></div>
@@ -2136,49 +2193,51 @@ function log(type,msg){
 }
 
 // ════ SLIDESHOW SYSTEM ════
-// ════════ SLIDESHOW - CSS background only ════════
-const SLIDES = [
-  'assets/slide1.jpg','assets/slide2.jpg','assets/slide3.jpg',
-  'assets/slide4.jpg','assets/slide5.jpg','assets/slide6.jpg',
-  'assets/slide7.jpg','assets/slide8.jpg','assets/slide9.jpg',
-  'assets/slide10.jpg','assets/slide11.jpg'
-];
-const SLIDES_COUNT = 11;
-let curSlide = 0, slideTimer = null;
 
-function applySlide(n) {
-  curSlide = ((n % SLIDES_COUNT) + SLIDES_COUNT) % SLIDES_COUNT;
-  document.body.style.backgroundImage = `url('${SLIDES[curSlide]}')`;
-  document.body.style.backgroundSize = 'cover';
-  document.body.style.backgroundPosition = 'center';
-  document.body.style.backgroundAttachment = 'fixed';
-  // overlay via body::before handled in CSS
-  document.querySelectorAll('.sdot').forEach((d,i) => d.classList.toggle('active', i===curSlide));
+
+// ════════ SLIDESHOW (safe, no click blocking) ════════
+const BG_SLIDES = ['assets/slide1.jpg', 'assets/slide2.jpg', 'assets/slide3.jpg', 'assets/slide4.jpg', 'assets/slide5.jpg', 'assets/slide6.jpg', 'assets/slide7.jpg', 'assets/slide8.jpg', 'assets/slide9.jpg', 'assets/slide10.jpg', 'assets/slide11.jpg'];
+const BG_COUNT = BG_SLIDES.length;
+let bgCur = 0, bgTimer = null;
+
+function bgGoSlide(n) {
+  bgCur = ((n % BG_COUNT) + BG_COUNT) % BG_COUNT;
+  document.querySelectorAll('.bg-slide').forEach((el,i) => el.classList.toggle('on', i===bgCur));
+  document.querySelectorAll('.bg-dot').forEach((el,i) => el.classList.toggle('on', i===bgCur));
+  // game overlay darker
 }
-function goSlide(n) { applySlide(n); }
-function nextSlide() { applySlide(curSlide + 1); }
-function startSlideshow(spd) {
-  clearInterval(slideTimer);
-  slideTimer = setInterval(nextSlide, spd || 4000);
-}
+function bgNext() { bgGoSlide(bgCur + 1); }
+function bgStart(spd) { clearInterval(bgTimer); bgTimer = setInterval(bgNext, spd||4000); }
 function updateSlideshowForScreen(id) {
-  const dots = document.getElementById('slide-dots-new');
-  if (dots) dots.style.display = id === 's-intro' ? 'flex' : 'none';
-  if (id === 's-intro') startSlideshow(4000);
-  else if (id === 's-game') startSlideshow(8000);
-  else startSlideshow(6000);
+  const dots = document.getElementById('bg-dots');
+  const ov = document.getElementById('bg-overlay');
+  if (!dots || !ov) return;
+  if (id === 's-intro') {
+    dots.style.display = 'flex';
+    ov.style.background = 'linear-gradient(to bottom,rgba(3,5,14,.45) 0%,rgba(3,5,14,.1) 40%,rgba(3,5,14,.65) 100%)';
+    bgStart(4000);
+  } else if (id === 's-game') {
+    dots.style.display = 'none';
+    ov.style.background = 'rgba(3,5,14,.87)';
+    bgStart(8000);
+  } else {
+    dots.style.display = 'none';
+    ov.style.background = 'rgba(3,5,14,.75)';
+    bgStart(6000);
+  }
 }
 // Swipe
-let _tx = 0;
-document.addEventListener('touchstart', e => { _tx = e.touches[0].clientX; }, {passive:true});
+let _t0 = 0;
+document.addEventListener('touchstart', e => { _t0 = e.touches[0].clientX; }, {passive:true});
 document.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - _tx;
-  if (Math.abs(dx) > 50) { dx < 0 ? nextSlide() : goSlide(curSlide-1); }
+  const dx = e.changedTouches[0].clientX - _t0;
+  if (Math.abs(dx) > 50) bgGoSlide(bgCur + (dx < 0 ? 1 : -1));
 }, {passive:true});
-
 // Init
-applySlide(0);
+bgStart(4000);
 updateSlideshowForScreen('s-intro');
+// ═════════════════════════════════════════════
+
 </script>
 </body>
 </html>
