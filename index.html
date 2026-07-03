@@ -634,7 +634,6 @@ body {
   inset: 0;
   z-index: 1;
   pointer-events: none !important;
-  background: linear-gradient(to bottom, rgba(3,5,14,.45) 0%, rgba(3,5,14,.1) 40%, rgba(3,5,14,.65) 100%);
   transition: background 0.5s;
 }
 /* Dots */
@@ -2583,11 +2582,11 @@ function updateSlideshowForScreen(id) {
     bgStart(4000);
   } else if (id === 's-game') {
     dots.style.display = 'none';
-    ov.style.setProperty('background', 'rgba(3,5,14,.87)', 'important');
+    ov.style.setProperty('background', 'rgba(3,5,14,.82)', 'important');
     bgStart(8000);
   } else {
     dots.style.display = 'none';
-    ov.style.setProperty('background', 'rgba(3,5,14,.75)', 'important');
+    ov.style.setProperty('background', 'rgba(3,5,14,.55)', 'important');
     bgStart(6000);
   }
 }
