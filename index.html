@@ -35,10 +35,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .logo{font-size:clamp(2rem,7vw,4.5rem);font-weight:900;letter-spacing:6px;
   background:linear-gradient(135deg,#00c8ff,#fff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
 .catchphrase{font-size:clamp(.82rem,2vw,1.1rem);color:var(--gold);font-weight:700;letter-spacing:2px;margin-bottom:28px}
-.intro-moon{width:210px;height:210px;border-radius:50%;margin:0 auto 28px;cursor:pointer;overflow:hidden;
-  box-shadow:0 0 90px rgba(0,200,255,.5),0 0 40px rgba(200,200,180,.2);transition:transform .3s}
-.intro-moon:hover{transform:scale(1.05)}
-.intro-moon img{width:100%;height:100%;object-fit:cover;display:block}
+
+
+
 .bf-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
 .bf-btn{padding:11px 18px;border-radius:12px;border:2px solid var(--border);background:var(--panel);cursor:pointer;transition:all .3s;text-align:center;min-width:115px}
 .bf-btn.open{border-color:var(--accent)}.bf-btn.open:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,200,255,.3)}
@@ -423,7 +422,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   position:relative;z-index:2;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  min-height:100vh;padding:50px 16px;text-align:center;
+  min-height:100vh;padding:60px 16px 40px;text-align:center;
 }
 /* Slide dots */
 .slide-dots{
@@ -511,7 +510,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   #s-intro .screen-content{padding:30px 12px}
   .logo{font-size:clamp(1.8rem,8vw,3rem);letter-spacing:3px}
   .catchphrase{font-size:.75rem;letter-spacing:1px;margin-bottom:20px}
-  .intro-moon{width:150px;height:150px;margin-bottom:20px}
+  
   .bf-row{gap:8px;margin-bottom:18px}
   .bf-btn{min-width:95px;padding:9px 10px}
   .bf-icon{font-size:1.5rem}
@@ -589,12 +588,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 <!-- INTRO -->
 <div class="screen active" id="s-intro">
   <div class="screen-content">
-  <div class="fu" style="text-align:center;margin-bottom:10px;margin-top:0">
+  <div class="fu" style="text-align:center;margin-bottom:18px">
     <div class="logo">KINGDOM WARS</div>
     <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
-  </div>
-  <div class="intro-moon fu2" onclick="goNation()">
-    <img src="assets/moon_real.png" alt="Moon" onerror="this.parentElement.style.background='radial-gradient(circle at 35% 35%,#d4d4c4,#909088,#606058)'"/>
   </div>
   <div class="bf-row fu3">
     <div class="bf-btn open" onclick="goNation()">
