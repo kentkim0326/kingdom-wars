@@ -600,30 +600,9 @@ body {
   transition: background-image 1.5s ease;
 }
 /* Intro dots */
-#slide-dots-new {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 7px;
-  z-index: 50;
-  pointer-events: all;
-}
-.sdot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.35);
-  border: 1px solid rgba(255,255,255,0.5);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.sdot.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  width: 20px;
-  border-radius: 4px;
-}
+
+
+
 
 
 /* ══ SAFE SLIDESHOW CSS ══ */
@@ -663,6 +642,7 @@ body {
   z-index: 200;
   pointer-events: all !important;
 }
+#bg-dots,.bg-dot{pointer-events:all!important}
 .bg-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
