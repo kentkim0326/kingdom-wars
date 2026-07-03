@@ -1,0 +1,2684 @@
+<!DOCTYPE html>
+<!-- FORCED1783064352 <!--REBUILD1783063505 -->
+<!-- KW v0.8.3 new-logo -->
+<!-- KW v0.8.2 logo+favicon -->
+<html lang="ko">
+<head>
+<script>
+// Kill all service workers and caches
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(function(registrations){
+    registrations.forEach(function(r){r.unregister();});
+  });
+}
+if('caches' in window){
+  caches.keys().then(function(names){
+    names.forEach(function(name){caches.delete(name);});
+  });
+}
+</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<!-- BUILD:1783073266 -->
+<script>
+// Block Kaikas/MetaMask from intercepting events
+(function() {
+  // 이벤트 가로채기 방지
+  var _origAEL = EventTarget.prototype.addEventListener;
+  // Kaikas contentscript가 window에 ethereum inject하려 할 때 무시
+  Object.defineProperty(window, 'ethereum', {
+    get: function() { return undefined; },
+    set: function() {},
+    configurable: false
+  });
+})();
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>KINGDOM WARS</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<meta name="theme-color" content="#03050e"/>
+<meta name="description" content="Kingdom Wars - Conquer the Moon before Elon"/>
+<meta property="og:title" content="KINGDOM WARS"/>
+<meta property="og:description" content="⚡ We will conquer Mars before Elon ⚡"/>
+<meta property="og:image" content="https://raw.githubusercontent.com/kentkim0326/kingdom-wars/main/assets/slide1.jpg"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+<style>
+:root{
+  --bg:#03050e;--panel:#07091a;--border:#1a2a4a;
+  --accent:#00c8ff;--gold:#ffd700;--red:#ff3a3a;--green:#00ff88;
+  --purple:#aa44ff;--orange:#ff8800;--teal:#00ffcc;
+  --text:#d0e8ff;--muted:#4a6a8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;background:#03050e;}
+
+.stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
+
+to{opacity:1;transform:translateY(0)}}
+.{opacity:1}
+.{opacity:1}
+.{opacity:1}
+
+/* ══ LANG BAR ══ */
+.lang-bar{position:fixed;top:0;right:0;z-index:999;display:flex;gap:2px;padding:5px 9px;
+  background:rgba(3,5,14,.92);border-bottom-left-radius:10px;border:1px solid var(--border);border-top:none;border-right:none}
+.lb{padding:3px 7px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+.lb.active{background:var(--accent);color:#000}
+
+/* ══ INTRO ══ */
+.logo{font-size:clamp(1.8rem,7vw,4.5rem);font-weight:900;letter-spacing:4px;word-break:break-word;
+  background:linear-gradient(135deg,#00c8ff,#fff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.catchphrase{font-size:clamp(.78rem,3.5vw,1.1rem);color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:20px;text-align:center;width:100%}
+
+
+
+.bf-row{display:flex;gap:8px;justify-content:center;flex-wrap:nowrap;margin-bottom:20px;width:100%;padding:0}
+.bf-btn{pointer-events:all!important;cursor:pointer;padding:11px 18px;border-radius:12px;border:2px solid var(--border);background:var(--panel);cursor:pointer;transition:all .3s;text-align:center;min-width:115px}
+.bf-btn.open{border-color:var(--accent)}.bf-btn.open:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,200,255,.3)}
+.bf-btn.locked{opacity:.4;cursor:not-allowed}
+.bf-icon{font-size:1.9rem;margin-bottom:3px}.bf-title{font-weight:700;font-size:.88rem;margin-bottom:1px}
+.bf-sub{font-size:.68rem;color:var(--muted)}
+.bdg{display:inline-block;padding:2px 8px;border-radius:18px;font-size:.58rem;font-weight:700;margin-bottom:3px}
+.bdg.open{background:var(--green);color:#000}.bdg.soon{background:var(--muted);color:#000}
+.btn-enter{pointer-events:all!important;cursor:pointer;padding:13px 44px;background:linear-gradient(135deg,#0066aa,#00c8ff);color:#000;font-weight:900;font-size:.95rem;border:none;border-radius:50px;cursor:pointer;letter-spacing:3px;transition:all .3s}
+.btn-enter:hover{transform:scale(1.05);box-shadow:0 0 60px rgba(0,200,255,.6)}
+
+/* ══ NATION ══ */
+#s-nation{padding:20px 16px;width:100%;}
+.stitle{font-size:1.4rem;font-weight:900;letter-spacing:4px;text-align:center;color:var(--accent);margin-bottom:4px;width:100%}
+.ssub{text-align:center;color:var(--muted);margin-bottom:13px;font-size:.82rem;width:100%}
+.search-box{display:block;width:100%;max-width:480px;margin:0 auto 11px;padding:8px 15px;background:var(--panel);border:1px solid var(--border);border-radius:28px;color:var(--text);font-size:.88rem;outline:none}
+.search-box:focus{border-color:var(--accent)}
+.nation-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;width:100%;max-width:720px;margin:0 auto;max-height:46vh;overflow-y:auto;padding:3px;scrollbar-width:thin}
+.nc{border:2px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;background:var(--panel)}
+.nc:hover{border-color:var(--accent);transform:translateY(-2px)}.nc.sel{border-color:var(--gold);background:rgba(255,215,0,.08)}
+.nf{font-size:1.55rem;margin-bottom:2px}.nn{font-size:.7rem;font-weight:600}.ne{font-size:.58rem;color:var(--muted)}
+.btn-next{display:block;margin:13px auto 0;padding:10px 38px;background:linear-gradient(135deg,#0066aa,#00c8ff);color:#000;font-weight:900;font-size:.88rem;border:none;border-radius:26px;cursor:pointer;display:none}
+.btn-next.show{display:block}
+
+/* ══ COMMANDER ══ */
+#s-commander{padding:22px 16px;align-items:center;justify-content:center;background:transparent;width:100%}
+.cmd-title{font-size:1.4rem;font-weight:900;letter-spacing:3px;text-align:center;color:var(--accent);margin-bottom:4px}
+.cmd-sub{text-align:center;color:var(--muted);margin-bottom:18px;font-size:.8rem}
+.cmd-nbadge{display:flex;align-items:center;gap:7px;justify-content:center;margin-bottom:18px;padding:7px 16px;background:var(--panel);border:1px solid var(--border);border-radius:28px;width:fit-content;margin-left:auto;margin-right:auto}
+.cmd-cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.cmd-card{width:172px;border:2px solid var(--border);border-radius:13px;background:var(--panel);cursor:pointer;transition:all .3s;overflow:hidden;text-align:center;padding-bottom:11px}
+.cmd-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.cmd-card.sel-m{border-color:#5af;box-shadow:0 0 24px rgba(80,160,255,.4)}
+.cmd-card.sel-f{border-color:#f9a;box-shadow:0 0 24px rgba(255,150,180,.4)}
+.cmd-avwrap{width:100%;height:140px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,30,60,.8),rgba(0,10,30,.95))}
+.cmd-avm{font-size:5.2rem;animation:cFloat 3s ease-in-out infinite}
+@keyframes cFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.cmd-gen{font-size:.58rem;letter-spacing:2px;color:var(--muted);margin:7px 0 2px;text-transform:uppercase}
+.cmd-name{font-size:.88rem;font-weight:900;margin-bottom:2px}
+.cmd-card.male .cmd-name{color:#5af}.cmd-card.female .cmd-name{color:#f9a}
+.cmd-ttl{font-size:.66rem;color:var(--gold);font-style:italic;margin-bottom:6px;padding:0 7px}
+.cmd-skills{padding:0 8px}
+.cmd-skill{font-size:.63rem;color:var(--muted);padding:2px 0;border-bottom:1px solid rgba(26,42,74,.4)}
+.cmd-vs{font-size:1.1rem;color:var(--muted);align-self:center}
+.btn-cmd-ok{padding:10px 36px;background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000;font-weight:900;font-size:.88rem;border:none;border-radius:24px;cursor:pointer;display:none}
+.btn-cmd-ok.show{display:block}
+.sp-pack{background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.2);border-radius:9px;padding:9px 14px;margin-top:12px;text-align:center;max-width:440px}
+.sp-title{font-size:.62rem;letter-spacing:2px;color:var(--accent);margin-bottom:6px}
+.sp-items{display:flex;gap:11px;justify-content:center;flex-wrap:wrap}
+.sp-i{text-align:center;font-size:.68rem}
+.sp-icon{font-size:1.1rem;margin-bottom:1px}.sp-val{color:var(--gold);font-weight:700}.sp-lbl{color:var(--muted);font-size:.56rem}
+
+/* ══ GAME ══ */
+#s-game{flex-direction:column;height:100vh;overflow:hidden}
+.hud{display:flex;align-items:center;justify-content:space-between;padding:4px 9px;
+  background:rgba(3,5,14,.97);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:4px;position:sticky;top:0;z-index:200}
+.hud-l{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.hud-r{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.hud-brand{font-weight:900;letter-spacing:3px;font-size:.84rem;color:var(--accent)}
+.cmd-hud{display:flex;align-items:center;gap:4px;padding:2px 7px;background:var(--panel);border:1px solid var(--border);border-radius:14px;font-size:.68rem}
+.hud-pill{display:flex;align-items:center;gap:3px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:2px 7px;font-size:.68rem}
+.rv{color:var(--gold);font-weight:700}
+
+/* MORALE BAR */
+.morale-bar{padding:3px 9px;background:rgba(3,5,14,.95);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.morale-pill{display:flex;align-items:center;gap:5px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:3px 9px;min-width:160px}
+.morale-track{flex:1;height:7px;background:rgba(0,0,0,.4);border-radius:4px;overflow:hidden}
+.morale-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.morale-val{font-size:.68rem;font-weight:700;min-width:30px}
+.online-timer{font-size:.64rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.online-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hourly-bonus{font-size:.64rem;color:var(--teal);display:flex;align-items:center;gap:3px}
+
+.res-bar{display:flex;gap:5px;padding:3px 9px;background:rgba(3,5,14,.95);border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
+.res-item{display:flex;align-items:center;gap:2px;background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:2px 7px;font-size:.68rem}
+.res-rate{font-size:.56rem;color:var(--green)}
+.news-ticker{display:flex;align-items:center;gap:6px;padding:2px 9px;background:rgba(0,10,30,.9);border-bottom:1px solid rgba(0,200,255,.12);overflow:hidden}
+.news-lbl{color:var(--accent);font-size:.6rem;font-weight:700;letter-spacing:2px;white-space:nowrap;border:1px solid var(--accent);padding:1px 5px;border-radius:7px;flex-shrink:0}
+.news-scroll{display:flex;gap:32px;animation:scrollNews 52s linear infinite;font-size:.64rem;color:var(--muted)}
+@keyframes scrollNews{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ev-ticker{display:none;align-items:center;gap:5px;padding:2px 9px;background:rgba(255,136,0,.12);border-bottom:1px solid rgba(255,136,0,.3);font-size:.66rem;color:var(--orange)}
+.ev-ticker.show{display:flex}
+.view-bar{display:flex;align-items:center;gap:3px;padding:3px 9px;background:rgba(3,5,14,.95);border-bottom:1px solid var(--border);overflow-x:auto}
+.vtbtn{padding:3px 10px;border:1px solid var(--border);border-radius:13px;background:transparent;color:var(--muted);font-size:.66rem;cursor:pointer;white-space:nowrap;transition:all .2s;font-weight:600}
+.vtbtn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.vtbtn:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+.turn-info{display:flex;align-items:center;gap:4px;font-size:.66rem;margin-left:5px;flex-shrink:0}
+.turn-num{color:var(--gold);font-weight:700}
+.btn-et{padding:3px 10px;background:linear-gradient(135deg,#ffd700,#ff8800);color:#000;border:none;border-radius:13px;font-size:.66rem;font-weight:700;cursor:pointer}
+.game-body{display:flex;flex:1;height:0;min-height:0;overflow:hidden;position:relative;z-index:1;flex-grow:1}
+
+/* ══ LEFT PANEL ══ */
+.lpanel{width:188px;min-width:155px;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+.ps{padding:7px;border-bottom:1px solid var(--border)}
+.plbl{font-size:.54rem;letter-spacing:2px;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
+.unit-tabs{display:flex;border-bottom:1px solid var(--border)}
+.utab{flex:1;padding:4px 2px;text-align:center;font-size:.56rem;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .2s}
+.utab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.unit-list{padding:5px}
+
+/* UNIT CARD */
+.ucard{border:1px solid var(--border);border-radius:9px;margin-bottom:5px;cursor:pointer;transition:all .2s;overflow:hidden;background:rgba(0,200,255,.02);position:relative}
+.ucard:hover,.ucard.sel{border-color:var(--accent);background:rgba(0,200,255,.08)}
+.ucard.sel{box-shadow:0 0 9px rgba(0,200,255,.3)}
+.ucard.rarity-sr{border-color:rgba(255,215,0,.45)}.ucard.rarity-ur{border-color:rgba(170,68,255,.6);box-shadow:0 0 7px rgba(170,68,255,.25)}
+.ucard-img{width:100%;height:68px;object-fit:cover;object-position:center 20%;display:block}
+.ucard-img.mech-i{object-position:center center}
+.rbadge{position:absolute;top:3px;right:3px;font-size:.48rem;font-weight:700;padding:1px 3px;border-radius:4px}
+.r-ur{background:rgba(170,68,255,.4);color:#c77fff}.r-sr{background:rgba(255,215,0,.3);color:var(--gold)}.r-r{background:rgba(0,150,255,.3);color:#5af}.r-n{background:rgba(100,140,180,.3);color:#8ab}
+.ucard-body{padding:4px 5px}
+.ucard-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.ucard-name{font-size:.68rem;font-weight:700}
+.ucard-cnt{font-size:.6rem;background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:1px 4px;color:var(--muted)}
+.ucard-stats{display:flex;gap:2px;align-items:center;flex-wrap:wrap;margin-bottom:2px}
+.ucard-pow{font-size:.66rem;color:var(--gold);font-weight:700}
+.tb{font-size:.5rem;padding:1px 4px;border-radius:6px;font-weight:700}
+.tb-f{background:rgba(0,150,255,.2);color:#5af;border:1px solid rgba(0,150,255,.3)}
+.tb-m{background:rgba(170,68,255,.2);color:#c77fff;border:1px solid rgba(170,68,255,.3)}
+.tb-a{background:rgba(255,215,0,.2);color:var(--gold);border:1px solid rgba(255,215,0,.3)}
+.ucard-skills{font-size:.54rem;color:var(--teal);margin-top:1px}
+/* Selected unit big display */
+.sel-big{padding:7px;border-bottom:1px solid var(--border)}
+.sel-big-img{width:100%;height:112px;object-fit:contain;border-radius:6px;border:1px solid var(--border);background:rgba(0,0,0,.4);margin-bottom:5px}
+.sel-big-name{font-size:.8rem;font-weight:700;margin-bottom:3px}
+.sel-big-pow{font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:3px}
+.sbr{display:flex;justify-content:space-between;font-size:.68rem;margin-bottom:2px}
+.sbk{color:var(--muted)}.sbv{font-weight:600}
+.sel-big-cnt{background:rgba(0,0,0,.3);border-radius:5px;padding:4px 5px;margin-top:3px;font-size:.62rem}
+.ch-s{color:var(--green)}.ch-w{color:var(--red)}
+.skill-chip{display:inline-block;padding:1px 5px;border-radius:7px;font-size:.52rem;font-weight:700;margin:1px;border:1px solid rgba(0,200,255,.3);background:rgba(0,200,255,.06);color:var(--teal)}
+.btn-buy{width:100%;padding:4px;margin-top:3px;border:1px solid var(--border);border-radius:5px;background:rgba(0,200,255,.04);color:var(--accent);font-size:.64rem;cursor:pointer}
+.spec-units{padding:7px;border-bottom:1px solid var(--border)}
+.spec-btn{width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:6px;background:var(--panel);color:var(--text);font-size:.66rem;cursor:pointer;transition:all .2s;text-align:left;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.spec-btn:hover{border-color:var(--accent)}
+.spec-icon{font-size:.95rem;flex-shrink:0}.spec-info{flex:1}
+.spec-name{font-size:.66rem;font-weight:700}.spec-desc{font-size:.56rem;color:var(--muted);margin-top:1px}
+.spec-cost{font-size:.58rem;color:var(--gold);white-space:nowrap}
+
+/* ══ CENTER ══ */
+.mwrap{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.view{flex:1;display:none;overflow:auto}
+.view.active{display:flex;flex-direction:column}
+
+/* SHIP VIEW */
+.ship-view{flex:1;background:radial-gradient(ellipse at 30% 40%,#0a1535 0%,#03050e 70%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ship-view-bg{position:absolute;inset:0;background:url("assets/bg_moon.png") center/cover no-repeat;opacity:.2;pointer-events:none}
+.cmd-disp{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;padding:14px;position:relative;z-index:2;width:100%}
+.cmd-port{text-align:center}
+.cmd-emo{font-size:4.5rem;display:block;margin-bottom:5px;filter:drop-shadow(0 0 16px rgba(0,200,255,.5));animation:sf 3s ease-in-out infinite}
+@keyframes sf{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.cmd-ship-area{text-align:center}
+.cmd-ship-img{max-width:280px;width:82%;filter:drop-shadow(0 0 26px rgba(0,200,255,.5));animation:sf 4s .5s ease-in-out infinite}
+.sv-stats{margin-top:11px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.sv-stat{background:rgba(0,0,0,.6);border:1px solid var(--border);border-radius:8px;padding:6px 11px;text-align:center}
+.sv-stat-v{font-size:.9rem;font-weight:700;color:var(--gold)}.sv-stat-l{font-size:.58rem;color:var(--muted);margin-top:1px}
+
+/* ══ BATTLE MAP — EXPANDING GRID ══ */
+.battle-view{flex:1;overflow:auto;position:relative;background:linear-gradient(180deg,#06080f 0%,#040610 100%);display:flex;justify-content:center;align-items:flex-start;display:flex;align-items:flex-start;justify-content:center}
+.battle-view::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle at 25% 35%,rgba(180,175,155,.06) 0%,transparent 30%),
+    radial-gradient(circle at 68% 22%,rgba(170,165,145,.04) 0%,transparent 22%)}
+.moon-surf{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.12;pointer-events:none}
+.grid-wrap{position:relative;z-index:1;display:grid;grid-template-columns:repeat(7,84px);gap:3px;padding:14px}
+
+/* ══ SECTOR TILE ══ */
+.sector{width:84px;height:84px;border:1px solid rgba(40,70,120,.4);border-radius:8px;cursor:pointer;position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(5,10,22,.5);backdrop-filter:blur(2px);transition:all .2s;overflow:hidden}
+
+/* FOG OF WAR states */
+.sector.fog{
+  background:rgba(2,4,10,.85);border-color:rgba(20,35,60,.5);cursor:default;
+  filter:blur(0px);pointer-events:none;
+}
+.sector.fog::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at center,rgba(0,5,20,.6),rgba(0,2,10,.95));
+  z-index:10}
+.sector.fog-edge{
+  background:rgba(4,8,20,.7);border-color:rgba(30,50,90,.4);cursor:pointer;opacity:.6;
+}
+.sector.fog-edge:hover{opacity:.85;border-color:rgba(0,200,255,.3)}
+
+.sector.active-empty:hover{border-color:var(--accent);background:rgba(0,200,255,.08);transform:scale(1.04);z-index:2}
+.sector.mine{background:rgba(0,70,170,.28);border-color:rgba(0,150,255,.65)}
+.sector.mine:hover{transform:scale(1.04);z-index:2}
+.sector.enemy{background:rgba(150,20,20,.22);border-color:rgba(210,40,40,.55)}
+.sector.enemy:hover{border-color:var(--red);transform:scale(1.03);z-index:2}
+.sector.sel{border-color:var(--gold)!important;background:rgba(255,215,0,.12)!important;box-shadow:0 0 18px rgba(255,215,0,.4);z-index:3}
+/* Resource border */
+.sector.res-he3{border-top:3px solid var(--accent)}.sector.res-reg{border-top:3px solid var(--purple)}
+.sector.res-h2o{border-top:3px solid var(--teal)}.sector.crater{border-style:dashed}
+
+.sec-id{position:absolute;top:2px;left:2px;font-size:.42rem;color:rgba(100,140,180,.5)}
+.sec-ti{position:absolute;top:2px;right:2px;font-size:.6rem}
+.sec-ui{width:42px;height:42px;object-fit:contain;border-radius:3px}
+.sec-fl{font-size:.84rem}
+.sec-nm{font-size:.4rem;color:var(--muted);text-align:center;padding:0 2px;margin-top:1px;line-height:1.2}
+.sec-hp{position:absolute;bottom:2px;left:2px;right:2px;height:3px;background:rgba(0,0,0,.4);border-radius:2px;overflow:hidden}
+.sec-hf{height:100%;border-radius:2px;transition:width .3s}
+.sec-intel{display:none;position:absolute;bottom:10px;left:1px;right:1px;font-size:.38rem;color:var(--teal);text-align:center;background:rgba(0,0,0,.7);border-radius:2px;padding:1px}
+.sector.scouted .sec-intel{display:block}
+/* Fog content */
+.fog-content{position:relative;z-index:1;text-align:center}
+.fog-icon{font-size:1.4rem;color:rgba(40,60,100,.5)}
+.fog-lbl{font-size:.4rem;color:rgba(40,60,100,.4);margin-top:2px}
+
+/* EXPAND UNLOCK ANIMATION */
+@keyframes unlockSec{
+  0%{transform:scale(.7);opacity:0;filter:blur(8px)}
+  60%{transform:scale(1.08);filter:blur(0)}
+  100%{transform:scale(1);opacity:1}
+}
+.sector.unlocking{animation:unlockSec .5s ease forwards}
+
+/* ══ SECTOR ACTION OVERLAY ══ */
+.sao{position:fixed;z-index:500;background:rgba(3,5,14,.97);border:2px solid var(--accent);
+  border-radius:13px;padding:13px;width:280px;box-shadow:0 0 40px rgba(0,200,255,.3);
+  display:none;pointer-events:all;animation:saoPop .2s ease}
+@keyframes saoPop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.sao.show{display:block}
+.sao-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.sao-title{font-size:.82rem;font-weight:700;color:var(--accent)}
+.sao-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem}
+.sao-si{background:rgba(0,0,0,.3);border-radius:6px;padding:7px;margin-bottom:9px}
+.sao-rows{display:grid;grid-template-columns:1fr 1fr;gap:2px;font-size:.66rem}
+.sao-row{display:flex;flex-direction:column}
+.sao-lbl{color:var(--muted);font-size:.56rem;margin-bottom:1px}.sao-val{font-weight:600}
+.sao-intel{background:rgba(0,255,200,.05);border:1px solid rgba(0,255,200,.2);border-radius:6px;padding:6px;margin-bottom:8px;font-size:.66rem;display:none}
+.sao-intel-t{color:var(--teal);font-size:.58rem;letter-spacing:1px;margin-bottom:3px}
+.sao-acts{display:flex;flex-direction:column;gap:4px}
+.saob{width:100%;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:var(--panel);color:var(--text);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:6px}
+.saob:hover:not(:disabled){transform:translateX(3px)}.saob:disabled{opacity:.4;cursor:not-allowed}
+.saob-icon{font-size:1rem;flex-shrink:0}.saob-info{flex:1}
+.saob-name{font-size:.72rem;font-weight:700}.saob-desc{font-size:.58rem;color:var(--muted);margin-top:1px}
+.saob-bonus{font-size:.58rem;margin-top:1px;font-weight:600}
+.saob.deploy{border-color:var(--accent);color:var(--accent)}.saob.deploy:hover:not(:disabled){background:rgba(0,200,255,.09)}
+.saob.scout{border-color:var(--teal);color:var(--teal)}.saob.scout:hover:not(:disabled){background:rgba(0,255,200,.07)}
+.saob.atk1{border-color:var(--red);color:var(--red)}.saob.atk1:hover:not(:disabled){background:rgba(255,50,50,.09)}
+.saob.atk2{border-color:var(--gold);color:var(--gold)}.saob.atk2:hover:not(:disabled){background:rgba(255,215,0,.07)}
+.saob.atk3{border-color:var(--purple);color:var(--purple)}.saob.atk3:hover:not(:disabled){background:rgba(170,68,255,.09)}
+.saob.radar{border-color:var(--purple);color:var(--purple)}.saob.radar:hover:not(:disabled){background:rgba(170,68,255,.07)}
+
+/* ══ FORMATION MODAL ══ */
+.fmodal{position:fixed;inset:0;z-index:800;background:rgba(2,4,12,.95);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center}
+.fmodal.show{display:flex}
+.fmbody{background:var(--panel);border:2px solid var(--orange);border-radius:14px;padding:16px;max-width:440px;width:95%;box-shadow:0 0 50px rgba(255,136,0,.3);max-height:90vh;overflow-y:auto}
+.fm-title{font-size:.95rem;font-weight:900;color:var(--orange);margin-bottom:3px;text-align:center}
+.fm-sub{font-size:.7rem;color:var(--muted);text-align:center;margin-bottom:11px}
+.fm-enemy{background:rgba(255,50,50,.08);border:1px solid rgba(255,50,50,.3);border-radius:7px;padding:8px;margin-bottom:11px;display:flex;align-items:center;gap:9px}
+.fm-eimg{width:44px;height:44px;object-fit:contain;border-radius:5px;border:1px solid var(--border)}
+.fm-units{display:flex;flex-direction:column;gap:6px;margin-bottom:11px}
+.fm-urow{display:flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid var(--border);border-radius:8px;background:rgba(0,0,0,.2)}
+.fm-uimg{width:40px;height:40px;object-fit:contain;border-radius:5px;border:1px solid var(--border)}
+.fm-ui{flex:1}
+.fm-un{font-size:.74rem;font-weight:700;margin-bottom:1px}
+.fm-up{font-size:.62rem;color:var(--gold)}
+.fm-uc{font-size:.58rem;margin-top:1px}
+.fm-qty{display:flex;align-items:center;gap:5px}
+.fm-qbtn{width:21px;height:21px;border:1px solid var(--border);border-radius:50%;background:var(--panel);color:var(--text);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.fm-qbtn:hover{border-color:var(--accent);color:var(--accent)}
+.fm-qv{font-size:.78rem;font-weight:700;min-width:13px;text-align:center;color:var(--gold)}
+.fm-sum{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:7px;padding:9px;margin-bottom:11px}
+.fm-srow{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;margin-bottom:3px}
+.fm-wr{font-size:.95rem;font-weight:900;text-align:center;margin-top:5px}
+.fm-btns{display:flex;gap:7px}
+.btn-fm-x{padding:9px 14px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:7px;cursor:pointer;font-size:.78rem}
+.btn-fm-go{flex:1;padding:9px;background:linear-gradient(135deg,var(--red),#aa0000);color:#fff;font-weight:900;border:none;border-radius:7px;cursor:pointer;font-size:.82rem}
+
+/* ══ RIGHT PANEL ══ */
+.rpanel{width:198px;min-width:165px;background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+.rcard{padding:8px;border-bottom:1px solid var(--border)}
+.rtitle{font-size:.56rem;letter-spacing:2px;color:var(--accent);margin-bottom:5px;text-transform:uppercase}
+.rrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:.7rem}
+.rk{color:var(--muted)}.rv2{font-weight:600}
+.log-item{font-size:.62rem;padding:2px 0;border-bottom:1px solid rgba(26,42,74,.4);line-height:1.4}
+.log-item .ts{color:var(--muted);font-size:.56rem;margin-right:2px}
+
+/* ══ MODALS ══ */
+.modal{position:fixed;inset:0;z-index:700;background:rgba(2,4,12,.93);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.mbody{background:var(--panel);border:2px solid var(--accent);border-radius:14px;padding:16px;max-width:480px;width:95%;text-align:center;box-shadow:0 0 70px rgba(0,200,255,.35)}
+.mtitle{font-size:.95rem;font-weight:900;letter-spacing:3px;color:var(--accent);margin-bottom:9px}
+.bvs{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;align-items:center;margin-bottom:11px}
+.bside{padding:8px;border:1px solid var(--border);border-radius:8px;background:rgba(0,0,0,.3)}
+.bflag{font-size:1.4rem;margin-bottom:2px}
+.bimg{width:66px;height:66px;object-fit:contain;border-radius:5px;margin:0 auto 4px;display:block}
+.bname{font-size:.62rem;color:var(--muted);margin-bottom:2px}.bpow{font-size:.8rem;color:var(--gold);font-weight:700}
+.bmod{font-size:.58rem;margin-top:1px}
+.vstext{font-size:1.4rem;font-weight:900;color:var(--red)}
+.hpwrap{margin-bottom:10px}
+.hplbl{display:flex;justify-content:space-between;font-size:.62rem;color:var(--muted);margin-bottom:2px}
+.hptrack{height:8px;background:rgba(0,0,0,.4);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.hpfill{height:100%;border-radius:4px;transition:width .55s ease}
+.prisoner-box{background:rgba(255,165,0,.08);border:1px solid orange;border-radius:6px;padding:6px;margin-top:4px;font-size:.68rem;display:none}
+.prisoner-box.show{display:block}
+.result{padding:8px;border-radius:6px;font-size:.82rem;font-weight:700;margin-bottom:7px;display:none}
+.result.win{background:rgba(0,255,136,.1);border:2px solid var(--green);color:var(--green)}
+.result.lose{background:rgba(255,50,50,.1);border:2px solid var(--red);color:var(--red)}
+.btn-close{padding:7px 25px;background:linear-gradient(135deg,#0066aa,#00c8ff);color:#000;font-weight:900;border:none;border-radius:22px;cursor:pointer;font-size:.8rem}
+.emodal{position:fixed;inset:0;z-index:800;display:none;align-items:center;justify-content:center}
+.emodal.show{display:flex}
+.ebody{background:var(--panel);border:2px solid var(--orange);border-radius:12px;padding:18px;max-width:340px;width:92%;text-align:center;box-shadow:0 0 55px rgba(255,136,0,.4);animation:ePop .4s ease}
+@keyframes ePop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.ev-icon{font-size:2.6rem;margin-bottom:6px}.ev-title{font-size:.9rem;font-weight:900;color:var(--orange);margin-bottom:4px}
+.ev-desc{font-size:.75rem;color:var(--text);margin-bottom:8px;line-height:1.5}
+.ev-effect{background:rgba(255,136,0,.1);border:1px solid rgba(255,136,0,.3);border-radius:6px;padding:6px;margin-bottom:10px;font-size:.72rem;color:var(--gold)}
+.btn-ev{padding:7px 22px;background:var(--orange);color:#000;font-weight:900;border:none;border-radius:16px;cursor:pointer;font-size:.8rem}
+
+/* HOURLY BONUS POPUP */
+.bonus-modal{position:fixed;inset:0;z-index:900;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}
+.bonus-modal.show{display:flex}
+.bonus-body{background:var(--panel);border:2px solid var(--gold);border-radius:16px;padding:22px 28px;text-align:center;max-width:320px;width:92%;box-shadow:0 0 60px rgba(255,215,0,.4);animation:bonusPop .5s ease}
+@keyframes bonusPop{0%{transform:scale(.5) rotate(-5deg);opacity:0}70%{transform:scale(1.08) rotate(2deg)}100%{transform:scale(1);opacity:1}}
+.bonus-icon{font-size:3rem;margin-bottom:8px}
+.bonus-title{font-size:1.1rem;font-weight:900;color:var(--gold);margin-bottom:10px}
+.bonus-items{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.bonus-item{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.2);border-radius:7px;font-size:.8rem}
+.bonus-val{color:var(--gold);font-weight:700}
+.btn-bonus{padding:9px 28px;background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000;font-weight:900;border:none;border-radius:22px;cursor:pointer;font-size:.85rem}
+
+/* MORALE WARNING */
+.morale-warn{position:fixed;top:165px;left:50%;transform:translateX(-50%);
+  background:rgba(255,136,0,.15);border:2px solid var(--orange);border-radius:10px;
+  padding:9px 16px;font-size:.78rem;font-weight:700;color:var(--orange);
+  z-index:850;text-align:center;pointer-events:none;display:none;
+  box-shadow:0 0 25px rgba(255,136,0,.35)}
+.morale-warn.show{display:block;animation:fadeUp .3s ease}
+to{opacity:1;transform:translate(-50%,0)}}
+
+/* REWARD POPUP */
+.rpopup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:950;background:var(--panel);border-radius:13px;padding:16px 22px;text-align:center;display:none;pointer-events:none;min-width:190px}
+.rpopup.show{display:block;animation:rpop .4s ease}
+@keyframes rpop{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}60%{transform:translate(-50%,-60%) scale(1.1);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.rp-icon{font-size:2.3rem;margin-bottom:5px}.rp-title{font-size:.86rem;font-weight:900;margin-bottom:2px}.rp-desc{font-size:.7rem;color:var(--muted)}
+
+/* AI WARNING */
+.ai-warn{position:fixed;top:165px;left:50%;transform:translateX(-50%);background:rgba(255,50,50,.14);border:2px solid var(--red);border-radius:10px;padding:9px 16px;font-size:.78rem;font-weight:700;color:var(--red);z-index:850;text-align:center;pointer-events:none;display:none;box-shadow:0 0 25px rgba(255,50,50,.35)}
+.ai-warn.show{display:block;animation:fadeUp .3s ease}
+
+/* EXPAND BUTTON */
+.expand-hint{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;pointer-events:none}
+.expand-pulse{width:14px;height:14px;border-radius:50%;background:rgba(0,200,255,.3);border:2px solid rgba(0,200,255,.6);animation:expandPulse 1.5s ease-in-out infinite}
+@keyframes expandPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.4);opacity:1}}
+
+/* STREAK BADGE */
+.streak-badge{background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);border-radius:10px;padding:2px 7px;font-size:.62rem;color:var(--gold);font-weight:700}
+
+@media(max-width:700px){
+  .lpanel,.rpanel{display:none}
+  .nation-grid{grid-template-columns:repeat(3,1fr);gap:5px}
+  .grid-wrap{grid-template-columns:repeat(7,52px);gap:2px;padding:8px}
+  .sector{width:52px;height:52px}.sec-ui{width:26px;height:26px}
+  .sao{width:250px}.fmbody{padding:12px}
+}
+
+/* ════════ SLIDESHOW ════════ */
+.slideshow-bg,.slide,.slide-overlay{
+  pointer-events:none!important;
+}
+
+
+
+
+/* Intro uses full-screen slides */
+
+
+#s-game{position:relative}
+
+/* ════════ MOBILE FIXES ════════ */
+@media(max-width:480px){
+  /* Intro full width centering */
+
+  .logo{font-size:clamp(1.6rem,8vw,2.8rem)!important;letter-spacing:3px!important;padding:0 8px}
+  .catchphrase{font-size:.72rem!important;padding:0 12px}
+  .bf-btn{min-width:88px!important;padding:8px 8px!important;flex:1;max-width:130px}
+  .bf-title{font-size:.76rem!important}
+  .bf-sub{font-size:.58rem!important}
+  .btn-enter{width:auto!important;white-space:nowrap;padding:12px 36px!important}
+  /* HUD compact */
+  .hud{padding:3px 6px;gap:3px}
+  .hud-brand{font-size:.72rem;letter-spacing:2px}
+  .cmd-hud{padding:1px 5px;font-size:.6rem}
+  .hud-pill{padding:1px 5px;font-size:.6rem}
+  #bgm-btn{font-size:.56rem;padding:1px 5px}
+  
+  /* Morale bar compact */
+  .morale-bar{padding:2px 6px;gap:4px;flex-wrap:wrap}
+  .morale-pill{min-width:120px;padding:2px 6px}
+  .morale-val{font-size:.6rem}
+  .online-timer{font-size:.56rem}
+  .hourly-bonus,.hourly-hint{display:none}
+  
+  /* Resource bar scroll */
+  .res-bar{padding:2px 6px;gap:3px;overflow-x:auto;flex-wrap:nowrap}
+  .res-item{font-size:.62rem;padding:2px 6px;white-space:nowrap;flex-shrink:0}
+  
+  /* View bar */
+  .view-bar{padding:2px 6px;gap:2px}
+  .vtbtn{padding:3px 8px;font-size:.62rem}
+  #i-map-hint{display:none}
+  .turn-info{margin-left:3px}
+  .btn-et{padding:3px 8px;font-size:.62rem}
+  
+  /* Battle grid - 7 cols fit mobile */
+  .grid-wrap{grid-template-columns:repeat(7,44px);gap:2px;padding:6px}
+  .sector{width:44px;height:44px}
+  .sec-ui{width:22px;height:22px}
+  .sec-nm{font-size:.34rem}
+  .sec-id{font-size:.36rem}
+  
+  /* SAO overlay full-width on mobile */
+  .sao{
+    position:fixed!important;
+    left:50%!important;transform:translateX(-50%)!important;
+    top:auto!important;bottom:0!important;
+    width:100%!important;max-width:100%!important;
+    border-radius:16px 16px 0 0!important;
+    border-bottom:none!important;
+    max-height:70vh;overflow-y:auto;
+  }
+  
+  /* Formation modal */
+  .fmbody{padding:10px;max-height:85vh}
+  .fm-urow{padding:5px 7px;gap:6px}
+  .fm-uimg{width:36px;height:36px}
+  .fm-un{font-size:.7rem}
+  
+  /* Battle modal */
+  .mbody{padding:12px}
+  .bimg{width:56px;height:56px}
+  
+  /* Intro page */
+  
+  .logo{font-size:clamp(1.8rem,8vw,3rem);letter-spacing:3px}
+  .catchphrase{font-size:.75rem;letter-spacing:1px;margin-bottom:20px}
+  
+  .bf-row{gap:8px;margin-bottom:18px}
+  .bf-btn{min-width:95px;padding:9px 10px}
+  .bf-icon{font-size:1.5rem}
+  .bf-title{font-size:.78rem}
+  .bf-sub{font-size:.6rem}
+  .btn-enter{padding:11px 32px;font-size:.84rem;letter-spacing:2px}
+  
+  /* Nation page */
+  /* Nation screen mobile */
+  #s-nation{padding:20px 16px;width:100%;}
+  .nation-grid{grid-template-columns:repeat(2,1fr);gap:6px;max-width:100%}
+  .nc{padding:10px 6px}
+  .nf{font-size:1.4rem}
+  .nn{font-size:.68rem}
+  .ne{font-size:.56rem}
+  .search-box{max-width:100%;font-size:.82rem}
+  .stitle{font-size:1.1rem;letter-spacing:2px}
+  .btn-next{width:calc(100% - 20px);max-width:320px}
+  /* Grid center */
+  .battle-view{justify-content:center}
+  .grid-wrap{margin:0 auto}
+  .nf{font-size:1.3rem}
+  .nn{font-size:.64rem}
+  
+  /* Commander page */
+  .cmd-cards{gap:10px}
+  .cmd-card{width:150px}
+  .cmd-avwrap{height:120px}
+  .cmd-avm{font-size:4.5rem}
+  .cmd-name{font-size:.82rem}
+  
+  /* News ticker */
+  .news-ticker{padding:2px 6px}
+  .news-label{display:none}
+  .news-scroll{font-size:.58rem}
+  
+  /* Bonus modal */
+  .bonus-body{padding:16px 18px}
+  .bonus-icon{font-size:2.4rem}
+  .bonus-title{font-size:.9rem}
+  
+  /* Lang bar */
+  .lang-bar{padding:4px 7px}
+  .lb{padding:2px 5px;font-size:.62rem}
+}
+
+@media(max-width:380px){
+  .nation-grid{grid-template-columns:repeat(2,1fr);gap:4px}
+  .grid-wrap{grid-template-columns:repeat(7,40px);gap:1px;padding:5px}
+  .sector{width:40px;height:40px}
+  .sec-ui{width:20px;height:20px}
+  .logo{font-size:1.6rem}
+}
+
+
+
+  50%{transform:translateY(-8px) scale(1.02);filter:drop-shadow(0 0 45px rgba(0,200,255,0.8))}}
+
+/* ══ INTRO INNER — guaranteed center ══ */
+.intro-logo{
+  width:min(220px,52vw);
+  height:auto;
+  display:block;
+  margin:0 auto 10px;
+  filter:drop-shadow(0 0 28px rgba(0,200,255,0.55));
+  animation:logoFloat 4s ease-in-out infinite;
+}
+50%{transform:translateY(-8px)}}
+
+
+/* INTRO CENTER FIX */
+.intro-logo{
+  width:min(200px,50vw);height:auto;
+  display:block;margin:0 auto 12px;
+  filter:drop-shadow(0 0 24px rgba(0,200,255,.5));
+  animation:logoFloat 4s ease-in-out infinite;
+}
+50%{transform:translateY(-8px)}}
+.catchphrase{
+  font-size:clamp(.78rem,3.5vw,1.05rem);
+  color:var(--gold);font-weight:700;
+  margin-bottom:20px;text-align:center;
+  letter-spacing:1px;
+}
+.bf-row{
+  display:flex;gap:8px;justify-content:center;
+  flex-wrap:nowrap;margin-bottom:20px;
+  width:100%;
+}
+.btn-enter{
+  display:inline-block;white-space:nowrap;
+  padding:13px 40px;
+  background:linear-gradient(135deg,#0066aa,#00c8ff);
+  color:#000;font-weight:900;font-size:.95rem;
+  border:none;border-radius:50px;cursor:pointer;
+  letter-spacing:2px;position:relative;z-index:5;
+}
+
+
+/* ══ SLIDESHOW via CSS only - no DOM overlay ══ */
+body {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: background-image 1.5s ease;
+}
+/* Intro dots */
+
+
+
+
+
+/* ══ SAFE SLIDESHOW CSS ══ */
+#bg-slideshow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none !important;
+  overflow: hidden;
+}
+#bg-slideshow .bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  pointer-events: none !important;
+}
+#bg-slideshow .bg-slide.on { opacity: 1; }
+#bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none !important;
+  /* no transition */
+}
+/* Dots */
+#bg-dots {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 7px;
+  z-index: 200;
+  pointer-events: all !important;
+}
+#bg-dots,.bg-dot{pointer-events:all!important}
+.bg-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.5);
+  cursor: pointer;
+  transition: all .3s;
+  pointer-events: all !important;
+}
+.bg-dot.on {
+  background: #00c8ff;
+  border-color: #00c8ff;
+  width: 20px;
+  border-radius: 4px;
+}
+
+/* ══ Z-INDEX FINAL ══ */
+#bg-slideshow, .stars { z-index: 1 !important; pointer-events: none !important; }
+#btn-moon, #btn-enter-main, .bf-btn, .btn-enter, .lb, .nc, .btn-next { 
+  position: relative; 
+  z-index: 30 !important; 
+  pointer-events: all !important; 
+  cursor: pointer !important;
+}
+.lang-bar { z-index: 999 !important; }
+
+
+.bf-btn, .btn-enter { 
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: rgba(0,200,255,0.3) !important;
+  -webkit-touch-callout: none !important;
+  user-select: none !important;
+  cursor: pointer !important;
+}
+body { overflow-x: hidden; overflow-y: auto; }
+/* ══════════════════════════════════════
+   LAYOUT MASTER CSS - 단일 정의
+   ══════════════════════════════════════ */
+
+/* SCREEN BASE */
+
+
+
+/* INTRO SCREEN */
+/* INTRO INNER */
+.intro-inner {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 60px 20px 40px;
+  
+  box-sizing: border-box;
+}
+
+/* INTRO ELEMENTS */
+.intro-logo {
+  width: min(200px, 50vw);
+  height: auto;
+  display: block;
+  margin: 0 auto 12px;
+  filter: drop-shadow(0 0 24px rgba(0,200,255,.5));
+  animation: logoFloat 4s ease-in-out infinite;
+}
+@keyframes logoFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.catchphrase {
+  font-size: clamp(.78rem, 3.5vw, 1.05rem);
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: 1px;
+  width: 100%;
+}
+.bf-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+  width: 100%;
+  
+}
+.btn-enter {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 13px 40px;
+  background: linear-gradient(135deg, #0066aa, #00c8ff);
+  color: #000;
+  font-weight: 900;
+  font-size: .95rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  pointer-events: none;
+}
+
+/* NATION SCREEN */
+#s-nation{padding:20px 16px;width:100%;}
+.nation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 6px;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+/* COMMANDER SCREEN */
+#s-commander {
+  padding: 22px 16px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  width: 100%;
+}
+
+/* TOUCH */
+.bf-btn, .btn-enter, .lb, .nc, .btn-next {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0,200,255,0.2);
+  cursor: pointer;
+}
+
+/* Z-INDEX */
+#bg-slideshow, .stars { z-index: 1 !important; pointer-events: none !important; }
+.lang-bar { z-index: 999 !important; }
+/* MOBILE 480px */
+@media(max-width: 480px) {
+  .intro-inner { padding: 40px 14px 28px; max-width: 100%; }
+  .intro-logo { width: min(160px, 45vw); }
+  .bf-btn { min-width: 80px !important; padding: 7px 6px !important; flex: 1; max-width: 120px; }
+  .bf-title { font-size: .72rem !important; }
+  .bf-sub { font-size: .55rem !important; }
+  .btn-enter { padding: 12px 32px; font-size: .88rem; }
+  .catchphrase { font-size: .72rem; }
+  
+  /* Nation */
+  #s-nation{padding:20px 16px;width:100%;}
+  .nation-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 6px; 
+    max-width: 100%;
+    max-height: 60vh;
+  }
+  .stitle { font-size: 1.1rem; letter-spacing: 2px; }
+  .search-box { max-width: 100%; }
+  .btn-next { width: calc(100% - 20px); max-width: 320px; }
+}
+
+/* MOBILE 380px */
+@media(max-width: 380px) {
+  .nation-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  .bf-btn { min-width: 72px !important; }
+}
+
+/* TABLET 700px */
+@media(max-width: 700px) {
+  .lpanel, .rpanel { display: none; }
+  .nation-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .grid-wrap { grid-template-columns: repeat(7, 52px); gap: 2px; padding: 8px; }
+  .sector { width: 52px; height: 52px; }
+  .sec-ui { width: 26px; height: 26px; }
+  .sao { width: 250px; }
+  .fmbody { padding: 12px; }
+}
+
+/* ══ INTRO ══ */
+
+/* ══ INTRO INNER ══ */
+.intro-inner{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  width:100%;max-width:560px;
+  margin:0 auto;padding:60px 20px 40px;
+  
+  box-sizing:border-box;
+  position:relative;z-index:20;
+}
+/* ══ NATION ══ */
+#s-nation{padding:20px 16px;width:100%;}
+.nation-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
+  gap:6px;width:100%;max-width:720px;
+  margin:0 auto;
+  max-height:55vh;overflow-y:auto;
+  padding:4px;box-sizing:border-box;
+}
+/* ══ MOBILE ══ */
+@media(max-width:480px){
+  .intro-inner{padding:40px 14px 28px;max-width:100%}
+  .nation-grid{grid-template-columns:repeat(2,1fr);gap:6px;max-width:100%;max-height:60vh}
+  #s-nation{padding:20px 16px;width:100%;}
+  .stitle{font-size:1.1rem;letter-spacing:2px}
+  .search-box{max-width:100%}
+  .btn-next{width:calc(100% - 20px);max-width:320px}
+}
+@media(max-width:380px){
+  .nation-grid{grid-template-columns:repeat(2,1fr);gap:4px}
+}
+.screen{position:relative;z-index:10;height:auto;display:none;flex-direction:column;align-items:center;width:100%;overflow:visible;box-sizing:border-box}
+.screen:not(.active){display:none!important}
+.screen.active{display:flex}
+/* ══ S-INTRO FIX ══ */
+#s-intro{flex-direction:column!important;align-items:center!important;justify-content:center!important;height:100vh!important;max-height:100vh!important;overflow:hidden!important;width:100%;padding:0;position:relative;background:transparent!important;}
+/* intro 내용물 크기 제한 */
+.intro-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  width:100%;
+  max-width:560px;
+  margin:0 auto;
+  padding:clamp(20px,5vh,60px) 20px clamp(16px,4vh,40px);
+  
+  box-sizing:border-box;
+  position:relative;
+  z-index:20;
+  max-height:100vh;
+  overflow:hidden;
+}
+.intro-logo{
+  width:min(180px,40vw);
+  height:auto;
+  display:block;
+  margin:0 auto clamp(6px,1.5vh,12px);
+  filter:drop-shadow(0 0 20px rgba(0,200,255,.5));
+  animation:logoFloat 4s ease-in-out infinite;
+}
+.catchphrase{
+  font-size:clamp(.7rem,2.5vw,1rem);
+  color:var(--gold);
+  font-weight:700;
+  margin-bottom:clamp(8px,2vh,20px);
+  text-align:center;
+  width:100%;
+}
+.bf-row{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  flex-wrap:nowrap;
+  margin-bottom:clamp(8px,2vh,20px);
+  width:100%;
+  
+}
+.bf-btn{
+  padding:clamp(7px,1.5vh,11px) clamp(8px,2vw,18px);
+  border-radius:12px;
+  border:2px solid var(--border);
+  background:var(--panel);
+  cursor:pointer;
+  transition:all .25s;
+  text-align:center;
+  flex:1;
+  max-width:140px;
+}
+.bf-icon{font-size:clamp(1.2rem,3vw,1.9rem);margin-bottom:3px}
+.bf-title{font-weight:700;font-size:clamp(.72rem,2vw,.88rem);margin-bottom:2px}
+.bf-sub{font-size:clamp(.54rem,1.5vw,.68rem);color:var(--muted)}
+.btn-enter{
+  display:inline-block;
+  white-space:nowrap;
+  padding:clamp(10px,2vh,13px) clamp(28px,6vw,40px);
+  background:linear-gradient(135deg,#0066aa,#00c8ff);
+  color:#000;font-weight:900;
+  font-size:clamp(.82rem,2.5vw,.95rem);
+  border:none;border-radius:50px;
+  cursor:pointer;letter-spacing:2px;
+  pointer-events:none;
+}
+#intro-click-layer{position:absolute;inset:0;z-index:9999;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;pointer-events:all !important;}
+
+/* ════════════════════════════════════════
+   FINAL OVERRIDE - 최우선 적용
+   ════════════════════════════════════════ */
+
+/* 모든 screen은 기본 hidden - specificity 우선 */
+.screen:not(.active) { display: none !important; }
+.screen.active { display: flex !important; }
+
+/* 각 screen 레이아웃 */
+#s-intro {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+#s-nation {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 100vh;
+  padding: 60px 16px 20px !important;
+  overflow-y: auto !important;
+}
+#s-commander {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 100vh;
+  padding: 60px 16px 20px !important;
+  overflow-y: auto !important;
+}
+#s-game {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+/* 클릭 레이어 */
+#intro-click-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  pointer-events: all !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  touch-action: manipulation !important;
+}
+
+/* 모바일 공통 */
+@media(max-width: 480px) {
+  /* Nation */
+  #s-nation { padding: 50px 10px 16px !important; }
+  .stitle { font-size: 1.1rem !important; letter-spacing: 2px !important; text-align: center; width: 100%; }
+  .ssub { text-align: center; width: 100%; font-size: .78rem; }
+  .search-box { width: 100% !important; max-width: 100% !important; font-size: .82rem; }
+  .nation-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    max-height: 55vh !important;
+  }
+  .nc { padding: 10px 4px !important; }
+  .nf { font-size: 1.3rem !important; }
+  .nn { font-size: .66rem !important; }
+  .btn-next { width: calc(100% - 20px) !important; max-width: 320px !important; margin: 10px auto !important; display: block !important; }
+
+  /* Commander */
+  #s-commander { padding: 50px 10px 16px !important; }
+  .cmd-title { font-size: 1.1rem !important; text-align: center; width: 100%; }
+  .cmd-sub { text-align: center; width: 100%; font-size: .76rem; }
+  .cmd-cards { gap: 8px !important; justify-content: center !important; }
+  .cmd-card { width: 140px !important; }
+  .cmd-avwrap { height: 110px !important; }
+  .cmd-name { font-size: .78rem !important; }
+  .sp-pack { padding: 10px !important; }
+  .btn-cmd-ok { width: calc(100% - 20px) !important; display: block !important; margin: 10px auto !important; }
+
+  /* Intro */
+  #s-intro { height: 100dvh !important; }
+  .intro-inner { padding: 40px 14px 28px !important; }
+  .intro-logo { width: min(150px, 42vw) !important; }
+  .catchphrase { font-size: .72rem !important; margin-bottom: 14px !important; }
+  .bf-btn { min-width: 78px !important; padding: 7px 5px !important; flex: 1 !important; max-width: 115px !important; }
+  .bf-title { font-size: .7rem !important; }
+  .bf-sub { font-size: .54rem !important; }
+  .bf-icon { font-size: 1.3rem !important; }
+  .btn-enter { padding: 11px 28px !important; font-size: .86rem !important; letter-spacing: 1px !important; }
+}
+
+@media(max-width: 380px) {
+  .nation-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .cmd-card { width: 125px !important; }
+  .bf-btn { min-width: 68px !important; max-width: 100px !important; }
+}
+
+
+/* ══ SCREEN ISOLATION FIX ══ */
+/* 각 screen을 완전히 격리 */
+#s-intro { position: relative !important; z-index: auto !important; }
+#s-nation { position: relative !important; z-index: auto !important; }  
+#s-commander { position: relative !important; z-index: auto !important; }
+#s-game { position: relative !important; z-index: auto !important; }
+
+/* 모바일 정렬 */
+@media(max-width: 500px) {
+  #s-nation, #s-commander {
+    align-items: center !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .stitle, .ssub, .cmd-title, .cmd-sub {
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .nation-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  .cmd-cards {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  .search-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .btn-next, .btn-cmd-ok {
+    display: block !important;
+    margin: 10px auto !important;
+    width: calc(100% - 24px) !important;
+  }
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div id="bg-slideshow">
+  <div class="bg-slide on" style="background-image:url('assets/slide1.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide2.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide3.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide4.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide5.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide6.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide7.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide8.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide9.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide10.jpg')"></div>
+  <div class="bg-slide" style="background-image:url('assets/slide11.jpg')"></div>
+</div>
+<div id="bg-overlay"></div>
+<div id="bg-dots">
+  <div class="bg-dot on" onclick="bgGoSlide(0)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(1)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(2)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(3)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(4)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(5)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(6)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(7)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(8)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(9)"></div>
+  <div class="bg-dot" onclick="bgGoSlide(10)"></div>
+</div>
+
+<div class="stars" id="stars"></div>
+<div class="sdot" onclick="goSlide(1)"></div>
+  <div class="sdot" onclick="goSlide(2)"></div>
+  <div class="sdot" onclick="goSlide(3)"></div>
+  <div class="sdot" onclick="goSlide(4)"></div>
+  <div class="sdot" onclick="goSlide(5)"></div>
+  <div class="sdot" onclick="goSlide(6)"></div>
+  <div class="sdot" onclick="goSlide(7)"></div>
+  <div class="sdot" onclick="goSlide(8)"></div>
+  <div class="sdot" onclick="goSlide(9)"></div>
+  <div class="sdot" onclick="goSlide(10)"></div>
+</div>
+<div class="lang-bar">
+  <button class="lb active" onclick="setLang('ko')">🇰🇷</button>
+  <button class="lb" onclick="setLang('en')">🇺🇸</button>
+  <button class="lb" onclick="setLang('ja')">🇯🇵</button>
+  <button class="lb" onclick="setLang('zh')">🇨🇳</button>
+</div>
+
+<!-- INTRO -->
+<div class="screen active" id="s-intro">
+<div class="intro-inner">
+  <img src="assets/logo.png" alt="KINGDOM WARS" class="intro-logo"
+    onerror="this.outerHTML='<div class=&quot;logo&quot;>KINGDOM WARS</div>'"/>
+  <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
+  <div class="bf-row">
+    <a href="javascript:void(0)" class="bf-btn open" id="btn-moon" role="button">
+      <span class="bdg open">OPEN</span>
+      <div class="bf-icon">🌙</div>
+      <div class="bf-title">THE MOON</div>
+      <div class="bf-sub"><span id="i-moon-sub">49섹터 · 전략 정복전</span></div>
+    </a>
+    <div class="bf-btn locked">
+      <span class="bdg soon">SOON</span>
+      <div class="bf-icon">🔴</div>
+      <div class="bf-title">MARS</div>
+      <div class="bf-sub"><span id="i-mars-sub">화성 · 81섹터</span></div>
+    </div>
+    <div class="bf-btn locked">
+      <span class="bdg soon">SOON</span>
+      <div class="bf-icon">🪐</div>
+      <div class="bf-title">DEEP SPACE</div>
+      <div class="bf-sub"><span id="i-space-sub">심우주 · 120섹터</span></div>
+    </div>
+  </div>
+  <div style="text-align:center">
+    <a href="javascript:void(0)" class="btn-enter" id="btn-enter-main" role="button" style="display:inline-block;text-decoration:none">
+      <span id="i-start">🚀 달 정복 개시</span>
+    </a>
+    <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
+      <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none">
+        <span id="i-guide">📖 게임 가이드</span>
+      </a>
+    </div>
+  </div>
+<!-- transparent click layer, Kaikas-proof -->
+<div id="intro-click-layer" style="position:absolute;inset:0;z-index:500;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;"></div>
+</div>
+
+<!-- NATION -->
+<div class="screen" id="s-nation">
+  <div class="stitle"><span id="i-n-title">🌍 국가 선택</span></div>
+  <div class="ssub"><span id="i-n-sub">달에 깃발을 꽂을 국가를 선택하세요</span></div>
+  <input class="search-box" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
+  <div class="nation-grid" id="ngrid"></div>
+  <button class="btn-next" id="btn-next" onclick="goCommander()"><span id="i-n-next">다음 → 사령관 선택</span></button>
+</div>
+
+<!-- COMMANDER -->
+<div class="screen" id="s-commander">
+  <div class="cmd-title"><span id="i-c-title">⭐ 사령관 선택</span></div>
+  <div class="cmd-sub"><span id="i-c-sub">당신의 분신이 될 사령관을 선택하세요</span></div>
+  <div class="cmd-nbadge"><span id="cmd-nf" style="font-size:1.6rem"></span><span id="cmd-nn" style="font-size:.9rem;font-weight:700"></span></div>
+  <div class="cmd-cards" id="cmd-cards"></div>
+  <div class="sp-pack">
+    <div class="sp-title"><span id="i-c-starter">🎁 스타터 패키지</span></div>
+    <div class="sp-items">
+      <div class="sp-i"><div class="sp-icon">🚀</div><div class="sp-val"><span id="i-c-s1">전투기×3</span></div><div class="sp-lbl"><span id="i-c-s1l">즉시배치</span></div></div>
+      <div class="sp-i"><div class="sp-icon">🪙</div><div class="sp-val">1,200</div><div class="sp-lbl">코인</div></div>
+      <div class="sp-i"><div class="sp-icon">⚡</div><div class="sp-val">2,400</div><div class="sp-lbl">He-3</div></div>
+      <div class="sp-i"><div class="sp-icon">💎</div><div class="sp-val">80</div><div class="sp-lbl">레골리스</div></div>
+      <div class="sp-i"><div class="sp-icon">😤</div><div class="sp-val">100%</div><div class="sp-lbl">사기</div></div>
+    </div>
+  </div>
+  <button class="btn-cmd-ok" id="btn-cmd-ok" onclick="goGame()"><span id="i-c-go">🚀 출전!</span></button>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="s-game">
+  <div class="hud">
+    <div class="hud-l">
+      <img src="assets/logo.png" alt="KW"
+  style="height:22px;width:auto;filter:brightness(0) invert(1) drop-shadow(0 0 6px rgba(0,200,255,0.6));vertical-align:middle"
+  onerror="this.outerHTML='<span class=hud-brand>👑 KW</span>'"/>
+      <div class="cmd-hud"><span id="hud-av"></span><span id="hud-cn" style="font-weight:700"></span></div>
+      <span id="hflag" style="font-size:.88rem"></span>
+      <span class="streak-badge" id="streak-badge" style="display:none">🔥 1일</span>
+    </div>
+    <div class="hud-r">
+      <div class="hud-pill">🏳️<span class="rv" id="rs">0</span>섹터</div>
+      <div class="hud-pill">⚔️<span class="rv" id="rw">0</span>승</div>
+      <div class="hud-pill">🛩️<span class="rv" id="sc-cnt">0</span></div>
+      <button id="bgm-btn" onclick="toggleBGM()" style="padding:2px 7px;border:1px solid var(--border);border-radius:11px;background:transparent;color:var(--muted);font-size:.6rem;cursor:pointer">🔇</button>
+    </div>
+  </div>
+
+  <!-- MORALE BAR -->
+  <div class="morale-bar">
+    <div class="morale-pill">
+      <span style="font-size:.72rem">😤</span>
+      <span style="font-size:.6rem;color:var(--muted);min-width:28px">사기</span>
+      <div class="morale-track"><div class="morale-fill" id="morale-fill" style="width:100%;background:var(--green)"></div></div>
+      <span class="morale-val" id="morale-val" style="color:var(--green)">100%</span>
+    </div>
+    <div class="online-timer">
+      <div class="online-dot"></div>
+      <span id="next-bonus-timer">다음 보너스: 60:00</span>
+    </div>
+    <div class="hourly-bonus" id="hourly-hint"><span id="i-hourly-hint">⚡ 매 1시간 접속 보너스</span></div>
+  </div>
+
+  <div class="res-bar">
+    <div class="res-item">⚡<span class="rv" id="res-he3">2,400</span><span style="color:var(--muted);font-size:.6rem">He-3</span><span class="res-rate" id="rate-he3">+0/턴</span></div>
+    <div class="res-item">💎<span class="rv" id="res-reg" style="color:var(--purple)">80</span><span style="color:var(--muted);font-size:.6rem">Reg</span><span class="res-rate" id="rate-reg">+0/턴</span></div>
+    <div class="res-item">🌊<span class="rv" id="res-h2o" style="color:var(--teal)">120</span><span style="color:var(--muted);font-size:.6rem">H₂O</span><span class="res-rate" id="rate-h2o">+0/턴</span></div>
+    <div class="res-item" style="margin-left:auto">🪙<span class="rv" id="rc">1,200</span></div>
+  </div>
+  <div class="news-ticker"><span class="news-lbl">🛸 SPACE</span><div class="news-scroll" id="news-scroll"></div></div>
+  <div class="ev-ticker" id="ev-ticker">⚠️ <span id="ev-ticker-text"></span></div>
+  <div class="view-bar">
+    <button class="vtbtn" id="vt0" onclick="switchView(0)"><span id="i-v-ship">🛸 내 함선</span></button>
+    <button class="vtbtn active" id="vt2" onclick="switchView(2)"><span id="i-v-battle">⚔️ 전투 맵</span></button>
+    <div class="turn-info">
+      <span style="color:var(--muted);font-size:.64rem">턴</span>
+      <span class="turn-num" id="turn-num">1</span>
+      <button class="btn-et" onclick="endTurn()"><span id="i-end-turn">턴 종료 ▶</span></button>
+    </div>
+    <span style="font-size:.6rem;color:var(--muted);margin-left:6px"><span id="i-map-hint">섹터 점령 → 인접 영역 해금 🌑→⚔️</span></span>
+  </div>
+
+  <div class="game-body">
+    <!-- LEFT -->
+    <div class="lpanel">
+      <div class="ps">
+        <div class="plbl"><span id="i-g-cmd">사령관</span></div>
+        <div style="text-align:center;padding:4px 0">
+          <div id="lp-av" style="font-size:1.9rem;margin-bottom:2px"></div>
+          <div id="lp-name" style="font-size:.7rem;font-weight:700"></div>
+          <div id="lp-title" style="font-size:.58rem;color:var(--gold);font-style:italic"></div>
+        </div>
+      </div>
+      <!-- Morale detail -->
+      <div class="ps">
+        <div class="plbl"><span id="i-g-morale-sys">사기 시스템</span></div>
+        <div style="font-size:.64rem;line-height:1.8;color:var(--muted)">
+          <div id="morale-status-text">😤 사기: 100%</div>
+          <div style="color:var(--teal)"><span id="i-hourly-tip">⏱️ 매 1시간 접속 보너스</span></div>
+          <div style="color:var(--orange)" id="morale-warning-text"></div>
+        </div>
+      </div>
+      <div class="unit-tabs">
+        <div class="utab active" onclick="switchTab('fleet',this)"><span id="i-tab-fleet">🚀 함선</span></div>
+        <div class="utab" onclick="switchTab('mech',this)"><span id="i-tab-mech">🤖 메카</span></div>
+        <div class="utab" onclick="switchTab('ace',this)"><span id="i-tab-ace">⭐ 에이스</span></div>
+      </div>
+      <div class="unit-list" id="ulist"></div>
+      <div class="ps"><button class="btn-buy" onclick="buyUnit()"><span id="i-btn-buy">+ 구매 500🪙</span></button></div>
+      <div class="sel-big" id="sel-big">
+        <div class="plbl"><span id="i-g-sel">선택된 유닛</span></div>
+        <div id="sel-big-content" style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0"><span id="i-g-sel-hint">클릭하여 선택</span></div>
+      </div>
+      <div class="spec-units">
+        <div class="plbl"><span id="i-g-spec">특수 장비</span></div>
+        <div class="spec-btn" onclick="buyScout()">
+          <span class="spec-icon">🛩️</span>
+          <div class="spec-info"><div class="spec-name"><span id="i-g-scout">정찰기</span></div><div class="spec-desc"><span id="sc-owned">0</span><span id="i-g-owned">기 보유</span></div></div>
+          <span class="spec-cost">500⚡</span>
+        </div>
+        <div class="spec-btn" onclick="buyRadar()">
+          <span class="spec-icon">📡</span>
+          <div class="spec-info"><div class="spec-name"><span id="i-g-radar">레이더</span></div><div class="spec-desc"><span id="rad-placed">0</span><span id="i-g-placed">개 배치</span></div></div>
+          <span class="spec-cost">800⚡</span>
+        </div>
+      </div>
+      <div class="ps" style="flex:1">
+        <div class="plbl"><span id="i-g-log">전황</span></div>
+        <div id="minilog" style="font-size:.6rem;color:var(--muted);line-height:1.7"></div>
+      </div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="mwrap">
+      <!-- VIEW 0: SHIP -->
+      <div class="view" id="view-0">
+        <div class="ship-view">
+          <div class="ship-view-bg"></div>
+          <div class="cmd-disp" id="cmd-disp"></div>
+        </div>
+      </div>
+      <!-- VIEW 2: BATTLE MAP (49 sectors) -->
+      <div class="view active" id="view-2">
+        <div class="battle-view" id="bv">
+          <img class="moon-surf" src="assets/moon_real.png" alt="" onerror="this.style.display='none'"/>
+          <div class="grid-wrap" id="grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="rpanel">
+      <div class="rcard">
+        <div class="rtitle"><span id="i-g-sec-info">섹터 정보</span></div>
+        <div id="r-sec-info"><div style="color:var(--muted);font-size:.68rem;text-align:center;padding:8px 0"><span id="i-g-sec-hint">섹터를 클릭하세요</span></div></div>
+      </div>
+      <!-- Territory progress -->
+      <div class="rcard">
+        <div class="rtitle"><span id="i-g-conquest">정복 현황</span></div>
+        <div id="conquest-progress"></div>
+      </div>
+      <div class="rcard" style="flex:1">
+        <div class="rtitle"><span id="i-g-blog">전투 로그</span></div>
+        <div id="blog"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAO -->
+<div class="sao" id="sao">
+  <div class="sao-hdr"><span class="sao-title" id="sao-title"><span id="i-sao-title">섹터 액션</span></span><button class="sao-x" onclick="closeSAO()">✕</button></div>
+  <div class="sao-si" id="sao-si"></div>
+  <div class="sao-intel" id="sao-intel"></div>
+  <div class="sao-acts" id="sao-acts"></div>
+</div>
+
+<!-- FORMATION MODAL -->
+<div class="fmodal" id="fmodal">
+  <div class="fmbody">
+    <div class="fm-title"><span id="i-fm-title">⚔️ 출격 편성</span></div>
+    <div class="fm-sub"><span id="i-fm-sub">공격에 보낼 유닛을 선택하세요. 보낸 만큼 소비됩니다.</span></div>
+    <div class="fm-enemy" id="fm-enemy"></div>
+    <div class="fm-units" id="fm-units"></div>
+    <div class="fm-sum" id="fm-sum"></div>
+    <div class="fm-btns">
+      <button class="btn-fm-x" onclick="closeFM()"><span id="i-fm-cancel">취소</span></button>
+      <button class="btn-fm-go" id="fm-go" onclick="launchFM()"><span id="i-fm-launch">🚀 출격!</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- BATTLE MODAL -->
+<div class="modal" id="bmodal">
+  <div class="mbody">
+    <div class="mtitle">⚔️ SPACE BATTLE</div>
+    <div id="btag-el"></div>
+    <div class="bvs">
+      <div class="bside"><div class="bflag" id="b-af"></div><img class="bimg" id="b-ai" src="" alt=""/><div class="bname" id="b-an"></div><div class="bpow" id="b-ap"></div><div class="bmod" id="b-am"></div></div>
+      <div class="vstext">VS</div>
+      <div class="bside"><div class="bflag" id="b-df"></div><img class="bimg" id="b-di" src="" alt=""/><div class="bname" id="b-dn"></div><div class="bpow" id="b-dp"></div><div class="bmod" id="b-dm"></div></div>
+    </div>
+    <div class="hpwrap">
+      <div class="hplbl"><span id="b-al"></span><span id="b-ahp">100%</span></div>
+      <div class="hptrack"><div class="hpfill" id="b-abar" style="width:100%;background:var(--accent)"></div></div>
+      <div class="hplbl"><span id="b-dl"></span><span id="b-dhp">100%</span></div>
+      <div class="hptrack"><div class="hpfill" id="b-dbar" style="width:100%;background:var(--red)"></div></div>
+    </div>
+    <div class="prisoner-box" id="prisoner-box">🔒 <span id="prisoner-info"></span></div>
+    <div class="result" id="bresult"></div>
+    <button class="btn-close" id="bclose" onclick="closeBattle()" style="display:none"><span id="i-btn-ok-ev">확인</span></button>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="emodal" id="emodal">
+  <div class="ebody">
+    <div class="ev-icon" id="ev-icon"></div>
+    <div class="ev-title" id="ev-title"></div>
+    <div class="ev-desc" id="ev-desc"></div>
+    <div class="ev-effect" id="ev-effect"></div>
+    <button class="btn-ev" onclick="closeEvent()">확인</button>
+  </div>
+</div>
+
+<!-- HOURLY BONUS MODAL -->
+<div class="bonus-modal" id="bonus-modal">
+  <div class="bonus-body">
+    <div class="bonus-icon">🎁</div>
+    <div class="bonus-title" id="bonus-title"><span id="bonus-title-el">접속 보너스!</span></div>
+    <div class="bonus-items" id="bonus-items"></div>
+    <button class="btn-bonus" onclick="claimBonus()"><span id="i-btn-claim">받기!</span></button>
+  </div>
+</div>
+
+<!-- MORALE WARNING -->
+<div class="morale-warn" id="morale-warn"></div>
+<!-- AI WARNING -->
+<div class="ai-warn" id="ai-warn"></div>
+<!-- REWARD POPUP -->
+<div class="rpopup" id="rpopup"><div class="rp-icon" id="rp-icon"></div><div class="rp-title" id="rp-title"></div><div class="rp-desc" id="rp-desc"></div></div>
+
+<script>
+const A="https://raw.githubusercontent.com/kentkim0326/kingdom-wars/main/assets/";
+
+// ══ SOUND ════════════════════════════════════════════
+let _ac=null;
+function ac(){if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();return _ac}
+function sfx(type){
+  try{const a=ac(),t=a.currentTime;
+  const tone=(f,v,d,tp="sine",dl=0)=>{const o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=tp;o.frequency.setValueAtTime(f,t+dl);g.gain.setValueAtTime(v,t+dl);g.gain.exponentialRampToValueAtTime(.001,t+dl+d);o.start(t+dl);o.stop(t+dl+d)};
+  switch(type){
+    case"click":tone(700,.1,.06);break;
+    case"deploy":tone(180,.28,.28,"sawtooth");tone(1100,.06,.18,"sine",.06);break;
+    case"scout":for(let i=0;i<3;i++)tone(1300+i*240,.1,.09,"sine",i*.11);break;
+    case"attack":tone(140,.42,.16);for(let i=0;i<4;i++)tone(2000-i*300,.09,.11,"sawtooth",i*.08);break;
+    case"btick":tone(200+Math.random()*350,.16,.09,"square");break;
+    case"win":[523,659,784,1047,1319].forEach((f,i)=>tone(f,i===4?.26:.17,.22,"triangle",i*.09));break;
+    case"lose":[500,420,350,280,220].forEach((f,i)=>tone(f,.15,.28,"sine",i*.14));break;
+    case"event":[[880,.18,.11],[1100,.18,.11],[880,.18,.11]].forEach(([f,v,d],i)=>tone(f,v,d,"sine",i*.15));break;
+    case"radar":tone(210,.09,.14,"square");tone(420,.07,.14,"square",.11);break;
+    case"collect":for(let i=0;i<3;i++)tone(740+i*170,.09,.08,"sine",i*.06);break;
+    case"nick":[523,659,784,659,1047].forEach((f,i)=>tone(f,.13,.14,"triangle",i*.08));break;
+    case"emove":tone(90,.06,.18,"sawtooth");break;
+    case"unlock":for(let i=0;i<5;i++)tone(400+i*120,.12,.12,"sine",i*.06);break;
+    case"bonus":[523,659,784,880,1047,1319].forEach((f,i)=>tone(f,.14,.18,"triangle",i*.07));break;
+    case"morale_warn":tone(300,.15,.1);tone(250,.15,.1,.12);tone(200,.15,.1,.24);break;
+  }}catch(e){}
+}
+let bgmOn=false,bgmCtx=null,bgmO=[];
+function toggleBGM(){const b=document.getElementById("bgm-btn");if(!bgmOn){bgmOn=true;b.textContent="🔊";startBGM();}else{bgmOn=false;b.textContent="🔇";bgmO.forEach(o=>{try{o.stop()}catch(e){}});bgmO=[];if(bgmCtx){bgmCtx.close();bgmCtx=null;}}}
+function startBGM(){try{bgmCtx=new(window.AudioContext||window.webkitAudioContext)();const sc=()=>{if(!bgmOn)return;const t2=bgmCtx.currentTime;[[55,.038,8],[82.4,.028,8],[110,.018,4],[73.4,.022,6]].forEach(([f,v,d],i)=>{const o=bgmCtx.createOscillator(),g=bgmCtx.createGain();o.connect(g);g.connect(bgmCtx.destination);o.frequency.value=f;g.gain.setValueAtTime(0,t2+i*.4);g.gain.linearRampToValueAtTime(v,t2+i*.4+.8);g.gain.linearRampToValueAtTime(v,t2+d-.8);g.gain.linearRampToValueAtTime(0,t2+d);o.start(t2+i*.4);o.stop(t2+d);bgmO.push(o);});setTimeout(sc,7200);};sc();}catch(e){}}
+
+// ══ COUNTER ══════════════════════════════════════════
+const CTR={
+  fighter:{strong:["destroyer"],weak:["laser_mech","drone"]},
+  destroyer:{strong:["mothership"],weak:["fighter"]},
+  mothership:{strong:["sector"],weak:["destroyer"]},
+  laser_mech:{strong:["fighter","drone"],weak:["armor_mech","missile_mech"]},
+  missile_mech:{strong:["armor_mech","destroyer"],weak:["laser_mech","ace"]},
+  armor_mech:{strong:["laser_mech"],weak:["missile_mech","ace"]},
+  melee_mech:{strong:["laser_mech","armor_mech"],weak:["fighter","missile_mech"]},
+  ace:{strong:["missile_mech","melee_mech"],weak:["drone"]},
+};
+function getCM(a,d){if(!a||!d)return{mod:1,lbl:"⚖️"};const c=CTR[a];if(!c)return{mod:1,lbl:"⚖️"};if(c.strong?.includes(d))return{mod:1.35,lbl:"✅+35%"};if(c.weak?.includes(d))return{mod:.60,lbl:"❌-40%"};return{mod:1,lbl:"⚖️"}}
+
+// ══ UNITS ════════════════════════════════════════════
+const SHIPS=[
+  {id:"f1",name:"전투기",ctype:"fighter",emoji:"🚀",img:A+"ship3.png",pow:80,count:3,hangar:0,rarity:"R",cost:{he3:0},skills:["선제타격","편대비행"],strong:"구축함",weak:"레이저"},
+  {id:"f2",name:"구축함",ctype:"destroyer",emoji:"🛸",img:A+"ship6.png",pow:200,count:0,hangar:2,rarity:"SR",cost:{he3:200},skills:["어뢰","대잠"],strong:"모선",weak:"전투기"},
+  {id:"f3",name:"순양함",ctype:"destroyer",emoji:"🌠",img:A+"ship1.png",pow:380,count:0,hangar:4,rarity:"SR",cost:{he3:400},skills:["광역포격","레이저포"],strong:"모선",weak:"어뢰"},
+  {id:"f4",name:"전투함",ctype:"destroyer",emoji:"🏛️",img:A+"ship5.png",pow:560,count:0,hangar:6,rarity:"UR",cost:{he3:700},skills:["함포폭격","전술방어"],strong:"섹터",weak:"드론"},
+  {id:"f5",name:"모선",ctype:"mothership",emoji:"🌌",img:A+"ship2.png",pow:850,count:0,hangar:12,rarity:"UR",cost:{he3:1200},skills:["격납출격","함대결전"],strong:"전섹터",weak:"구축함"},
+];
+const MECHS=[
+  {id:"m1",name:"레이저 메카",ctype:"laser_mech",emoji:"🎯",img:A+"mech1.png",pow:180,count:2,rarity:"SR",cost:{he3:150},skills:["관통샷","과열"],strong:"전투기",weak:"장갑"},
+  {id:"m2",name:"미사일 메카",ctype:"missile_mech",emoji:"💣",img:A+"mech3.png",pow:250,count:1,rarity:"SR",cost:{he3:200},skills:["유도탄","광역폭발"],strong:"장갑",weak:"레이저"},
+  {id:"m3",name:"공중 강습",ctype:"fighter",emoji:"🦅",img:A+"mech5.png",pow:160,count:2,rarity:"R",cost:{he3:100},skills:["급강하","기동회피"],strong:"구축함",weak:"레이저"},
+  {id:"m4",name:"격투 메카",ctype:"melee_mech",emoji:"🥊",img:A+"mech2.png",pow:210,count:0,rarity:"R",cost:{he3:150},skills:["강타","철벽"],strong:"레이저",weak:"전투기"},
+  {id:"m5",name:"장갑 메카",ctype:"armor_mech",emoji:"🗿",img:A+"mech3.png",pow:290,count:0,rarity:"SR",cost:{he3:250},skills:["실드흡수","반격"],strong:"레이저",weak:"미사일"},
+];
+const ACES=[
+  {id:"a1",name:"에이스 파일럿",ctype:"ace",emoji:"⭐",img:A+"mech4.png",pow:380,count:1,rarity:"UR",cost:{he3:300},skills:["영웅기","필살기"],strong:"미사일",weak:"드론"},
+];
+const ALL=[...SHIPS,...MECHS,...ACES];
+
+// ══ 49-SECTOR MAP DATA ═══════════════════════════════
+// 7×7 grid: idx = row*7 + col
+// Sector types pattern for 49 sectors
+const SEC_TYPES=[];
+const TYPE_POOL=["he3","neutral","neutral","reg","neutral","neutral","h2o","crater","neutral","neutral","he3","reg","neutral","h2o"];
+for(let i=0;i<49;i++) SEC_TYPES.push(TYPE_POOL[i%TYPE_POOL.length]);
+// Override special sectors
+[0,12,24,36,48].forEach(i=>SEC_TYPES[i]="crater");
+[3,10,17,31,38,45].forEach(i=>SEC_TYPES[i]="he3");
+[7,21,28,42].forEach(i=>SEC_TYPES[i]="reg");
+[14,25,32,46].forEach(i=>SEC_TYPES[i]="h2o");
+
+const SEC_RES={
+  he3:{icon:"💠",color:"#00c8ff",label:"He-3 광맥",prod:{he3:180,reg:0,h2o:0}},
+  reg:{icon:"💜",color:"#aa44ff",label:"레골리스",prod:{he3:60,reg:25,h2o:0}},
+  h2o:{icon:"🩵",color:"#00ffcc",label:"H₂O 얼음",prod:{he3:60,reg:0,h2o:35}},
+  crater:{icon:"🏔️",color:"#888",label:"크레이터",prod:{he3:90,reg:0,h2o:0}},
+  neutral:{icon:"",color:"",label:"일반",prod:{he3:110,reg:0,h2o:12}},
+};
+
+// 49 sector names
+const SNAMES=[
+  "고요A","고요B","고요C","폭풍A","폭풍B","폭풍C","위기해",
+  "샤클턴A","샤클턴B","코페르니쿠스","티코A","티코B","플라톤","아리스타르코스",
+  "비의海A","비의海B","구름海A","구름海B","지식海","프톨레마이오스","달뒷면A",
+  "달뒷면B","남극A","남극B","남극C","북극A","북극B","아이트켄A",
+  "아이트켄B","풍요海A","풍요海B","세레니티A","세레니티B","위기海A","위기海B",
+  "허블A","허블B","코롤레프","사빈A","사빈B","Moltke","란그레누스",
+  "페타비우스","스테비누스","풀처리무스","지오르다노","빌헬름A","빌헬름B","메시에",
+];
+
+// ══ ENEMY TEMPLATES ══════════════════════════════════
+const ENEMY_NATIONS=[
+  {f:"🇷🇺",n:"러시아"},{f:"🇺🇸",n:"미국"},{f:"🇨🇳",n:"중국"},
+  {f:"🇯🇵",n:"일본"},{f:"🇩🇪",n:"독일"},{f:"🇫🇷",n:"프랑스"},
+  {f:"🇮🇳",n:"인도"},{f:"🇬🇧",n:"영국"},{f:"🇧🇷",n:"브라질"},
+  {f:"🇰🇿",n:"카자흐스탄"},{f:"🇦🇺",n:"호주"},{f:"🇮🇱",n:"이스라엘"},
+];
+const EU=[
+  {img:A+"ship4.png",emoji:"💀",ct:"destroyer",basePow:120},
+  {img:A+"ship5.png",emoji:"🛸",ct:"destroyer",basePow:160},
+  {img:A+"mech3.png",emoji:"💣",ct:"missile_mech",basePow:140},
+  {img:A+"mech5.png",emoji:"🦅",ct:"fighter",basePow:90},
+  {img:A+"ship2.png",emoji:"🌌",ct:"mothership",basePow:280},
+  {img:A+"mech2.png",emoji:"🥊",ct:"melee_mech",basePow:130},
+];
+
+const COMMANDERS={
+  "🇰🇷":[
+    {g:"male",av:"🧑‍🚀",name:"이준혁",title:'"철의 장군"',skills:["⚡레이저+15%","🛡️크레이터+20%","😤사기유지+10%"]},
+    {g:"female",av:"👩‍🚀",name:"김서연",title:'"달의 여왕"',skills:["💨전투기+20%","💎레골리스+25%","⭐에이스+30%"]},
+  ],
+  "🇺🇸":[
+    {g:"male",av:"🧑‍✈️",name:"Commander Blake",title:'"Eagle"',skills:["🚀모선+20%","💰코인+15%","🎯미사일+25%"]},
+    {g:"female",av:"👩‍✈️",name:"Admiral Sarah",title:'"Valkyrie"',skills:["🛡️방어+10%","⚡He-3+20%","😤사기+15%"]},
+  ],
+  "🇯🇵":[
+    {g:"male",av:"🥷",name:"大和司令",title:'"鋼の将"',skills:["⚔️근접+25%","🎋기술+20%","😤사기회복"]},
+    {g:"female",av:"👘",name:"月姫サクラ",title:'"月の女神"',skills:["🌙시야개방","💎레골리스+30%","😤사기면역"]},
+  ],
+  "🇨🇳":[
+    {g:"male",av:"🐉",name:"赵龙将军",title:'"龙之将"',skills:["👥병력2배","🏯요새무료","⚡He-3+30%"]},
+    {g:"female",av:"🏮",name:"李嫦娥",title:'"月神"',skills:["🌙자원+25%","🔮이벤트예고","😤사기최고유지"]},
+  ],
+  "_":[
+    {g:"male",av:"🧑‍🚀",name:"Commander",title:'"전사"',skills:["⚔️전투+10%","⚡자원+10%","😤사기+10%"]},
+    {g:"female",av:"👩‍🚀",name:"Admiral",title:'"지휘관"',skills:["💨기동+15%","💎희귀+15%","⭐에이스+20%"]},
+  ],
+};
+const NATIONS=[
+  {f:"🇰🇷",n:"대한민국",e:"Korea"},{f:"🇺🇸",n:"미국",e:"USA"},{f:"🇨🇳",n:"중국",e:"China"},
+  {f:"🇯🇵",n:"일본",e:"Japan"},{f:"🇷🇺",n:"러시아",e:"Russia"},{f:"🇩🇪",n:"독일",e:"Germany"},
+  {f:"🇫🇷",n:"프랑스",e:"France"},{f:"🇬🇧",n:"영국",e:"UK"},{f:"🇮🇳",n:"인도",e:"India"},
+  {f:"🇧🇷",n:"브라질",e:"Brazil"},{f:"🇨🇦",n:"캐나다",e:"Canada"},{f:"🇦🇺",n:"호주",e:"Australia"},
+  {f:"🇮🇹",n:"이탈리아",e:"Italy"},{f:"🇪🇸",n:"스페인",e:"Spain"},{f:"🇲🇽",n:"멕시코",e:"Mexico"},
+  {f:"🇮🇩",n:"인도네시아",e:"Indonesia"},{f:"🇸🇦",n:"사우디",e:"Saudi"},{f:"🇹🇷",n:"터키",e:"Turkey"},
+  {f:"🇦🇷",n:"아르헨티나",e:"Argentina"},{f:"🇳🇱",n:"네덜란드",e:"Netherlands"},
+  {f:"🇵🇱",n:"폴란드",e:"Poland"},{f:"🇸🇪",n:"스웨덴",e:"Sweden"},{f:"🇿🇦",n:"남아공",e:"S.Africa"},
+  {f:"🇻🇳",n:"베트남",e:"Vietnam"},{f:"🇹🇭",n:"태국",e:"Thailand"},{f:"🇵🇭",n:"필리핀",e:"Philippines"},
+  {f:"🇳🇴",n:"노르웨이",e:"Norway"},{f:"🇦🇪",n:"UAE",e:"UAE"},{f:"🇺🇦",n:"우크라이나",e:"Ukraine"},
+  {f:"🇮🇷",n:"이란",e:"Iran"},{f:"🇪🇬",n:"이집트",e:"Egypt"},{f:"🇳🇬",n:"나이지리아",e:"Nigeria"},
+  {f:"🇮🇱",n:"이스라엘",e:"Israel"},{f:"🇵🇰",n:"파키스탄",e:"Pakistan"},
+];
+const EVENTS=[
+  {icon:"☄️",title:"소행성 충돌!",desc:"달에 소행성이 충돌했습니다.",effect:"전 공격 정확도 -20% (1턴)",apply:G=>{G.eventMod=-0.2}},
+  {icon:"☀️",title:"태양풍 발생",desc:"강력한 태양풍이 에너지 무기를 강화합니다.",effect:"레이저 유닛 전투력 +30% (1턴)",apply:G=>{G.energyBuff=1.3}},
+  {icon:"🏆",title:"UN 평화 협정",desc:"UN이 긴급 평화 협정을 선포했습니다.",effect:"3턴간 자원 생산 +50%",apply:G=>{G.prodMod=1.5;G.peaceTurns=3}},
+  {icon:"🌊",title:"H₂O 빙하 발견",desc:"대규모 H₂O 빙하가 발견되었습니다!",effect:"H₂O +200 즉시 획득",apply:G=>{G.h2o+=200}},
+  {icon:"💎",title:"레골리스 광맥 발견",desc:"새로운 레골리스 결정체 광맥!",effect:"레골리스 +50 + 사기 +10",apply:G=>{G.reg+=50;G.morale=Math.min(100,G.morale+10)}},
+  {icon:"😤",title:"결사 항전!",desc:"강력한 연설로 군의 사기가 솟구칩니다!",effect:"사기 +30% 즉시 회복",apply:G=>{G.morale=Math.min(100,G.morale+30)}},
+];
+const NICK3=["달의 악몽","고요의 살인마","샤클턴의 저주"];
+const NICK5=["철의 군주","헬륨 사냥꾼","달의 전설"];
+const NICK10=["태양계의 왕","달의 지배자","우주 패권자"];
+function getNick(w){if(w>=10)return NICK10[~~(Math.random()*3)];if(w>=5)return NICK5[~~(Math.random()*3)];if(w>=3)return NICK3[~~(Math.random()*3)];return null}
+
+// ══ STATE ════════════════════════════════════════════
+let G={
+  nation:null,commander:null,tab:"fleet",selUnit:null,selSec:null,
+  he3:2400,reg:80,h2o:120,coins:1200,
+  morale:100,          // 0-100, affects combat power
+  lastLogin:Date.now(),
+  nextBonus:Date.now()+3600000, // 1 hour
+  loginStreak:1,
+  pendingBonus:false,
+  sectors:{},logs:[],
+  currentView:2,turn:1,wins:0,
+  unitWins:{},unitNick:{},
+  eventMod:0,prodMod:1,energyBuff:1,peaceTurns:0,
+  scoutCount:0,radars:{},scouted:{},
+  // Formation
+  fmSec:null,fmMode:"direct",fmQty:{},
+  // Fog of war — which sectors are revealed
+  revealed:new Set(), // set of sector indices player can see/interact with
+  // Active enemies with growth
+  aiTurn:0,
+};
+
+// ══ STARS ════════════════════════════════════════════
+(()=>{const c=document.getElementById("stars");for(let i=0;i<80;i++){const s=document.createElement("div");s.className="star";const sz=Math.random()*1.8+.4;s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${Math.random()*4+2}s;animation-delay:${Math.random()*4}s;opacity:${Math.random()*.3+.1}`;c.appendChild(s);}})();
+
+// ══ NAV ══════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════
+// KW COMPLETE 4-LANGUAGE i18n (ko / en / ja / zh)
+// ══════════════════════════════════════════════════════════
+const KW_LANG = {
+  ko:{
+    moon_sub:"49섹터 · 전략 정복전",mars_sub:"화성 · 81섹터",space_sub:"심우주 · 120섹터",
+    start_btn:"🚀 달 정복 개시",guide:"📖 게임 가이드",
+    n_title:"🌍 국가 선택",n_sub:"달에 깃발을 꽂을 국가를 선택하세요",
+    n_search:"🔍 국가 검색...",n_next:"다음 → 사령관 선택",
+    c_title:"⭐ 사령관 선택",c_sub:"당신의 분신이 될 사령관을 선택하세요",
+    c_male:"♂ 남성 사령관",c_female:"♀ 여성 사령관",
+    c_starter:"🎁 스타터 패키지",c_s1:"전투기×3",c_s1l:"즉시배치",c_go:"🚀 출전!",
+    g_sectors:"섹터",g_morale:"사기",
+    hourly_hint:"⚡ 매 1시간 접속 보너스",hourly_tip:"⏱️ 매 1시간 접속 보너스",
+    next_bonus:"다음 보너스:",
+    v_ship:"🛸 내 함선",v_battle:"⚔️ 전투 맵",
+    end_turn:"턴 종료 ▶",turn_lbl:"턴",
+    map_hint:"섹터 점령 → 인접 영역 해금 🌑→⚔️",
+    g_cmd:"사령관",g_morale_sys:"사기 시스템",
+    morale_ok:"😤 사기: {v}% — 최상",morale_mid:"😐 사기: {v}% — 보통",
+    morale_low:"😟 사기: {v}% — 낮음! 전투력-20%",morale_crit:"😰 사기: {v}% — 위험! -40%",
+    morale_warn_low:"⚠️ 접속 보너스로 사기 회복!",morale_warn_crit:"🚨 사기 붕괴 위험!",
+    tab_fleet:"🚀 함선",tab_mech:"🤖 메카",tab_ace:"⭐ 에이스",
+    btn_buy:"+ 구매 500🪙",
+    g_sel:"선택된 유닛",g_sel_hint:"클릭하여 선택",
+    g_spec:"특수 장비",g_scout:"정찰기",g_owned:"기 보유",
+    g_radar:"레이더",g_placed:"개 배치",g_log:"전황",
+    g_sec_info:"섹터 정보",g_sec_hint:"섹터를 클릭하세요",
+    g_conquest:"정복 현황",g_blog:"전투 로그",
+    cq_my:"내 영토",cq_empty:"공백",cq_enemy:"적",
+    cq_total:"전체 49섹터 중 {v}% 점령",cq_fog:"🌑 미탐사 {v}섹터 | 더 점령하면 해금!",
+    fog_lbl:"미탐사",
+    sao_title:"섹터 액션",sao_owner:"소유",sao_res:"자원",sao_prod:"생산",sao_hp:"HP",sao_pow:"전투력",
+    sao_unocc:"미점령",sao_my:"내 영토",sao_enemy:"적",
+    sao_scout_done:"정찰 완료",
+    sao_deploy:"🚀 유닛 배치",sao_scout:"🛩️ 정찰 먼저",
+    sao_direct:"⚔️ 정면 돌격",sao_smart:"🎯 정밀 타격",
+    sao_surround:"🔄 포위 공격",sao_radar_add:"📡 레이더 설치",sao_radar_rm:"📡 레이더 제거",
+    sao_my_sec:"✅ 내 영토",sao_defending:"수비 중",
+    sao_no_unit:"⚠️ 유닛 없음",sao_no_unit_hint:"왼쪽에서 유닛 선택 후 공격",
+    sao_sc_count:"보유: {v}기",sao_sc_bonus:"+20% 보너스",
+    sao_surr_hint:"인접 {v}개 아군 협공",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v} 소모",sao_no_enough:"유닛 부족",sao_no_sel:"유닛 선택 필요",
+    fm_title:"⚔️ 출격 편성",fm_sub:"공격에 보낼 유닛을 선택하세요. 보낸 만큼 소비됩니다.",
+    fm_cancel:"취소",fm_launch:"🚀 출격!",fm_no_he3:"He-3 부족",fm_no_unit:"유닛 선택",
+    fm_form:"편성",fm_total:"총 전투력",fm_cost:"비용",fm_def:"vs 방어",
+    fm_strat:"전략",fm_morale_pen:"사기 패널티",fm_wr:"예상 승률: {v}%",
+    fm_no_avail:"보유 유닛 없음\n왼쪽 패널에서 구매하세요",
+    fm_direct:"정면 돌격",fm_smart:"정밀 타격(+20%)",fm_surr:"포위(+{v}%)",
+    fm_morale_warn:"⚠️ 사기 낮음 — 전투력 감소",
+    bm_fleet:"연합함대",
+    res_win:"🏆 승리! {flag} {sec} 점령!\n⚡He-3 +{he} 약탈",
+    res_lose:"💥 패배... {flag} {name}\n전략을 바꿔보세요",
+    prisoner:"포획",btn_ok:"확인",
+    bonus_title:"🎁 접속 보너스! ({v}일 연속)",bonus_hourly:"⏰ 시간 보너스!",
+    btn_claim:"받기!",bonus_streak:"연속 {v}일 보너스",bonus_weekly:"주간 보너스",
+    streak_pre:"🔥",streak_suf:"일",
+    log_enter:"달 진입!",log_tip:"섹터 클릭 → 액션 선택",log_tip2:"사기: 접속 유지시 유리, 이탈시 -5%/시간",
+    log_collect:"수집",log_deploy:"배치",log_scout:"정찰",log_radar:"레이더",
+    log_alarm:"경보",log_defend:"방어",log_fall:"함락",log_turn:"턴",
+    log_buy:"구매",log_event:"이벤트",log_bonus:"보너스",log_reveal:"{v}개 영역 해금!",
+    ai_fall:"⚠️ {sec} 함락! {flag} {name}에게 빼앗겼습니다",
+    unit_owned:"보유",unit_wins:"승리",unit_nick:"별명",unit_strong:"강함",unit_weak:"약함",
+    timer_fmt:"다음 보너스: {m}:{s}",
+  },
+  en:{
+    moon_sub:"49 Sectors · Strategic Conquest",mars_sub:"Mars · 81 Sectors",space_sub:"Deep Space · 120 Sectors",
+    start_btn:"🚀 Conquer the Moon",guide:"📖 Game Guide",
+    n_title:"🌍 Choose Nation",n_sub:"Pick the nation to plant its flag on the Moon",
+    n_search:"🔍 Search nations...",n_next:"Next → Commander",
+    c_title:"⭐ Choose Commander",c_sub:"Select your battle commander",
+    c_male:"♂ Male Commander",c_female:"♀ Female Commander",
+    c_starter:"🎁 Starter Package",c_s1:"Fighter×3",c_s1l:"Deploy now",c_go:"🚀 Deploy!",
+    g_sectors:"Sectors",g_morale:"Morale",
+    hourly_hint:"⚡ Hourly login bonus",hourly_tip:"⏱️ Hourly login bonus",next_bonus:"Next bonus:",
+    v_ship:"🛸 My Ship",v_battle:"⚔️ Battle Map",end_turn:"End Turn ▶",turn_lbl:"Turn",
+    map_hint:"Capture sectors → Unlock adjacent fog 🌑→⚔️",
+    g_cmd:"Commander",g_morale_sys:"Morale System",
+    morale_ok:"😤 Morale: {v}% — Excellent",morale_mid:"😐 Morale: {v}% — Normal",
+    morale_low:"😟 Morale: {v}% — Low! Power -20%",morale_crit:"😰 Morale: {v}% — DANGER! -40%",
+    morale_warn_low:"⚠️ Claim login bonus to restore morale!",morale_warn_crit:"🚨 Morale collapse imminent!",
+    tab_fleet:"🚀 Fleet",tab_mech:"🤖 Mech",tab_ace:"⭐ Ace",btn_buy:"+ Buy 500🪙",
+    g_sel:"Selected Unit",g_sel_hint:"Click to select",
+    g_spec:"Special Gear",g_scout:"Scout Plane",g_owned:" owned",
+    g_radar:"Radar",g_placed:" placed",g_log:"Battlefield",
+    g_sec_info:"Sector Info",g_sec_hint:"Click a sector",
+    g_conquest:"Conquest Status",g_blog:"Battle Log",
+    cq_my:"Mine",cq_empty:"Empty",cq_enemy:"Enemy",
+    cq_total:"{v}% of 49 sectors captured",cq_fog:"🌑 {v} unexplored | Capture more to unlock!",
+    fog_lbl:"Unexplored",
+    sao_title:"Sector Action",sao_owner:"Owner",sao_res:"Resource",sao_prod:"Production",sao_hp:"HP",sao_pow:"Power",
+    sao_unocc:"Unoccupied",sao_my:"My Territory",sao_enemy:"Enemy",sao_scout_done:"Scout Complete",
+    sao_deploy:"🚀 Deploy Unit",sao_scout:"🛩️ Scout First",
+    sao_direct:"⚔️ Direct Assault",sao_smart:"🎯 Precision Strike",
+    sao_surround:"🔄 Surround Attack",sao_radar_add:"📡 Place Radar",sao_radar_rm:"📡 Remove Radar",
+    sao_my_sec:"✅ My Territory",sao_defending:"Defending",
+    sao_no_unit:"⚠️ No Units",sao_no_unit_hint:"Select unit on left panel",
+    sao_sc_count:"{v} scouts",sao_sc_bonus:"+20% bonus",
+    sao_surr_hint:"{v} allied sectors flanking",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v}",sao_no_enough:"Not enough",sao_no_sel:"Select unit first",
+    fm_title:"⚔️ Formation",fm_sub:"Choose units to send. Sent units are consumed.",
+    fm_cancel:"Cancel",fm_launch:"🚀 Launch!",fm_no_he3:"Not enough He-3",fm_no_unit:"Select Units",
+    fm_form:"Formation",fm_total:"Total Power",fm_cost:"Cost",fm_def:"vs Defense",
+    fm_strat:"Strategy",fm_morale_pen:"Morale Penalty",fm_wr:"Win Rate: {v}%",
+    fm_no_avail:"No units available\nBuy from left panel",
+    fm_direct:"Direct Assault",fm_smart:"Precision(+20%)",fm_surr:"Surround(+{v}%)",
+    fm_morale_warn:"⚠️ Low morale — reduced power",bm_fleet:"Combined Fleet",
+    res_win:"🏆 Victory! {flag} {sec} captured!\n⚡He-3 +{he} plundered",
+    res_lose:"💥 Defeated... {flag} {name}\nTry a different strategy",
+    prisoner:"captured",btn_ok:"OK",
+    bonus_title:"🎁 Login Bonus! ({v}-day streak)",bonus_hourly:"⏰ Hourly Bonus!",
+    btn_claim:"Claim!",bonus_streak:"{v}-day streak",bonus_weekly:"Weekly bonus",
+    streak_pre:"🔥",streak_suf:"d",
+    log_enter:"Moon Entry!",log_tip:"Click sectors → choose action",log_tip2:"Morale: High online, drops offline",
+    log_collect:"Collected",log_deploy:"Deployed",log_scout:"Scouted",log_radar:"Radar",
+    log_alarm:"Alert",log_defend:"Defended",log_fall:"Sector Lost",log_turn:"Turn",
+    log_buy:"Purchased",log_event:"Event",log_bonus:"Bonus",log_reveal:"{v} sectors unlocked!",
+    ai_fall:"⚠️ {sec} lost! Taken by {flag} {name}",
+    unit_owned:"Owned",unit_wins:"Wins",unit_nick:"Nickname",unit_strong:"Strong vs",unit_weak:"Weak vs",
+    timer_fmt:"Next bonus: {m}:{s}",
+  },
+  ja:{
+    moon_sub:"49セクター · 戦略征服戦",mars_sub:"火星 · 81セクター",space_sub:"深宇宙 · 120セクター",
+    start_btn:"🚀 月を征服せよ",guide:"📖 ゲームガイド",
+    n_title:"🌍 国家選択",n_sub:"月に旗を立てる国を選択してください",
+    n_search:"🔍 国家検索...",n_next:"次へ → 司令官選択",
+    c_title:"⭐ 司令官選択",c_sub:"あなたの分身となる司令官を選択",
+    c_male:"♂ 男性司令官",c_female:"♀ 女性司令官",
+    c_starter:"🎁 スターターパック",c_s1:"戦闘機×3",c_s1l:"即時配置",c_go:"🚀 出撃！",
+    g_sectors:"セクター",g_morale:"士気",
+    hourly_hint:"⚡ 毎時間ログインボーナス",hourly_tip:"⏱️ 毎時間ログインボーナス",next_bonus:"次のボーナス:",
+    v_ship:"🛸 自艦",v_battle:"⚔️ 戦闘マップ",end_turn:"ターン終了 ▶",turn_lbl:"ターン",
+    map_hint:"セクター占領 → 隣接霧解除 🌑→⚔️",
+    g_cmd:"司令官",g_morale_sys:"士気システム",
+    morale_ok:"😤 士気: {v}% — 最高",morale_mid:"😐 士気: {v}% — 普通",
+    morale_low:"😟 士気: {v}% — 低い！戦闘力-20%",morale_crit:"😰 士気: {v}% — 危険！-40%",
+    morale_warn_low:"⚠️ ログインボーナスで士気回復！",morale_warn_crit:"🚨 士気崩壊の危機！",
+    tab_fleet:"🚀 艦隊",tab_mech:"🤖 メカ",tab_ace:"⭐ エース",btn_buy:"+ 購入 500🪙",
+    g_sel:"選択ユニット",g_sel_hint:"クリックして選択",
+    g_spec:"特殊装備",g_scout:"偵察機",g_owned:"機保有",
+    g_radar:"レーダー",g_placed:"個配置",g_log:"戦況",
+    g_sec_info:"セクター情報",g_sec_hint:"セクターをクリック",
+    g_conquest:"征服状況",g_blog:"戦闘ログ",
+    cq_my:"自国",cq_empty:"空白",cq_enemy:"敵",
+    cq_total:"49セクター中{v}%占領",cq_fog:"🌑 未探査{v}セクター | もっと占領して解除！",
+    fog_lbl:"未探査",
+    sao_title:"セクターアクション",sao_owner:"所有",sao_res:"資源",sao_prod:"生産",sao_hp:"HP",sao_pow:"戦闘力",
+    sao_unocc:"未占領",sao_my:"自国領土",sao_enemy:"敵",sao_scout_done:"偵察完了",
+    sao_deploy:"🚀 ユニット配置",sao_scout:"🛩️ 偵察先行",
+    sao_direct:"⚔️ 正面突撃",sao_smart:"🎯 精密打撃",
+    sao_surround:"🔄 包囲攻撃",sao_radar_add:"📡 レーダー設置",sao_radar_rm:"📡 レーダー撤去",
+    sao_my_sec:"✅ 自国領土",sao_defending:"防衛中",
+    sao_no_unit:"⚠️ ユニットなし",sao_no_unit_hint:"左パネルでユニット選択",
+    sao_sc_count:"{v}機保有",sao_sc_bonus:"+20%ボーナス",
+    sao_surr_hint:"隣接{v}個の味方から挟撃",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v}消費",sao_no_enough:"不足",sao_no_sel:"ユニット選択が必要",
+    fm_title:"⚔️ 出撃編成",fm_sub:"攻撃に送るユニットを選択。送ったユニットは消費されます。",
+    fm_cancel:"キャンセル",fm_launch:"🚀 出撃！",fm_no_he3:"He-3不足",fm_no_unit:"ユニット選択",
+    fm_form:"編成",fm_total:"総戦闘力",fm_cost:"コスト",fm_def:"vs防衛",
+    fm_strat:"戦略",fm_morale_pen:"士気ペナルティ",fm_wr:"勝率予測: {v}%",
+    fm_no_avail:"保有ユニットなし\n左パネルで購入してください",
+    fm_direct:"正面突撃",fm_smart:"精密打撃(+20%)",fm_surr:"包囲(+{v}%)",
+    fm_morale_warn:"⚠️ 士気低下 — 戦闘力減少",bm_fleet:"連合艦隊",
+    res_win:"🏆 勝利！{flag} {sec}占領！\n⚡He-3 +{he}略奪",
+    res_lose:"💥 敗北... {flag} {name}\n戦略を変えてください",
+    prisoner:"捕獲",btn_ok:"確認",
+    bonus_title:"🎁 ログインボーナス！({v}日連続)",bonus_hourly:"⏰ 時間ボーナス！",
+    btn_claim:"受け取る！",bonus_streak:"{v}日連続ボーナス",bonus_weekly:"週間ボーナス",
+    streak_pre:"🔥",streak_suf:"日",
+    log_enter:"月突入！",log_tip:"セクタークリック → アクション選択",log_tip2:"士気：ログイン維持で有利",
+    log_collect:"収集",log_deploy:"配置",log_scout:"偵察",log_radar:"レーダー",
+    log_alarm:"警報",log_defend:"防衛",log_fall:"陥落",log_turn:"ターン",
+    log_buy:"購入",log_event:"イベント",log_bonus:"ボーナス",log_reveal:"{v}個のセクター解除！",
+    ai_fall:"⚠️ {sec}陥落！{flag}{name}に奪われました",
+    unit_owned:"保有",unit_wins:"勝利",unit_nick:"ニックネーム",unit_strong:"得意",unit_weak:"苦手",
+    timer_fmt:"次のボーナス: {m}:{s}",
+  },
+  zh:{
+    moon_sub:"49扇区 · 战略征服战",mars_sub:"火星 · 81扇区",space_sub:"深空 · 120扇区",
+    start_btn:"🚀 征服月球",guide:"📖 游戏指南",
+    n_title:"🌍 选择国家",n_sub:"选择将在月球上插旗的国家",
+    n_search:"🔍 搜索国家...",n_next:"下一步 → 指挥官",
+    c_title:"⭐ 选择指挥官",c_sub:"选择您的化身指挥官",
+    c_male:"♂ 男性指挥官",c_female:"♀ 女性指挥官",
+    c_starter:"🎁 新手礼包",c_s1:"战斗机×3",c_s1l:"立即部署",c_go:"🚀 出击！",
+    g_sectors:"扇区",g_morale:"士气",
+    hourly_hint:"⚡ 每小时登录奖励",hourly_tip:"⏱️ 每小时登录奖励",next_bonus:"下次奖励:",
+    v_ship:"🛸 我的舰船",v_battle:"⚔️ 战斗地图",end_turn:"结束回合 ▶",turn_lbl:"回合",
+    map_hint:"占领扇区 → 解锁相邻迷雾 🌑→⚔️",
+    g_cmd:"指挥官",g_morale_sys:"士气系统",
+    morale_ok:"😤 士气: {v}% — 极佳",morale_mid:"😐 士气: {v}% — 正常",
+    morale_low:"😟 士气: {v}% — 低落！战斗力-20%",morale_crit:"😰 士气: {v}% — 危险！-40%",
+    morale_warn_low:"⚠️ 领取登录奖励恢复士气！",morale_warn_crit:"🚨 士气崩溃危机！",
+    tab_fleet:"🚀 舰队",tab_mech:"🤖 机甲",tab_ace:"⭐ 王牌",btn_buy:"+ 购买 500🪙",
+    g_sel:"选中单位",g_sel_hint:"点击选择",
+    g_spec:"特殊装备",g_scout:"侦察机",g_owned:"架拥有",
+    g_radar:"雷达",g_placed:"个部署",g_log:"战况",
+    g_sec_info:"扇区信息",g_sec_hint:"点击扇区",
+    g_conquest:"征服状态",g_blog:"战斗日志",
+    cq_my:"我方",cq_empty:"空白",cq_enemy:"敌方",
+    cq_total:"49扇区中已占领{v}%",cq_fog:"🌑 未探索{v}扇区 | 占领更多以解锁！",
+    fog_lbl:"未探索",
+    sao_title:"扇区行动",sao_owner:"所有者",sao_res:"资源",sao_prod:"生产",sao_hp:"HP",sao_pow:"战斗力",
+    sao_unocc:"未占领",sao_my:"我方领土",sao_enemy:"敌方",sao_scout_done:"侦察完成",
+    sao_deploy:"🚀 部署单位",sao_scout:"🛩️ 先侦察",
+    sao_direct:"⚔️ 正面突击",sao_smart:"🎯 精确打击",
+    sao_surround:"🔄 包围攻击",sao_radar_add:"📡 安装雷达",sao_radar_rm:"📡 拆除雷达",
+    sao_my_sec:"✅ 我方领土",sao_defending:"防守中",
+    sao_no_unit:"⚠️ 无单位",sao_no_unit_hint:"在左侧选择单位",
+    sao_sc_count:"拥有{v}架",sao_sc_bonus:"+20%奖励",
+    sao_surr_hint:"{v}个相邻友方夹击",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v}消耗",sao_no_enough:"数量不足",sao_no_sel:"请先选择单位",
+    fm_title:"⚔️ 出击编队",fm_sub:"选择要出击的单位。出击单位将被消耗。",
+    fm_cancel:"取消",fm_launch:"🚀 出击！",fm_no_he3:"He-3不足",fm_no_unit:"选择单位",
+    fm_form:"编队",fm_total:"总战斗力",fm_cost:"费用",fm_def:"vs防御",
+    fm_strat:"战略",fm_morale_pen:"士气惩罚",fm_wr:"预计胜率: {v}%",
+    fm_no_avail:"无可用单位\n请在左侧购买",
+    fm_direct:"正面突击",fm_smart:"精确打击(+20%)",fm_surr:"包围(+{v}%)",
+    fm_morale_warn:"⚠️ 士气低落 — 战斗力下降",bm_fleet:"联合舰队",
+    res_win:"🏆 胜利！{flag} {sec}占领！\n⚡He-3 +{he}掠夺",
+    res_lose:"💥 失败... {flag} {name}\n请换一种策略",
+    prisoner:"俘获",btn_ok:"确认",
+    bonus_title:"🎁 登录奖励！({v}天连续)",bonus_hourly:"⏰ 时间奖励！",
+    btn_claim:"领取！",bonus_streak:"{v}天连续奖励",bonus_weekly:"周奖励",
+    streak_pre:"🔥",streak_suf:"天",
+    log_enter:"登月！",log_tip:"点击扇区 → 选择行动",log_tip2:"士气：在线时有利，离线时下降",
+    log_collect:"收集",log_deploy:"部署",log_scout:"侦察",log_radar:"雷达",
+    log_alarm:"警报",log_defend:"防御",log_fall:"陷落",log_turn:"回合",
+    log_buy:"购买",log_event:"事件",log_bonus:"奖励",log_reveal:"解锁{v}个新扇区！",
+    ai_fall:"⚠️ {sec}陷落！被{flag}{name}夺取",
+    unit_owned:"拥有",unit_wins:"胜利",unit_nick:"称号",unit_strong:"克制",unit_weak:"被克",
+    timer_fmt:"下次奖励: {m}:{s}",
+  }
+};
+let _L="ko";
+function t(k,v){
+  const d=KW_LANG[_L]||KW_LANG.ko;
+  let s=d[k]||KW_LANG.ko[k]||k;
+  if(v)for(const[a,b]of Object.entries(v))s=s.replace("{"+a+"}",b);
+  return s;
+}
+function setLang(l){
+  _L=l;
+  document.querySelectorAll(".lb").forEach(b=>b.classList.toggle("active",b.getAttribute("onclick").includes("'"+l+"'")));
+  // Apply all i18n keys to DOM
+  const M={
+    // INTRO
+    "i-moon-sub":"moon_sub","i-mars-sub":"mars_sub","i-space-sub":"space_sub",
+    "i-start":"start_btn","i-guide":"guide",
+    // NATION
+    "i-n-title":"n_title","i-n-sub":"n_sub","i-n-next":"n_next",
+    // COMMANDER
+    "i-c-title":"c_title","i-c-sub":"c_sub","i-c-starter":"c_starter",
+    "i-c-s1":"c_s1","i-c-s1l":"c_s1l","i-c-go":"c_go",
+    // GAME
+    "i-v-ship":"v_ship","i-v-battle":"v_battle",
+    "i-end-turn":"end_turn","i-map-hint":"map_hint",
+    "i-g-cmd":"g_cmd","i-g-morale-sys":"g_morale_sys",
+    "i-tab-fleet":"tab_fleet","i-tab-mech":"tab_mech","i-tab-ace":"tab_ace",
+    "i-btn-buy":"btn_buy","i-g-sel":"g_sel","i-g-sel-hint":"g_sel_hint",
+    "i-g-spec":"g_spec","i-g-scout":"g_scout","i-g-owned":"g_owned",
+    "i-g-radar":"g_radar","i-g-placed":"g_placed","i-g-log":"g_log",
+    "i-g-sec-info":"g_sec_info","i-g-sec-hint":"g_sec_hint",
+    "i-g-conquest":"g_conquest","i-g-blog":"g_blog",
+    "i-hourly-hint":"hourly_hint","i-hourly-tip":"hourly_tip",
+    // SAO
+    "i-sao-title":"sao_title",
+    // FM
+    "i-fm-title":"fm_title","i-fm-sub":"fm_sub",
+    "i-fm-cancel":"fm_cancel","i-fm-launch":"fm_launch",
+    // BONUS
+    "i-btn-claim":"btn_claim",
+    // EVENT
+    "i-btn-ok-ev":"btn_ok","i-btn-ok-bm":"btn_ok",
+  };
+  for(const[id,key]of Object.entries(M)){const el=document.getElementById(id);if(el)el.textContent=t(key);}
+  // Placeholders
+  const ns=document.getElementById("nsearch");if(ns)ns.placeholder=t("n_search");
+  // Streak suffix
+  const ss=document.getElementById("i-streak-suf");if(ss)ss.textContent=t("streak_suf");
+  // Refresh dynamic UI
+  if(typeof updateMoraleUI==="function")updateMoraleUI();
+  if(typeof updateConquestProgress==="function")updateConquestProgress();
+  if(G&&G.nation){if(typeof renderUnits==="function")renderUnits();if(typeof showSelBig==="function")showSelBig();}
+}
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(function(s){
+    s.classList.remove("active");
+    s.style.setProperty("display","none","important");
+  });
+  var el=document.getElementById(id);
+  if(el){
+    el.classList.add("active");
+    el.style.setProperty("display","flex","important");
+
+  }
+  if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);
+}
+function goNation(){sfx("click");show("s-nation");renderN(NATIONS)}
+function renderN(list){document.getElementById("ngrid").innerHTML=list.map(n=>`<div class="nc" onclick="selN('${n.e}')"><div class="nf">${n.f}</div><div class="nn">${n.n}</div><div class="ne">${n.e}</div></div>`).join("")}
+function filterN(q){renderN(NATIONS.filter(n=>n.n.includes(q)||n.e.toLowerCase().includes(q.toLowerCase())))}
+function selN(en){G.nation=NATIONS.find(n=>n.e===en);sfx("click");document.querySelectorAll(".nc").forEach(c=>c.classList.toggle("sel",c.querySelector(".ne").textContent===en));document.getElementById("btn-next").classList.add("show")}
+function goCommander(){
+  sfx("click");if(!G.nation)return;show("s-commander");
+  document.getElementById("cmd-nf").textContent=G.nation.f;
+  document.getElementById("cmd-nn").textContent=G.nation.n;
+  const cmds=COMMANDERS[G.nation.f]||COMMANDERS["_"];
+  const con=document.getElementById("cmd-cards");con.innerHTML="";
+  cmds.forEach((cmd,i)=>{
+    const card=document.createElement("div");card.className=`cmd-card ${cmd.g}`;
+    card.innerHTML=`<div class="cmd-avwrap"><span class="cmd-avm">${cmd.av}</span></div>
+      <div class="cmd-gen">${cmd.g==="male"?t("c_male"):t("c_female")}</div>
+      <div class="cmd-name">${cmd.name}</div><div class="cmd-ttl">${cmd.title}</div>
+      <div class="cmd-skills">${cmd.skills.map(s=>`<div class="cmd-skill">${s}</div>`).join("")}</div>`;
+    card.onclick=()=>{G.commander=cmd;document.querySelectorAll(".cmd-card").forEach(c=>c.classList.remove("sel-m","sel-f"));card.classList.add(cmd.g==="male"?"sel-m":"sel-f");document.getElementById("btn-cmd-ok").classList.add("show");sfx("click")};
+    con.appendChild(card);
+    if(i===0){const vs=document.createElement("div");vs.className="cmd-vs";vs.textContent="VS";con.appendChild(vs)}
+  });
+}
+function goGame(){
+  sfx("deploy");if(!G.nation||!G.commander)return;
+  initMap();
+  document.getElementById("news-scroll").innerHTML=[
+    "🚀 SpaceX Starship 화성 유인 탐사 2027년 목표","🌙 NASA 아르테미스 달 착륙 예정",
+    "⚡ 달 He-3 매장량 100만 톤","🔬 달 토양 산소 추출 성공","🏗️ 달 게이트웨이 2027년 착공",
+    "⚔️ UN 우주 군사화 금지 논의","💫 민간 달 궤도 비행 2028년","🌌 제임스 웹 우주 관측 신기록",
+  ].flatMap(n=>[n,n]).map(n=>`<span style="white-space:nowrap">${n}</span>`).join("");
+  buildGrid();updateResUI();updateHUD();
+  G.selUnit=SHIPS[0];renderUnits();showSelBig();
+  log("sys","["+t("log_enter")+"] "+G.nation.f+" "+G.commander.name);
+  log("info","💡 "+t("log_tip"));
+  log("info","😤 "+t("log_tip2"));
+  show("s-game");
+  updateHUD();
+  startAI();
+  startMoraleTimer();
+  startBonusTimer();
+  checkLoginBonus();
+}
+
+// ══ 49-SECTOR MAP INIT ═══════════════════════════════
+function initMap(){
+  // Start: center 3 sectors revealed (col 3, rows 3-4-5 of 7x7 = indices 24,25,26 roughly center)
+  // Actually start at bottom-left quadrant player "base"
+  const START_SECTORS=[23,24,30,31]; // center cluster
+  START_SECTORS.forEach(i=>{G.revealed.add(i)});
+  // Reveal adjacents as fog-edge
+  START_SECTORS.forEach(i=>getAdj49(i).forEach(j=>G.revealed.add(j)));
+
+  // Place player start units
+  G.sectors[42]={own:"me",flag:G.nation.f,name:G.nation.n,hp:100,ui:SHIPS[0].img,ue:SHIPS[0].emoji,ct:SHIPS[0].ctype,pow:SHIPS[0].pow};
+  SHIPS[0].count=2; // used 1 for sector 42
+
+  // Place enemies — scattered across 49 sectors (not in revealed zone)
+  const ENEMY_STARTS=[2,5,11,16,20,27,33,39,44,48];
+  ENEMY_STARTS.forEach(i=>{
+    if(G.revealed.has(i))return;
+    const en=ENEMY_NATIONS[~~(Math.random()*ENEMY_NATIONS.length)];
+    const eu=EU[~~(Math.random()*EU.length)];
+    const tier=Math.floor(Math.random()*3); // 0=weak, 1=mid, 2=strong
+    G.sectors[i]={own:"enemy",flag:en.f,name:en.n,hp:60+tier*15,
+      ui:eu.img,ue:eu.emoji,ct:eu.ct,pow:eu.basePow+tier*80+~~(Math.random()*60)};
+  });
+}
+
+// Get adjacent sector indices in 7×7 grid
+function getAdj49(i){
+  const adj=[];const col=i%7,row=~~(i/7);
+  [[-1,0],[1,0],[0,-1],[0,1]].forEach(([dc,dr])=>{
+    const nc=col+dc,nr=row+dr;
+    if(nc>=0&&nc<7&&nr>=0&&nr<7)adj.push(nr*7+nc);
+  });return adj;
+}
+function getAdjMine(i){return getAdj49(i).filter(j=>G.sectors[j]?.own==="me")}
+function getAdjEnemy(i){return getAdj49(i).filter(j=>G.sectors[j]?.own==="enemy")}
+
+// When a sector is captured, unlock adjacent fog
+function unlockAdjacent(i){
+  const adj=getAdj49(i);let newlyRevealed=[];
+  adj.forEach(j=>{if(!G.revealed.has(j)){G.revealed.add(j);newlyRevealed.push(j);}});
+  if(newlyRevealed.length){
+    sfx("unlock");
+    newlyRevealed.forEach(j=>{
+      const el=document.getElementById(`s${j}`);
+      if(el){el.classList.add("unlocking");setTimeout(()=>el.classList.remove("unlocking"),600);}
+    });
+    log("info",`🌑 새로운 영역 ${newlyRevealed.length}개 해금!`);
+  }
+  buildGrid(); // re-render with new fog state
+  updateConquestProgress();
+}
+
+// ══ GRID BUILD ═══════════════════════════════════════
+function buildGrid(){
+  const g=document.getElementById("grid");g.innerHTML="";
+  for(let i=0;i<49;i++){
+    const d=document.createElement("div");d.className="sector";d.id=`s${i}`;
+    const isRevealed=G.revealed.has(i);
+    const s=G.sectors[i];
+    const isMyAdj=!isRevealed&&getAdj49(i).some(j=>G.revealed.has(j)&&G.sectors[j]?.own==="me");
+    if(!isRevealed){
+      // Deep fog
+      d.className="sector fog";
+      d.innerHTML=`<div class="fog-content"><div class="fog-icon">🌑</div><div class="fog-lbl">${t("fog_lbl")}</div></div>`;
+    }else if(!s){
+      // Revealed but empty
+      const st=SEC_TYPES[i]||"neutral";const si=SEC_RES[st];
+      d.className=`sector active-empty ${st==="he3"?"res-he3":st==="reg"?"res-reg":st==="h2o"?"res-h2o":st==="crater"?"crater":""}`;
+      d.innerHTML=`<span class="sec-id">${String(i+1).padStart(2,"0")}</span>
+        <span class="sec-ti">${si.icon||""}${G.radars[i]?"📡":""}</span>
+        <div class="expand-hint"><div class="expand-pulse"></div></div>
+        <div style="font-size:.38rem;color:rgba(80,120,180,.5);margin-top:16px">${si.label||"일반"}</div>
+        <div style="font-size:.36rem;color:rgba(60,100,160,.4)">${SNAMES[i]}</div>`;
+      d.onclick=()=>clickSec(i);
+    }else{
+      // Occupied
+      const st=SEC_TYPES[i]||"neutral";const si=SEC_RES[st];
+      const tc=st==="he3"?"res-he3":st==="reg"?"res-reg":st==="h2o"?"res-h2o":st==="crater"?"crater":"";
+      const own=s.own==="me"?" mine":s.own==="enemy"?" enemy":"";
+      const sel=G.selSec===i?" sel":"";
+      d.className=`sector ${tc}${own}${sel}${G.scouted[i]?" scouted":""}`;
+      d.innerHTML=`<span class="sec-id">${String(i+1).padStart(2,"0")}</span>
+        <span class="sec-ti">${si.icon||""}${G.radars[i]?"📡":""}</span>
+        <img class="sec-ui" src="${s.ui||""}" alt="" onerror="this.style.display='none';this.nextSibling&&(this.nextSibling.style.display='block')"/>
+        <span style="display:none;font-size:.95rem">${s.ue||"🚀"}</span>
+        <span class="sec-fl">${s.flag}</span>
+        <div class="sec-nm">${SNAMES[i]}</div>
+        ${G.scouted[i]&&s.own==="enemy"?`<div class="sec-intel">${G.scouted[i].ue} ⚔️${G.scouted[i].pow}</div>`:""}
+        <div class="sec-hp"><div class="sec-hf" style="width:${s.hp}%;background:${s.own==="me"?"var(--green)":"var(--red)"}"></div></div>`;
+      d.onclick=()=>clickSec(i);
+    }
+    g.appendChild(d);
+  }
+  updateConquestProgress();
+}
+function refresh(i){const el=document.getElementById(`s${i}`);if(!el)return;const old=el.className;buildGrid();} // full rebuild for fog
+function softRefresh(i){
+  // Just update one sector without fog rebuild
+  const el=document.getElementById(`s${i}`);if(!el)return;
+  const s=G.sectors[i];const st=SEC_TYPES[i]||"neutral";const si=SEC_RES[st];
+  if(s){
+    const tc=st==="he3"?"res-he3":st==="reg"?"res-reg":st==="h2o"?"res-h2o":st==="crater"?"crater":"";
+    el.className=`sector ${tc}${s.own==="me"?" mine":s.own==="enemy"?" enemy":""}${G.selSec===i?" sel":""}${G.scouted[i]?" scouted":""}`;
+    el.innerHTML=`<span class="sec-id">${String(i+1).padStart(2,"0")}</span>
+      <span class="sec-ti">${si.icon||""}${G.radars[i]?"📡":""}</span>
+      <img class="sec-ui" src="${s.ui||""}" alt="" onerror="this.style.display='none'"/>
+      <span class="sec-fl">${s.flag}</span>
+      <div class="sec-nm">${SNAMES[i]}</div>
+      ${G.scouted[i]&&s.own==="enemy"?`<div class="sec-intel">${G.scouted[i].ue} ⚔️${G.scouted[i].pow}</div>`:""}
+      <div class="sec-hp"><div class="sec-hf" style="width:${s.hp}%;background:${s.own==="me"?"var(--green)":"var(--red)"}"></div></div>`;
+  }
+}
+
+function updateConquestProgress(){
+  const mine=Object.values(G.sectors).filter(s=>s.own==="me").length;
+  const enemy=Object.values(G.sectors).filter(s=>s.own==="enemy").length;
+  const neutral=G.revealed.size-mine-enemy;
+  const pct=Math.round(mine/49*100);
+  document.getElementById("conquest-progress").innerHTML=`
+    <div style="display:flex;justify-content:space-between;font-size:.68rem;margin-bottom:4px">
+      <span style="color:var(--green)">${t("cq_my")} ${mine}</span>
+      <span style="color:var(--muted)">${t("cq_empty")} ${neutral}</span>
+      <span style="color:var(--red)">${t("cq_enemy")} ${enemy}</span>
+    </div>
+    <div style="height:8px;background:rgba(0,0,0,.4);border-radius:4px;overflow:hidden;margin-bottom:4px">
+      <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:4px;transition:width .5s"></div>
+    </div>
+    <div style="font-size:.62rem;color:var(--muted)">${t("cq_total",{v:pct})}</div>
+    <div style="font-size:.6rem;color:var(--muted);margin-top:3px">${t("cq_fog",{v:49-G.revealed.size})}</div>`;
+}
+
+// ══ SECTOR CLICK ═════════════════════════════════════
+function clickSec(i){
+  sfx("click");G.selSec=i;buildGrid();updateRSec(i);showSAO(i);
+}
+function updateRSec(i){
+  const s=G.sectors[i];const si=SEC_RES[SEC_TYPES[i]||"neutral"];
+  document.getElementById("r-sec-info").innerHTML=`
+    <div class="rrow"><span class="rk">섹터</span><span class="rv2" style="font-size:.65rem">${SNAMES[i]}</span></div>
+    <div class="rrow"><span class="rk">자원</span><span class="rv2" style="color:${si.color||"var(--muted)"}">${si.label||"일반"}</span></div>
+    <div class="rrow"><span class="rk">생산</span><span class="rv2" style="color:var(--green)">⚡+${si.prod.he3}/턴</span></div>
+    ${s?`<div class="rrow"><span class="rk">소유</span><span class="rv2">${s.flag} ${s.name}</span></div>
+    <div class="rrow"><span class="rk">HP</span><span class="rv2" style="color:${s.own==="me"?"var(--green)":"var(--red)"}">${s.hp}%</span></div>
+    <div class="rrow"><span class="rk">전투력</span><span class="rv2" style="color:var(--gold)">⚔️${s.pow}</span></div>`:""}`;
+}
+
+// ══ SAO ══════════════════════════════════════════════
+function showSAO(i){
+  const s=G.sectors[i];const st=SEC_TYPES[i]||"neutral";const si=SEC_RES[st];
+  const scouted=G.scouted[i];const sao=document.getElementById("sao");
+  const secEl=document.getElementById(`s${i}`);
+  if(secEl){
+    const r=secEl.getBoundingClientRect();
+    let left=r.right+7,top=r.top;
+    if(left+285>window.innerWidth)left=r.left-292;
+    if(top+360>window.innerHeight)top=window.innerHeight-365;
+    if(top<60)top=60;
+    sao.style.left=left+"px";sao.style.top=top+"px";
+  }
+  document.getElementById("sao-title").textContent=`${si.icon||"🌑"} ${SNAMES[i]}`;
+  const intelKnown=scouted&&s&&s.own==="enemy";
+  document.getElementById("sao-si").innerHTML=`
+    <div class="sao-rows">
+      <div class="sao-row"><span class="sao-lbl">소유</span>
+        <span class="sao-val" style="color:${!s?"var(--muted)":s.own==="me"?"var(--green)":"var(--red)"}">
+          ${!s?t("sao_unocc"):s.own==="me"?G.nation.f+" "+t("sao_my"):s.flag+" "+s.name}</span></div>
+      <div class="sao-row"><span class="sao-lbl">${t("sao_res")}</span><span class="sao-val" style="color:${si.color||"var(--muted)"}">${si.label}</span></div>
+      <div class="sao-row"><span class="sao-lbl">${t("sao_prod")}</span><span class="sao-val" style="color:var(--green)">+${si.prod.he3} He-3</span></div>
+      ${s?`<div class="sao-row"><span class="sao-lbl">${t("sao_hp")}</span><span class="sao-val" style="color:${s.own==="me"?"var(--green)":"var(--red)"}">${s.hp}%</span></div>`:""}
+    </div>`;
+  const intel=document.getElementById("sao-intel");
+  if(intelKnown){intel.style.display="block";const cm=G.selUnit?getCM(G.selUnit.ctype,scouted.ct):{mod:1,lbl:"⚖️"};
+    intel.innerHTML=`<div class="sao-intel-t">🛩️ ${t("sao_scout_done")}</div>
+      <div style="display:flex;justify-content:space-between;font-size:.64rem;margin-bottom:2px"><span>유닛</span><span>${scouted.ue} (${scouted.ct})</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.64rem;margin-bottom:2px"><span>전투력</span><span style="color:var(--red)">⚔️${scouted.pow}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.64px"><span>상성</span><span style="color:${cm.mod>1?"var(--green)":cm.mod<1?"var(--red)":"var(--muted)"}">${cm.lbl}</span></div>`;}
+  else intel.style.display="none";
+  const acts=document.getElementById("sao-acts");acts.innerHTML="";
+  const u=G.selUnit;const moraleMod=G.morale>=70?1:G.morale>=50?.8:.6; // morale affects combat
+
+  if(!s){
+    // Empty revealed sector
+    addSAOB(acts,"deploy","🚀",t("sao_deploy"),u&&u.count>0?`${u.emoji} ${u.name} → ${SNAMES[i]}`:u?"유닛 부족":"유닛 선택 필요",u&&u.count>0?`He-3 ${u.cost?.he3||0} 소모`:"",u&&u.count>0?()=>deployUnit(i):null,!u||u.count<=0);
+    addSAOB(acts,"radar","📡",t("sao_radar_add"),"800 He-3","",()=>{closeSAO();placeRadar(i)});
+  }else if(s.own==="me"){
+    addSAOB(acts,"deploy","✅",t("sao_my_sec"),SNAMES[i],t("sao_defending"),null,true);
+    addSAOB(acts,"radar",G.radars[i]?"📡":"📡",G.radars[i]?t("sao_radar_rm"):t("sao_radar_add"),"800 He-3","",()=>{closeSAO();G.radars[i]?removeRadar(i):placeRadar(i)});
+  }else{
+    // Enemy — show attack options with morale modifier
+    const moraleNote=G.morale<50?` ⚠️사기${G.morale}%(-전투력)`:"";
+    if(!u||u.count<=0){
+      addSAOB(acts,"atk1","⚠️",t("sao_no_unit"),t("sao_no_unit_hint"),"",null,true);
+    }else{
+      const cm=getCM(u.ctype,s.ct);const adj=getAdjMine(i);
+      const crater=st==="crater"?" 🏔️+50%":"";
+      addSAOB(acts,"atk1","⚔️",t("sao_direct"),`${u.emoji} vs ${s.ue} ${s.name}${crater}${moraleNote}`,
+        `${cm.lbl} | ~${Math.round(50*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"direct")});
+      if(intelKnown){
+        addSAOB(acts,"atk2","🎯",t("sao_smart"),t("sao_scout_done")+" +20%",`~${Math.round(60*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"smart")});
+      }else{
+        addSAOB(acts,"scout","🛩️",t("sao_scout"),t("sao_sc_count",{v:G.scoutCount}),t("sao_sc_bonus"),G.scoutCount>0?()=>{closeSAO();executeScout(i)}:null,G.scoutCount<=0);
+      }
+      if(adj.length>=2){
+        addSAOB(acts,"atk3","🔄",t("sao_surround"),t("sao_surr_hint",{v:adj.length}),`+${adj.length*15}% | ~${Math.round(65*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"surround")});
+      }
+    }
+  }
+  sao.classList.add("show");
+}
+function addSAOB(con,cls,icon,name,desc,bonus,onClick,disabled=false){
+  const btn=document.createElement("button");btn.className=`saob ${cls}`;btn.disabled=disabled;
+  btn.innerHTML=`<span class="saob-icon">${icon}</span><div class="saob-info"><div class="saob-name">${name}</div><div class="saob-desc">${desc}</div>${bonus?`<div class="saob-bonus" style="color:${cls.startsWith("atk")?"var(--gold)":"var(--accent)"}">${bonus}</div>`:""}</div>`;
+  if(onClick&&!disabled)btn.onclick=()=>{sfx("click");onClick()};
+  con.appendChild(btn);
+}
+function closeSAO(){document.getElementById("sao").classList.remove("show")}
+
+// ══ FORMATION MODAL ══════════════════════════════════
+function openFM(secIdx,mode){
+  sfx("click");G.fmSec=secIdx;G.fmMode=mode;G.fmQty={};
+  const s=G.sectors[secIdx];
+  document.getElementById("fm-enemy").innerHTML=`
+    <img class="fm-eimg" src="${s.ui||""}" alt="" onerror="this.style.display='none'"/>
+    <div>
+      <div style="font-weight:700;font-size:.8rem">${s.flag} ${s.name}</div>
+      <div style="font-size:.7rem;color:var(--red)">⚔️${s.pow} | HP ${s.hp}%</div>
+      <div style="font-size:.62rem;color:var(--muted);margin-top:2px">${SNAMES[secIdx]} | ${SEC_RES[SEC_TYPES[secIdx]||"neutral"].label}</div>
+      ${G.morale<50?`<div style="font-size:.6rem;color:var(--orange);margin-top:1px">⚠️ 사기 낮음 — 전투력 감소</div>`:""}
+    </div>`;
+  renderFMUnits();updateFMSummary();
+  document.getElementById("fmodal").classList.add("show");
+}
+function closeFM(){document.getElementById("fmodal").classList.remove("show")}
+function renderFMUnits(){
+  const avail=ALL.filter(u=>u.count>0);
+  const s=G.sectors[G.fmSec];const ct=s?s.ct:"destroyer";
+  document.getElementById("fm-units").innerHTML=avail.length?avail.map(u=>{
+    const qty=G.fmQty[u.id]||0;const cm=getCM(u.ctype,ct);
+    const rc=u.rarity==="UR"?"r-ur":u.rarity==="SR"?"r-sr":"r-r";
+    const cc=cm.mod>1?"var(--green)":cm.mod<1?"var(--red)":"var(--muted)";
+    return`<div class="fm-urow">
+      <img class="fm-uimg" src="${u.img}" alt="" onerror="this.style.display='none'"/>
+      <div class="fm-ui">
+        <div class="fm-un">${u.emoji} ${u.name} <span class="rbadge ${rc}" style="position:relative;top:0;right:0">${u.rarity}</span></div>
+        <div class="fm-up">⚔️${u.pow} | ⚡${u.cost?.he3||0}/기</div>
+        <div class="fm-uc" style="color:${cc}">${cm.lbl}</div>
+      </div>
+      <div class="fm-qty">
+        <button class="fm-qbtn" onclick="fmQty('${u.id}',-1)">−</button>
+        <span class="fm-qv">${qty}</span>
+        <button class="fm-qbtn" onclick="fmQty('${u.id}',1)">+</button>
+        <span style="font-size:.56rem;color:var(--muted)">/${u.count}</span>
+      </div>
+    </div>`}).join(""):`<div style="color:var(--muted);text-align:center;padding:10px;font-size:.74rem">${t("fm_no_avail").replace("\\n","<br>")}</div>`;
+}
+function fmQty(id,d){
+  const u=ALL.find(x=>x.id===id);if(!u)return;
+  const cur=G.fmQty[id]||0;const nv=Math.max(0,Math.min(u.count,cur+d));
+  if(nv===0)delete G.fmQty[id];else G.fmQty[id]=nv;
+  sfx("click");renderFMUnits();updateFMSummary();
+}
+function updateFMSummary(){
+  const s=G.sectors[G.fmSec];if(!s)return;
+  const ct=s.ct,sPow=s.pow;let tp=0,tc=0,entries=[];
+  for(const[id,qty] of Object.entries(G.fmQty)){
+    const u=ALL.find(x=>x.id===id);if(!u||qty<=0)continue;
+    const cm=getCM(u.ctype,ct);const mp=~~(u.pow*cm.mod*qty);
+    tp+=mp;tc+=(u.cost?.he3||0)*qty;entries.push(`${u.emoji}×${qty}`);
+  }
+  const adj=getAdjMine(G.fmSec);let modPow=tp;
+  if(G.fmMode==="smart")modPow=~~(modPow*1.2);
+  if(G.fmMode==="surround")modPow=~~(modPow*(1+adj.length*.15));
+  // Morale modifier
+  const mor=G.morale>=70?1:G.morale>=50?.8:.6;
+  modPow=~~(modPow*mor);
+  const defMult=SEC_TYPES[G.fmSec]==="crater"?1.5:1;
+  const defPow=~~(sPow*defMult);
+  const wp=tp>0?Math.min(99,~~(modPow/(modPow+defPow)*100)):0;
+  const wc=wp>=65?"var(--green)":wp>=45?"var(--gold)":"var(--red)";
+  const ml=G.fmMode==="smart"?t("fm_smart"):G.fmMode==="surround"?t("fm_surr",{v:adj.length*15}):t("fm_direct");
+  document.getElementById("fm-sum").innerHTML=`
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_form")}</span><span style="font-size:.66rem">${entries.join(" ")||"없음"}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_total")}</span><span style="color:var(--gold)">⚔️${modPow}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_cost")}</span><span style="color:var(--orange)">⚡${tc}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_def")}</span><span style="color:var(--red)">⚔️${defPow}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_strat")}</span><span>${ml}</span></div>
+    ${G.morale<70?`<div class="fm-srow"><span style="color:var(--orange)">${t("fm_morale_pen")}</span><span style="color:var(--orange)">×${mor.toFixed(1)}</span></div>`:""}
+    <div class="fm-wr" style="color:${wc}">예상 승률: ${wp}%</div>`;
+  const btn=document.getElementById("fm-go");
+  btn.disabled=tc>G.he3||tp===0;
+  btn.textContent=tc>G.he3?t("fm_no_he3"):tp===0?t("fm_no_unit"):t("fm_launch");
+}
+function launchFM(){
+  const s=G.sectors[G.fmSec];if(!s||s.own==="enemy"===false)return;
+  let tp=0,tc=0,repUnit=null;
+  const ct=s.ct;
+  for(const[id,qty] of Object.entries(G.fmQty)){
+    const u=ALL.find(x=>x.id===id);if(!u||qty<=0)continue;
+    const cm=getCM(u.ctype,ct);tp+=~~(u.pow*cm.mod*qty);tc+=(u.cost?.he3||0)*qty;if(!repUnit)repUnit=u;
+    u.count=Math.max(0,u.count-qty);
+  }
+  if(!repUnit||tp===0||tc>G.he3){closeFM();return}
+  G.he3-=tc;G.fmQty={};
+  const adj=getAdjMine(G.fmSec);
+  if(G.fmMode==="smart")tp=~~(tp*1.2);
+  if(G.fmMode==="surround")tp=~~(tp*(1+adj.length*.15));
+  const mor=G.morale>=70?1:G.morale>=50?.8:.6;tp=~~(tp*mor);
+  const attPow=tp+~~(Math.random()*60);
+  const defMult=SEC_TYPES[G.fmSec]==="crater"?1.5:1;
+  const defPow=~~(s.pow*defMult)+~~(Math.random()*60);
+  const won=Math.random()<attPow/(attPow+defPow);
+  closeFM();renderUnits();showSelBig();updateResUI();
+  sfx("attack");
+  const ml=G.fmMode==="smart"?"정밀 타격":G.fmMode==="surround"?"포위 공격":"정면 돌격";
+  const mc=G.fmMode==="smart"?"#ffd700":G.fmMode==="surround"?"#aa44ff":"var(--red)";
+  document.getElementById("btag-el").innerHTML=`<span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:.66rem;font-weight:700;background:${mc}22;border:1px solid ${mc};color:${mc};margin-bottom:9px">${ml}</span>`;
+  const $=id=>document.getElementById(id);
+  $("b-af").textContent=G.nation.f;$("b-ai").src=repUnit.img;$("b-an").textContent=G.nation.n+" "+t("bm_fleet");$("b-ap").textContent="PWR: "+attPow;$("b-am").innerHTML=`<span style="color:var(--orange)">⚡-${tc}</span>`;
+  $("b-df").textContent=s.flag;$("b-di").src=s.ui||"";$("b-dn").textContent=s.name;$("b-dp").textContent="PWR: "+defPow;$("b-dm").innerHTML=defMult>1?'<span style="color:var(--orange)">🏔️+50%</span>':"";
+  [$("b-abar"),$("b-dbar")].forEach(el=>{if(el)el.style.width="100%"});
+  [$("b-ahp"),$("b-dhp")].forEach(el=>{if(el)el.textContent="100%"});
+  $("bresult").style.display="none";$("bclose").style.display="none";$("prisoner-box").classList.remove("show");
+  $("b-al").textContent=G.nation.n;$("b-dl").textContent=s.name;
+  $("bmodal").classList.add("show");
+  let ah=100,dh=100,step=0;
+  const iv=setInterval(()=>{
+    step++;sfx("btick");
+    if(won){dh=Math.max(0,dh-~~(Math.random()*22+8));ah=Math.max(25,ah-~~(Math.random()*7));}
+    else{ah=Math.max(0,ah-~~(Math.random()*22+10));dh=Math.max(30,dh-~~(Math.random()*6));}
+    if($("b-abar"))$("b-abar").style.width=ah+"%";if($("b-dbar"))$("b-dbar").style.width=dh+"%";
+    if($("b-ahp"))$("b-ahp").textContent=ah+"%";if($("b-dhp"))$("b-dhp").textContent=dh+"%";
+    if(step>=5){clearInterval(iv);showBR(won,G.fmSec,s,repUnit,tc);}
+  },500);
+}
+function showBR(won,i,s,u,cost){
+  sfx(won?"win":"lose");const r=document.getElementById("bresult");const sn=SNAMES[i];
+  if(won){
+    const pl=~~(SEC_RES[SEC_TYPES[i]||"neutral"].prod.he3*.35)||55;G.he3+=pl;
+    r.className="result win";r.innerHTML=t("res_win",{flag:G.nation.f,sec:sn,he:pl}).replace("\n","<br>");
+    G.sectors[i]={own:"me",flag:G.nation.f,name:G.nation.n,hp:85,ui:u.img,ue:u.emoji,ct:u.ctype,pow:u.pow};
+    delete G.scouted[i];G.wins++;
+    G.unitWins[u.id]=(G.unitWins[u.id]||0)+1;const wins=G.unitWins[u.id];
+    const nick=getNick(wins);
+    if(nick&&!G.unitNick[u.id]){G.unitNick[u.id]=nick;sfx("nick");showNickPop(`${u.name}: "${nick}" (${wins}승)`);}
+    // UNLOCK adjacent fog
+    unlockAdjacent(i);
+    if(Math.random()<.3){document.getElementById("prisoner-info").textContent=s.flag+" "+s.name+" "+t("prisoner");document.getElementById("prisoner-box").classList.add("show");}
+    // Morale boost on win
+    G.morale=Math.min(100,G.morale+8);
+    updateResUI();updateMoraleUI();
+    log("win",`[점령] ${G.nation.f} ${sn} +He-3${pl}`);
+  }else{
+    r.className="result lose";r.innerHTML=t("res_lose",{flag:s.flag,name:s.name}).replace("\n","<br>");
+    // Morale hit on loss
+    G.morale=Math.max(0,G.morale-12);updateMoraleUI();
+    log("lose",`[패배] ${s.flag} ${s.name}`);
+  }
+  r.style.display="block";document.getElementById("bclose").style.display="inline-block";
+  buildGrid();updateResUI();
+}
+function closeBattle(){document.getElementById("bmodal").classList.remove("show");if(G.currentView===0)updateShipView()}
+
+// ══ MORALE SYSTEM ════════════════════════════════════
+function updateMoraleUI(){
+  const m=G.morale;const fill=document.getElementById("morale-fill");const val=document.getElementById("morale-val");
+  const col=m>=70?"var(--green)":m>=50?"var(--gold)":m>=30?"var(--orange)":"var(--red)";
+  fill.style.width=m+"%";fill.style.background=col;val.textContent=m+"%";val.style.color=col;
+  const statusEl=document.getElementById("morale-status-text");
+  const warnEl=document.getElementById("morale-warning-text");
+  if(m>=70){statusEl.textContent=t("morale_ok",{v:m});if(warnEl)warnEl.textContent="";}
+  else if(m>=50){statusEl.textContent=t("morale_mid",{v:m});if(warnEl)warnEl.textContent="";}
+  else if(m>=30){statusEl.textContent=t("morale_low",{v:m});if(warnEl)warnEl.textContent=t("morale_warn_low");}
+  else{statusEl.textContent=t("morale_crit",{v:m});if(warnEl)warnEl.textContent=t("morale_warn_crit");}
+}
+let moraleInterval=null;
+let nextBonusSec=3600; // seconds to next bonus
+function startMoraleTimer(){
+  if(moraleInterval)clearInterval(moraleInterval);
+  moraleInterval=setInterval(()=>{
+    nextBonusSec=Math.max(0,nextBonusSec-1);
+    const min=~~(nextBonusSec/60),sec=nextBonusSec%60;
+    const timerEl=document.getElementById("next-bonus-timer");
+    if(timerEl)timerEl.textContent=t("timer_fmt",{m:String(min).padStart(2,"0"),s:String(sec).padStart(2,"0")});
+    if(nextBonusSec===0){nextBonusSec=3600;showBonusModal();}
+    // Morale ticks down — every 60 real seconds -1 morale (simulating hourly -5%)
+    // For demo: every 2 minutes -1 (scaled)
+    if(Date.now()-G._lastMoraleTick>120000){
+      G._lastMoraleTick=Date.now();
+      if(G.morale>0){G.morale=Math.max(0,G.morale-1);updateMoraleUI();}
+      if(G.morale<=30&&G.morale%10===0){
+        sfx("morale_warn");
+        const w=document.getElementById("morale-warn");
+        w.textContent=t("morale_crit",{v:G.morale})+" "+t("morale_warn_crit");
+        w.classList.add("show");setTimeout(()=>w.classList.remove("show"),4000);
+      }
+    }
+  },1000);
+  G._lastMoraleTick=Date.now();
+}
+
+// ══ HOURLY BONUS ═════════════════════════════════════
+function startBonusTimer(){
+  // Simulate: first bonus in 10 seconds for demo, then every hour
+  nextBonusSec=3600;
+}
+function checkLoginBonus(){
+  // First time bonus + streak
+  const streak=G.loginStreak;
+  setTimeout(()=>{
+    showBonusModal(true,streak);
+  },1500);
+}
+function showBonusModal(isLogin=false,streak=1){
+  sfx("bonus");
+  const bonuses=[];
+  const heBonus=300+streak*50;const regBonus=15+streak*5;const moraleBonus=20;
+  bonuses.push({icon:"⚡",label:"He-3",val:"+"+heBonus});
+  bonuses.push({icon:"💎",label:"레골리스",val:"+"+regBonus});
+  bonuses.push({icon:"😤",label:"사기",val:"+"+moraleBonus+"%"});
+  if(streak>=3)bonuses.push({icon:"🔥",label:t("bonus_streak",{v:streak}),val:"×1.5"});
+  if(streak>=7)bonuses.push({icon:"⭐",label:t("bonus_weekly"),val:"🪙 +500"});
+  document.getElementById("bonus-title").textContent=isLogin?t("bonus_title",{v:streak}):t("bonus_hourly");
+  document.getElementById("bonus-items").innerHTML=bonuses.map(b=>`
+    <div class="bonus-item"><span>${b.icon} ${b.label}</span><span class="bonus-val">${b.val}</span></div>`).join("");
+  G._pendingBonus={he:heBonus,reg:regBonus,morale:moraleBonus,streak,coins:streak>=7?500:0};
+  document.getElementById("bonus-modal").classList.add("show");
+}
+function claimBonus(){
+  sfx("collect");const b=G._pendingBonus||{he:300,reg:15,morale:20,coins:0};
+  G.he3+=b.he;G.reg+=b.reg;G.morale=Math.min(100,G.morale+b.morale);G.coins+=b.coins||0;
+  G._pendingBonus=null;
+  document.getElementById("bonus-modal").classList.remove("show");
+  updateResUI();updateMoraleUI();
+  reward("🎁","보너스 수령!",`⚡+${b.he} 💎+${b.reg} 😤+${b.morale}%`);
+  log("info",`[보너스] ⚡+${b.he} 💎+${b.reg} 😤+${b.morale}%`);
+}
+
+// ══ DEPLOY / SCOUT / RADAR ═══════════════════════════
+function deployUnit(i){
+  const u=G.selUnit;if(!u||u.count<=0){reward("⚠️","유닛 없음","");return}
+  if(G.he3<(u.cost?.he3||0)){reward("⚠️","He-3 부족","");return}
+  sfx("deploy");G.he3-=(u.cost?.he3||0);
+  G.sectors[i]={own:"me",flag:G.nation.f,name:G.nation.n,hp:100,ui:u.img,ue:u.emoji,ct:u.ctype,pow:u.pow};
+  u.count--;renderUnits();showSelBig();unlockAdjacent(i);updateResUI();
+  reward("🚀","배치 완료!",`${u.emoji} ${u.name} → ${SNAMES[i]}`);
+  log("win","["+t("log_deploy")+"] "+u.emoji+" "+u.name+" → "+SNAMES[i]);
+  if(G.currentView===0)updateShipView();
+}
+function buyScout(){sfx("scout");if(G.he3<500){reward("⚠️","He-3 부족","");return}G.he3-=500;G.scoutCount++;updateResUI();reward("🛩️","정찰기 획득!",`보유: ${G.scoutCount}기`);log("info","[구매] 🛩️ +1")}
+function executeScout(i){
+  sfx("scout");if(G.scoutCount<=0){reward("⚠️","정찰기 없음","");return}
+  const s=G.sectors[i];if(!s||s.own!=="enemy")return;
+  G.scoutCount--;
+  if(G.radars[i]){reward("📡","격추됨!",s.flag+" "+s.name);log("lose","["+t("log_scout")+"] ❌ 📡");updateResUI();return}
+  G.scouted[i]={ue:s.ue,ct:s.ct,pow:s.pow,hp:s.hp};
+  buildGrid();updateResUI();reward("🛩️","정찰 성공!",s.flag+" "+s.name+" ⚔️"+s.pow);
+  log("info",`[정찰] ✅ ${s.flag} ${s.name}`);setTimeout(()=>showSAO(i),1400);
+}
+function buyRadar(){sfx("radar");if(G.selSec==null){reward("⚠️","섹터 선택 필요","");return}placeRadar(G.selSec)}
+function placeRadar(i){if(G.he3<800){reward("⚠️","He-3 부족","");return}G.he3-=800;G.radars[i]=true;buildGrid();updateResUI();reward("📡","레이더 설치!",SNAMES[i]);log("info","[레이더] 📡 "+SNAMES[i])}
+function removeRadar(i){sfx("click");delete G.radars[i];buildGrid();updateResUI()}
+
+// ══ COLLECT / BUY / TURN ═════════════════════════════
+function collect(){
+  sfx("collect");const owned=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="me");if(!owned.length)return;
+  let he=0,reg=0,h2o=0;owned.forEach(k=>{const p=SEC_RES[SEC_TYPES[k]||"neutral"].prod;he+=p.he3;reg+=p.reg;h2o+=p.h2o;});
+  he=~~(he*G.prodMod);reg=~~(reg*G.prodMod);h2o=~~(h2o*G.prodMod);
+  G.he3+=he;G.reg+=reg;G.h2o+=h2o;updateResUI();
+  log("win","["+t("log_collect")+"] ⚡+"+he+" 💎+"+reg+" 🌊+"+h2o);
+}
+function buyUnit(){sfx("click");if(G.coins<500){reward("⚠️","코인 부족","");return}G.coins-=500;const pool=[...SHIPS.slice(0,3),...MECHS.slice(0,3),...ACES];const u=pool[~~(Math.random()*pool.length)];u.count++;renderUnits();showSelBig();updateResUI();reward("🎁","유닛 획득!",`${u.emoji} ${u.name}`);log("win",`[구매] ${u.emoji} ${u.name}`)}
+function endTurn(){
+  sfx("click");G.turn++;document.getElementById("turn-num").textContent=G.turn;collect();
+  if(G.h2o<50){log("lose","⚠️ H₂O");Object.values(G.sectors).filter(s=>s.own==="me").forEach(s=>s.hp=Math.max(10,s.hp-5));}
+  G.eventMod=0;if(G.energyBuff>1)G.energyBuff=1;if(G.prodMod!==1&&!G.peaceTurns)G.prodMod=1;if(G.peaceTurns>0)G.peaceTurns--;
+  // Morale small tick
+  if(!G._lastMoraleTick||Date.now()-G._lastMoraleTick<60000){/* skip */}
+  if(G.turn%5===0){const ev=EVENTS[~~(Math.random()*EVENTS.length)];ev.apply(G);sfx("event");
+    document.getElementById("ev-icon").textContent=ev.icon;document.getElementById("ev-title").textContent=ev.title;
+    document.getElementById("ev-desc").textContent=ev.desc;document.getElementById("ev-effect").textContent=ev.effect;
+    document.getElementById("emodal").classList.add("show");log("sys","["+t("log_event")+"] "+ev.icon+" "+ev.title);}
+  updateResUI();updateMoraleUI();buildGrid();log("sys","["+t("turn_lbl")+" "+G.turn+"]");
+}
+function closeEvent(){document.getElementById("emodal").classList.remove("show");const tk=document.getElementById("ev-ticker");document.getElementById("ev-ticker-text").textContent=document.getElementById("ev-title").textContent;tk.classList.add("show");setTimeout(()=>tk.classList.remove("show"),4000)}
+
+// ══ ACTIVE AI ════════════════════════════════════════
+let aiTimer=null;
+const AI_NAT=[{f:"🇷🇺",n:"러시아"},{f:"🇺🇸",n:"미국"},{f:"🇨🇳",n:"중국"},
+  {f:"🇯🇵",n:"일본"},{f:"🇩🇪",n:"독일"},{f:"🇫🇷",n:"프랑스"},{f:"🇮🇳",n:"인도"},
+  {f:"🇬🇧",n:"영국"},{f:"🇮🇱",n:"이스라엘"},{f:"🇦🇺",n:"호주"},{f:"🇧🇷",n:"브라질"}];
+function startAI(){if(aiTimer)clearInterval(aiTimer);setTimeout(aiTick,9000);aiTimer=setInterval(aiTick,18000)}
+function aiTick(){
+  if(!G.nation)return;G.aiTurn++;const r=Math.random();
+  const eTier=Math.min(3,~~(G.aiTurn/3)); // enemies get stronger over time
+  if(r<0.38){
+    // Expand to empty revealed OR unrevealed sector adjacent to existing enemy
+    const candidates=[];
+    for(let i=0;i<49;i++){
+      if(G.sectors[i])continue;
+      const hasEnemyAdj=getAdj49(i).some(j=>G.sectors[j]?.own==="enemy");
+      const hasRevealedEmpty=G.revealed.has(i)&&!G.sectors[i];
+      if(hasEnemyAdj||Math.random()<0.08)candidates.push(i);
+    }
+    if(candidates.length){
+      const idx=candidates[~~(Math.random()*candidates.length)];
+      const n=AI_NAT[~~(Math.random()*AI_NAT.length)];const eu=EU[~~(Math.random()*EU.length)];
+      G.sectors[idx]={own:"enemy",flag:n.f,name:n.n,hp:55+eTier*10,
+        ui:eu.img,ue:eu.emoji,ct:eu.ct,pow:eu.basePow+eTier*70+~~(Math.random()*60)};
+      // If revealed, show it
+      if(G.revealed.has(idx)){buildGrid();sfx("emove");log("sys",`[경보] ${n.f} ${n.n} → ${SNAMES[idx]}`)}
+    }
+  }else if(r<0.62){
+    // Attack player sector
+    const mine=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="me");
+    const enm=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="enemy");
+    if(mine.length&&enm.length){
+      const tk=mine[~~(Math.random()*mine.length)];const ak=enm[~~(Math.random()*enm.length)];
+      const ms=G.sectors[tk];const es=G.sectors[ak];if(!ms||!es)return;
+      if(G.radars[tk]){log("info",`[레이더] 📡 ${SNAMES[tk]} 방어!`);sfx("radar");return}
+      const ap=es.pow+~~(Math.random()*60);const dp=~~(ms.pow*(1+(G.morale/100)*.5))+~~(Math.random()*40);
+      sfx("emove");
+      if(Math.random()<ap/(ap+dp)){
+        ms.own="enemy";ms.flag=es.flag;ms.name=es.name;ms.ui=es.ui;ms.ue=es.ue;ms.ct=es.ct;ms.pow=es.pow;ms.hp=70;
+        sfx("lose");G.morale=Math.max(0,G.morale-15);updateMoraleUI();
+        const w=document.getElementById("ai-warn");
+        w.textContent=t("ai_fall",{sec:SNAMES[tk],flag:es.flag,name:es.name});
+        w.classList.add("show");setTimeout(()=>w.classList.remove("show"),4000);
+        buildGrid();updateResUI();log("lose",`[함락] ⚠️ ${SNAMES[tk]} — ${es.flag}`);
+      }else{ms.hp=Math.max(20,ms.hp-18);buildGrid();log("sys",`[방어] 🛡️ ${SNAMES[tk]}`)}
+    }
+  }else if(r<0.78){
+    // Enemy HP regen
+    const enm=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="enemy");
+    if(enm.length){const k=enm[~~(Math.random()*enm.length)];const s=G.sectors[k];if(s&&s.hp<100){s.hp=Math.min(100,s.hp+12);}}
+  }
+}
+
+// ══ UI HELPERS ═══════════════════════════════════════
+function switchView(v){sfx("click");G.currentView=v;document.querySelectorAll(".view").forEach((el,i)=>el.classList.toggle("active",i===v));document.querySelectorAll(".vtbtn").forEach((el,i)=>el.classList.toggle("active",i===v));closeSAO();if(v===0)updateShipView();}
+function updateHUD(){
+  if(!G.nation||!G.commander)return;
+  document.getElementById("hud-av").textContent=G.commander.av;document.getElementById("hud-cn").textContent=G.commander.name;document.getElementById("hflag").textContent=G.nation.f;
+  document.getElementById("lp-av").textContent=G.commander.av;document.getElementById("lp-name").textContent=G.commander.name;document.getElementById("lp-title").textContent=G.commander.title;
+  const sb=document.getElementById("streak-badge");if(sb&&G.loginStreak>1){sb.style.display="inline";sb.textContent=`🔥 ${G.loginStreak}일`;}
+}
+function updateResUI(){
+  const owned=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="me");
+  let he=0,reg=0,h2o=0;owned.forEach(k=>{const p=SEC_RES[SEC_TYPES[k]||"neutral"].prod;he+=p.he3;reg+=p.reg;h2o+=p.h2o;});
+  he=~~(he*G.prodMod);reg=~~(reg*G.prodMod);h2o=~~(h2o*G.prodMod);
+  document.getElementById("res-he3").textContent=G.he3.toLocaleString();document.getElementById("res-reg").textContent=G.reg;document.getElementById("res-h2o").textContent=G.h2o;
+  document.getElementById("rc").textContent=G.coins.toLocaleString();document.getElementById("rs").textContent=owned.length;document.getElementById("rw").textContent=G.wins;
+  document.getElementById("sc-cnt").textContent=G.scoutCount;document.getElementById("sc-owned").textContent=G.scoutCount;document.getElementById("rad-placed").textContent=Object.keys(G.radars).length;
+  document.getElementById("rate-he3").textContent=`+${he}/턴`;document.getElementById("rate-reg").textContent=`+${reg}/턴`;document.getElementById("rate-h2o").textContent=`+${h2o}/턴`;
+}
+function updateShipView(){
+  if(!G.nation||!G.commander)return;const u=G.selUnit||SHIPS[0];const nc=G.commander.g==="female"?"#f9a":"#5af";
+  document.getElementById("cmd-disp").innerHTML=`
+    <div class="cmd-port"><span class="cmd-emo" style="color:${nc}">${G.commander.av}</span>
+      <div style="font-size:.8rem;font-weight:700;color:${nc};margin-bottom:2px">${G.commander.name}</div>
+      <div style="font-size:.62rem;color:var(--gold);font-style:italic">${G.commander.title}</div></div>
+    <div class="cmd-ship-area">
+      <img class="cmd-ship-img" src="${u.img}" alt="${u.name}" onerror="this.textContent='${u.emoji}';this.style.fontSize='5rem';this.style.display='block'"/>
+      <div style="font-size:.76rem;font-weight:700;color:var(--accent);margin-top:6px">${u.emoji} ${u.name}</div>
+      <div class="sv-stats">
+        <div class="sv-stat"><div class="sv-stat-v">⚔️${u.pow}</div><div class="sv-stat-l">전투력</div></div>
+        <div class="sv-stat"><div class="sv-stat-v">${Object.values(G.sectors).filter(s=>s.own==="me").length}</div><div class="sv-stat-l">점령 섹터</div></div>
+        <div class="sv-stat"><div class="sv-stat-v">${G.wins}</div><div class="sv-stat-l">승리</div></div>
+        <div class="sv-stat"><div class="sv-stat-v" style="color:${G.morale>=70?"var(--green)":G.morale>=50?"var(--gold)":"var(--red)"}">${G.morale}%</div><div class="sv-stat-l">사기</div></div>
+      </div>
+    </div>`;
+}
+function switchTab(t,el){sfx("click");G.tab=t;document.querySelectorAll(".utab").forEach(u=>u.classList.remove("active"));if(el)el.classList.add("active");renderUnits()}
+function getList(){return G.tab==="fleet"?SHIPS:G.tab==="mech"?MECHS:ACES}
+function renderUnits(){
+  document.getElementById("ulist").innerHTML=getList().map(u=>{
+    const wins=G.unitWins[u.id]||0;const nick=G.unitNick[u.id];
+    const rc=u.rarity==="UR"?"rarity-ur":u.rarity==="SR"?"rarity-sr":"";
+    const rb=u.rarity==="UR"?"r-ur":u.rarity==="SR"?"r-sr":u.rarity==="R"?"r-r":"r-n";
+    const tb=G.tab==="fleet"?"tb-f":G.tab==="ace"?"tb-a":"tb-m";
+    return`<div class="ucard ${rc} ${G.selUnit?.id===u.id?"sel":""}" onclick="selUnit('${u.id}')">
+      <span class="rbadge ${rb}">${u.rarity}</span>
+      <img class="ucard-img ${G.tab!=="fleet"?"mech-i":""}" src="${u.img}" alt="${u.name}" onerror="this.style.display='none'"/>
+      <div class="ucard-body">
+        <div class="ucard-hdr"><span class="ucard-name">${u.emoji} ${u.name}</span><span class="ucard-cnt">×${u.count}</span></div>
+        <div class="ucard-stats"><span class="ucard-pow">⚔️${u.pow}</span><span class="tb ${tb}">${G.tab==="fleet"?"함선":G.tab==="ace"?"에이스":"메카"}</span></div>
+        ${wins>=3?`<div style="font-size:.54rem;color:var(--gold)">🏆${wins}${nick?` "${nick}"`:""}</div>`:""}
+        ${u.skills?`<div class="ucard-skills">⚡${u.skills.join("·")}</div>`:""}
+      </div></div>`;
+  }).join("");
+}
+function selUnit(id){const found=ALL.find(x=>x.id===id);G.selUnit=found;sfx("click");renderUnits();showSelBig();if(G.currentView===0)updateShipView()}
+function showSelBig(){
+  const el=document.getElementById("sel-big-content");if(!G.selUnit){el.innerHTML=`<div style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0">클릭하여 선택</div>`;return}
+  const u=G.selUnit;const wins=G.unitWins[u.id]||0;const nick=G.unitNick[u.id];
+  const rb=u.rarity==="UR"?"r-ur":u.rarity==="SR"?"r-sr":"r-r";
+  el.innerHTML=`
+    <img class="sel-big-img" src="${u.img}" alt="${u.name}" onerror="this.style.display='none'"/>
+    <div class="sel-big-name"><span class="rbadge ${rb}" style="position:relative;top:0;right:0">${u.rarity}</span> ${u.emoji} ${u.name}</div>
+    <div class="sel-big-pow">⚔️ ${u.pow}</div>
+    <div class="sbr"><span class="sbk">보유</span><span class="sbv">×${u.count}</span></div>
+    <div class="sbr"><span class="sbk">승리</span><span class="sbv">🏆${wins}</span></div>
+    ${nick?`<div class="sbr"><span class="sbk">별명</span><span class="sbv" style="color:var(--gold)">"${nick}"</span></div>`:""}
+    <div class="sel-big-cnt"><div class="ch-s">✅ ${u.strong||"—"}</div><div class="ch-w">❌ ${u.weak||"—"}</div></div>
+    ${u.skills?`<div style="margin-top:4px">${u.skills.map(s=>`<span class="skill-chip">${s}</span>`).join("")}</div>`:""}`;
+}
+let rpT=null;
+function reward(icon,title,desc){clearTimeout(rpT);const p=document.getElementById("rpopup");document.getElementById("rp-icon").textContent=icon;document.getElementById("rp-title").textContent=title;document.getElementById("rp-desc").textContent=desc;const c=icon==="⚠️"?"var(--red)":"var(--accent)";p.style.border=`2px solid ${c}`;p.style.boxShadow=`0 0 36px ${c}44`;p.classList.add("show");rpT=setTimeout(()=>p.classList.remove("show"),2400)}
+function showNickPop(t){const p=document.getElementById("nickpop")||document.createElement("div");p.id="nickpop";p.style.cssText="position:fixed;bottom:20px;right:12px;z-index:800;background:var(--panel);border:2px solid var(--gold);border-radius:10px;padding:8px 12px;font-size:.72rem;box-shadow:0 0 26px rgba(255,215,0,.3)";p.innerHTML=`<div style="color:var(--gold);font-weight:700;margin-bottom:2px">🏆 별명 획득!</div><div>${t}</div>`;document.body.appendChild(p);sfx("nick");setTimeout(()=>p.remove(),4000)}
+function log(type,msg){
+  const now=new Date();const ts=`${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+  G.logs.unshift({type,msg,ts});if(G.logs.length>30)G.logs.pop();
+  const cl={win:"color:var(--green)",lose:"color:var(--red)",sys:"color:var(--accent)",info:"color:var(--gold)"}[type]||"color:var(--muted)";
+  const bl=document.getElementById("blog");if(bl)bl.innerHTML=G.logs.slice(0,14).map(l=>`<div class="log-item" style="${cl}"><span class="ts">[${l.ts}]</span>${l.msg.substring(0,52)}</div>`).join("");
+  const ml=document.getElementById("minilog");if(ml)ml.innerHTML=G.logs.slice(0,4).map(l=>`<div style="padding:1px 0;border-bottom:1px solid var(--border);font-size:.6rem;${cl}">${l.msg.substring(0,30)}</div>`).join("");
+}
+
+// ════ SLIDESHOW SYSTEM ════
+
+
+// ════════ SLIDESHOW (safe, no click blocking) ════════
+const BG_SLIDES = ['assets/slide1.jpg', 'assets/slide2.jpg', 'assets/slide3.jpg', 'assets/slide4.jpg', 'assets/slide5.jpg', 'assets/slide6.jpg', 'assets/slide7.jpg', 'assets/slide8.jpg', 'assets/slide9.jpg', 'assets/slide10.jpg', 'assets/slide11.jpg'];
+const BG_COUNT = BG_SLIDES.length;
+let bgCur = 0, bgTimer = null;
+
+function bgGoSlide(n) {
+  bgCur = ((n % BG_COUNT) + BG_COUNT) % BG_COUNT;
+  document.querySelectorAll('.bg-slide').forEach((el,i) => el.classList.toggle('on', i===bgCur));
+  document.querySelectorAll('.bg-dot').forEach((el,i) => el.classList.toggle('on', i===bgCur));
+  // game overlay darker
+}
+function bgNext() { bgGoSlide(bgCur + 1); }
+function bgStart(spd) { clearInterval(bgTimer); bgTimer = setInterval(bgNext, spd||4000); }
+function updateSlideshowForScreen(id) {
+  const dots = document.getElementById('bg-dots');
+  const ov = document.getElementById('bg-overlay');
+  if (dots) dots.style.display = id === 's-intro' ? 'flex' : 'none';
+  if (!ov) return;
+  // 게임화면만 어둡게, 나머지는 동일한 밝기
+  if (id === 's-game') {
+    ov.style.background = 'rgba(3,5,14,.82)';
+  } else {
+    ov.style.background = 'linear-gradient(to bottom,rgba(3,5,14,.4) 0%,rgba(3,5,14,.1) 40%,rgba(3,5,14,.6) 100%)';
+  }
+  // 슬라이드 속도만 조절 (멈추지 않음)
+  if (id === 's-intro') bgStart(4000);
+  else if (id === 's-game') bgStart(8000);
+  else bgStart(6000);
+}
+// Swipe
+let _t0 = 0;
+document.addEventListener('touchstart', e => { _t0 = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - _t0;
+  if (Math.abs(dx) > 50) bgGoSlide(bgCur + (dx < 0 ? 1 : -1));
+}, {passive:true});
+// Init
+bgStart(4000);
+updateSlideshowForScreen('s-intro');
+
+// ════ INTRO CLICK LAYER - Kaikas proof ════
+(function() {
+  function setupClickLayer() {
+    var layer = document.getElementById('intro-click-layer');
+    if (!layer) return;
+    
+    // 모든 이벤트를 여기서 처리
+    function handleIntroClick(e) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      // 가이드 링크 영역 제외 (하단 10%)
+      var rect = layer.getBoundingClientRect();
+      var y = (e.clientY || (e.touches && e.touches[0].clientY) || 0);
+      if (y > rect.bottom - rect.height * 0.08) {
+        window.open('how_to_play.html', '_blank');
+        return;
+      }
+      goNation();
+    }
+    
+    layer.addEventListener('click', handleIntroClick, {capture:true, passive:false});
+    layer.addEventListener('touchend', function(e) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      var rect = layer.getBoundingClientRect();
+      var y = e.changedTouches[0].clientY;
+      if (y > rect.bottom - rect.height * 0.08) {
+        window.open('how_to_play.html', '_blank');
+        return;
+      }
+      goNation();
+    }, {capture:true, passive:false});
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupClickLayer);
+  } else {
+    setupClickLayer();
+  }
+  window.addEventListener('load', setupClickLayer);
+})();
+
+
+
+
+
+
+
+
+
+
+// ═════════════════════════════════════════════
+
+
+// ══ SIMPLE CLICK HANDLER ══
+function _goN(e) {
+  if(e) { e.preventDefault(); e.stopPropagation(); }
+  goNation();
+  return false;
+}
+
+
+</script>
+</body>
+</html>
