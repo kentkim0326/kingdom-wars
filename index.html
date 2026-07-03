@@ -44,7 +44,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .45s ease forwards}
 .fu2{animation:fadeUp .45s .1s ease forwards;opacity:0}
 .fu3{animation:fadeUp .45s .2s ease forwards;opacity:0}
@@ -390,7 +390,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
   z-index:850;text-align:center;pointer-events:none;display:none;
   box-shadow:0 0 25px rgba(255,136,0,.35)}
 .morale-warn.show{display:block;animation:fadeUp .3s ease}
-@keyframes fadeUp{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+to{opacity:1;transform:translate(-50%,0)}}
 
 /* REWARD POPUP */
 .rpopup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:950;background:var(--panel);border-radius:13px;padding:16px 22px;text-align:center;display:none;pointer-events:none;min-width:190px}
@@ -554,7 +554,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 }
 
 
-@keyframes logoFloat{0%,100%{transform:translateY(0) scale(1);filter:drop-shadow(0 0 30px rgba(0,200,255,0.5))}
+
   50%{transform:translateY(-8px) scale(1.02);filter:drop-shadow(0 0 45px rgba(0,200,255,0.8))}}
 
 /* ══ INTRO INNER — guaranteed center ══ */
@@ -566,7 +566,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
   filter:drop-shadow(0 0 28px rgba(0,200,255,0.55));
   animation:logoFloat 4s ease-in-out infinite;
 }
-@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+50%{transform:translateY(-8px)}}
 
 
 /* INTRO CENTER FIX */
@@ -576,7 +576,7 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
   filter:drop-shadow(0 0 24px rgba(0,200,255,.5));
   animation:logoFloat 4s ease-in-out infinite;
 }
-@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+50%{transform:translateY(-8px)}}
 .catchphrase{
   font-size:clamp(.78rem,3.5vw,1.05rem);
   color:var(--gold);font-weight:700;
@@ -1081,6 +1081,7 @@ body { overflow-x: hidden; overflow-y: auto; }
     width: calc(100% - 24px) !important;
   }
 }
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
