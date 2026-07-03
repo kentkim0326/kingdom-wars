@@ -2679,6 +2679,28 @@ function _goN(e) {
 }
 
 
+
+// AUTO-FIX: s-nation이 s-intro 안에 갇혀있으면 body로 이동
+(function() {
+  function fixScreenStructure() {
+    var screens = ['s-nation','s-commander','s-game'];
+    screens.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (el.parentElement && el.parentElement.id !== 'body' && el.parentElement.tagName !== 'BODY') {
+        console.log('Moving ' + id + ' to body');
+        document.body.appendChild(el);
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixScreenStructure);
+  } else {
+    fixScreenStructure();
+  }
+  window.addEventListener('load', fixScreenStructure);
+})();
+
 </script>
 </body>
 </html>
