@@ -42,7 +42,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .lb.active{background:var(--accent);color:#000}
 
 /* ══ INTRO ══ */
-#s-intro{align-items:center;justify-content:center;text-align:center;padding:50px 16px;
+#s-intro{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 16px 30px;width:100%;position:relative;background:transparent!important;
   background:radial-gradient(ellipse at 50% 30%,#0a1530 0%,#03050e 70%)}
 .logo{font-size:clamp(1.8rem,7vw,4.5rem);font-weight:900;letter-spacing:4px;word-break:break-word;
   background:linear-gradient(135deg,#00c8ff,#fff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
@@ -208,12 +208,12 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .sv-stat-v{font-size:.9rem;font-weight:700;color:var(--gold)}.sv-stat-l{font-size:.58rem;color:var(--muted);margin-top:1px}
 
 /* ══ BATTLE MAP — EXPANDING GRID ══ */
-.battle-view{flex:1;overflow:auto;position:relative;background:linear-gradient(180deg,#06080f 0%,#040610 100%);display:flex;align-items:flex-start;justify-content:center}
+.battle-view{flex:1;overflow:auto;position:relative;background:linear-gradient(180deg,#06080f 0%,#040610 100%);display:flex;justify-content:center;align-items:flex-start;display:flex;align-items:flex-start;justify-content:center}
 .battle-view::before{content:"";position:absolute;inset:0;pointer-events:none;
   background-image:radial-gradient(circle at 25% 35%,rgba(180,175,155,.06) 0%,transparent 30%),
     radial-gradient(circle at 68% 22%,rgba(170,165,145,.04) 0%,transparent 22%)}
 .moon-surf{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.12;pointer-events:none}
-.grid-wrap{position:relative;z-index:1;display:grid;grid-template-columns:repeat(7,84px);gap:3px;padding:14px;-content}
+.grid-wrap{position:relative;z-index:1;display:grid;grid-template-columns:repeat(7,84px);gap:3px;padding:14px}
 
 /* ══ SECTOR TILE ══ */
 .sector{width:84px;height:84px;border:1px solid rgba(40,70,120,.4);border-radius:8px;cursor:pointer;position:relative;
@@ -426,18 +426,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   );
 }
 /* Intro uses full-screen slides */
-#s-intro{
-  position:relative;
-  background:transparent!important;
-  width:100%;
-  align-items:center;
-}
-#s-intro .screen-content{
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  width:100%;min-height:100vh;padding:60px 16px 40px;text-align:center;
-}
+
+
 /* Slide dots */
 .slide-dots{
   position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
@@ -469,13 +459,13 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 @media(max-width:480px){
   /* Intro full width centering */
   #s-intro,.screen{width:100%;overflow-x:hidden}
-  .screen-content{width:100%!important;max-width:100vw;overflow-x:hidden}
+
   .logo{font-size:clamp(1.6rem,8vw,2.8rem)!important;letter-spacing:3px!important;padding:0 8px}
   .catchphrase{font-size:.72rem!important;padding:0 12px}
   .bf-btn{min-width:88px!important;padding:8px 8px!important;flex:1;max-width:130px}
   .bf-title{font-size:.76rem!important}
   .bf-sub{font-size:.58rem!important}
-  .btn-enter{width:calc(100% - 48px)!important;max-width:280px}
+  .btn-enter{width:auto!important;white-space:nowrap;padding:12px 36px!important}
   /* HUD compact */
   .hud{padding:3px 6px;gap:3px}
   .hud-brand{font-size:.72rem;letter-spacing:2px}
@@ -530,7 +520,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   .bimg{width:56px;height:56px}
   
   /* Intro page */
-  #s-intro .screen-content{padding:30px 12px}
+  
   .logo{font-size:clamp(1.8rem,8vw,3rem);letter-spacing:3px}
   .catchphrase{font-size:.75rem;letter-spacing:1px;margin-bottom:20px}
   
@@ -624,7 +614,6 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 
 <!-- INTRO -->
 <div class="screen active" id="s-intro">
-  <div class="screen-content">
   <div class="fu" style="text-align:center;margin-bottom:10px">
     <img src="assets/logo.png" alt="KINGDOM WARS"
   style="width:min(260px,60vw);height:auto;margin:0 auto 6px;display:block;
@@ -650,7 +639,6 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     </div>
   </div>
 </div>
-</div><!-- /screen-content -->
 
 <!-- NATION -->
 <div class="screen" id="s-nation">
@@ -1413,7 +1401,7 @@ function goGame(){
 function initMap(){
   // Start: center 3 sectors revealed (col 3, rows 3-4-5 of 7x7 = indices 24,25,26 roughly center)
   // Actually start at bottom-left quadrant player "base"
-  const START_SECTORS=[35,36,42,43]; // center-bottom cluster
+  const START_SECTORS=[23,24,30,31]; // center cluster
   START_SECTORS.forEach(i=>{G.revealed.add(i)});
   // Reveal adjacents as fog-edge
   START_SECTORS.forEach(i=>getAdj49(i).forEach(j=>G.revealed.add(j)));
