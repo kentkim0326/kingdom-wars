@@ -49,9 +49,9 @@ body{font-family:'Segoe UI',sans-serif;color:var(--text);min-height:100vh;overfl
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
 
 to{opacity:1;transform:translateY(0)}}
-.fu{opacity:1}
-.fu2{opacity:1}
-.fu3{opacity:1}
+.{opacity:1}
+.{opacity:1}
+.{opacity:1}
 
 /* ══ LANG BAR ══ */
 .lang-bar{position:fixed;top:0;right:0;z-index:999;display:flex;gap:2px;padding:5px 9px;
@@ -1178,20 +1178,20 @@ body { overflow-x: hidden; overflow-y: auto; }
 
 <!-- NATION -->
 <div class="screen" id="s-nation">
-  <div class="stitle fu"><span id="i-n-title">🌍 국가 선택</span></div>
-  <div class="ssub fu2"><span id="i-n-sub">달에 깃발을 꽂을 국가를 선택하세요</span></div>
-  <input class="search-box fu2" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
-  <div class="nation-grid fu3" id="ngrid"></div>
+  <div class="stitle"><span id="i-n-title">🌍 국가 선택</span></div>
+  <div class="ssub"><span id="i-n-sub">달에 깃발을 꽂을 국가를 선택하세요</span></div>
+  <input class="search-box" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
+  <div class="nation-grid" id="ngrid"></div>
   <button class="btn-next" id="btn-next" onclick="goCommander()"><span id="i-n-next">다음 → 사령관 선택</span></button>
 </div>
 
 <!-- COMMANDER -->
 <div class="screen" id="s-commander">
-  <div class="cmd-title fu"><span id="i-c-title">⭐ 사령관 선택</span></div>
-  <div class="cmd-sub fu2"><span id="i-c-sub">당신의 분신이 될 사령관을 선택하세요</span></div>
-  <div class="cmd-nbadge fu2"><span id="cmd-nf" style="font-size:1.6rem"></span><span id="cmd-nn" style="font-size:.9rem;font-weight:700"></span></div>
-  <div class="cmd-cards fu3" id="cmd-cards"></div>
-  <div class="sp-pack fu3">
+  <div class="cmd-title"><span id="i-c-title">⭐ 사령관 선택</span></div>
+  <div class="cmd-sub"><span id="i-c-sub">당신의 분신이 될 사령관을 선택하세요</span></div>
+  <div class="cmd-nbadge"><span id="cmd-nf" style="font-size:1.6rem"></span><span id="cmd-nn" style="font-size:.9rem;font-weight:700"></span></div>
+  <div class="cmd-cards" id="cmd-cards"></div>
+  <div class="sp-pack">
     <div class="sp-title"><span id="i-c-starter">🎁 스타터 패키지</span></div>
     <div class="sp-items">
       <div class="sp-i"><div class="sp-icon">🚀</div><div class="sp-val"><span id="i-c-s1">전투기×3</span></div><div class="sp-lbl"><span id="i-c-s1l">즉시배치</span></div></div>
