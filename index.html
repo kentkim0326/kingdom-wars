@@ -868,6 +868,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
   .nation-grid{grid-template-columns:repeat(2,1fr);gap:4px}
 }
 .screen{position:relative;z-index:10;height:auto;display:none;flex-direction:column;align-items:center;width:100%;overflow:visible;box-sizing:border-box}
+.screen:not(.active){display:none!important}
 .screen.active{display:flex}
 /* ══ S-INTRO FIX ══ */
 #s-intro{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;height:100vh!important;max-height:100vh!important;overflow:hidden!important;width:100%;padding:0;position:relative;background:transparent!important;}
@@ -945,8 +946,8 @@ body { overflow-x: hidden; overflow-y: hidden; }
    FINAL OVERRIDE - 최우선 적용
    ════════════════════════════════════════ */
 
-/* 모든 screen은 기본 hidden */
-.screen { display: none !important; }
+/* 모든 screen은 기본 hidden - specificity 우선 */
+.screen:not(.active) { display: none !important; }
 .screen.active { display: flex !important; }
 
 /* 각 screen 레이아웃 */
