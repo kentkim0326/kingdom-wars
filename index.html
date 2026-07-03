@@ -698,7 +698,7 @@ body {
 
 /* OVERFLOW & TOUCH FIX */
 #s-intro { overflow: visible !important; touch-action: manipulation !important; isolation: isolate; }
-.intro-inner { overflow: visible !important; touch-action: manipulation !important; }
+.intro-inner { overflow: visible !important; touch-action: manipulation !important; pointer-events: none; }
 .bf-btn, .btn-enter { 
   touch-action: manipulation !important;
   -webkit-tap-highlight-color: rgba(0,200,255,0.3) !important;
@@ -708,6 +708,7 @@ body {
 }
 .screen { overflow: visible !important; }
 body { overflow-x: hidden; overflow-y: auto; }
+#intro-click-layer { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 </style>
 </head>
 <body>
@@ -2215,49 +2216,50 @@ document.addEventListener('touchend', e => {
 bgStart(4000);
 updateSlideshowForScreen('s-intro');
 
-// ════ KAIKAS/METAMASK SAFE BUTTON HANDLER ════
+// ════ INTRO CLICK LAYER - Kaikas proof ════
 (function() {
-  function setupButtons() {
-    var ids = ['btn-moon', 'btn-enter-main'];
-    ids.forEach(function(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-
-      // capture:true — 확장프로그램보다 먼저 이벤트 수신
-      el.addEventListener('click', function(e) {
-        e.stopImmediatePropagation();
-        e.stopPropagation();
-        e.preventDefault();
-        goNation();
-      }, { capture: true, passive: false });
-
-      // iOS Safari touchend
-      el.addEventListener('touchend', function(e) {
-        e.stopImmediatePropagation();
-        e.stopPropagation();
-        e.preventDefault();
-        goNation();
-      }, { capture: true, passive: false });
-
-      // 직접 onclick도 설정
-      el.onclick = function(e) {
-        if(e) { e.stopImmediatePropagation(); e.stopPropagation(); }
-        goNation();
-        return false;
-      };
-    });
+  function setupClickLayer() {
+    var layer = document.getElementById('intro-click-layer');
+    if (!layer) return;
+    
+    // 모든 이벤트를 여기서 처리
+    function handleIntroClick(e) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      // 가이드 링크 영역 제외 (하단 10%)
+      var rect = layer.getBoundingClientRect();
+      var y = (e.clientY || (e.touches && e.touches[0].clientY) || 0);
+      if (y > rect.bottom - rect.height * 0.08) {
+        window.open('how_to_play.html', '_blank');
+        return;
+      }
+      goNation();
+    }
+    
+    layer.addEventListener('click', handleIntroClick, {capture:true, passive:false});
+    layer.addEventListener('touchend', function(e) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      var rect = layer.getBoundingClientRect();
+      var y = e.changedTouches[0].clientY;
+      if (y > rect.bottom - rect.height * 0.08) {
+        window.open('how_to_play.html', '_blank');
+        return;
+      }
+      goNation();
+    }, {capture:true, passive:false});
   }
-
-  // DOM 준비되면 즉시 실행
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupButtons);
+    document.addEventListener('DOMContentLoaded', setupClickLayer);
   } else {
-    setupButtons();
+    setupClickLayer();
   }
-
-  // 혹시 나중에 DOM이 바뀌어도 재설정
-  window.addEventListener('load', setupButtons);
+  window.addEventListener('load', setupClickLayer);
 })();
+
+
+
 
 
 
