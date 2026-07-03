@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- v034020 -->
+<!-- v034334 -->
 <!-- KW v0.8.3 new-logo -->
 <!-- KW v0.8.2 logo+favicon -->
 <html lang="ko">
@@ -29,7 +29,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:.85}}
-.screen{position:relative;z-index:2;min-height:100vh;display:none;flex-direction:column;overflow-x:hidden}
+.screen{position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;overflow-x:hidden}
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .fu{animation:fadeUp .45s ease forwards}
@@ -50,7 +50,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 
 
 .bf-row{display:flex;gap:8px;justify-content:center;flex-wrap:nowrap;margin-bottom:20px;width:100%;padding:0}
-.bf-btn{padding:11px 18px;border-radius:12px;border:2px solid var(--border);background:var(--panel);cursor:pointer;transition:all .3s;text-align:center;min-width:115px}
+.bf-btn{pointer-events:all!important;cursor:pointer;padding:11px 18px;border-radius:12px;border:2px solid var(--border);background:var(--panel);cursor:pointer;transition:all .3s;text-align:center;min-width:115px}
 .bf-btn.open{border-color:var(--accent)}.bf-btn.open:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,200,255,.3)}
 .bf-btn.locked{opacity:.4;cursor:not-allowed}
 .bf-icon{font-size:1.9rem;margin-bottom:3px}.bf-title{font-weight:700;font-size:.88rem;margin-bottom:1px}
@@ -405,16 +405,16 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 }
 
 /* ════════ SLIDESHOW ════════ */
+.slideshow-bg,.slide,.slide-overlay{
+  pointer-events:none!important;
+}
 .slideshow-bg{
   position:fixed;inset:0;z-index:0;overflow:hidden;
-  pointer-events:none;
 }
 .slide{
   position:absolute;inset:0;
   background-size:cover;background-position:center;
   opacity:0;transition:opacity 1.2s ease;
-  will-change:opacity;
-  pointer-events:none;
 }
 .slide.active{opacity:1}
 .slide-overlay{
@@ -584,7 +584,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   background:transparent!important;
   padding:0;
 }
-.intro-inner{
+.intro-inner{pointer-events:all!important;position:relative;z-index:100;
   position:relative;z-index:3;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
@@ -612,7 +612,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   min-height:100vh;width:100%;padding:0;
   position:relative;background:transparent!important;
 }
-.intro-inner{
+.intro-inner{pointer-events:all!important;position:relative;z-index:100;
   position:relative;z-index:5;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
