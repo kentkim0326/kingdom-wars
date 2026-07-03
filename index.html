@@ -685,8 +685,6 @@ body {
   cursor: pointer !important;
 }
 body { overflow-x: hidden; overflow-y: hidden; }
-#intro-click-layer{position:absolute;inset:0;z-index:9999 !important;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;pointer-events:all !important;}
-
 /* ══════════════════════════════════════
    LAYOUT MASTER CSS - 단일 정의
    ══════════════════════════════════════ */
@@ -709,7 +707,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
   max-width: 560px;
   margin: 0 auto;
   padding: 60px 20px 40px;
-  pointer-events: none;
+  
   box-sizing: border-box;
 }
 
@@ -742,7 +740,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
   flex-wrap: nowrap;
   margin-bottom: 20px;
   width: 100%;
-  pointer-events: none;
+  
 }
 .btn-enter {
   display: inline-block;
@@ -794,8 +792,6 @@ body { overflow-x: hidden; overflow-y: hidden; }
 #bg-slideshow, #bg-overlay { z-index: 0 !important; pointer-events: none !important; }
 .stars { z-index: 1 !important; pointer-events: none !important; }
 .lang-bar { z-index: 999 !important; }
-#intro-click-layer{position:absolute;inset:0;z-index:9999 !important;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;pointer-events:all !important;}
-
 /* MOBILE 480px */
 @media(max-width: 480px) {
   .intro-inner { padding: 40px 14px 28px; max-width: 100%; }
@@ -845,7 +841,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
   text-align:center;
   width:100%;max-width:560px;
   margin:0 auto;padding:60px 20px 40px;
-  pointer-events:none;
+  
   box-sizing:border-box;
   position:relative;z-index:20;
 }
@@ -886,7 +882,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
   max-width:560px;
   margin:0 auto;
   padding:clamp(20px,5vh,60px) 20px clamp(16px,4vh,40px);
-  pointer-events:none;
+  
   box-sizing:border-box;
   position:relative;
   z-index:20;
@@ -916,7 +912,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
   flex-wrap:nowrap;
   margin-bottom:clamp(8px,2vh,20px);
   width:100%;
-  pointer-events:none;
+  
 }
 .bf-btn{
   padding:clamp(7px,1.5vh,11px) clamp(8px,2vw,18px);
@@ -943,6 +939,7 @@ body { overflow-x: hidden; overflow-y: hidden; }
   cursor:pointer;letter-spacing:2px;
   pointer-events:none;
 }
+#intro-click-layer{position:absolute;inset:0;z-index:9999;cursor:pointer;background:transparent;-webkit-tap-highlight-color:transparent;touch-action:manipulation;pointer-events:all !important;}
 </style>
 </head>
 <body>
