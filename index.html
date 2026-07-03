@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- v20260703033128 -->
 <!-- KW v0.8.3 new-logo -->
 <!-- KW v0.8.2 logo+favicon -->
 <html lang="ko">
@@ -603,6 +604,51 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 }
 @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
+
+/* INTRO CENTER FIX */
+#s-intro{
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  min-height:100vh;width:100%;padding:0;
+  position:relative;background:transparent!important;
+}
+.intro-inner{
+  position:relative;z-index:5;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  width:100%;max-width:540px;
+  margin:0 auto;
+  padding:60px 24px 40px;
+  pointer-events:all;
+}
+.intro-logo{
+  width:min(200px,50vw);height:auto;
+  display:block;margin:0 auto 12px;
+  filter:drop-shadow(0 0 24px rgba(0,200,255,.5));
+  animation:logoFloat 4s ease-in-out infinite;
+}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.catchphrase{
+  font-size:clamp(.78rem,3.5vw,1.05rem);
+  color:var(--gold);font-weight:700;
+  margin-bottom:20px;text-align:center;
+  letter-spacing:1px;
+}
+.bf-row{
+  display:flex;gap:8px;justify-content:center;
+  flex-wrap:nowrap;margin-bottom:20px;
+  width:100%;
+}
+.btn-enter{
+  display:inline-block;white-space:nowrap;
+  padding:13px 40px;
+  background:linear-gradient(135deg,#0066aa,#00c8ff);
+  color:#000;font-weight:900;font-size:.95rem;
+  border:none;border-radius:50px;cursor:pointer;
+  letter-spacing:2px;position:relative;z-index:5;
+}
+
 </style>
 </head>
 <body>
@@ -646,34 +692,41 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 
 <!-- INTRO -->
 <div class="screen active" id="s-intro">
-  <div class="intro-inner">
-    <div class="fu">
-      <img src="assets/logo.png" alt="KINGDOM WARS" class="intro-logo"
-        onerror="this.outerHTML='<div class=logo>KINGDOM WARS</div>'"/>
-      <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
+<div class="intro-inner">
+  <img src="assets/logo.png" alt="KINGDOM WARS" class="intro-logo"
+    onerror="this.outerHTML='<div class=&quot;logo&quot;>KINGDOM WARS</div>'"/>
+  <div class="catchphrase">⚡ We will conquer Mars before Elon ⚡</div>
+  <div class="bf-row">
+    <div class="bf-btn open" onclick="goNation()">
+      <span class="bdg open">OPEN</span>
+      <div class="bf-icon">🌙</div>
+      <div class="bf-title">THE MOON</div>
+      <div class="bf-sub"><span id="i-moon-sub">49섹터 · 전략 정복전</span></div>
     </div>
-    <div class="bf-row fu3">
-      <div class="bf-btn open" onclick="goNation()">
-        <span class="bdg open">OPEN</span><div class="bf-icon">🌙</div>
-        <div class="bf-title">THE MOON</div>
-        <div class="bf-sub"><span id="i-moon-sub">49섹터 · 전략 정복전</span></div>
-      </div>
-      <div class="bf-btn locked"><span class="bdg soon">SOON</span><div class="bf-icon">🔴</div>
-        <div class="bf-title">MARS</div>
-        <div class="bf-sub"><span id="i-mars-sub">화성 · 81섹터</span></div>
-      </div>
-      <div class="bf-btn locked"><span class="bdg soon">SOON</span><div class="bf-icon">🪐</div>
-        <div class="bf-title">DEEP SPACE</div>
-        <div class="bf-sub"><span id="i-space-sub">심우주 · 120섹터</span></div>
-      </div>
+    <div class="bf-btn locked">
+      <span class="bdg soon">SOON</span>
+      <div class="bf-icon">🔴</div>
+      <div class="bf-title">MARS</div>
+      <div class="bf-sub"><span id="i-mars-sub">화성 · 81섹터</span></div>
     </div>
-    <div class="fu3">
-      <button class="btn-enter" onclick="goNation()"><span id="i-start">🚀 달 정복 개시</span></button>
-      <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
-        <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none"><span id="i-guide">📖 게임 가이드</span></a>
-      </div>
+    <div class="bf-btn locked">
+      <span class="bdg soon">SOON</span>
+      <div class="bf-icon">🪐</div>
+      <div class="bf-title">DEEP SPACE</div>
+      <div class="bf-sub"><span id="i-space-sub">심우주 · 120섹터</span></div>
     </div>
   </div>
+  <div style="text-align:center">
+    <button class="btn-enter" onclick="goNation()">
+      <span id="i-start">🚀 달 정복 개시</span>
+    </button>
+    <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
+      <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none">
+        <span id="i-guide">📖 게임 가이드</span>
+      </a>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- NATION -->
