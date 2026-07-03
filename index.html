@@ -416,47 +416,47 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="bf-row fu3">
     <div class="bf-btn open" onclick="goNation()">
       <span class="bdg open">OPEN</span><div class="bf-icon">🌙</div>
-      <div class="bf-title">THE MOON</div><div class="bf-sub">49섹터 · 전략 정복전</div>
+      <div class="bf-title">THE MOON</div><div class="bf-sub"><span id="i-moon-sub">49섹터 · 전략 정복전</span></div>
     </div>
     <div class="bf-btn locked"><span class="bdg soon">SOON</span><div class="bf-icon">🔴</div>
-      <div class="bf-title">MARS</div><div class="bf-sub">화성 · 81섹터</div></div>
+      <div class="bf-title">MARS</div><div class="bf-sub"><span id="i-mars-sub">화성 · 81섹터</span></div></div>
     <div class="bf-btn locked"><span class="bdg soon">SOON</span><div class="bf-icon">🪐</div>
-      <div class="bf-title">DEEP SPACE</div><div class="bf-sub">심우주 · 120섹터</div></div>
+      <div class="bf-title">DEEP SPACE</div><div class="bf-sub"><span id="i-space-sub">심우주 · 120섹터</span></div></div>
   </div>
   <div class="fu3" style="text-align:center">
-    <button class="btn-enter" onclick="goNation()">🚀 달 정복 개시</button>
+    <button class="btn-enter" onclick="goNation()"><span id="i-start">🚀 달 정복 개시</span></button>
     <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
-      <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none">📖 게임 가이드</a>
+      <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none"><span id="i-guide">📖 게임 가이드</span></a>
     </div>
   </div>
 </div>
 
 <!-- NATION -->
 <div class="screen" id="s-nation">
-  <div class="stitle fu">🌍 국가 선택</div>
-  <div class="ssub fu2">달에 깃발을 꽂을 국가를 선택하세요</div>
+  <div class="stitle fu"><span id="i-n-title">🌍 국가 선택</span></div>
+  <div class="ssub fu2"><span id="i-n-sub">달에 깃발을 꽂을 국가를 선택하세요</span></div>
   <input class="search-box fu2" id="nsearch" placeholder="🔍 국가 검색..." oninput="filterN(this.value)"/>
   <div class="nation-grid fu3" id="ngrid"></div>
-  <button class="btn-next" id="btn-next" onclick="goCommander()">다음 → 사령관 선택</button>
+  <button class="btn-next" id="btn-next" onclick="goCommander()"><span id="i-n-next">다음 → 사령관 선택</span></button>
 </div>
 
 <!-- COMMANDER -->
 <div class="screen" id="s-commander">
-  <div class="cmd-title fu">⭐ 사령관 선택</div>
-  <div class="cmd-sub fu2">당신의 분신이 될 사령관을 선택하세요</div>
+  <div class="cmd-title fu"><span id="i-c-title">⭐ 사령관 선택</span></div>
+  <div class="cmd-sub fu2"><span id="i-c-sub">당신의 분신이 될 사령관을 선택하세요</span></div>
   <div class="cmd-nbadge fu2"><span id="cmd-nf" style="font-size:1.6rem"></span><span id="cmd-nn" style="font-size:.9rem;font-weight:700"></span></div>
   <div class="cmd-cards fu3" id="cmd-cards"></div>
   <div class="sp-pack fu3">
-    <div class="sp-title">🎁 스타터 패키지</div>
+    <div class="sp-title"><span id="i-c-starter">🎁 스타터 패키지</span></div>
     <div class="sp-items">
-      <div class="sp-i"><div class="sp-icon">🚀</div><div class="sp-val">전투기×3</div><div class="sp-lbl">즉시배치</div></div>
+      <div class="sp-i"><div class="sp-icon">🚀</div><div class="sp-val"><span id="i-c-s1">전투기×3</span></div><div class="sp-lbl"><span id="i-c-s1l">즉시배치</span></div></div>
       <div class="sp-i"><div class="sp-icon">🪙</div><div class="sp-val">1,200</div><div class="sp-lbl">코인</div></div>
       <div class="sp-i"><div class="sp-icon">⚡</div><div class="sp-val">2,400</div><div class="sp-lbl">He-3</div></div>
       <div class="sp-i"><div class="sp-icon">💎</div><div class="sp-val">80</div><div class="sp-lbl">레골리스</div></div>
       <div class="sp-i"><div class="sp-icon">😤</div><div class="sp-val">100%</div><div class="sp-lbl">사기</div></div>
     </div>
   </div>
-  <button class="btn-cmd-ok" id="btn-cmd-ok" onclick="goGame()">🚀 출전!</button>
+  <button class="btn-cmd-ok" id="btn-cmd-ok" onclick="goGame()"><span id="i-c-go">🚀 출전!</span></button>
 </div>
 
 <!-- GAME -->
@@ -488,7 +488,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       <div class="online-dot"></div>
       <span id="next-bonus-timer">다음 보너스: 60:00</span>
     </div>
-    <div class="hourly-bonus" id="hourly-hint">⚡ 매 1시간 접속 보너스</div>
+    <div class="hourly-bonus" id="hourly-hint"><span id="i-hourly-hint">⚡ 매 1시간 접속 보너스</span></div>
   </div>
 
   <div class="res-bar">
@@ -500,21 +500,21 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="news-ticker"><span class="news-lbl">🛸 SPACE</span><div class="news-scroll" id="news-scroll"></div></div>
   <div class="ev-ticker" id="ev-ticker">⚠️ <span id="ev-ticker-text"></span></div>
   <div class="view-bar">
-    <button class="vtbtn" id="vt0" onclick="switchView(0)">🛸 내 함선</button>
-    <button class="vtbtn active" id="vt2" onclick="switchView(2)">⚔️ 전투 맵</button>
+    <button class="vtbtn" id="vt0" onclick="switchView(0)"><span id="i-v-ship">🛸 내 함선</span></button>
+    <button class="vtbtn active" id="vt2" onclick="switchView(2)"><span id="i-v-battle">⚔️ 전투 맵</span></button>
     <div class="turn-info">
       <span style="color:var(--muted);font-size:.64rem">턴</span>
       <span class="turn-num" id="turn-num">1</span>
-      <button class="btn-et" onclick="endTurn()">턴 종료 ▶</button>
+      <button class="btn-et" onclick="endTurn()"><span id="i-end-turn">턴 종료 ▶</span></button>
     </div>
-    <span style="font-size:.6rem;color:var(--muted);margin-left:6px">섹터 점령 → 인접 영역 해금 🌑→⚔️</span>
+    <span style="font-size:.6rem;color:var(--muted);margin-left:6px"><span id="i-map-hint">섹터 점령 → 인접 영역 해금 🌑→⚔️</span></span>
   </div>
 
   <div class="game-body">
     <!-- LEFT -->
     <div class="lpanel">
       <div class="ps">
-        <div class="plbl">사령관</div>
+        <div class="plbl"><span id="i-g-cmd">사령관</span></div>
         <div style="text-align:center;padding:4px 0">
           <div id="lp-av" style="font-size:1.9rem;margin-bottom:2px"></div>
           <div id="lp-name" style="font-size:.7rem;font-weight:700"></div>
@@ -523,39 +523,39 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       </div>
       <!-- Morale detail -->
       <div class="ps">
-        <div class="plbl">사기 시스템</div>
+        <div class="plbl"><span id="i-g-morale-sys">사기 시스템</span></div>
         <div style="font-size:.64rem;line-height:1.8;color:var(--muted)">
           <div id="morale-status-text">😤 사기: 100%</div>
-          <div style="color:var(--teal)">⏱️ 매 1시간 접속 보너스</div>
+          <div style="color:var(--teal)"><span id="i-hourly-tip">⏱️ 매 1시간 접속 보너스</span></div>
           <div style="color:var(--orange)" id="morale-warning-text"></div>
         </div>
       </div>
       <div class="unit-tabs">
-        <div class="utab active" onclick="switchTab('fleet',this)">🚀 함선</div>
-        <div class="utab" onclick="switchTab('mech',this)">🤖 메카</div>
-        <div class="utab" onclick="switchTab('ace',this)">⭐ 에이스</div>
+        <div class="utab active" onclick="switchTab('fleet',this)"><span id="i-tab-fleet">🚀 함선</span></div>
+        <div class="utab" onclick="switchTab('mech',this)"><span id="i-tab-mech">🤖 메카</span></div>
+        <div class="utab" onclick="switchTab('ace',this)"><span id="i-tab-ace">⭐ 에이스</span></div>
       </div>
       <div class="unit-list" id="ulist"></div>
-      <div class="ps"><button class="btn-buy" onclick="buyUnit()">+ 구매 500🪙</button></div>
+      <div class="ps"><button class="btn-buy" onclick="buyUnit()"><span id="i-btn-buy">+ 구매 500🪙</span></button></div>
       <div class="sel-big" id="sel-big">
-        <div class="plbl">선택된 유닛</div>
-        <div id="sel-big-content" style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0">클릭하여 선택</div>
+        <div class="plbl"><span id="i-g-sel">선택된 유닛</span></div>
+        <div id="sel-big-content" style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0"><span id="i-g-sel-hint">클릭하여 선택</span></div>
       </div>
       <div class="spec-units">
-        <div class="plbl">특수 장비</div>
+        <div class="plbl"><span id="i-g-spec">특수 장비</span></div>
         <div class="spec-btn" onclick="buyScout()">
           <span class="spec-icon">🛩️</span>
-          <div class="spec-info"><div class="spec-name">정찰기</div><div class="spec-desc"><span id="sc-owned">0</span>기 보유</div></div>
+          <div class="spec-info"><div class="spec-name"><span id="i-g-scout">정찰기</span></div><div class="spec-desc"><span id="sc-owned">0</span><span id="i-g-owned">기 보유</span></div></div>
           <span class="spec-cost">500⚡</span>
         </div>
         <div class="spec-btn" onclick="buyRadar()">
           <span class="spec-icon">📡</span>
-          <div class="spec-info"><div class="spec-name">레이더</div><div class="spec-desc"><span id="rad-placed">0</span>개 배치</div></div>
+          <div class="spec-info"><div class="spec-name"><span id="i-g-radar">레이더</span></div><div class="spec-desc"><span id="rad-placed">0</span><span id="i-g-placed">개 배치</span></div></div>
           <span class="spec-cost">800⚡</span>
         </div>
       </div>
       <div class="ps" style="flex:1">
-        <div class="plbl">전황</div>
+        <div class="plbl"><span id="i-g-log">전황</span></div>
         <div id="minilog" style="font-size:.6rem;color:var(--muted);line-height:1.7"></div>
       </div>
     </div>
@@ -581,16 +581,16 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     <!-- RIGHT -->
     <div class="rpanel">
       <div class="rcard">
-        <div class="rtitle">섹터 정보</div>
-        <div id="r-sec-info"><div style="color:var(--muted);font-size:.68rem;text-align:center;padding:8px 0">섹터를 클릭하세요</div></div>
+        <div class="rtitle"><span id="i-g-sec-info">섹터 정보</span></div>
+        <div id="r-sec-info"><div style="color:var(--muted);font-size:.68rem;text-align:center;padding:8px 0"><span id="i-g-sec-hint">섹터를 클릭하세요</span></div></div>
       </div>
       <!-- Territory progress -->
       <div class="rcard">
-        <div class="rtitle">정복 현황</div>
+        <div class="rtitle"><span id="i-g-conquest">정복 현황</span></div>
         <div id="conquest-progress"></div>
       </div>
       <div class="rcard" style="flex:1">
-        <div class="rtitle">전투 로그</div>
+        <div class="rtitle"><span id="i-g-blog">전투 로그</span></div>
         <div id="blog"></div>
       </div>
     </div>
@@ -599,7 +599,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 
 <!-- SAO -->
 <div class="sao" id="sao">
-  <div class="sao-hdr"><span class="sao-title" id="sao-title">섹터 액션</span><button class="sao-x" onclick="closeSAO()">✕</button></div>
+  <div class="sao-hdr"><span class="sao-title" id="sao-title"><span id="i-sao-title">섹터 액션</span></span><button class="sao-x" onclick="closeSAO()">✕</button></div>
   <div class="sao-si" id="sao-si"></div>
   <div class="sao-intel" id="sao-intel"></div>
   <div class="sao-acts" id="sao-acts"></div>
@@ -608,14 +608,14 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 <!-- FORMATION MODAL -->
 <div class="fmodal" id="fmodal">
   <div class="fmbody">
-    <div class="fm-title">⚔️ 출격 편성</div>
-    <div class="fm-sub">공격에 보낼 유닛을 선택하세요. 보낸 만큼 소비됩니다.</div>
+    <div class="fm-title"><span id="i-fm-title">⚔️ 출격 편성</span></div>
+    <div class="fm-sub"><span id="i-fm-sub">공격에 보낼 유닛을 선택하세요. 보낸 만큼 소비됩니다.</span></div>
     <div class="fm-enemy" id="fm-enemy"></div>
     <div class="fm-units" id="fm-units"></div>
     <div class="fm-sum" id="fm-sum"></div>
     <div class="fm-btns">
-      <button class="btn-fm-x" onclick="closeFM()">취소</button>
-      <button class="btn-fm-go" id="fm-go" onclick="launchFM()">🚀 출격!</button>
+      <button class="btn-fm-x" onclick="closeFM()"><span id="i-fm-cancel">취소</span></button>
+      <button class="btn-fm-go" id="fm-go" onclick="launchFM()"><span id="i-fm-launch">🚀 출격!</span></button>
     </div>
   </div>
 </div>
@@ -638,7 +638,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     </div>
     <div class="prisoner-box" id="prisoner-box">🔒 <span id="prisoner-info"></span></div>
     <div class="result" id="bresult"></div>
-    <button class="btn-close" id="bclose" onclick="closeBattle()" style="display:none">확인</button>
+    <button class="btn-close" id="bclose" onclick="closeBattle()" style="display:none"><span id="i-btn-ok-ev">확인</span></button>
   </div>
 </div>
 
@@ -657,9 +657,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 <div class="bonus-modal" id="bonus-modal">
   <div class="bonus-body">
     <div class="bonus-icon">🎁</div>
-    <div class="bonus-title" id="bonus-title">접속 보너스!</div>
+    <div class="bonus-title" id="bonus-title"><span id="bonus-title-el">접속 보너스!</span></div>
     <div class="bonus-items" id="bonus-items"></div>
-    <button class="btn-bonus" onclick="claimBonus()">받기!</button>
+    <button class="btn-bonus" onclick="claimBonus()"><span id="i-btn-claim">받기!</span></button>
   </div>
 </div>
 
@@ -856,7 +856,293 @@ let G={
 (()=>{const c=document.getElementById("stars");for(let i=0;i<80;i++){const s=document.createElement("div");s.className="star";const sz=Math.random()*1.8+.4;s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${Math.random()*4+2}s;animation-delay:${Math.random()*4}s;opacity:${Math.random()*.3+.1}`;c.appendChild(s);}})();
 
 // ══ NAV ══════════════════════════════════════════════
-function setLang(l){document.querySelectorAll(".lb").forEach(b=>b.classList.toggle("active",b.getAttribute("onclick").includes("'"+l+"'")))}
+
+// ══════════════════════════════════════════════════════════
+// KW COMPLETE 4-LANGUAGE i18n (ko / en / ja / zh)
+// ══════════════════════════════════════════════════════════
+const KW_LANG = {
+  ko:{
+    moon_sub:"49섹터 · 전략 정복전",mars_sub:"화성 · 81섹터",space_sub:"심우주 · 120섹터",
+    start_btn:"🚀 달 정복 개시",guide:"📖 게임 가이드",
+    n_title:"🌍 국가 선택",n_sub:"달에 깃발을 꽂을 국가를 선택하세요",
+    n_search:"🔍 국가 검색...",n_next:"다음 → 사령관 선택",
+    c_title:"⭐ 사령관 선택",c_sub:"당신의 분신이 될 사령관을 선택하세요",
+    c_male:"♂ 남성 사령관",c_female:"♀ 여성 사령관",
+    c_starter:"🎁 스타터 패키지",c_s1:"전투기×3",c_s1l:"즉시배치",c_go:"🚀 출전!",
+    g_sectors:"섹터",g_morale:"사기",
+    hourly_hint:"⚡ 매 1시간 접속 보너스",hourly_tip:"⏱️ 매 1시간 접속 보너스",
+    next_bonus:"다음 보너스:",
+    v_ship:"🛸 내 함선",v_battle:"⚔️ 전투 맵",
+    end_turn:"턴 종료 ▶",turn_lbl:"턴",
+    map_hint:"섹터 점령 → 인접 영역 해금 🌑→⚔️",
+    g_cmd:"사령관",g_morale_sys:"사기 시스템",
+    morale_ok:"😤 사기: {v}% — 최상",morale_mid:"😐 사기: {v}% — 보통",
+    morale_low:"😟 사기: {v}% — 낮음! 전투력-20%",morale_crit:"😰 사기: {v}% — 위험! -40%",
+    morale_warn_low:"⚠️ 접속 보너스로 사기 회복!",morale_warn_crit:"🚨 사기 붕괴 위험!",
+    tab_fleet:"🚀 함선",tab_mech:"🤖 메카",tab_ace:"⭐ 에이스",
+    btn_buy:"+ 구매 500🪙",
+    g_sel:"선택된 유닛",g_sel_hint:"클릭하여 선택",
+    g_spec:"특수 장비",g_scout:"정찰기",g_owned:"기 보유",
+    g_radar:"레이더",g_placed:"개 배치",g_log:"전황",
+    g_sec_info:"섹터 정보",g_sec_hint:"섹터를 클릭하세요",
+    g_conquest:"정복 현황",g_blog:"전투 로그",
+    cq_my:"내 영토",cq_empty:"공백",cq_enemy:"적",
+    cq_total:"전체 49섹터 중 {v}% 점령",cq_fog:"🌑 미탐사 {v}섹터 | 더 점령하면 해금!",
+    fog_lbl:"미탐사",
+    sao_title:"섹터 액션",sao_owner:"소유",sao_res:"자원",sao_prod:"생산",sao_hp:"HP",sao_pow:"전투력",
+    sao_unocc:"미점령",sao_my:"내 영토",sao_enemy:"적",
+    sao_scout_done:"정찰 완료",
+    sao_deploy:"🚀 유닛 배치",sao_scout:"🛩️ 정찰 먼저",
+    sao_direct:"⚔️ 정면 돌격",sao_smart:"🎯 정밀 타격",
+    sao_surround:"🔄 포위 공격",sao_radar_add:"📡 레이더 설치",sao_radar_rm:"📡 레이더 제거",
+    sao_my_sec:"✅ 내 영토",sao_defending:"수비 중",
+    sao_no_unit:"⚠️ 유닛 없음",sao_no_unit_hint:"왼쪽에서 유닛 선택 후 공격",
+    sao_sc_count:"보유: {v}기",sao_sc_bonus:"+20% 보너스",
+    sao_surr_hint:"인접 {v}개 아군 협공",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v} 소모",sao_no_enough:"유닛 부족",sao_no_sel:"유닛 선택 필요",
+    fm_title:"⚔️ 출격 편성",fm_sub:"공격에 보낼 유닛을 선택하세요. 보낸 만큼 소비됩니다.",
+    fm_cancel:"취소",fm_launch:"🚀 출격!",fm_no_he3:"He-3 부족",fm_no_unit:"유닛 선택",
+    fm_form:"편성",fm_total:"총 전투력",fm_cost:"비용",fm_def:"vs 방어",
+    fm_strat:"전략",fm_morale_pen:"사기 패널티",fm_wr:"예상 승률: {v}%",
+    fm_no_avail:"보유 유닛 없음\n왼쪽 패널에서 구매하세요",
+    fm_direct:"정면 돌격",fm_smart:"정밀 타격(+20%)",fm_surr:"포위(+{v}%)",
+    fm_morale_warn:"⚠️ 사기 낮음 — 전투력 감소",
+    bm_fleet:"연합함대",
+    res_win:"🏆 승리! {flag} {sec} 점령!\n⚡He-3 +{he} 약탈",
+    res_lose:"💥 패배... {flag} {name}\n전략을 바꿔보세요",
+    prisoner:"포획",btn_ok:"확인",
+    bonus_title:"🎁 접속 보너스! ({v}일 연속)",bonus_hourly:"⏰ 시간 보너스!",
+    btn_claim:"받기!",bonus_streak:"연속 {v}일 보너스",bonus_weekly:"주간 보너스",
+    streak_pre:"🔥",streak_suf:"일",
+    log_enter:"달 진입!",log_tip:"섹터 클릭 → 액션 선택",log_tip2:"사기: 접속 유지시 유리, 이탈시 -5%/시간",
+    log_collect:"수집",log_deploy:"배치",log_scout:"정찰",log_radar:"레이더",
+    log_alarm:"경보",log_defend:"방어",log_fall:"함락",log_turn:"턴",
+    log_buy:"구매",log_event:"이벤트",log_bonus:"보너스",log_reveal:"{v}개 영역 해금!",
+    ai_fall:"⚠️ {sec} 함락! {flag} {name}에게 빼앗겼습니다",
+    unit_owned:"보유",unit_wins:"승리",unit_nick:"별명",unit_strong:"강함",unit_weak:"약함",
+    timer_fmt:"다음 보너스: {m}:{s}",
+  },
+  en:{
+    moon_sub:"49 Sectors · Strategic Conquest",mars_sub:"Mars · 81 Sectors",space_sub:"Deep Space · 120 Sectors",
+    start_btn:"🚀 Conquer the Moon",guide:"📖 Game Guide",
+    n_title:"🌍 Choose Nation",n_sub:"Pick the nation to plant its flag on the Moon",
+    n_search:"🔍 Search nations...",n_next:"Next → Commander",
+    c_title:"⭐ Choose Commander",c_sub:"Select your battle commander",
+    c_male:"♂ Male Commander",c_female:"♀ Female Commander",
+    c_starter:"🎁 Starter Package",c_s1:"Fighter×3",c_s1l:"Deploy now",c_go:"🚀 Deploy!",
+    g_sectors:"Sectors",g_morale:"Morale",
+    hourly_hint:"⚡ Hourly login bonus",hourly_tip:"⏱️ Hourly login bonus",next_bonus:"Next bonus:",
+    v_ship:"🛸 My Ship",v_battle:"⚔️ Battle Map",end_turn:"End Turn ▶",turn_lbl:"Turn",
+    map_hint:"Capture sectors → Unlock adjacent fog 🌑→⚔️",
+    g_cmd:"Commander",g_morale_sys:"Morale System",
+    morale_ok:"😤 Morale: {v}% — Excellent",morale_mid:"😐 Morale: {v}% — Normal",
+    morale_low:"😟 Morale: {v}% — Low! Power -20%",morale_crit:"😰 Morale: {v}% — DANGER! -40%",
+    morale_warn_low:"⚠️ Claim login bonus to restore morale!",morale_warn_crit:"🚨 Morale collapse imminent!",
+    tab_fleet:"🚀 Fleet",tab_mech:"🤖 Mech",tab_ace:"⭐ Ace",btn_buy:"+ Buy 500🪙",
+    g_sel:"Selected Unit",g_sel_hint:"Click to select",
+    g_spec:"Special Gear",g_scout:"Scout Plane",g_owned:" owned",
+    g_radar:"Radar",g_placed:" placed",g_log:"Battlefield",
+    g_sec_info:"Sector Info",g_sec_hint:"Click a sector",
+    g_conquest:"Conquest Status",g_blog:"Battle Log",
+    cq_my:"Mine",cq_empty:"Empty",cq_enemy:"Enemy",
+    cq_total:"{v}% of 49 sectors captured",cq_fog:"🌑 {v} unexplored | Capture more to unlock!",
+    fog_lbl:"Unexplored",
+    sao_title:"Sector Action",sao_owner:"Owner",sao_res:"Resource",sao_prod:"Production",sao_hp:"HP",sao_pow:"Power",
+    sao_unocc:"Unoccupied",sao_my:"My Territory",sao_enemy:"Enemy",sao_scout_done:"Scout Complete",
+    sao_deploy:"🚀 Deploy Unit",sao_scout:"🛩️ Scout First",
+    sao_direct:"⚔️ Direct Assault",sao_smart:"🎯 Precision Strike",
+    sao_surround:"🔄 Surround Attack",sao_radar_add:"📡 Place Radar",sao_radar_rm:"📡 Remove Radar",
+    sao_my_sec:"✅ My Territory",sao_defending:"Defending",
+    sao_no_unit:"⚠️ No Units",sao_no_unit_hint:"Select unit on left panel",
+    sao_sc_count:"{v} scouts",sao_sc_bonus:"+20% bonus",
+    sao_surr_hint:"{v} allied sectors flanking",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v}",sao_no_enough:"Not enough",sao_no_sel:"Select unit first",
+    fm_title:"⚔️ Formation",fm_sub:"Choose units to send. Sent units are consumed.",
+    fm_cancel:"Cancel",fm_launch:"🚀 Launch!",fm_no_he3:"Not enough He-3",fm_no_unit:"Select Units",
+    fm_form:"Formation",fm_total:"Total Power",fm_cost:"Cost",fm_def:"vs Defense",
+    fm_strat:"Strategy",fm_morale_pen:"Morale Penalty",fm_wr:"Win Rate: {v}%",
+    fm_no_avail:"No units available\nBuy from left panel",
+    fm_direct:"Direct Assault",fm_smart:"Precision(+20%)",fm_surr:"Surround(+{v}%)",
+    fm_morale_warn:"⚠️ Low morale — reduced power",bm_fleet:"Combined Fleet",
+    res_win:"🏆 Victory! {flag} {sec} captured!\n⚡He-3 +{he} plundered",
+    res_lose:"💥 Defeated... {flag} {name}\nTry a different strategy",
+    prisoner:"captured",btn_ok:"OK",
+    bonus_title:"🎁 Login Bonus! ({v}-day streak)",bonus_hourly:"⏰ Hourly Bonus!",
+    btn_claim:"Claim!",bonus_streak:"{v}-day streak",bonus_weekly:"Weekly bonus",
+    streak_pre:"🔥",streak_suf:"d",
+    log_enter:"Moon Entry!",log_tip:"Click sectors → choose action",log_tip2:"Morale: High online, drops offline",
+    log_collect:"Collected",log_deploy:"Deployed",log_scout:"Scouted",log_radar:"Radar",
+    log_alarm:"Alert",log_defend:"Defended",log_fall:"Sector Lost",log_turn:"Turn",
+    log_buy:"Purchased",log_event:"Event",log_bonus:"Bonus",log_reveal:"{v} sectors unlocked!",
+    ai_fall:"⚠️ {sec} lost! Taken by {flag} {name}",
+    unit_owned:"Owned",unit_wins:"Wins",unit_nick:"Nickname",unit_strong:"Strong vs",unit_weak:"Weak vs",
+    timer_fmt:"Next bonus: {m}:{s}",
+  },
+  ja:{
+    moon_sub:"49セクター · 戦略征服戦",mars_sub:"火星 · 81セクター",space_sub:"深宇宙 · 120セクター",
+    start_btn:"🚀 月を征服せよ",guide:"📖 ゲームガイド",
+    n_title:"🌍 国家選択",n_sub:"月に旗を立てる国を選択してください",
+    n_search:"🔍 国家検索...",n_next:"次へ → 司令官選択",
+    c_title:"⭐ 司令官選択",c_sub:"あなたの分身となる司令官を選択",
+    c_male:"♂ 男性司令官",c_female:"♀ 女性司令官",
+    c_starter:"🎁 スターターパック",c_s1:"戦闘機×3",c_s1l:"即時配置",c_go:"🚀 出撃！",
+    g_sectors:"セクター",g_morale:"士気",
+    hourly_hint:"⚡ 毎時間ログインボーナス",hourly_tip:"⏱️ 毎時間ログインボーナス",next_bonus:"次のボーナス:",
+    v_ship:"🛸 自艦",v_battle:"⚔️ 戦闘マップ",end_turn:"ターン終了 ▶",turn_lbl:"ターン",
+    map_hint:"セクター占領 → 隣接霧解除 🌑→⚔️",
+    g_cmd:"司令官",g_morale_sys:"士気システム",
+    morale_ok:"😤 士気: {v}% — 最高",morale_mid:"😐 士気: {v}% — 普通",
+    morale_low:"😟 士気: {v}% — 低い！戦闘力-20%",morale_crit:"😰 士気: {v}% — 危険！-40%",
+    morale_warn_low:"⚠️ ログインボーナスで士気回復！",morale_warn_crit:"🚨 士気崩壊の危機！",
+    tab_fleet:"🚀 艦隊",tab_mech:"🤖 メカ",tab_ace:"⭐ エース",btn_buy:"+ 購入 500🪙",
+    g_sel:"選択ユニット",g_sel_hint:"クリックして選択",
+    g_spec:"特殊装備",g_scout:"偵察機",g_owned:"機保有",
+    g_radar:"レーダー",g_placed:"個配置",g_log:"戦況",
+    g_sec_info:"セクター情報",g_sec_hint:"セクターをクリック",
+    g_conquest:"征服状況",g_blog:"戦闘ログ",
+    cq_my:"自国",cq_empty:"空白",cq_enemy:"敵",
+    cq_total:"49セクター中{v}%占領",cq_fog:"🌑 未探査{v}セクター | もっと占領して解除！",
+    fog_lbl:"未探査",
+    sao_title:"セクターアクション",sao_owner:"所有",sao_res:"資源",sao_prod:"生産",sao_hp:"HP",sao_pow:"戦闘力",
+    sao_unocc:"未占領",sao_my:"自国領土",sao_enemy:"敵",sao_scout_done:"偵察完了",
+    sao_deploy:"🚀 ユニット配置",sao_scout:"🛩️ 偵察先行",
+    sao_direct:"⚔️ 正面突撃",sao_smart:"🎯 精密打撃",
+    sao_surround:"🔄 包囲攻撃",sao_radar_add:"📡 レーダー設置",sao_radar_rm:"📡 レーダー撤去",
+    sao_my_sec:"✅ 自国領土",sao_defending:"防衛中",
+    sao_no_unit:"⚠️ ユニットなし",sao_no_unit_hint:"左パネルでユニット選択",
+    sao_sc_count:"{v}機保有",sao_sc_bonus:"+20%ボーナス",
+    sao_surr_hint:"隣接{v}個の味方から挟撃",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v}消費",sao_no_enough:"不足",sao_no_sel:"ユニット選択が必要",
+    fm_title:"⚔️ 出撃編成",fm_sub:"攻撃に送るユニットを選択。送ったユニットは消費されます。",
+    fm_cancel:"キャンセル",fm_launch:"🚀 出撃！",fm_no_he3:"He-3不足",fm_no_unit:"ユニット選択",
+    fm_form:"編成",fm_total:"総戦闘力",fm_cost:"コスト",fm_def:"vs防衛",
+    fm_strat:"戦略",fm_morale_pen:"士気ペナルティ",fm_wr:"勝率予測: {v}%",
+    fm_no_avail:"保有ユニットなし\n左パネルで購入してください",
+    fm_direct:"正面突撃",fm_smart:"精密打撃(+20%)",fm_surr:"包囲(+{v}%)",
+    fm_morale_warn:"⚠️ 士気低下 — 戦闘力減少",bm_fleet:"連合艦隊",
+    res_win:"🏆 勝利！{flag} {sec}占領！\n⚡He-3 +{he}略奪",
+    res_lose:"💥 敗北... {flag} {name}\n戦略を変えてください",
+    prisoner:"捕獲",btn_ok:"確認",
+    bonus_title:"🎁 ログインボーナス！({v}日連続)",bonus_hourly:"⏰ 時間ボーナス！",
+    btn_claim:"受け取る！",bonus_streak:"{v}日連続ボーナス",bonus_weekly:"週間ボーナス",
+    streak_pre:"🔥",streak_suf:"日",
+    log_enter:"月突入！",log_tip:"セクタークリック → アクション選択",log_tip2:"士気：ログイン維持で有利",
+    log_collect:"収集",log_deploy:"配置",log_scout:"偵察",log_radar:"レーダー",
+    log_alarm:"警報",log_defend:"防衛",log_fall:"陥落",log_turn:"ターン",
+    log_buy:"購入",log_event:"イベント",log_bonus:"ボーナス",log_reveal:"{v}個のセクター解除！",
+    ai_fall:"⚠️ {sec}陥落！{flag}{name}に奪われました",
+    unit_owned:"保有",unit_wins:"勝利",unit_nick:"ニックネーム",unit_strong:"得意",unit_weak:"苦手",
+    timer_fmt:"次のボーナス: {m}:{s}",
+  },
+  zh:{
+    moon_sub:"49扇区 · 战略征服战",mars_sub:"火星 · 81扇区",space_sub:"深空 · 120扇区",
+    start_btn:"🚀 征服月球",guide:"📖 游戏指南",
+    n_title:"🌍 选择国家",n_sub:"选择将在月球上插旗的国家",
+    n_search:"🔍 搜索国家...",n_next:"下一步 → 指挥官",
+    c_title:"⭐ 选择指挥官",c_sub:"选择您的化身指挥官",
+    c_male:"♂ 男性指挥官",c_female:"♀ 女性指挥官",
+    c_starter:"🎁 新手礼包",c_s1:"战斗机×3",c_s1l:"立即部署",c_go:"🚀 出击！",
+    g_sectors:"扇区",g_morale:"士气",
+    hourly_hint:"⚡ 每小时登录奖励",hourly_tip:"⏱️ 每小时登录奖励",next_bonus:"下次奖励:",
+    v_ship:"🛸 我的舰船",v_battle:"⚔️ 战斗地图",end_turn:"结束回合 ▶",turn_lbl:"回合",
+    map_hint:"占领扇区 → 解锁相邻迷雾 🌑→⚔️",
+    g_cmd:"指挥官",g_morale_sys:"士气系统",
+    morale_ok:"😤 士气: {v}% — 极佳",morale_mid:"😐 士气: {v}% — 正常",
+    morale_low:"😟 士气: {v}% — 低落！战斗力-20%",morale_crit:"😰 士气: {v}% — 危险！-40%",
+    morale_warn_low:"⚠️ 领取登录奖励恢复士气！",morale_warn_crit:"🚨 士气崩溃危机！",
+    tab_fleet:"🚀 舰队",tab_mech:"🤖 机甲",tab_ace:"⭐ 王牌",btn_buy:"+ 购买 500🪙",
+    g_sel:"选中单位",g_sel_hint:"点击选择",
+    g_spec:"特殊装备",g_scout:"侦察机",g_owned:"架拥有",
+    g_radar:"雷达",g_placed:"个部署",g_log:"战况",
+    g_sec_info:"扇区信息",g_sec_hint:"点击扇区",
+    g_conquest:"征服状态",g_blog:"战斗日志",
+    cq_my:"我方",cq_empty:"空白",cq_enemy:"敌方",
+    cq_total:"49扇区中已占领{v}%",cq_fog:"🌑 未探索{v}扇区 | 占领更多以解锁！",
+    fog_lbl:"未探索",
+    sao_title:"扇区行动",sao_owner:"所有者",sao_res:"资源",sao_prod:"生产",sao_hp:"HP",sao_pow:"战斗力",
+    sao_unocc:"未占领",sao_my:"我方领土",sao_enemy:"敌方",sao_scout_done:"侦察完成",
+    sao_deploy:"🚀 部署单位",sao_scout:"🛩️ 先侦察",
+    sao_direct:"⚔️ 正面突击",sao_smart:"🎯 精确打击",
+    sao_surround:"🔄 包围攻击",sao_radar_add:"📡 安装雷达",sao_radar_rm:"📡 拆除雷达",
+    sao_my_sec:"✅ 我方领土",sao_defending:"防守中",
+    sao_no_unit:"⚠️ 无单位",sao_no_unit_hint:"在左侧选择单位",
+    sao_sc_count:"拥有{v}架",sao_sc_bonus:"+20%奖励",
+    sao_surr_hint:"{v}个相邻友方夹击",sao_wr:"~{v}%",
+    sao_deploy_cost:"He-3 {v}消耗",sao_no_enough:"数量不足",sao_no_sel:"请先选择单位",
+    fm_title:"⚔️ 出击编队",fm_sub:"选择要出击的单位。出击单位将被消耗。",
+    fm_cancel:"取消",fm_launch:"🚀 出击！",fm_no_he3:"He-3不足",fm_no_unit:"选择单位",
+    fm_form:"编队",fm_total:"总战斗力",fm_cost:"费用",fm_def:"vs防御",
+    fm_strat:"战略",fm_morale_pen:"士气惩罚",fm_wr:"预计胜率: {v}%",
+    fm_no_avail:"无可用单位\n请在左侧购买",
+    fm_direct:"正面突击",fm_smart:"精确打击(+20%)",fm_surr:"包围(+{v}%)",
+    fm_morale_warn:"⚠️ 士气低落 — 战斗力下降",bm_fleet:"联合舰队",
+    res_win:"🏆 胜利！{flag} {sec}占领！\n⚡He-3 +{he}掠夺",
+    res_lose:"💥 失败... {flag} {name}\n请换一种策略",
+    prisoner:"俘获",btn_ok:"确认",
+    bonus_title:"🎁 登录奖励！({v}天连续)",bonus_hourly:"⏰ 时间奖励！",
+    btn_claim:"领取！",bonus_streak:"{v}天连续奖励",bonus_weekly:"周奖励",
+    streak_pre:"🔥",streak_suf:"天",
+    log_enter:"登月！",log_tip:"点击扇区 → 选择行动",log_tip2:"士气：在线时有利，离线时下降",
+    log_collect:"收集",log_deploy:"部署",log_scout:"侦察",log_radar:"雷达",
+    log_alarm:"警报",log_defend:"防御",log_fall:"陷落",log_turn:"回合",
+    log_buy:"购买",log_event:"事件",log_bonus:"奖励",log_reveal:"解锁{v}个新扇区！",
+    ai_fall:"⚠️ {sec}陷落！被{flag}{name}夺取",
+    unit_owned:"拥有",unit_wins:"胜利",unit_nick:"称号",unit_strong:"克制",unit_weak:"被克",
+    timer_fmt:"下次奖励: {m}:{s}",
+  }
+};
+let _L="ko";
+function t(k,v){
+  const d=KW_LANG[_L]||KW_LANG.ko;
+  let s=d[k]||KW_LANG.ko[k]||k;
+  if(v)for(const[a,b]of Object.entries(v))s=s.replace("{"+a+"}",b);
+  return s;
+}
+function setLang(l){
+  _L=l;
+  document.querySelectorAll(".lb").forEach(b=>b.classList.toggle("active",b.getAttribute("onclick").includes("'"+l+"'")));
+  // Apply all i18n keys to DOM
+  const M={
+    // INTRO
+    "i-moon-sub":"moon_sub","i-mars-sub":"mars_sub","i-space-sub":"space_sub",
+    "i-start":"start_btn","i-guide":"guide",
+    // NATION
+    "i-n-title":"n_title","i-n-sub":"n_sub","i-n-next":"n_next",
+    // COMMANDER
+    "i-c-title":"c_title","i-c-sub":"c_sub","i-c-starter":"c_starter",
+    "i-c-s1":"c_s1","i-c-s1l":"c_s1l","i-c-go":"c_go",
+    // GAME
+    "i-v-ship":"v_ship","i-v-battle":"v_battle",
+    "i-end-turn":"end_turn","i-map-hint":"map_hint",
+    "i-g-cmd":"g_cmd","i-g-morale-sys":"g_morale_sys",
+    "i-tab-fleet":"tab_fleet","i-tab-mech":"tab_mech","i-tab-ace":"tab_ace",
+    "i-btn-buy":"btn_buy","i-g-sel":"g_sel","i-g-sel-hint":"g_sel_hint",
+    "i-g-spec":"g_spec","i-g-scout":"g_scout","i-g-owned":"g_owned",
+    "i-g-radar":"g_radar","i-g-placed":"g_placed","i-g-log":"g_log",
+    "i-g-sec-info":"g_sec_info","i-g-sec-hint":"g_sec_hint",
+    "i-g-conquest":"g_conquest","i-g-blog":"g_blog",
+    "i-hourly-hint":"hourly_hint","i-hourly-tip":"hourly_tip",
+    // SAO
+    "i-sao-title":"sao_title",
+    // FM
+    "i-fm-title":"fm_title","i-fm-sub":"fm_sub",
+    "i-fm-cancel":"fm_cancel","i-fm-launch":"fm_launch",
+    // BONUS
+    "i-btn-claim":"btn_claim",
+    // EVENT
+    "i-btn-ok-ev":"btn_ok","i-btn-ok-bm":"btn_ok",
+  };
+  for(const[id,key]of Object.entries(M)){const el=document.getElementById(id);if(el)el.textContent=t(key);}
+  // Placeholders
+  const ns=document.getElementById("nsearch");if(ns)ns.placeholder=t("n_search");
+  // Streak suffix
+  const ss=document.getElementById("i-streak-suf");if(ss)ss.textContent=t("streak_suf");
+  // Refresh dynamic UI
+  if(typeof updateMoraleUI==="function")updateMoraleUI();
+  if(typeof updateConquestProgress==="function")updateConquestProgress();
+  if(G&&G.nation){if(typeof renderUnits==="function")renderUnits();if(typeof showSelBig==="function")showSelBig();}
+}
+
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active")}
 function goNation(){sfx("click");show("s-nation");renderN(NATIONS)}
 function renderN(list){document.getElementById("ngrid").innerHTML=list.map(n=>`<div class="nc" onclick="selN('${n.e}')"><div class="nf">${n.f}</div><div class="nn">${n.n}</div><div class="ne">${n.e}</div></div>`).join("")}
@@ -871,7 +1157,7 @@ function goCommander(){
   cmds.forEach((cmd,i)=>{
     const card=document.createElement("div");card.className=`cmd-card ${cmd.g}`;
     card.innerHTML=`<div class="cmd-avwrap"><span class="cmd-avm">${cmd.av}</span></div>
-      <div class="cmd-gen">${cmd.g==="male"?"♂ 남성":"♀ 여성"} 사령관</div>
+      <div class="cmd-gen">${cmd.g==="male"?t("c_male"):t("c_female")}</div>
       <div class="cmd-name">${cmd.name}</div><div class="cmd-ttl">${cmd.title}</div>
       <div class="cmd-skills">${cmd.skills.map(s=>`<div class="cmd-skill">${s}</div>`).join("")}</div>`;
     card.onclick=()=>{G.commander=cmd;document.querySelectorAll(".cmd-card").forEach(c=>c.classList.remove("sel-m","sel-f"));card.classList.add(cmd.g==="male"?"sel-m":"sel-f");document.getElementById("btn-cmd-ok").classList.add("show");sfx("click")};
@@ -889,9 +1175,9 @@ function goGame(){
   ].flatMap(n=>[n,n]).map(n=>`<span style="white-space:nowrap">${n}</span>`).join("");
   buildGrid();updateResUI();updateHUD();
   G.selUnit=SHIPS[0];renderUnits();showSelBig();
-  log("sys","[입장] "+G.nation.f+" "+G.commander.name+" 달 진입!");
-  log("info","💡 섹터 점령 → 인접 안개 해금 → 영토 확장!");
-  log("info","😤 사기: 접속 유지시 유리, 이탈시 -5%/시간");
+  log("sys","["+t("log_enter")+"] "+G.nation.f+" "+G.commander.name);
+  log("info","💡 "+t("log_tip"));
+  log("info","😤 "+t("log_tip2"));
   show("s-game");
   updateHUD();
   startAI();
@@ -963,7 +1249,7 @@ function buildGrid(){
     if(!isRevealed){
       // Deep fog
       d.className="sector fog";
-      d.innerHTML=`<div class="fog-content"><div class="fog-icon">🌑</div><div class="fog-lbl">미탐사</div></div>`;
+      d.innerHTML=`<div class="fog-content"><div class="fog-icon">🌑</div><div class="fog-lbl">${t("fog_lbl")}</div></div>`;
     }else if(!s){
       // Revealed but empty
       const st=SEC_TYPES[i]||"neutral";const si=SEC_RES[st];
@@ -1020,15 +1306,15 @@ function updateConquestProgress(){
   const pct=Math.round(mine/49*100);
   document.getElementById("conquest-progress").innerHTML=`
     <div style="display:flex;justify-content:space-between;font-size:.68rem;margin-bottom:4px">
-      <span style="color:var(--green)">내 영토 ${mine}</span>
-      <span style="color:var(--muted)">공백 ${neutral}</span>
-      <span style="color:var(--red)">적 ${enemy}</span>
+      <span style="color:var(--green)">${t("cq_my")} ${mine}</span>
+      <span style="color:var(--muted)">${t("cq_empty")} ${neutral}</span>
+      <span style="color:var(--red)">${t("cq_enemy")} ${enemy}</span>
     </div>
     <div style="height:8px;background:rgba(0,0,0,.4);border-radius:4px;overflow:hidden;margin-bottom:4px">
       <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:4px;transition:width .5s"></div>
     </div>
-    <div style="font-size:.62rem;color:var(--muted)">전체 49섹터 중 <span style="color:var(--gold);font-weight:700">${pct}%</span> 점령</div>
-    <div style="font-size:.6rem;color:var(--muted);margin-top:3px">🌑 미탐사 ${49-G.revealed.size}섹터 | 더 점령하면 해금!</div>`;
+    <div style="font-size:.62rem;color:var(--muted)">${t("cq_total",{v:pct})}</div>
+    <div style="font-size:.6rem;color:var(--muted);margin-top:3px">${t("cq_fog",{v:49-G.revealed.size})}</div>`;
 }
 
 // ══ SECTOR CLICK ═════════════════════════════════════
@@ -1065,14 +1351,14 @@ function showSAO(i){
     <div class="sao-rows">
       <div class="sao-row"><span class="sao-lbl">소유</span>
         <span class="sao-val" style="color:${!s?"var(--muted)":s.own==="me"?"var(--green)":"var(--red)"}">
-          ${!s?"미점령":s.own==="me"?G.nation.f+" 내 영토":s.flag+" "+s.name}</span></div>
-      <div class="sao-row"><span class="sao-lbl">자원</span><span class="sao-val" style="color:${si.color||"var(--muted)"}">${si.label}</span></div>
-      <div class="sao-row"><span class="sao-lbl">생산</span><span class="sao-val" style="color:var(--green)">+${si.prod.he3} He-3</span></div>
-      ${s?`<div class="sao-row"><span class="sao-lbl">HP</span><span class="sao-val" style="color:${s.own==="me"?"var(--green)":"var(--red)"}">${s.hp}%</span></div>`:""}
+          ${!s?t("sao_unocc"):s.own==="me"?G.nation.f+" "+t("sao_my"):s.flag+" "+s.name}</span></div>
+      <div class="sao-row"><span class="sao-lbl">${t("sao_res")}</span><span class="sao-val" style="color:${si.color||"var(--muted)"}">${si.label}</span></div>
+      <div class="sao-row"><span class="sao-lbl">${t("sao_prod")}</span><span class="sao-val" style="color:var(--green)">+${si.prod.he3} He-3</span></div>
+      ${s?`<div class="sao-row"><span class="sao-lbl">${t("sao_hp")}</span><span class="sao-val" style="color:${s.own==="me"?"var(--green)":"var(--red)"}">${s.hp}%</span></div>`:""}
     </div>`;
   const intel=document.getElementById("sao-intel");
   if(intelKnown){intel.style.display="block";const cm=G.selUnit?getCM(G.selUnit.ctype,scouted.ct):{mod:1,lbl:"⚖️"};
-    intel.innerHTML=`<div class="sao-intel-t">🛩️ 정찰 완료</div>
+    intel.innerHTML=`<div class="sao-intel-t">🛩️ ${t("sao_scout_done")}</div>
       <div style="display:flex;justify-content:space-between;font-size:.64rem;margin-bottom:2px"><span>유닛</span><span>${scouted.ue} (${scouted.ct})</span></div>
       <div style="display:flex;justify-content:space-between;font-size:.64rem;margin-bottom:2px"><span>전투력</span><span style="color:var(--red)">⚔️${scouted.pow}</span></div>
       <div style="display:flex;justify-content:space-between;font-size:.64px"><span>상성</span><span style="color:${cm.mod>1?"var(--green)":cm.mod<1?"var(--red)":"var(--muted)"}">${cm.lbl}</span></div>`;}
@@ -1082,28 +1368,28 @@ function showSAO(i){
 
   if(!s){
     // Empty revealed sector
-    addSAOB(acts,"deploy","🚀","유닛 배치",u&&u.count>0?`${u.emoji} ${u.name} → ${SNAMES[i]}`:u?"유닛 부족":"유닛 선택 필요",u&&u.count>0?`He-3 ${u.cost?.he3||0} 소모`:"",u&&u.count>0?()=>deployUnit(i):null,!u||u.count<=0);
-    addSAOB(acts,"radar","📡","레이더 설치","적 정찰 자동 차단","800 He-3",()=>{closeSAO();placeRadar(i)});
+    addSAOB(acts,"deploy","🚀",t("sao_deploy"),u&&u.count>0?`${u.emoji} ${u.name} → ${SNAMES[i]}`:u?"유닛 부족":"유닛 선택 필요",u&&u.count>0?`He-3 ${u.cost?.he3||0} 소모`:"",u&&u.count>0?()=>deployUnit(i):null,!u||u.count<=0);
+    addSAOB(acts,"radar","📡",t("sao_radar_add"),"800 He-3","",()=>{closeSAO();placeRadar(i)});
   }else if(s.own==="me"){
-    addSAOB(acts,"deploy","✅","내 영토",SNAMES[i],"수비 중",null,true);
-    addSAOB(acts,"radar",G.radars[i]?"📡":"📡",G.radars[i]?"레이더 제거":"레이더 설치","800 He-3","",()=>{closeSAO();G.radars[i]?removeRadar(i):placeRadar(i)});
+    addSAOB(acts,"deploy","✅",t("sao_my_sec"),SNAMES[i],t("sao_defending"),null,true);
+    addSAOB(acts,"radar",G.radars[i]?"📡":"📡",G.radars[i]?t("sao_radar_rm"):t("sao_radar_add"),"800 He-3","",()=>{closeSAO();G.radars[i]?removeRadar(i):placeRadar(i)});
   }else{
     // Enemy — show attack options with morale modifier
     const moraleNote=G.morale<50?` ⚠️사기${G.morale}%(-전투력)`:"";
     if(!u||u.count<=0){
-      addSAOB(acts,"atk1","⚠️","유닛 없음","왼쪽에서 유닛 선택 후 공격","",null,true);
+      addSAOB(acts,"atk1","⚠️",t("sao_no_unit"),t("sao_no_unit_hint"),"",null,true);
     }else{
       const cm=getCM(u.ctype,s.ct);const adj=getAdjMine(i);
       const crater=st==="crater"?" 🏔️+50%":"";
-      addSAOB(acts,"atk1","⚔️","정면 돌격",`${u.emoji} vs ${s.ue} ${s.name}${crater}${moraleNote}`,
+      addSAOB(acts,"atk1","⚔️",t("sao_direct"),`${u.emoji} vs ${s.ue} ${s.name}${crater}${moraleNote}`,
         `${cm.lbl} | ~${Math.round(50*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"direct")});
       if(intelKnown){
-        addSAOB(acts,"atk2","🎯","정밀 타격","정찰 정보 활용 +20%",`~${Math.round(60*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"smart")});
+        addSAOB(acts,"atk2","🎯",t("sao_smart"),t("sao_scout_done")+" +20%",`~${Math.round(60*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"smart")});
       }else{
-        addSAOB(acts,"scout","🛩️","정찰 먼저",`보유: ${G.scoutCount}기 | 성공시 +20%`,"+20% 보너스",G.scoutCount>0?()=>{closeSAO();executeScout(i)}:null,G.scoutCount<=0);
+        addSAOB(acts,"scout","🛩️",t("sao_scout"),t("sao_sc_count",{v:G.scoutCount}),t("sao_sc_bonus"),G.scoutCount>0?()=>{closeSAO();executeScout(i)}:null,G.scoutCount<=0);
       }
       if(adj.length>=2){
-        addSAOB(acts,"atk3","🔄","포위 공격",`인접 ${adj.length}개 아군 협공`,`+${adj.length*15}% | ~${Math.round(65*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"surround")});
+        addSAOB(acts,"atk3","🔄",t("sao_surround"),t("sao_surr_hint",{v:adj.length}),`+${adj.length*15}% | ~${Math.round(65*cm.mod*moraleMod)}%`,()=>{closeSAO();openFM(i,"surround")});
       }
     }
   }
@@ -1153,7 +1439,7 @@ function renderFMUnits(){
         <button class="fm-qbtn" onclick="fmQty('${u.id}',1)">+</button>
         <span style="font-size:.56rem;color:var(--muted)">/${u.count}</span>
       </div>
-    </div>`}).join(""):`<div style="color:var(--muted);text-align:center;padding:10px;font-size:.74rem">보유 유닛 없음<br>왼쪽 패널에서 구매하세요</div>`;
+    </div>`}).join(""):`<div style="color:var(--muted);text-align:center;padding:10px;font-size:.74rem">${t("fm_no_avail").replace("\\n","<br>")}</div>`;
 }
 function fmQty(id,d){
   const u=ALL.find(x=>x.id===id);if(!u)return;
@@ -1179,18 +1465,18 @@ function updateFMSummary(){
   const defPow=~~(sPow*defMult);
   const wp=tp>0?Math.min(99,~~(modPow/(modPow+defPow)*100)):0;
   const wc=wp>=65?"var(--green)":wp>=45?"var(--gold)":"var(--red)";
-  const ml=G.fmMode==="smart"?"정밀 타격(+20%)":G.fmMode==="surround"?`포위(+${adj.length*15}%)` :"정면 돌격";
+  const ml=G.fmMode==="smart"?t("fm_smart"):G.fmMode==="surround"?t("fm_surr",{v:adj.length*15}):t("fm_direct");
   document.getElementById("fm-sum").innerHTML=`
-    <div class="fm-srow"><span style="color:var(--muted)">편성</span><span style="font-size:.66rem">${entries.join(" ")||"없음"}</span></div>
-    <div class="fm-srow"><span style="color:var(--muted)">총 전투력</span><span style="color:var(--gold)">⚔️${modPow}</span></div>
-    <div class="fm-srow"><span style="color:var(--muted)">비용</span><span style="color:var(--orange)">⚡${tc}</span></div>
-    <div class="fm-srow"><span style="color:var(--muted)">vs 방어</span><span style="color:var(--red)">⚔️${defPow}</span></div>
-    <div class="fm-srow"><span style="color:var(--muted)">전략</span><span>${ml}</span></div>
-    ${G.morale<70?`<div class="fm-srow"><span style="color:var(--orange)">사기 패널티</span><span style="color:var(--orange)">×${mor.toFixed(1)}</span></div>`:""}
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_form")}</span><span style="font-size:.66rem">${entries.join(" ")||"없음"}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_total")}</span><span style="color:var(--gold)">⚔️${modPow}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_cost")}</span><span style="color:var(--orange)">⚡${tc}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_def")}</span><span style="color:var(--red)">⚔️${defPow}</span></div>
+    <div class="fm-srow"><span style="color:var(--muted)">${t("fm_strat")}</span><span>${ml}</span></div>
+    ${G.morale<70?`<div class="fm-srow"><span style="color:var(--orange)">${t("fm_morale_pen")}</span><span style="color:var(--orange)">×${mor.toFixed(1)}</span></div>`:""}
     <div class="fm-wr" style="color:${wc}">예상 승률: ${wp}%</div>`;
   const btn=document.getElementById("fm-go");
   btn.disabled=tc>G.he3||tp===0;
-  btn.textContent=tc>G.he3?"He-3 부족":tp===0?"유닛 선택":"🚀 출격!";
+  btn.textContent=tc>G.he3?t("fm_no_he3"):tp===0?t("fm_no_unit"):t("fm_launch");
 }
 function launchFM(){
   const s=G.sectors[G.fmSec];if(!s||s.own==="enemy"===false)return;
@@ -1217,7 +1503,7 @@ function launchFM(){
   const mc=G.fmMode==="smart"?"#ffd700":G.fmMode==="surround"?"#aa44ff":"var(--red)";
   document.getElementById("btag-el").innerHTML=`<span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:.66rem;font-weight:700;background:${mc}22;border:1px solid ${mc};color:${mc};margin-bottom:9px">${ml}</span>`;
   const $=id=>document.getElementById(id);
-  $("b-af").textContent=G.nation.f;$("b-ai").src=repUnit.img;$("b-an").textContent=G.nation.n+" 연합함대";$("b-ap").textContent="PWR: "+attPow;$("b-am").innerHTML=`<span style="color:var(--orange)">⚡-${tc}</span>`;
+  $("b-af").textContent=G.nation.f;$("b-ai").src=repUnit.img;$("b-an").textContent=G.nation.n+" "+t("bm_fleet");$("b-ap").textContent="PWR: "+attPow;$("b-am").innerHTML=`<span style="color:var(--orange)">⚡-${tc}</span>`;
   $("b-df").textContent=s.flag;$("b-di").src=s.ui||"";$("b-dn").textContent=s.name;$("b-dp").textContent="PWR: "+defPow;$("b-dm").innerHTML=defMult>1?'<span style="color:var(--orange)">🏔️+50%</span>':"";
   [$("b-abar"),$("b-dbar")].forEach(el=>{if(el)el.style.width="100%"});
   [$("b-ahp"),$("b-dhp")].forEach(el=>{if(el)el.textContent="100%"});
@@ -1238,7 +1524,7 @@ function showBR(won,i,s,u,cost){
   sfx(won?"win":"lose");const r=document.getElementById("bresult");const sn=SNAMES[i];
   if(won){
     const pl=~~(SEC_RES[SEC_TYPES[i]||"neutral"].prod.he3*.35)||55;G.he3+=pl;
-    r.className="result win";r.innerHTML=`🏆 승리! ${G.nation.f} ${sn} 점령!<br>⚡He-3 +${pl} 약탈`;
+    r.className="result win";r.innerHTML=t("res_win",{flag:G.nation.f,sec:sn,he:pl}).replace("\n","<br>");
     G.sectors[i]={own:"me",flag:G.nation.f,name:G.nation.n,hp:85,ui:u.img,ue:u.emoji,ct:u.ctype,pow:u.pow};
     delete G.scouted[i];G.wins++;
     G.unitWins[u.id]=(G.unitWins[u.id]||0)+1;const wins=G.unitWins[u.id];
@@ -1246,13 +1532,13 @@ function showBR(won,i,s,u,cost){
     if(nick&&!G.unitNick[u.id]){G.unitNick[u.id]=nick;sfx("nick");showNickPop(`${u.name}: "${nick}" (${wins}승)`);}
     // UNLOCK adjacent fog
     unlockAdjacent(i);
-    if(Math.random()<.3){document.getElementById("prisoner-info").textContent=s.flag+" "+s.name+" 포획";document.getElementById("prisoner-box").classList.add("show");}
+    if(Math.random()<.3){document.getElementById("prisoner-info").textContent=s.flag+" "+s.name+" "+t("prisoner");document.getElementById("prisoner-box").classList.add("show");}
     // Morale boost on win
     G.morale=Math.min(100,G.morale+8);
     updateResUI();updateMoraleUI();
     log("win",`[점령] ${G.nation.f} ${sn} +He-3${pl}`);
   }else{
-    r.className="result lose";r.innerHTML=`💥 패배... ${s.flag} ${s.name}<br>전략을 바꿔보세요`;
+    r.className="result lose";r.innerHTML=t("res_lose",{flag:s.flag,name:s.name}).replace("\n","<br>");
     // Morale hit on loss
     G.morale=Math.max(0,G.morale-12);updateMoraleUI();
     log("lose",`[패배] ${s.flag} ${s.name}`);
@@ -1269,10 +1555,10 @@ function updateMoraleUI(){
   fill.style.width=m+"%";fill.style.background=col;val.textContent=m+"%";val.style.color=col;
   const statusEl=document.getElementById("morale-status-text");
   const warnEl=document.getElementById("morale-warning-text");
-  if(m>=70){statusEl.textContent="😤 사기: "+m+"% — 최상";if(warnEl)warnEl.textContent="";}
-  else if(m>=50){statusEl.textContent="😐 사기: "+m+"% — 보통";if(warnEl)warnEl.textContent="";}
-  else if(m>=30){statusEl.textContent="😟 사기: "+m+"% — 낮음! 전투력 -20%";if(warnEl)warnEl.textContent="⚠️ 접속 보너스로 사기 회복!";}
-  else{statusEl.textContent="😰 사기: "+m+"% — 위험! 전투력 -40%";if(warnEl)warnEl.textContent="🚨 사기 붕괴 위험! 즉시 접속 보너스 받으세요!";}
+  if(m>=70){statusEl.textContent=t("morale_ok",{v:m});if(warnEl)warnEl.textContent="";}
+  else if(m>=50){statusEl.textContent=t("morale_mid",{v:m});if(warnEl)warnEl.textContent="";}
+  else if(m>=30){statusEl.textContent=t("morale_low",{v:m});if(warnEl)warnEl.textContent=t("morale_warn_low");}
+  else{statusEl.textContent=t("morale_crit",{v:m});if(warnEl)warnEl.textContent=t("morale_warn_crit");}
 }
 let moraleInterval=null;
 let nextBonusSec=3600; // seconds to next bonus
@@ -1282,7 +1568,7 @@ function startMoraleTimer(){
     nextBonusSec=Math.max(0,nextBonusSec-1);
     const min=~~(nextBonusSec/60),sec=nextBonusSec%60;
     const timerEl=document.getElementById("next-bonus-timer");
-    if(timerEl)timerEl.textContent=`다음 보너스: ${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+    if(timerEl)timerEl.textContent=t("timer_fmt",{m:String(min).padStart(2,"0"),s:String(sec).padStart(2,"0")});
     if(nextBonusSec===0){nextBonusSec=3600;showBonusModal();}
     // Morale ticks down — every 60 real seconds -1 morale (simulating hourly -5%)
     // For demo: every 2 minutes -1 (scaled)
@@ -1292,7 +1578,7 @@ function startMoraleTimer(){
       if(G.morale<=30&&G.morale%10===0){
         sfx("morale_warn");
         const w=document.getElementById("morale-warn");
-        w.textContent=`😰 사기 ${G.morale}%! 접속 보너스를 받아 회복하세요!`;
+        w.textContent=t("morale_crit",{v:G.morale})+" "+t("morale_warn_crit");
         w.classList.add("show");setTimeout(()=>w.classList.remove("show"),4000);
       }
     }
@@ -1319,9 +1605,9 @@ function showBonusModal(isLogin=false,streak=1){
   bonuses.push({icon:"⚡",label:"He-3",val:"+"+heBonus});
   bonuses.push({icon:"💎",label:"레골리스",val:"+"+regBonus});
   bonuses.push({icon:"😤",label:"사기",val:"+"+moraleBonus+"%"});
-  if(streak>=3)bonuses.push({icon:"🔥",label:"연속 "+streak+"일 보너스",val:"×1.5"});
-  if(streak>=7)bonuses.push({icon:"⭐",label:"주간 보너스",val:"코인 +500"});
-  document.getElementById("bonus-title").textContent=isLogin?`🎁 접속 보너스! (${streak}일 연속)`:"⏰ 시간 보너스!";
+  if(streak>=3)bonuses.push({icon:"🔥",label:t("bonus_streak",{v:streak}),val:"×1.5"});
+  if(streak>=7)bonuses.push({icon:"⭐",label:t("bonus_weekly"),val:"🪙 +500"});
+  document.getElementById("bonus-title").textContent=isLogin?t("bonus_title",{v:streak}):t("bonus_hourly");
   document.getElementById("bonus-items").innerHTML=bonuses.map(b=>`
     <div class="bonus-item"><span>${b.icon} ${b.label}</span><span class="bonus-val">${b.val}</span></div>`).join("");
   G._pendingBonus={he:heBonus,reg:regBonus,morale:moraleBonus,streak,coins:streak>=7?500:0};
@@ -1345,7 +1631,7 @@ function deployUnit(i){
   G.sectors[i]={own:"me",flag:G.nation.f,name:G.nation.n,hp:100,ui:u.img,ue:u.emoji,ct:u.ctype,pow:u.pow};
   u.count--;renderUnits();showSelBig();unlockAdjacent(i);updateResUI();
   reward("🚀","배치 완료!",`${u.emoji} ${u.name} → ${SNAMES[i]}`);
-  log("win",`[배치] ${u.emoji} ${u.name} → ${SNAMES[i]}`);
+  log("win","["+t("log_deploy")+"] "+u.emoji+" "+u.name+" → "+SNAMES[i]);
   if(G.currentView===0)updateShipView();
 }
 function buyScout(){sfx("scout");if(G.he3<500){reward("⚠️","He-3 부족","");return}G.he3-=500;G.scoutCount++;updateResUI();reward("🛩️","정찰기 획득!",`보유: ${G.scoutCount}기`);log("info","[구매] 🛩️ +1")}
@@ -1353,7 +1639,7 @@ function executeScout(i){
   sfx("scout");if(G.scoutCount<=0){reward("⚠️","정찰기 없음","");return}
   const s=G.sectors[i];if(!s||s.own!=="enemy")return;
   G.scoutCount--;
-  if(G.radars[i]){reward("📡","격추됨!",s.flag+" "+s.name);log("lose","[정찰] ❌ 레이더");updateResUI();return}
+  if(G.radars[i]){reward("📡","격추됨!",s.flag+" "+s.name);log("lose","["+t("log_scout")+"] ❌ 📡");updateResUI();return}
   G.scouted[i]={ue:s.ue,ct:s.ct,pow:s.pow,hp:s.hp};
   buildGrid();updateResUI();reward("🛩️","정찰 성공!",s.flag+" "+s.name+" ⚔️"+s.pow);
   log("info",`[정찰] ✅ ${s.flag} ${s.name}`);setTimeout(()=>showSAO(i),1400);
@@ -1368,20 +1654,20 @@ function collect(){
   let he=0,reg=0,h2o=0;owned.forEach(k=>{const p=SEC_RES[SEC_TYPES[k]||"neutral"].prod;he+=p.he3;reg+=p.reg;h2o+=p.h2o;});
   he=~~(he*G.prodMod);reg=~~(reg*G.prodMod);h2o=~~(h2o*G.prodMod);
   G.he3+=he;G.reg+=reg;G.h2o+=h2o;updateResUI();
-  log("win",`[수집] ⚡+${he} 💎+${reg} 🌊+${h2o} (${owned.length}섹터)`);
+  log("win","["+t("log_collect")+"] ⚡+"+he+" 💎+"+reg+" 🌊+"+h2o);
 }
 function buyUnit(){sfx("click");if(G.coins<500){reward("⚠️","코인 부족","");return}G.coins-=500;const pool=[...SHIPS.slice(0,3),...MECHS.slice(0,3),...ACES];const u=pool[~~(Math.random()*pool.length)];u.count++;renderUnits();showSelBig();updateResUI();reward("🎁","유닛 획득!",`${u.emoji} ${u.name}`);log("win",`[구매] ${u.emoji} ${u.name}`)}
 function endTurn(){
   sfx("click");G.turn++;document.getElementById("turn-num").textContent=G.turn;collect();
-  if(G.h2o<50){log("lose","⚠️ H₂O 부족! HP -5%");Object.values(G.sectors).filter(s=>s.own==="me").forEach(s=>s.hp=Math.max(10,s.hp-5));}
+  if(G.h2o<50){log("lose","⚠️ H₂O");Object.values(G.sectors).filter(s=>s.own==="me").forEach(s=>s.hp=Math.max(10,s.hp-5));}
   G.eventMod=0;if(G.energyBuff>1)G.energyBuff=1;if(G.prodMod!==1&&!G.peaceTurns)G.prodMod=1;if(G.peaceTurns>0)G.peaceTurns--;
   // Morale small tick
   if(!G._lastMoraleTick||Date.now()-G._lastMoraleTick<60000){/* skip */}
   if(G.turn%5===0){const ev=EVENTS[~~(Math.random()*EVENTS.length)];ev.apply(G);sfx("event");
     document.getElementById("ev-icon").textContent=ev.icon;document.getElementById("ev-title").textContent=ev.title;
     document.getElementById("ev-desc").textContent=ev.desc;document.getElementById("ev-effect").textContent=ev.effect;
-    document.getElementById("emodal").classList.add("show");log("sys",`[이벤트] ${ev.icon} ${ev.title}`);}
-  updateResUI();updateMoraleUI();buildGrid();log("sys",`[턴 ${G.turn}]`);
+    document.getElementById("emodal").classList.add("show");log("sys","["+t("log_event")+"] "+ev.icon+" "+ev.title);}
+  updateResUI();updateMoraleUI();buildGrid();log("sys","["+t("turn_lbl")+" "+G.turn+"]");
 }
 function closeEvent(){document.getElementById("emodal").classList.remove("show");const tk=document.getElementById("ev-ticker");document.getElementById("ev-ticker-text").textContent=document.getElementById("ev-title").textContent;tk.classList.add("show");setTimeout(()=>tk.classList.remove("show"),4000)}
 
@@ -1425,7 +1711,7 @@ function aiTick(){
         ms.own="enemy";ms.flag=es.flag;ms.name=es.name;ms.ui=es.ui;ms.ue=es.ue;ms.ct=es.ct;ms.pow=es.pow;ms.hp=70;
         sfx("lose");G.morale=Math.max(0,G.morale-15);updateMoraleUI();
         const w=document.getElementById("ai-warn");
-        w.textContent=`⚠️ ${SNAMES[tk]} 함락! ${es.flag} ${es.name}에게 빼앗겼습니다`;
+        w.textContent=t("ai_fall",{sec:SNAMES[tk],flag:es.flag,name:es.name});
         w.classList.add("show");setTimeout(()=>w.classList.remove("show"),4000);
         buildGrid();updateResUI();log("lose",`[함락] ⚠️ ${SNAMES[tk]} — ${es.flag}`);
       }else{ms.hp=Math.max(20,ms.hp-18);buildGrid();log("sys",`[방어] 🛡️ ${SNAMES[tk]}`)}
