@@ -597,6 +597,19 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   .btn-enter{max-width:calc(100% - 32px)!important;box-sizing:border-box!important;}
   .catchphrase{font-size:.75rem!important;}
 }
+
+/* v0.9 ADDICTION ENGINE CSS */
+.xp-bar{height:4px;background:rgba(0,0,0,.4);border-radius:2px;margin:2px 8px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,#ffd700,#ff6600);transition:width .5s;border-radius:2px}
+.xp-label{font-size:.56rem;color:var(--gold);text-align:center}
+.mission-item{display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:.64rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.mission-item.done{opacity:.5;text-decoration:line-through}
+.m-icon{font-size:.8rem}
+.m-text{flex:1;color:var(--text)}
+.m-prog{color:var(--gold);font-weight:700;font-size:.6rem}
+.ex-row{padding:10px;margin:6px 0;background:rgba(0,200,255,.08);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.78rem;text-align:center;transition:all .2s}
+.ex-row:hover{background:rgba(0,200,255,.18);border-color:var(--accent)}
+
 </style>
 </head>
 <body>
@@ -775,7 +788,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
         <div class="utab" onclick="switchTab('ace',this)"><span id="i-tab-ace">⭐ 에이스</span></div>
       </div>
       <div class="unit-list" id="ulist"></div>
-      <div class="ps"><button class="btn-buy" onclick="buyUnit()"><span id="i-btn-buy">+ 구매 500🪙</span></button></div>
+      <div class="ps"><button class="btn-buy" onclick="buyUnit()"><span id="i-btn-buy">+ 구매 500🪙</span></button>
+    <button class="btn-buy" onclick="openExchange()" style="margin-left:4px;background:var(--panel);border:1px solid var(--gold);color:var(--gold)">🏪 교환</button></div>
       <div class="sel-big" id="sel-big">
         <div class="plbl"><span id="i-g-sel">선택된 유닛</span></div>
         <div id="sel-big-content" style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0"><span id="i-g-sel-hint">클릭하여 선택</span></div>
@@ -1056,6 +1070,7 @@ const NATIONS=[
   {f:"🇮🇷",n:"이란",e:"Iran"},{f:"🇪🇬",n:"이집트",e:"Egypt"},{f:"🇳🇬",n:"나이지리아",e:"Nigeria"},
   {f:"🇮🇱",n:"이스라엘",e:"Israel"},{f:"🇵🇰",n:"파키스탄",e:"Pakistan"},
 ];
+const EVENTS_EXT=[{"icon": "🏴‍☠️", "title": "용병 출현!"}, {"icon": "🔬", "title": "기술 돌파!"}, {"icon": "💫", "title": "유성우!"}, {"icon": "🤝", "title": "동맹 제안"}, {"icon": "⚡", "title": "에너지 폭풍!"}, {"icon": "🎰", "title": "보물 발견!"}];
 const EVENTS=[
   {icon:"☄️",title:"소행성 충돌!",desc:"달에 소행성이 충돌했습니다.",effect:"전 공격 정확도 -20% (1턴)",apply:G=>{G.eventMod=-0.2}},
   {icon:"☀️",title:"태양풍 발생",desc:"강력한 태양풍이 에너지 무기를 강화합니다.",effect:"레이저 유닛 전투력 +30% (1턴)",apply:G=>{G.energyBuff=1.3}},
@@ -1767,6 +1782,10 @@ function showBR(won,i,s,u,cost){
     G.sectors[i]={own:"me",flag:G.nation.f,name:G.nation.n,hp:85,ui:u.img,ue:u.emoji,ct:u.ctype,pow:u.pow};
     delete G.scouted[i];G.wins++;
     G.unitWins[u.id]=(G.unitWins[u.id]||0)+1;const wins=G.unitWins[u.id];
+    addUnitXP(u.id, 1);
+    addXP(100);
+    G._lastWin=true; G._combo=(G._combo||0)+1;
+    checkAchievements();
     const nick=getNick(wins);
     if(nick&&!G.unitNick[u.id]){G.unitNick[u.id]=nick;sfx("nick");showNickPop(`${u.name}: "${nick}" (${wins}승)`);}
     // UNLOCK adjacent fog
@@ -1779,7 +1798,7 @@ function showBR(won,i,s,u,cost){
   }else{
     r.className="result lose";r.innerHTML=t("res_lose",{flag:s.flag,name:s.name}).replace("\n","<br>");
     // Morale hit on loss
-    G.morale=Math.max(0,G.morale-12);updateMoraleUI();
+    G.morale=Math.max(0,G.morale-12);G._lastWin=false;G._combo=0;updateMoraleUI();
     log("lose",`[패배] ${s.flag} ${s.name}`);
   }
   r.style.display="block";document.getElementById("bclose").style.display="inline-block";
@@ -1896,6 +1915,176 @@ function collect(){
   log("win","["+t("log_collect")+"] ⚡+"+he+" 💎+"+reg+" 🌊+"+h2o);
 }
 function buyUnit(){sfx("click");if(G.coins<500){reward("⚠️","코인 부족","");return}G.coins-=500;const pool=[...SHIPS.slice(0,3),...MECHS.slice(0,3),...ACES];const u=pool[~~(Math.random()*pool.length)];u.count++;renderUnits();showSelBig();updateResUI();reward("🎁","유닛 획득!",`${u.emoji} ${u.name}`);log("win",`[구매] ${u.emoji} ${u.name}`)}
+
+// ═══════════════════════════════════════
+// KINGDOM WARS v0.9 — ADDICTION ENGINE
+// ═══════════════════════════════════════
+
+// ── 1. 플레이어 레벨 & 경험치 ──
+function addXP(amount) {
+  G.xp = (G.xp||0) + amount;
+  const needed = G.level * 500;
+  if (G.xp >= needed) {
+    G.xp -= needed;
+    G.level++;
+    sfx("bonus");
+    reward("⭐", "레벨 업!", "Lv." + G.level + " 달성! 보상: He-3 +" + (G.level*200) + ", 코인 +" + (G.level*100));
+    G.he3 += G.level * 200;
+    G.coins += G.level * 100;
+    log("sys", "⭐ [레벨 " + G.level + "] 달성!");
+    updateHUD();
+  }
+  updateXPBar();
+}
+
+function updateXPBar() {
+  const bar = document.getElementById("xp-bar-fill");
+  const lbl = document.getElementById("xp-label");
+  if (!bar || !lbl) return;
+  const needed = G.level * 500;
+  const pct = Math.min(100, (G.xp / needed) * 100);
+  bar.style.width = pct + "%";
+  lbl.textContent = "Lv." + G.level + " (" + G.xp + "/" + needed + ")";
+}
+
+// ── 2. 유닛 레벨업 ──
+function addUnitXP(unitId, amount) {
+  if (!G.unitXP) G.unitXP = {};
+  if (!G.unitLv) G.unitLv = {};
+  G.unitXP[unitId] = (G.unitXP[unitId]||0) + amount;
+  const lv = G.unitLv[unitId] || 1;
+  const needed = lv * 3; // 승리 3회마다 레벨업
+  if (G.unitXP[unitId] >= needed) {
+    G.unitXP[unitId] -= needed;
+    G.unitLv[unitId] = lv + 1;
+    // 전투력 10% 증가
+    const allUnits = [...SHIPS, ...MECHS, ...ACES];
+    const u = allUnits.find(x => x.id === unitId);
+    if (u) {
+      u.pow = Math.round(u.pow * 1.1);
+      sfx("nick");
+      reward("💪", u.name + " Lv." + (lv+1), "전투력 +" + Math.round(u.pow*0.1) + "!");
+      log("win", "💪 " + u.emoji + " " + u.name + " → Lv." + (lv+1) + " (⚔️" + u.pow + ")");
+    }
+  }
+}
+
+// ── 3. 업적 시스템 ──
+const ACHIEVEMENTS = [
+  {id:"first_blood",name:"첫 승리",desc:"첫 전투에서 승리",icon:"🏆",check:G=>G.wins>=1,reward:{he3:500}},
+  {id:"conqueror_5",name:"정복자",desc:"5개 섹터 점령",icon:"🗺️",check:G=>Object.values(G.sectors).filter(s=>s.own==="me").length>=5,reward:{coins:300}},
+  {id:"conqueror_15",name:"대정복자",desc:"15개 섹터 점령",icon:"👑",check:G=>Object.values(G.sectors).filter(s=>s.own==="me").length>=15,reward:{he3:2000,coins:500}},
+  {id:"rich",name:"부자",desc:"He-3 10,000 보유",icon:"💰",check:G=>G.he3>=10000,reward:{coins:1000}},
+  {id:"scout_5",name:"정찰왕",desc:"정찰 5회 성공",icon:"🛩️",check:G=>(G.scoutDone||0)>=5,reward:{he3:800}},
+  {id:"streak_5",name:"연속 접속",desc:"5일 연속 접속",icon:"🔥",check:G=>(G.streak||0)>=5,reward:{he3:1500,coins:500}},
+  {id:"turn_20",name:"전략가",desc:"20턴 도달",icon:"🧠",check:G=>G.turn>=20,reward:{he3:1000}},
+  {id:"turn_50",name:"대전략가",desc:"50턴 도달",icon:"🎖️",check:G=>G.turn>=50,reward:{he3:3000,coins:1000}},
+  {id:"morale_max",name:"사기 충천",desc:"사기 100% 유지 5턴",icon:"😤",check:G=>(G.moraleMaxTurns||0)>=5,reward:{he3:600}},
+  {id:"defender",name:"수호자",desc:"적 공격 3회 방어",icon:"🛡️",check:G=>(G.defended||0)>=3,reward:{he3:1200}},
+];
+
+function checkAchievements() {
+  if (!G.achievements) G.achievements = {};
+  ACHIEVEMENTS.forEach(a => {
+    if (!G.achievements[a.id] && a.check(G)) {
+      G.achievements[a.id] = true;
+      sfx("unlock");
+      reward(a.icon, "업적: " + a.name, a.desc);
+      if (a.reward.he3) G.he3 += a.reward.he3;
+      if (a.reward.coins) G.coins += a.reward.coins;
+      log("sys", a.icon + " [업적] " + a.name + " 달성!");
+      addXP(200);
+    }
+  });
+}
+
+// ── 4. 전투 연출 강화 ──
+function getBattleEffects(u, s, mode) {
+  const effects = [];
+  const roll = Math.random();
+  
+  // 크리티컬 (10% 확률)
+  if (roll < 0.10) {
+    effects.push({type:"critical", mult:1.5, text:"💥 크리티컬 히트!"});
+  }
+  // 콤보 (연승시 확률 증가)
+  if (G._lastWin && Math.random() < 0.15) {
+    effects.push({type:"combo", mult:1.25, text:"🔥 " + (G._combo||1) + "연승 콤보!"});
+  }
+  // 상성 보너스 텍스트
+  const cm = getCM(u.ctype, s.ct);
+  if (cm.mod > 1) effects.push({type:"advantage", mult:1, text:"✨ 상성 우위!"});
+  if (cm.mod < 1) effects.push({type:"disadvantage", mult:1, text:"⚠️ 상성 불리..."});
+  
+  // 사기 보너스 텍스트
+  if (G.morale >= 90) effects.push({type:"morale", mult:1.05, text:"😤 투지 만점!"});
+  
+  return effects;
+}
+
+// ── 5. 퀘스트/미션 ──
+function getActiveMissions() {
+  const missions = [];
+  const mine = Object.values(G.sectors).filter(s=>s.own==="me").length;
+  
+  if (mine < 3) missions.push({icon:"🎯",text:"3개 섹터 점령",progress:mine+"/3",done:mine>=3});
+  else if (mine < 8) missions.push({icon:"🎯",text:"8개 섹터 점령",progress:mine+"/8",done:mine>=8});
+  else if (mine < 15) missions.push({icon:"🎯",text:"15개 섹터 점령",progress:mine+"/15",done:mine>=15});
+  else missions.push({icon:"🎯",text:"전체 정복",progress:mine+"/49",done:mine>=49});
+  
+  if (G.turn < 10) missions.push({icon:"⏰",text:"10턴 생존",progress:G.turn+"/10",done:G.turn>=10});
+  if (G.he3 < 5000) missions.push({icon:"⚡",text:"He-3 5,000 모으기",progress:G.he3+"/5000",done:G.he3>=5000});
+  
+  return missions;
+}
+
+function renderMissions() {
+  const mc = document.getElementById("mission-container");
+  if (!mc) return;
+  const missions = getActiveMissions();
+  mc.innerHTML = missions.map(m => 
+    "<div class=\"mission-item " + (m.done?"done":"") + "\">" +
+    "<span class=\"m-icon\">" + m.icon + "</span>" +
+    "<span class=\"m-text\">" + m.text + "</span>" +
+    "<span class=\"m-prog\">" + m.progress + "</span>" +
+    "</div>"
+  ).join("");
+}
+
+// ── 6. 추가 이벤트 (기존 6개 + 6개 신규) ──
+const EVENTS_NEW = [
+  {icon:"🏴‍☠️",title:"용병 출현!",desc:"용병 부대가 합류를 제안합니다.",effect:"전투기 +2 즉시 획득",apply:G=>{SHIPS[0].count+=2;}},
+  {icon:"🔬",title:"기술 돌파!",desc:"연구소에서 신기술을 개발했습니다!",effect:"다음 3턴 전투력 +25%",apply:G=>{G.techBuff=1.25;G.techTurns=3;}},
+  {icon:"💫",title:"유성우!",desc:"유성우가 쏟아집니다!",effect:"무작위 3섹터 자원 2배",apply:G=>{G.meteorTurns=2;}},
+  {icon:"🤝",title:"동맹 제안",desc:"중립 세력이 동맹을 제안합니다.",effect:"빈 섹터 1개 무료 획득",apply:G=>{for(let i=0;i<49;i++){if(!G.sectors[i]&&G.revealed.has(i)){G.sectors[i]={own:"me",flag:G.nation.f,name:G.nation.n,hp:60,ue:"🤝",ct:"neutral",pow:50};buildGrid();break;}}}},
+  {icon:"⚡",title:"에너지 폭풍!",desc:"강력한 에너지 파동이 감지됩니다!",effect:"He-3 +500, 사기 +15%",apply:G=>{G.he3+=500;G.morale=Math.min(100,G.morale+15);}},
+  {icon:"🎰",title:"보물 발견!",desc:"고대 유적에서 보물을 발견했습니다!",effect:"코인 +800",apply:G=>{G.coins+=800;}},
+];
+
+// ── 7. 자원 교환소 ──
+function openExchange() {
+  const m = document.getElementById("emodal");
+  m.style.display = "flex";
+  m.querySelector(".ebg").onclick = () => { m.style.display = "none"; };
+  const body = m.querySelector(".ebody") || m;
+  body.innerHTML = "<div class=\"ev-title\">🏪 자원 교환소</div>" +
+    "<div class=\"ex-row\" onclick=\"exchange('he3','coins',500,100)\">⚡ He-3 500 → 🪙 코인 100</div>" +
+    "<div class=\"ex-row\" onclick=\"exchange('coins','he3',200,600)\">🪙 코인 200 → ⚡ He-3 600</div>" +
+    "<div class=\"ex-row\" onclick=\"exchange('reg','he3',50,800)\">💎 레골리스 50 → ⚡ He-3 800</div>" +
+    "<div class=\"ex-row\" onclick=\"exchange('he3','reg',1000,30)\">⚡ He-3 1000 → 💎 레골리스 30</div>" +
+    "<div style=\"text-align:center;margin-top:12px\"><button class=\"btn-ok\" onclick=\"document.getElementById('emodal').style.display='none'\">닫기</button></div>";
+}
+
+function exchange(from, to, fromAmt, toAmt) {
+  if (G[from] < fromAmt) { reward("⚠️", "자원 부족", from + " " + fromAmt + " 필요"); return; }
+  G[from] -= fromAmt;
+  G[to] += toAmt;
+  sfx("collect");
+  updateResUI();
+  reward("✅", "교환 완료", to + " +" + toAmt);
+  log("info", "🏪 [교환] " + from + " -" + fromAmt + " → " + to + " +" + toAmt);
+}
+
 function endTurn(){
   sfx("click");G.turn++;document.getElementById("turn-num").textContent=G.turn;collect();
   if(G.h2o<50){log("lose","⚠️ H₂O");Object.values(G.sectors).filter(s=>s.own==="me").forEach(s=>s.hp=Math.max(10,s.hp-5));}
