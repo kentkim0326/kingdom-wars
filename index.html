@@ -1919,7 +1919,7 @@ function removeRadar(i){sfx("click");delete G.radars[i];buildGrid();updateResUI(
 function collect(){
   sfx("collect");const owned=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="me");if(!owned.length)return;
   let he=0,reg=0,h2o=0;owned.forEach(k=>{const p=SEC_RES[SEC_TYPES[k]||"neutral"].prod;he+=p.he3;reg+=p.reg;h2o+=p.h2o;});
-  he=~~(he*G.prodMod);reg=~~(reg*G.prodMod);h2o=~~(h2o*G.prodMod);
+  const dry=G.h2o<50?0.5:1;he=~~(he*G.prodMod*dry);reg=~~(reg*G.prodMod*dry);h2o=~~(h2o*G.prodMod);
   G.he3+=he;G.reg+=reg;G.h2o+=h2o;updateResUI();
   log("win","["+t("log_collect")+"] ⚡+"+he+" 💎+"+reg+" 🌊+"+h2o);
 }
@@ -2098,8 +2098,14 @@ function endTurn(){
   const now=Date.now();
   if(G._lastTurnTime && now-G._lastTurnTime<2000){reward("⏳","잠시 후","턴은 2초에 1번");return}
   G._lastTurnTime=now;
-  sfx("click");G.turn++;document.getElementById("turn-num").textContent=G.turn;collect();
-  if(G.h2o<50){log("lose","⚠️ H₂O");Object.values(G.sectors).filter(s=>s.own==="me").forEach(s=>s.hp=Math.max(10,s.hp-5));}
+  sfx("click");G.turn++;document.getElementById("turn-num").textContent=G.turn;
+  // 유지비: 섹터당 H₂O 3 소모 (턴 스팸 = H₂O 고갈 리스크)
+  const myCount=Object.values(G.sectors).filter(s=>s.own==="me").length;
+  const upkeep=myCount*3;
+  G.h2o=Math.max(0,G.h2o-upkeep);
+  if(upkeep>0)log("info","💧 [유지비] H₂O -"+upkeep+" ("+myCount+"개 섹터)");
+  collect();
+  if(G.h2o<50){log("lose","⚠️ H₂O 부족! 섹터 약화 + 생산 -50%");Object.values(G.sectors).filter(s=>s.own==="me").forEach(s=>s.hp=Math.max(10,s.hp-5));G.morale=Math.max(0,G.morale-3);}
   G.eventMod=0;if(G.energyBuff>1)G.energyBuff=1;if(G.prodMod!==1&&!G.peaceTurns)G.prodMod=1;if(G.peaceTurns>0)G.peaceTurns--;
   // Morale small tick
   if(!G._lastMoraleTick||Date.now()-G._lastMoraleTick<60000){/* skip */}
@@ -2108,6 +2114,8 @@ function endTurn(){
     document.getElementById("ev-desc").textContent=ev.desc;document.getElementById("ev-effect").textContent=ev.effect;
     document.getElementById("emodal").classList.add("show");log("sys","["+t("log_event")+"] "+ev.icon+" "+ev.title);}
   updateResUI();updateMoraleUI();buildGrid();log("sys","["+t("turn_lbl")+" "+G.turn+"]");
+  // 턴마다 적도 1회 행동 — 턴 스팸시 적도 같이 성장
+  if(typeof aiTick==="function") aiTick();
   // v0.9: XP, achievements, missions
   addXP(50 + G.turn*5);
   checkAchievements();
