@@ -736,6 +736,11 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       <div class="morale-track"><div class="morale-fill" id="morale-fill" style="width:100%;background:var(--green)"></div></div>
       <span class="morale-val" id="morale-val" style="color:var(--green)">100%</span>
     </div>
+    <div class="morale-pill" style="min-width:150px">
+      <span style="font-size:.72rem">⭐</span>
+      <div class="morale-track"><div class="xp-fill" id="xp-bar-fill" style="width:0%"></div></div>
+      <span class="morale-val" id="xp-label" style="color:var(--gold);font-size:.56rem;min-width:70px">Lv.1 (0/500)</span>
+    </div>
     <div class="online-timer">
       <div class="online-dot"></div>
       <span id="next-bonus-timer">다음 보너스: 60:00</span>
@@ -808,6 +813,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
         </div>
       </div>
       <div class="ps" style="flex:1">
+        <div class="plbl" style="color:var(--accent)">📋 미션</div>
+        <div id="mission-container"></div>
         <div class="plbl"><span id="i-g-log">전황</span></div>
         <div id="minilog" style="font-size:.6rem;color:var(--muted);line-height:1.7"></div>
       </div>
@@ -1097,6 +1104,7 @@ let G={
   currentView:2,turn:1,wins:0,
   unitWins:{},unitNick:{},
   eventMod:0,prodMod:1,energyBuff:1,peaceTurns:0,
+  level:1,xp:0,achievements:{},unitXP:{},unitLv:{},scoutDone:0,defended:0,moraleMaxTurns:0,techBuff:1,techTurns:0,_combo:0,_lastWin:false,_lastTurnTime:0,
   scoutCount:0,radars:{},scouted:{},
   // Formation
   fmSec:null,fmMode:"direct",fmQty:{},
@@ -1422,6 +1430,7 @@ function goCommander(){
 function goGame(){
   sfx("deploy");if(!G.nation||!G.commander)return;
   initMap();
+  setTimeout(function(){renderMissions();updateXPBar();},100);
   document.getElementById("news-scroll").innerHTML=[
     "🚀 SpaceX Starship 화성 유인 탐사 2027년 목표","🌙 NASA 아르테미스 달 착륙 예정",
     "⚡ 달 He-3 매장량 100만 톤","🔬 달 토양 산소 추출 성공","🏗️ 달 게이트웨이 2027년 착공",
@@ -2086,6 +2095,9 @@ function exchange(from, to, fromAmt, toAmt) {
 }
 
 function endTurn(){
+  const now=Date.now();
+  if(G._lastTurnTime && now-G._lastTurnTime<2000){reward("⏳","잠시 후","턴은 2초에 1번");return}
+  G._lastTurnTime=now;
   sfx("click");G.turn++;document.getElementById("turn-num").textContent=G.turn;collect();
   if(G.h2o<50){log("lose","⚠️ H₂O");Object.values(G.sectors).filter(s=>s.own==="me").forEach(s=>s.hp=Math.max(10,s.hp-5));}
   G.eventMod=0;if(G.energyBuff>1)G.energyBuff=1;if(G.prodMod!==1&&!G.peaceTurns)G.prodMod=1;if(G.peaceTurns>0)G.peaceTurns--;
@@ -2096,6 +2108,12 @@ function endTurn(){
     document.getElementById("ev-desc").textContent=ev.desc;document.getElementById("ev-effect").textContent=ev.effect;
     document.getElementById("emodal").classList.add("show");log("sys","["+t("log_event")+"] "+ev.icon+" "+ev.title);}
   updateResUI();updateMoraleUI();buildGrid();log("sys","["+t("turn_lbl")+" "+G.turn+"]");
+  // v0.9: XP, achievements, missions
+  addXP(50 + G.turn*5);
+  checkAchievements();
+  renderMissions();
+  if(G.morale>=100) G.moraleMaxTurns=(G.moraleMaxTurns||0)+1;
+  if(G.techTurns>0){G.techTurns--;if(G.techTurns<=0)G.techBuff=1;}
 }
 function closeEvent(){document.getElementById("emodal").classList.remove("show");const tk=document.getElementById("ev-ticker");document.getElementById("ev-ticker-text").textContent=document.getElementById("ev-title").textContent;tk.classList.add("show");setTimeout(()=>tk.classList.remove("show"),4000)}
 
