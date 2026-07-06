@@ -1992,6 +1992,46 @@ const ACHIEVEMENTS = [
   {id:"defender",name:"수호자",desc:"적 공격 3회 방어",icon:"🛡️",check:G=>(G.defended||0)>=3,reward:{he3:1200}},
 ];
 
+
+// ═══ 승리/패배 판정 ═══
+function showEndModal(icon, title, titleColor, descHTML, btnHTML){
+  let ov = document.getElementById("end-overlay");
+  if(!ov){
+    ov = document.createElement("div");
+    ov.id = "end-overlay";
+    ov.style.cssText = "position:fixed;inset:0;z-index:99999;background:rgba(3,5,14,.92);display:flex;align-items:center;justify-content:center;padding:20px";
+    document.body.appendChild(ov);
+  }
+  ov.innerHTML = "<div style=\"background:var(--panel);border:2px solid "+titleColor+";border-radius:18px;padding:34px 28px;max-width:420px;width:100%;text-align:center;box-shadow:0 0 60px "+titleColor+"55\">"+
+    "<div style=\"font-size:3.5rem;margin-bottom:10px\">"+icon+"</div>"+
+    "<div style=\"font-size:1.5rem;font-weight:900;color:"+titleColor+";letter-spacing:2px;margin-bottom:12px\">"+title+"</div>"+
+    "<div style=\"font-size:.85rem;color:var(--text);line-height:1.7;margin-bottom:18px\">"+descHTML+"</div>"+
+    btnHTML+"</div>";
+  ov.style.display = "flex";
+}
+
+function checkGameEnd(){
+  if(G._gameEnded) return;
+  const mine=Object.values(G.sectors).filter(s=>s.own==="me").length;
+  if(mine===0 && G.turn>1){
+    G._gameEnded=true;
+    sfx("lose");
+    showEndModal("💀","패배...","#ff3a3a",
+      "모든 영토를 잃었습니다.<br>달 정복의 꿈은 다음 기회에...<br><br>🕐 도달 턴: "+G.turn+" &nbsp;·&nbsp; ⭐ Lv."+G.level+"<br>🏆 승리: "+G.wins+"회",
+      "<button onclick=\"location.reload()\" style=\"padding:12px 36px;background:linear-gradient(135deg,#aa0000,#ff3a3a);color:#fff;border:none;border-radius:50px;font-weight:900;font-size:.9rem;cursor:pointer;letter-spacing:1px\">🔄 다시 도전</button>");
+    log("lose","💀 [게임 오버] 모든 영토 상실");
+    return;
+  }
+  if(mine>=49){
+    G._gameEnded=true;
+    sfx("win");
+    showEndModal("👑","달 정복 완료!","#ffd700",
+      "49개 전 섹터를 정복했습니다!<br>당신이 달의 지배자입니다! 🌙<br><br>🕐 클리어 턴: "+G.turn+" &nbsp;·&nbsp; ⭐ Lv."+G.level+"<br>🏆 승리: "+G.wins+"회",
+      "<button onclick=\"location.reload()\" style=\"padding:12px 36px;background:linear-gradient(135deg,#aa7700,#ffd700);color:#000;border:none;border-radius:50px;font-weight:900;font-size:.9rem;cursor:pointer;letter-spacing:1px\">🚀 화성으로 (Soon)</button>");
+    log("win","👑 [승리] 달 정복 완료!");
+  }
+}
+
 function checkAchievements() {
   if (!G.achievements) G.achievements = {};
   ACHIEVEMENTS.forEach(a => {
@@ -2114,11 +2154,12 @@ function endTurn(){
     document.getElementById("ev-desc").textContent=ev.desc;document.getElementById("ev-effect").textContent=ev.effect;
     document.getElementById("emodal").classList.add("show");log("sys","["+t("log_event")+"] "+ev.icon+" "+ev.title);}
   updateResUI();updateMoraleUI();buildGrid();log("sys","["+t("turn_lbl")+" "+G.turn+"]");
-  // 턴마다 적도 1회 행동 — 턴 스팸시 적도 같이 성장
-  if(typeof aiTick==="function") aiTick();
+  // 2턴마다 적 1회 행동 (타이머 AI와 별개)
+  if(G.turn%2===0 && typeof aiTick==="function") aiTick();
   // v0.9: XP, achievements, missions
   addXP(50 + G.turn*5);
   checkAchievements();
+  checkGameEnd();
   renderMissions();
   if(G.morale>=100) G.moraleMaxTurns=(G.moraleMaxTurns||0)+1;
   if(G.techTurns>0){G.techTurns--;if(G.techTurns<=0)G.techBuff=1;}
@@ -2152,18 +2193,20 @@ function aiTick(){
       if(G.revealed.has(idx)){buildGrid();sfx("emove");log("sys",`[경보] ${n.f} ${n.n} → ${SNAMES[idx]}`)}
     }
   }else if(r<0.62){
-    // Attack player sector
+    // Attack player sector (첫 5턴은 유예 — 확장만)
+    if(G.turn<5)return;
     const mine=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="me");
     const enm=Object.keys(G.sectors).filter(k=>G.sectors[k].own==="enemy");
     if(mine.length&&enm.length){
       const tk=mine[~~(Math.random()*mine.length)];const ak=enm[~~(Math.random()*enm.length)];
       const ms=G.sectors[tk];const es=G.sectors[ak];if(!ms||!es)return;
       if(G.radars[tk]){log("info",`[레이더] 📡 ${SNAMES[tk]} 방어!`);sfx("radar");return}
-      const ap=es.pow+~~(Math.random()*60);const dp=~~(ms.pow*(1+(G.morale/100)*.5))+~~(Math.random()*40);
+      const ap=es.pow+~~(Math.random()*60);let dp=~~(ms.pow*(1+(G.morale/100)*.5))+~~(Math.random()*40);
+      if(mine.length<=1){dp=~~(dp*2.2);/* 최후의 방어선 */}
       sfx("emove");
       if(Math.random()<ap/(ap+dp)){
         ms.own="enemy";ms.flag=es.flag;ms.name=es.name;ms.ui=es.ui;ms.ue=es.ue;ms.ct=es.ct;ms.pow=es.pow;ms.hp=70;
-        sfx("lose");G.morale=Math.max(0,G.morale-15);updateMoraleUI();
+        sfx("lose");G.morale=Math.max(0,G.morale-15);updateMoraleUI();setTimeout(checkGameEnd,600);
         const w=document.getElementById("ai-warn");
         w.textContent=t("ai_fall",{sec:SNAMES[tk],flag:es.flag,name:es.name});
         w.classList.add("show");setTimeout(()=>w.classList.remove("show"),4000);
