@@ -610,6 +610,17 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .ex-row{padding:10px;margin:6px 0;background:rgba(0,200,255,.08);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.78rem;text-align:center;transition:all .2s}
 .ex-row:hover{background:rgba(0,200,255,.18);border-color:var(--accent)}
 
+
+/* MOBILE UNIT BAR */
+#munit-bar{display:none}
+@media(max-width:700px){
+  #munit-bar{display:flex;gap:6px;overflow-x:auto;padding:6px 8px;background:rgba(7,9,26,.92);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch}
+  .mu-chip{flex:0 0 auto;display:flex;align-items:center;gap:4px;padding:6px 10px;border:1.5px solid var(--border);border-radius:20px;background:var(--panel);font-size:.72rem;cursor:pointer;white-space:nowrap}
+  .mu-chip.sel{border-color:var(--accent);background:rgba(0,200,255,.15);box-shadow:0 0 8px rgba(0,200,255,.3)}
+  .mu-chip .mu-cnt{color:var(--gold);font-weight:700;font-size:.66rem}
+  .mu-chip.zero{opacity:.4}
+}
+
 </style>
 </head>
 <body>
@@ -831,7 +842,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       </div>
       <!-- VIEW 2: BATTLE MAP (49 sectors) -->
       <div class="view active" id="view-2">
-        <div class="battle-view" id="bv">
+        <!-- MOBILE UNIT BAR -->
+<div id="munit-bar"></div>
+<div class="battle-view" id="bv">
           <img class="moon-surf" src="assets/moon_real.png" alt="" onerror="this.style.display='none'"/>
           <div class="grid-wrap" id="grid"></div>
         </div>
@@ -1430,6 +1443,7 @@ function goCommander(){
 function goGame(){
   sfx("deploy");if(!G.nation||!G.commander)return;
   initMap();
+  G.selUnit=SHIPS[0]; // 전투기 자동 선택 — 바로 배치/공격 가능
   setTimeout(function(){renderMissions();updateXPBar();},100);
   document.getElementById("news-scroll").innerHTML=[
     "🚀 SpaceX Starship 화성 유인 탐사 2027년 목표","🌙 NASA 아르테미스 달 착륙 예정",
@@ -1669,6 +1683,7 @@ function closeSAO(){document.getElementById("sao").classList.remove("show")}
 // ══ FORMATION MODAL ══════════════════════════════════
 function openFM(secIdx,mode){
   sfx("click");G.fmSec=secIdx;G.fmMode=mode;G.fmQty={};
+  if(G.selUnit&&G.selUnit.count>0)G.fmQty[G.selUnit.id]=1; // 선택 유닛 1대 자동 편성
   const s=G.sectors[secIdx];
   document.getElementById("fm-enemy").innerHTML=`
     <img class="fm-eimg" src="${s.ui||""}" alt="" onerror="this.style.display='none'"/>
@@ -1750,7 +1765,8 @@ function launchFM(){
     const cm=getCM(u.ctype,ct);tp+=~~(u.pow*cm.mod*qty);tc+=(u.cost?.he3||0)*qty;if(!repUnit)repUnit=u;
     u.count=Math.max(0,u.count-qty);
   }
-  if(!repUnit||tp===0||tc>G.he3){closeFM();return}
+  if(!repUnit||tp===0){reward("⚠️","출격 유닛 없음","+버튼으로 유닛 수량을 선택하세요");return}
+  if(tc>G.he3){reward("⚠️","He-3 부족","필요: "+tc+" / 보유: "+G.he3);return}
   G.he3-=tc;G.fmQty={};
   const adj=getAdjMine(G.fmSec);
   if(G.fmMode==="smart")tp=~~(tp*1.2);
@@ -2256,6 +2272,18 @@ function updateShipView(){
 }
 function switchTab(t,el){sfx("click");G.tab=t;document.querySelectorAll(".utab").forEach(u=>u.classList.remove("active"));if(el)el.classList.add("active");renderUnits()}
 function getList(){return G.tab==="fleet"?SHIPS:G.tab==="mech"?MECHS:ACES}
+
+// ═══ 모바일 유닛 선택 바 ═══
+function renderMobileBar(){
+  const bar=document.getElementById("munit-bar");
+  if(!bar)return;
+  const ALL_U=[...SHIPS,...MECHS,...ACES];
+  bar.innerHTML=ALL_U.filter(u=>u.count>0||G.selUnit?.id===u.id).map(u=>
+    '<div class="mu-chip '+(G.selUnit?.id===u.id?"sel":"")+' '+(u.count<=0?"zero":"")+'" onclick="selUnit(\''+u.id+'\')">'+
+    u.emoji+' <span>'+u.name+'</span> <span class="mu-cnt">×'+u.count+'</span></div>'
+  ).join("");
+}
+
 function renderUnits(){
   document.getElementById("ulist").innerHTML=getList().map(u=>{
     const wins=G.unitWins[u.id]||0;const nick=G.unitNick[u.id];
@@ -2272,8 +2300,8 @@ function renderUnits(){
         ${u.skills?`<div class="ucard-skills">⚡${u.skills.join("·")}</div>`:""}
       </div></div>`;
   }).join("");
-}
-function selUnit(id){const found=ALL.find(x=>x.id===id);G.selUnit=found;sfx("click");renderUnits();showSelBig();if(G.currentView===0)updateShipView()}
+;renderMobileBar();}
+function selUnit(id){const found=ALL.find(x=>x.id===id);G.selUnit=found;sfx("click");renderUnits();showSelBig();if(G.currentView===0)updateShipView();renderMobileBar();}
 function showSelBig(){
   const el=document.getElementById("sel-big-content");if(!G.selUnit){el.innerHTML=`<div style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0">클릭하여 선택</div>`;return}
   const u=G.selUnit;const wins=G.unitWins[u.id]||0;const nick=G.unitNick[u.id];
