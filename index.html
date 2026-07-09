@@ -621,6 +621,11 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   .mu-chip.zero{opacity:.4}
 }
 
+
+/* 유닛 부족 알림 */
+.btn-buy.urgent{animation:btnPulse 1.5s ease-in-out infinite;box-shadow:0 0 12px rgba(255,215,0,.6)}
+@keyframes btnPulse{0%,100%{transform:scale(1);box-shadow:0 0 8px rgba(255,215,0,.4)}50%{transform:scale(1.05);box-shadow:0 0 20px rgba(255,215,0,.8)}}
+
 </style>
 </head>
 <body>
@@ -993,7 +998,7 @@ function getCM(a,d){if(!a||!d)return{mod:1,lbl:"⚖️"};const c=CTR[a];if(!c)re
 // ══ UNITS ════════════════════════════════════════════
 const SHIPS=[
   {id:"f1",name:"전투기",ctype:"fighter",emoji:"🚀",img:A+"ship3.png",pow:80,count:3,hangar:0,rarity:"R",cost:{he3:0},skills:["선제타격","편대비행"],strong:"구축함",weak:"레이저"},
-  {id:"f2",name:"구축함",ctype:"destroyer",emoji:"🛸",img:A+"ship6.png",pow:200,count:0,hangar:2,rarity:"SR",cost:{he3:200},skills:["어뢰","대잠"],strong:"모선",weak:"전투기"},
+  {id:"f2",name:"구축함",ctype:"destroyer",emoji:"🛸",img:A+"ship6.png",pow:200,count:2,hangar:2,rarity:"SR",cost:{he3:200},skills:["어뢰","대잠"],strong:"모선",weak:"전투기"},
   {id:"f3",name:"순양함",ctype:"destroyer",emoji:"🌠",img:A+"ship1.png",pow:380,count:0,hangar:4,rarity:"SR",cost:{he3:400},skills:["광역포격","레이저포"],strong:"모선",weak:"어뢰"},
   {id:"f4",name:"전투함",ctype:"destroyer",emoji:"🏛️",img:A+"ship5.png",pow:560,count:0,hangar:6,rarity:"UR",cost:{he3:700},skills:["함포폭격","전술방어"],strong:"섹터",weak:"드론"},
   {id:"f5",name:"모선",ctype:"mothership",emoji:"🌌",img:A+"ship2.png",pow:850,count:0,hangar:12,rarity:"UR",cost:{he3:1200},skills:["격납출격","함대결전"],strong:"전섹터",weak:"구축함"},
@@ -1177,7 +1182,7 @@ const KW_LANG = {
     sao_no_unit:"⚠️ 유닛 없음",sao_no_unit_hint:"왼쪽에서 유닛 선택 후 공격",
     sao_sc_count:"보유: {v}기",sao_sc_bonus:"+20% 보너스",
     sao_surr_hint:"인접 {v}개 아군 협공",sao_wr:"~{v}%",
-    sao_deploy_cost:"He-3 {v} 소모",sao_no_enough:"유닛 부족",sao_no_sel:"유닛 선택 필요",
+    sao_deploy_cost:"He-3 {v} 소모",sao_no_enough:"유닛 부족 - 구매/턴종료",sao_no_sel:"유닛 선택 필요",
     fm_title:"⚔️ 출격 편성",fm_sub:"공격에 보낼 유닛을 선택하세요. 보낸 만큼 소비됩니다.",
     fm_cancel:"취소",fm_launch:"🚀 출격!",fm_no_he3:"He-3 부족",fm_no_unit:"유닛 선택",
     fm_form:"편성",fm_total:"총 전투력",fm_cost:"비용",fm_def:"vs 방어",
@@ -1648,7 +1653,7 @@ function showSAO(i){
 
   if(!s){
     // Empty revealed sector
-    addSAOB(acts,"deploy","🚀",t("sao_deploy"),u&&u.count>0?`${u.emoji} ${u.name} → ${SNAMES[i]}`:u?"유닛 부족":"유닛 선택 필요",u&&u.count>0?`He-3 ${u.cost?.he3||0} 소모`:"",u&&u.count>0?()=>deployUnit(i):null,!u||u.count<=0);
+    addSAOB(acts,"deploy","🚀",t("sao_deploy"),u&&u.count>0?`${u.emoji} ${u.name} → ${SNAMES[i]}`:u?"유닛 부족 - 구매/턴종료":"유닛 선택 필요",u&&u.count>0?`He-3 ${u.cost?.he3||0} 소모`:"",u&&u.count>0?()=>deployUnit(i):null,!u||u.count<=0);
     addSAOB(acts,"radar","📡",t("sao_radar_add"),"800 He-3","",()=>{closeSAO();placeRadar(i)});
   }else if(s.own==="me"){
     addSAOB(acts,"deploy","✅",t("sao_my_sec"),SNAMES[i],t("sao_defending"),null,true);
@@ -2176,6 +2181,9 @@ function endTurn(){
   // 2턴마다 적 1회 행동 (타이머 AI와 별개)
   if(G.turn%2===0 && typeof aiTick==="function") aiTick();
   // v0.9: XP, achievements, missions
+  // 매 턴 전투기 1대 자동 지급 (유닛 고갈 방지)
+  SHIPS[0].count+=1;
+  renderUnits();
   addXP(50 + G.turn*5);
   checkAchievements();
   checkGameEnd();
@@ -2303,7 +2311,13 @@ function renderUnits(){
         ${u.skills?`<div class="ucard-skills">⚡${u.skills.join("·")}</div>`:""}
       </div></div>`;
   }).join("");
-;renderMobileBar();}
+;renderMobileBar();
+  // 유닛 총량 0이면 구매 버튼 강조
+  const totalUnits = [...SHIPS,...MECHS,...ACES].reduce((a,u)=>a+u.count,0);
+  document.querySelectorAll('.btn-buy').forEach(b=>{
+    if(totalUnits===0) b.classList.add('urgent'); else b.classList.remove('urgent');
+  });
+}
 function selUnit(id){const found=ALL.find(x=>x.id===id);G.selUnit=found;sfx("click");renderUnits();showSelBig();if(G.currentView===0)updateShipView();renderMobileBar();}
 function showSelBig(){
   const el=document.getElementById("sel-big-content");if(!G.selUnit){el.innerHTML=`<div style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0">클릭하여 선택</div>`;return}
