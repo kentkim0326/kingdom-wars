@@ -1482,7 +1482,9 @@ function initMap(){
 
   // Place player start units
   G.sectors[42]={own:"me",flag:G.nation.f,name:G.nation.n,hp:100,ui:SHIPS[0].img,ue:SHIPS[0].emoji,ct:SHIPS[0].ctype,pow:SHIPS[0].pow};
-  SHIPS[0].count=2; // used 1 for sector 42
+  SHIPS[0].count=5; // 시작 전투기 5대 (섹터42 배치용 1 소모 후 실제 4대)
+  SHIPS[1].count=2; // 시작 구축함 2대
+  G.he3=3500; G.reg=80; G.h2o=150; G.coins=1500;
 
   // Place enemies — scattered across 49 sectors (not in revealed zone)
   const ENEMY_STARTS=[2,5,11,16,20,27,33,39,44,48];
