@@ -2250,7 +2250,20 @@ function aiTick(){
 }
 
 // ══ UI HELPERS ═══════════════════════════════════════
-function switchView(v){sfx("click");G.currentView=v;document.querySelectorAll(".view").forEach((el,i)=>el.classList.toggle("active",i===v));document.querySelectorAll(".vtbtn").forEach((el,i)=>el.classList.toggle("active",i===v));closeSAO();if(v===0)updateShipView();}
+function switchView(v){
+  sfx("click");G.currentView=v;
+  // ID 기반으로 정확히 매칭 (view-0, view-2)
+  document.querySelectorAll(".view").forEach(el=>{
+    el.classList.toggle("active", el.id==="view-"+v);
+  });
+  // 탭 버튼: onclick의 switchView(N) 숫자로 매칭
+  document.querySelectorAll(".vtbtn").forEach(el=>{
+    const oc=el.getAttribute("onclick")||"";
+    el.classList.toggle("active", oc.includes("switchView("+v+")"));
+  });
+  closeSAO();
+  if(v===0)updateShipView();
+}
 function updateHUD(){
   if(!G.nation||!G.commander)return;
   document.getElementById("hud-av").textContent=G.commander.av;document.getElementById("hud-cn").textContent=G.commander.name;document.getElementById("hflag").textContent=G.nation.f;
