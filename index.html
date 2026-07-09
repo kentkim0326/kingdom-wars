@@ -1464,6 +1464,7 @@ function goGame(){
   log("info","💡 "+t("log_tip"));
   log("info","😤 "+t("log_tip2"));
   show("s-game");
+  switchView(2); // 전투맵 뷰 활성화 (필수!)
   updateHUD();
   startAI();
   startMoraleTimer();
