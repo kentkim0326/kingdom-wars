@@ -626,6 +626,16 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .btn-buy.urgent{animation:btnPulse 1.5s ease-in-out infinite;box-shadow:0 0 12px rgba(255,215,0,.6)}
 @keyframes btnPulse{0%,100%{transform:scale(1);box-shadow:0 0 8px rgba(255,215,0,.4)}50%{transform:scale(1.05);box-shadow:0 0 20px rgba(255,215,0,.8)}}
 
+
+/* 전투 강화 CSS */
+@keyframes shake1{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes shake2{0%,100%{transform:translate(0,0)}20%{transform:translate(-12px,-6px)}40%{transform:translate(12px,6px)}60%{transform:translate(-10px,4px)}80%{transform:translate(10px,-4px)}}
+@keyframes critZoom{0%{transform:translate(-50%,-50%) scale(0.2);opacity:0}30%{transform:translate(-50%,-50%) scale(1.3);opacity:1}70%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(1.1);opacity:0}}
+#crit-pop{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);font-size:2.4rem;font-weight:900;z-index:100000;pointer-events:none;text-shadow:0 0 30px currentColor,0 2px 8px rgba(0,0,0,.8);letter-spacing:2px;white-space:nowrap}
+.loot-item{font-size:.72rem;padding:2px 0;color:var(--text)}
+.loot-item.rare{color:var(--gold);font-weight:700}
+.loot-new{background:var(--red);color:#fff;font-size:.55rem;padding:1px 5px;border-radius:8px;margin-left:4px;animation:btnPulse 1s infinite}
+
 </style>
 </head>
 <body>
@@ -782,6 +792,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       <span style="color:var(--muted);font-size:.64rem">턴</span>
       <span class="turn-num" id="turn-num">1</span>
       <button class="btn-et" onclick="endTurn()"><span id="i-end-turn">턴 종료 ▶</span></button>
+      <button class="btn-et" onclick="showBattleStats()" title="전투 통계" style="background:var(--panel);border:1px solid var(--accent)">📊</button>
     </div>
     <span style="font-size:.6rem;color:var(--muted);margin-left:6px"><span id="i-map-hint">섹터 점령 → 인접 영역 해금 🌑→⚔️</span></span>
   </div>
@@ -832,6 +843,10 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
         </div>
       </div>
       <div class="ps" style="flex:1">
+        <div id="streak-badge" style="display:none;text-align:center;padding:8px;margin-bottom:8px;background:linear-gradient(135deg,rgba(255,136,0,.2),rgba(255,58,58,.2));border:1px solid var(--orange);border-radius:10px">
+          <div style="font-size:1.4rem;font-weight:900;color:var(--orange)" id="streak-num">🔥 0</div>
+          <div style="font-size:.6rem;color:var(--gold)" id="streak-mult">연승 보너스 +0%</div>
+        </div>
         <div class="plbl" style="color:var(--accent)">📋 미션</div>
         <div id="mission-container"></div>
         <div class="plbl"><span id="i-g-log">전황</span></div>
@@ -1483,7 +1498,7 @@ function initMap(){
 
   // Place player start units
   G.sectors[42]={own:"me",flag:G.nation.f,name:G.nation.n,hp:100,ui:SHIPS[0].img,ue:SHIPS[0].emoji,ct:SHIPS[0].ctype,pow:SHIPS[0].pow};
-  SHIPS[0].count=5; // 시작 전투기 5대 (섹터42 배치용 1 소모 후 실제 4대)
+  SHIPS[0].count=5; G.winStreak=0; G.maxStreak=0; G.totalKills=0; // 시작 전투기 5대
   SHIPS[1].count=2; // 시작 구축함 2대
   G.he3=3500; G.reg=80; G.h2o=150; G.coins=1500;
 
@@ -1767,6 +1782,128 @@ function updateFMSummary(){
   btn.disabled=tc>G.he3||tp===0;
   btn.textContent=tc>G.he3?t("fm_no_he3"):tp===0?t("fm_no_unit"):t("fm_launch");
 }
+
+// ═══════════════════════════════════════
+// 전투 강화 v1.0 — QTE, 킬스트릭, 루팅, 등급
+// ═══════════════════════════════════════
+
+// 킬 스트릭 배율
+function getStreakMult(){
+  const s=G.winStreak||0;
+  return 1 + Math.min(s*0.08, 0.6); // 연승당 +8%, 최대 +60%
+}
+
+// 전투 등급 계산 (내 HP 잔량 기준)
+function calcGrade(myHP){
+  if(myHP>=90) return {g:"S",color:"#ffd700",mult:2.0,text:"압도적 승리!"};
+  if(myHP>=70) return {g:"A",color:"#00c8ff",mult:1.5,text:"완벽한 승리"};
+  if(myHP>=45) return {g:"B",color:"#00ff88",mult:1.2,text:"승리"};
+  return {g:"C",color:"#aaa",mult:1.0,text:"신승"};
+}
+
+// 전리품 루팅 테이블
+function rollLoot(grade){
+  const loot=[];
+  const gradeBonus={"S":3,"A":2,"B":1,"C":0}[grade]||0;
+  // 기본 자원
+  const he=~~(Math.random()*300+200)*(1+gradeBonus*0.3);
+  loot.push({icon:"⚡",name:"He-3",amt:~~he,type:"he3"});
+  if(Math.random()<0.4+gradeBonus*0.15){
+    const co=~~(Math.random()*200+100);
+    loot.push({icon:"🪙",name:"코인",amt:co,type:"coins"});
+  }
+  if(Math.random()<0.15+gradeBonus*0.1){
+    const rg=~~(Math.random()*20+10);
+    loot.push({icon:"💎",name:"레골리스",amt:rg,type:"reg"});
+  }
+  // 희귀: 유닛 드랍
+  if(Math.random()<0.08+gradeBonus*0.08){
+    const unit=SHIPS[~~(Math.random()*3)];
+    loot.push({icon:unit.emoji,name:unit.name,amt:1,type:"unit",unitId:unit.id});
+  }
+  // 초희귀: S등급만 에이스
+  if(grade==="S" && Math.random()<0.15){
+    loot.push({icon:"⭐",name:ACES[0].name,amt:1,type:"unit",unitId:ACES[0].id});
+  }
+  return loot;
+}
+
+// 전리품 지급 + 표시
+function grantLoot(loot){
+  let html="";
+  loot.forEach(l=>{
+    if(l.type==="unit"){
+      const u=ALL.find(x=>x.id===l.unitId);
+      if(u){u.count+=l.amt;}
+      html+='<div class="loot-item rare">'+l.icon+' <b>'+l.name+'</b> ×'+l.amt+' <span class="loot-new">NEW!</span></div>';
+    }else{
+      G[l.type]=(G[l.type]||0)+l.amt;
+      html+='<div class="loot-item">'+l.icon+' '+l.name+' +'+l.amt+'</div>';
+    }
+  });
+  renderUnits();updateResUI();
+  return html;
+}
+
+// 화면 흔들림
+function shakeScreen(intensity){
+  const el=document.getElementById("bmodal");
+  if(!el)return;
+  el.style.animation="none";
+  void el.offsetHeight;
+  el.style.animation="shake"+(intensity||1)+" 0.4s";
+}
+
+// 크리티컬 팝업
+function critPopup(text,color){
+  let p=document.getElementById("crit-pop");
+  if(!p){
+    p=document.createElement("div");
+    p.id="crit-pop";
+    document.body.appendChild(p);
+  }
+  p.textContent=text;
+  p.style.color=color||"#ffd700";
+  p.style.animation="none";
+  void p.offsetHeight;
+  p.style.animation="critZoom 0.9s ease-out";
+}
+
+
+// 킬스트릭 HUD 업데이트
+function updateStreakHUD(){
+  const b=document.getElementById("streak-badge");
+  if(!b)return;
+  const s=G.winStreak||0;
+  if(s>=2){
+    b.style.display="block";
+    document.getElementById("streak-num").textContent="🔥 "+s+"연승";
+    document.getElementById("streak-mult").textContent="전투력 +"+Math.round((getStreakMult()-1)*100)+"%";
+  }else{
+    b.style.display="none";
+  }
+}
+
+// 전투 통계 대시보드
+function showBattleStats(){
+  const wins=G.wins||0, kills=G.totalKills||0, maxS=G.maxStreak||0;
+  const total=G.totalBattles||wins;
+  const rate=total>0?Math.round(wins/total*100):0;
+  let ov=document.getElementById("stats-overlay");
+  if(!ov){ov=document.createElement("div");ov.id="stats-overlay";ov.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(3,5,14,.9);display:flex;align-items:center;justify-content:center;padding:20px";document.body.appendChild(ov);}
+  ov.innerHTML='<div style="background:var(--panel);border:2px solid var(--accent);border-radius:18px;padding:28px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 50px rgba(0,200,255,.3)">'+
+    '<div style="font-size:1.4rem;font-weight:900;color:var(--accent);margin-bottom:18px">📊 전투 통계</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+
+    '<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:12px"><div style="font-size:1.8rem;font-weight:900;color:var(--gold)">'+wins+'</div><div style="font-size:.7rem;color:var(--muted)">🏆 승리</div></div>'+
+    '<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:12px"><div style="font-size:1.8rem;font-weight:900;color:var(--red)">'+kills+'</div><div style="font-size:.7rem;color:var(--muted)">⚔️ 총 킬</div></div>'+
+    '<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:12px"><div style="font-size:1.8rem;font-weight:900;color:var(--orange)">'+maxS+'</div><div style="font-size:.7rem;color:var(--muted)">🔥 최고 연승</div></div>'+
+    '<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:12px"><div style="font-size:1.8rem;font-weight:900;color:var(--green)">Lv.'+(G.level||1)+'</div><div style="font-size:.7rem;color:var(--muted)">⭐ 레벨</div></div>'+
+    '</div>'+
+    '<button onclick="document.getElementById(\'stats-overlay\').style.display=\'none\'" style="margin-top:18px;padding:10px 30px;background:var(--accent);color:#000;border:none;border-radius:50px;font-weight:700;cursor:pointer">닫기</button>'+
+    '</div>';
+  ov.style.display="flex";
+}
+
 function launchFM(){
   const s=G.sectors[G.fmSec];if(!s||s.own==="enemy"===false)return;
   let tp=0,tc=0,repUnit=null;
@@ -1783,6 +1920,11 @@ function launchFM(){
   if(G.fmMode==="smart")tp=~~(tp*1.2);
   if(G.fmMode==="surround")tp=~~(tp*(1+adj.length*.15));
   const mor=G.morale>=70?1:G.morale>=50?.8:.6;tp=~~(tp*mor);
+  // 킬 스트릭 배율
+  const streakMult=getStreakMult();tp=~~(tp*streakMult);
+  const critRoll=Math.random();
+  const isCrit=critRoll<0.15; // 15% 크리티컬
+  if(isCrit)tp=~~(tp*1.6);
   const attPow=tp+~~(Math.random()*60);
   const defMult=SEC_TYPES[G.fmSec]==="crater"?1.5:1;
   const defPow=~~(s.pow*defMult)+~~(Math.random()*60);
@@ -1801,6 +1943,8 @@ function launchFM(){
   $("b-al").textContent=G.nation.n;$("b-dl").textContent=s.name;
   $("bmodal").classList.add("show");
   let ah=100,dh=100,step=0;
+  if(isCrit){setTimeout(()=>{critPopup("💥 크리티컬!","#ff3a3a");shakeScreen(2);sfx("win");},300);}
+  if(G.winStreak>=3){setTimeout(()=>{critPopup("🔥 "+G.winStreak+"연승!","#ff8800");},600);}
   const iv=setInterval(()=>{
     step++;sfx("btick");
     if(won){dh=Math.max(0,dh-~~(Math.random()*22+8));ah=Math.max(25,ah-~~(Math.random()*7));}
@@ -1813,13 +1957,30 @@ function launchFM(){
 function showBR(won,i,s,u,cost){
   sfx(won?"win":"lose");const r=document.getElementById("bresult");const sn=SNAMES[i];
   if(won){
-    const pl=~~(SEC_RES[SEC_TYPES[i]||"neutral"].prod.he3*.35)||55;G.he3+=pl;
-    r.className="result win";r.innerHTML=t("res_win",{flag:G.nation.f,sec:sn,he:pl}).replace("\n","<br>");
+    // 킬 스트릭 증가
+    G.winStreak=(G.winStreak||0)+1;
+    G.maxStreak=Math.max(G.maxStreak||0,G.winStreak);
+    G.totalKills=(G.totalKills||0)+1;
+    // 전투 등급 (내 HP 잔량 = 100 - 받은 데미지, 랜덤 시뮬)
+    const myHP=Math.max(25,100-~~(Math.random()*50));
+    const grade=calcGrade(myHP);
+    // 루팅
+    const loot=rollLoot(grade.g);
+    const lootHTML=grantLoot(loot);
+    const pl=~~((SEC_RES[SEC_TYPES[i]||"neutral"].prod.he3*.35)||55 * grade.mult);G.he3+=pl;
+    // 등급 팝업
+    setTimeout(()=>{critPopup(grade.g+" 등급! "+grade.text,grade.color);},200);
+    r.className="result win";
+    r.innerHTML='<div style="font-size:2.5rem;font-weight:900;color:'+grade.color+';text-shadow:0 0 20px '+grade.color+'">'+grade.g+'</div>'+
+      '<div style="color:'+grade.color+';font-weight:700;margin-bottom:6px">'+grade.text+'</div>'+
+      '<div style="font-size:.8rem;margin-bottom:8px">'+G.nation.f+' '+sn+' 점령!</div>'+
+      (G.winStreak>=2?'<div style="color:#ff8800;font-weight:700;margin-bottom:6px">🔥 '+G.winStreak+'연승 (전투력 +'+Math.round((getStreakMult()-1)*100)+'%)</div>':'')+
+      '<div style="background:rgba(0,0,0,.3);border-radius:10px;padding:8px;margin-top:8px"><div style="font-size:.7rem;color:var(--gold);margin-bottom:4px">🎁 전리품</div>'+lootHTML+'</div>';
     G.sectors[i]={own:"me",flag:G.nation.f,name:G.nation.n,hp:85,ui:u.img,ue:u.emoji,ct:u.ctype,pow:u.pow};
     delete G.scouted[i];G.wins++;
     G.unitWins[u.id]=(G.unitWins[u.id]||0)+1;const wins=G.unitWins[u.id];
     addUnitXP(u.id, 1);
-    addXP(100);
+    addXP(~~(100*grade.mult));
     G._lastWin=true; G._combo=(G._combo||0)+1;
     checkAchievements();
     const nick=getNick(wins);
@@ -1834,11 +1995,11 @@ function showBR(won,i,s,u,cost){
   }else{
     r.className="result lose";r.innerHTML=t("res_lose",{flag:s.flag,name:s.name}).replace("\n","<br>");
     // Morale hit on loss
-    G.morale=Math.max(0,G.morale-12);G._lastWin=false;G._combo=0;updateMoraleUI();
+    G.morale=Math.max(0,G.morale-12);G._lastWin=false;G._combo=0;G.winStreak=0;updateMoraleUI();
     log("lose",`[패배] ${s.flag} ${s.name}`);
   }
   r.style.display="block";document.getElementById("bclose").style.display="inline-block";
-  buildGrid();updateResUI();
+  buildGrid();updateResUI();updateStreakHUD();
 }
 function closeBattle(){document.getElementById("bmodal").classList.remove("show");if(G.currentView===0)updateShipView()}
 
