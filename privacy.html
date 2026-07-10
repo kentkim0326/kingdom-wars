@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Privacy Policy — KINGDOM WARS</title>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="pages/_shared.css"/>
+</head>
+<body>
+<header id="kw-header"></header>
+<main class="kw-page">
+  <div class="kw-hero"><h1 id="p-title"></h1></div>
+  <div class="kw-updated" id="p-updated"></div>
+  <div id="p-body"></div>
+  <div class="kw-cta"><a href="index.html" id="p-cta"></a></div>
+</main>
+<footer id="kw-footer"></footer>
+<script src="pages/_shared.js"></script>
+<script>
+const PRIVACY = {
+  ko:{title:"개인정보 처리방침",updated:"최종 수정일: 2027년 1월 1일",cta:"← 홈으로",
+    body:`
+    <div class="kw-section"><h2>🔒 요약</h2>
+    <p><strong>KINGDOM WARS는 개인정보를 수집하지 않습니다.</strong> 회원가입이 없으며, 이름·이메일·전화번호 등 어떠한 개인 식별 정보도 요구하지 않습니다.</p></div>
+    <div class="kw-section"><h2>1. 로컬 저장 데이터</h2>
+    <p>게임 진행 상황(레벨, 점령 섹터, 언어 설정 등)은 오직 귀하의 브라우저 내부(localStorage)에만 저장됩니다. 이 데이터는 외부 서버로 전송되지 않으며, 귀하만 접근할 수 있습니다.</p></div>
+    <div class="kw-section"><h2>2. 외부 서비스</h2>
+    <ul>
+      <li><strong>뉴스 티커</strong> — 실시간 뉴스는 공개 RSS 피드를 통해 제공됩니다. 이 과정에서 개인정보는 전송되지 않습니다.</li>
+      <li><strong>이미지·에셋</strong> — GitHub Pages를 통해 정적으로 제공됩니다.</li>
+    </ul></div>
+    <div class="kw-section"><h2>3. 쿠키</h2>
+    <p>본 서비스는 추적용 쿠키를 사용하지 않습니다. 광고 추적, 분석 도구, 제3자 추적기를 사용하지 않습니다.</p></div>
+    <div class="kw-section"><h2>4. 아동 보호</h2>
+    <p>본 서비스는 개인정보를 수집하지 않으므로 모든 연령대가 안전하게 이용할 수 있습니다.</p></div>
+    <div class="kw-section"><h2>5. 데이터 삭제</h2>
+    <p>브라우저 설정에서 사이트 데이터를 삭제하면 저장된 모든 게임 데이터가 즉시 제거됩니다.</p></div>`},
+  en:{title:"Privacy Policy",updated:"Last updated: January 1, 2027",cta:"← Home",
+    body:`
+    <div class="kw-section"><h2>🔒 Summary</h2>
+    <p><strong>KINGDOM WARS does not collect personal data.</strong> There is no sign-up, and we never ask for any personally identifiable information such as name, email, or phone number.</p></div>
+    <div class="kw-section"><h2>1. Locally Stored Data</h2>
+    <p>Your game progress (level, captured sectors, language setting, etc.) is stored solely within your browser (localStorage). This data is never sent to any external server and is accessible only to you.</p></div>
+    <div class="kw-section"><h2>2. External Services</h2>
+    <ul>
+      <li><strong>News ticker</strong> — Live news is delivered via public RSS feeds. No personal data is transmitted in this process.</li>
+      <li><strong>Images & assets</strong> — Served statically via GitHub Pages.</li>
+    </ul></div>
+    <div class="kw-section"><h2>3. Cookies</h2>
+    <p>This Service uses no tracking cookies. We use no ad tracking, analytics tools, or third-party trackers.</p></div>
+    <div class="kw-section"><h2>4. Children's Protection</h2>
+    <p>Since the Service collects no personal data, it is safe for users of all ages.</p></div>
+    <div class="kw-section"><h2>5. Data Deletion</h2>
+    <p>Clearing site data in your browser settings immediately removes all stored game data.</p></div>`},
+  ja:{title:"プライバシーポリシー",updated:"最終更新日: 2027年1月1日",cta:"← ホーム",
+    body:`
+    <div class="kw-section"><h2>🔒 概要</h2>
+    <p><strong>KINGDOM WARSは個人情報を収集しません。</strong> 会員登録はなく、名前・メールアドレス・電話番号などいかなる個人識別情報も要求しません。</p></div>
+    <div class="kw-section"><h2>1. ローカル保存データ</h2>
+    <p>ゲームの進行状況（レベル、占領セクター、言語設定など）は、お使いのブラウザ内部（localStorage）にのみ保存されます。このデータは外部サーバーに送信されず、あなただけがアクセスできます。</p></div>
+    <div class="kw-section"><h2>2. 外部サービス</h2>
+    <ul>
+      <li><strong>ニュースティッカー</strong> — リアルタイムニュースは公開RSSフィードを通じて提供されます。この過程で個人情報は送信されません。</li>
+      <li><strong>画像・アセット</strong> — GitHub Pagesを通じて静的に提供されます。</li>
+    </ul></div>
+    <div class="kw-section"><h2>3. クッキー</h2>
+    <p>本サービスはトラッキングクッキーを使用しません。広告トラッキング、分析ツール、第三者トラッカーを使用しません。</p></div>
+    <div class="kw-section"><h2>4. 児童保護</h2>
+    <p>本サービスは個人情報を収集しないため、全年齢が安全に利用できます。</p></div>
+    <div class="kw-section"><h2>5. データの削除</h2>
+    <p>ブラウザ設定でサイトデータを削除すると、保存されたすべてのゲームデータが即座に削除されます。</p></div>`},
+  zh:{title:"隐私政策",updated:"最后更新: 2027年1月1日",cta:"← 主页",
+    body:`
+    <div class="kw-section"><h2>🔒 摘要</h2>
+    <p><strong>KINGDOM WARS 不收集个人数据。</strong> 无需注册，我们绝不要求任何个人身份信息，如姓名、电子邮件或电话号码。</p></div>
+    <div class="kw-section"><h2>1. 本地存储数据</h2>
+    <p>您的游戏进度（等级、占领区域、语言设置等）仅存储在您的浏览器内部（localStorage）。此数据绝不会发送到任何外部服务器，只有您可以访问。</p></div>
+    <div class="kw-section"><h2>2. 外部服务</h2>
+    <ul>
+      <li><strong>新闻滚动</strong> — 实时新闻通过公开RSS源提供。此过程中不传输任何个人数据。</li>
+      <li><strong>图像与资源</strong> — 通过GitHub Pages静态提供。</li>
+    </ul></div>
+    <div class="kw-section"><h2>3. Cookie</h2>
+    <p>本服务不使用跟踪Cookie。我们不使用广告跟踪、分析工具或第三方跟踪器。</p></div>
+    <div class="kw-section"><h2>4. 儿童保护</h2>
+    <p>由于本服务不收集个人数据，因此适合所有年龄段的用户安全使用。</p></div>
+    <div class="kw-section"><h2>5. 数据删除</h2>
+    <p>在浏览器设置中清除网站数据将立即删除所有已存储的游戏数据。</p></div>`},
+};
+function kwRenderPage(l){
+  const d=PRIVACY[l]||PRIVACY.en;
+  document.getElementById("p-title").textContent=d.title;
+  document.getElementById("p-updated").textContent=d.updated;
+  document.getElementById("p-body").innerHTML=d.body;
+  document.getElementById("p-cta").textContent=d.cta;
+}
+</script>
+</body>
+</html>
