@@ -1,0 +1,122 @@
+/* ═══ KINGDOM WARS 공통 스타일 ═══ */
+:root{
+  --bg:#03050e;--panel:#07091a;--border:#1a2a4a;
+  --accent:#00c8ff;--gold:#ffd700;--red:#ff3a3a;--green:#00ff88;
+  --purple:#aa44ff;--orange:#ff8800;--teal:#00ffcc;
+  --text:#d0e8ff;--muted:#4a6a8a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Segoe UI',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;line-height:1.6;
+}
+a{color:var(--accent);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold)}
+
+/* ─── 헤더 ─── */
+#kw-header{
+  position:sticky;top:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 28px;gap:20px;
+  background:rgba(7,9,26,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.kw-logo img{height:34px;display:block}
+.kw-logo span{font-weight:900;color:var(--accent);letter-spacing:1px}
+.kw-nav{display:flex;gap:24px;flex:1;margin-left:20px}
+.kw-nav a{color:var(--text);font-size:.9rem;font-weight:600;opacity:.85}
+.kw-nav a:hover{opacity:1;color:var(--accent)}
+.kw-nav-right{display:flex;align-items:center;gap:14px}
+.kw-langs{display:flex;gap:4px}
+.kw-lb{
+  padding:4px 9px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-size:.7rem;font-weight:700;border-radius:20px;cursor:pointer;transition:all .2s;
+}
+.kw-lb.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.kw-lb:hover{border-color:var(--accent)}
+.kw-play-btn{
+  padding:8px 18px;background:linear-gradient(135deg,var(--accent),#0088cc);
+  color:#000!important;font-weight:800;border-radius:50px;font-size:.85rem;white-space:nowrap;
+  box-shadow:0 2px 12px rgba(0,200,255,.3);
+}
+.kw-play-btn:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(0,200,255,.5)}
+.kw-burger{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+
+/* ─── 본문 ─── */
+.kw-page{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+.kw-hero{text-align:center;padding:40px 0 30px}
+.kw-hero h1{
+  font-size:clamp(2rem,5vw,3.2rem);font-weight:900;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--accent),#fff,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;
+}
+.kw-hero p{color:var(--muted);font-size:1.05rem}
+.kw-section{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;
+  padding:28px 30px;margin-bottom:20px;
+}
+.kw-section h2{
+  font-size:1.35rem;color:var(--accent);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.kw-section h3{font-size:1.05rem;color:var(--gold);margin:16px 0 8px}
+.kw-section p{margin-bottom:12px;color:var(--text);opacity:.92}
+.kw-section ul{margin:10px 0 14px 4px;list-style:none}
+.kw-section li{padding:6px 0 6px 26px;position:relative}
+.kw-section li:before{content:"▸";position:absolute;left:6px;color:var(--accent)}
+.kw-section strong{color:var(--gold)}
+.kw-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:18px 0}
+.kw-card{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.kw-card .ic{font-size:2.4rem;margin-bottom:8px}
+.kw-card .t{font-weight:700;color:var(--accent);margin-bottom:6px}
+.kw-card .d{font-size:.85rem;color:var(--muted)}
+.kw-cta{text-align:center;margin:36px 0}
+.kw-cta a{
+  display:inline-block;padding:14px 40px;
+  background:linear-gradient(135deg,var(--accent),#0088cc);color:#000;
+  font-weight:800;border-radius:50px;font-size:1.05rem;
+  box-shadow:0 4px 20px rgba(0,200,255,.35);
+}
+.kw-cta a:hover{transform:translateY(-2px)}
+.kw-updated{font-size:.8rem;color:var(--muted);margin-bottom:20px}
+
+/* ─── 푸터 ─── */
+#kw-footer{
+  background:var(--panel);border-top:1px solid var(--border);
+  padding:44px 28px 24px;margin-top:40px;
+}
+.kw-foot-grid{
+  max-width:1000px;margin:0 auto;display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;
+}
+.kw-foot-brand img{height:36px;margin-bottom:12px}
+.kw-foot-tag{color:var(--muted);font-size:.88rem;max-width:240px}
+.kw-foot-h{font-weight:700;color:var(--accent);margin-bottom:12px;font-size:.9rem}
+.kw-foot-col a{display:block;color:var(--muted);font-size:.85rem;padding:4px 0}
+.kw-foot-col a:hover,.kw-foot-col a.active{color:var(--accent)}
+.kw-foot-bottom{
+  max-width:1000px;margin:32px auto 0;padding-top:20px;
+  border-top:1px solid var(--border);text-align:center;
+}
+.kw-foot-bottom>div:first-child{color:var(--muted);font-size:.82rem;margin-bottom:6px}
+.kw-foot-disc{color:var(--muted);opacity:.6;font-size:.74rem}
+
+/* ─── 모바일 ─── */
+@media(max-width:760px){
+  #kw-header{flex-wrap:wrap;padding:10px 16px}
+  .kw-burger{display:block;order:3}
+  .kw-nav{
+    display:none;flex-basis:100%;flex-direction:column;gap:0;margin:8px 0 0;order:4;
+  }
+  #kw-header.open .kw-nav{display:flex}
+  #kw-header.open .kw-nav a{padding:12px 4px;border-bottom:1px solid var(--border)}
+  .kw-nav-right{order:2;margin-left:auto}
+  .kw-play-btn{padding:6px 14px;font-size:.78rem}
+  .kw-foot-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .kw-foot-brand{grid-column:1/-1}
+}
+@media(max-width:420px){
+  .kw-langs{gap:2px}
+  .kw-lb{padding:3px 6px;font-size:.62rem}
+}
