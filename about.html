@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>About — KINGDOM WARS</title>
+<meta name="description" content="KINGDOM WARS — a Web3 strategy game to conquer the Moon's 49 sectors."/>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="pages/_shared.css"/>
+</head>
+<body>
+<header id="kw-header"></header>
+<main class="kw-page">
+  <div class="kw-hero">
+    <h1 id="p-title"></h1>
+    <p id="p-sub"></p>
+  </div>
+  <div id="p-body"></div>
+  <div class="kw-cta"><a href="index.html" id="p-cta"></a></div>
+</main>
+<footer id="kw-footer"></footer>
+<script src="pages/_shared.js"></script>
+<script>
+const ABOUT = {
+  ko:{title:"KINGDOM WARS 소개",sub:"달을 정복하라 — 실시간 Web3 전략 정복전",cta:"🚀 지금 시작하기",
+    body:`
+    <div class="kw-section"><h2>🌙 게임 개요</h2>
+    <p><strong>KINGDOM WARS</strong>는 달의 49개 섹터를 놓고 벌이는 실시간 전략 정복 게임입니다. 34개국 중 하나를 선택해 사령관을 임명하고, 함선과 메카를 지휘하여 달 전역을 정복하세요.</p>
+    <p>단순한 클릭 게임이 아닙니다. 자원 관리, 유닛 상성, 킬 스트릭, 사기 시스템이 얽힌 깊이 있는 전략을 요구합니다.</p></div>
+    <div class="kw-cards">
+      <div class="kw-card"><div class="ic">🗺️</div><div class="t">49개 섹터</div><div class="d">7×7 전장에서 안개를 걷어내며 영토를 확장</div></div>
+      <div class="kw-card"><div class="ic">🚀</div><div class="t">11종 유닛</div><div class="d">함선·메카·에이스, 각기 다른 상성과 스킬</div></div>
+      <div class="kw-card"><div class="ic">🔥</div><div class="t">킬 스트릭</div><div class="d">연승할수록 전투력 최대 +60% 상승</div></div>
+      <div class="kw-card"><div class="ic">🎁</div><div class="t">전리품 루팅</div><div class="d">승리 등급에 따라 희귀 유닛 드랍</div></div>
+    </div>
+    <div class="kw-section"><h2>⚔️ 핵심 특징</h2>
+    <ul>
+      <li><strong>전투 등급 시스템</strong> — S/A/B/C 등급으로 보상 차등, 압도적 승리시 2배</li>
+      <li><strong>사기(Morale) 시스템</strong> — 승패에 따라 사기가 오르내리며 전투력에 직결</li>
+      <li><strong>4개국어 완벽 지원</strong> — 한국어·영어·일본어·중국어, 실시간 현지 뉴스 티커</li>
+      <li><strong>레벨 & 업적</strong> — 플레이어 레벨업, 10종 업적, 유닛 성장 시스템</li>
+    </ul></div>
+    <div class="kw-section"><h2>🌌 로드맵</h2>
+    <p>THE MOON(49섹터)은 시작에 불과합니다.</p>
+    <ul>
+      <li><strong>MARS</strong> — 화성 81섹터 정복전 (준비 중)</li>
+      <li><strong>DEEP SPACE</strong> — 심우주 120섹터 (준비 중)</li>
+    </ul></div>`},
+  en:{title:"About KINGDOM WARS",sub:"Conquer the Moon — Real-time Web3 Strategy Warfare",cta:"🚀 Play Now",
+    body:`
+    <div class="kw-section"><h2>🌙 Overview</h2>
+    <p><strong>KINGDOM WARS</strong> is a real-time strategy conquest game fought over the Moon's 49 sectors. Choose one of 34 nations, appoint your commander, and command fleets and mechs to conquer the lunar surface.</p>
+    <p>This is no simple clicker. It demands deep strategy woven from resource management, unit matchups, kill streaks, and a morale system.</p></div>
+    <div class="kw-cards">
+      <div class="kw-card"><div class="ic">🗺️</div><div class="t">49 Sectors</div><div class="d">Expand across a 7×7 battlefield, lifting the fog of war</div></div>
+      <div class="kw-card"><div class="ic">🚀</div><div class="t">11 Units</div><div class="d">Ships, mechs & aces with unique matchups and skills</div></div>
+      <div class="kw-card"><div class="ic">🔥</div><div class="t">Kill Streaks</div><div class="d">Chain wins for up to +60% combat power</div></div>
+      <div class="kw-card"><div class="ic">🎁</div><div class="t">Loot Drops</div><div class="d">Rare units drop based on your victory grade</div></div>
+    </div>
+    <div class="kw-section"><h2>⚔️ Key Features</h2>
+    <ul>
+      <li><strong>Battle Grade System</strong> — S/A/B/C grades scale rewards; flawless wins pay double</li>
+      <li><strong>Morale System</strong> — Morale rises and falls with your results, directly affecting combat power</li>
+      <li><strong>Full 4-Language Support</strong> — Korean, English, Japanese, Chinese, with live local news ticker</li>
+      <li><strong>Levels & Achievements</strong> — Player leveling, 10 achievements, unit growth</li>
+    </ul></div>
+    <div class="kw-section"><h2>🌌 Roadmap</h2>
+    <p>THE MOON (49 sectors) is only the beginning.</p>
+    <ul>
+      <li><strong>MARS</strong> — 81-sector conquest (coming soon)</li>
+      <li><strong>DEEP SPACE</strong> — 120 sectors (coming soon)</li>
+    </ul></div>`},
+  ja:{title:"KINGDOM WARSについて",sub:"月を征服せよ — リアルタイムWeb3戦略征服戦",cta:"🚀 今すぐプレイ",
+    body:`
+    <div class="kw-section"><h2>🌙 概要</h2>
+    <p><strong>KINGDOM WARS</strong>は、月の49セクターを巡るリアルタイム戦略征服ゲームです。34カ国から一つを選び、司令官を任命し、艦船とメカを指揮して月面全域を征服しましょう。</p>
+    <p>単純なクリックゲームではありません。資源管理、ユニット相性、連勝、士気システムが絡み合う奥深い戦略が求められます。</p></div>
+    <div class="kw-cards">
+      <div class="kw-card"><div class="ic">🗺️</div><div class="t">49セクター</div><div class="d">7×7の戦場で霧を晴らしながら領土を拡大</div></div>
+      <div class="kw-card"><div class="ic">🚀</div><div class="t">11種ユニット</div><div class="d">艦船・メカ・エース、それぞれ異なる相性とスキル</div></div>
+      <div class="kw-card"><div class="ic">🔥</div><div class="t">連勝</div><div class="d">連勝するほど戦闘力が最大+60%上昇</div></div>
+      <div class="kw-card"><div class="ic">🎁</div><div class="t">戦利品</div><div class="d">勝利グレードに応じてレアユニットがドロップ</div></div>
+    </div>
+    <div class="kw-section"><h2>⚔️ 主な特徴</h2>
+    <ul>
+      <li><strong>戦闘グレードシステム</strong> — S/A/B/Cグレードで報酬に差、圧倒的勝利で2倍</li>
+      <li><strong>士気システム</strong> — 勝敗により士気が変動し戦闘力に直結</li>
+      <li><strong>4カ国語完全対応</strong> — 韓国語・英語・日本語・中国語、リアルタイム現地ニュースティッカー</li>
+      <li><strong>レベル＆実績</strong> — プレイヤーレベルアップ、10種の実績、ユニット成長</li>
+    </ul></div>
+    <div class="kw-section"><h2>🌌 ロードマップ</h2>
+    <p>THE MOON（49セクター）は始まりに過ぎません。</p>
+    <ul>
+      <li><strong>MARS</strong> — 火星81セクター征服戦（準備中）</li>
+      <li><strong>DEEP SPACE</strong> — 深宇宙120セクター（準備中）</li>
+    </ul></div>`},
+  zh:{title:"关于 KINGDOM WARS",sub:"征服月球 — 实时Web3策略征服战",cta:"🚀 立即游玩",
+    body:`
+    <div class="kw-section"><h2>🌙 概述</h2>
+    <p><strong>KINGDOM WARS</strong>是一款围绕月球49个区域展开的实时策略征服游戏。从34个国家中选择一个，任命指挥官，指挥舰队和机甲征服整个月球表面。</p>
+    <p>这不是简单的点击游戏。它需要由资源管理、兵种相克、连胜和士气系统交织而成的深度策略。</p></div>
+    <div class="kw-cards">
+      <div class="kw-card"><div class="ic">🗺️</div><div class="t">49个区域</div><div class="d">在7×7战场上驱散战争迷雾，扩张领土</div></div>
+      <div class="kw-card"><div class="ic">🚀</div><div class="t">11种兵种</div><div class="d">舰船·机甲·王牌，各具相克与技能</div></div>
+      <div class="kw-card"><div class="ic">🔥</div><div class="t">连胜</div><div class="d">连胜可使战斗力最高提升+60%</div></div>
+      <div class="kw-card"><div class="ic">🎁</div><div class="t">战利品</div><div class="d">根据胜利等级掉落稀有兵种</div></div>
+    </div>
+    <div class="kw-section"><h2>⚔️ 核心特色</h2>
+    <ul>
+      <li><strong>战斗评级系统</strong> — S/A/B/C评级差异化奖励，压倒性胜利翻倍</li>
+      <li><strong>士气系统</strong> — 士气随胜负起伏，直接影响战斗力</li>
+      <li><strong>完整四语言支持</strong> — 韩语·英语·日语·中文，实时本地新闻滚动</li>
+      <li><strong>等级与成就</strong> — 玩家升级、10种成就、兵种成长</li>
+    </ul></div>
+    <div class="kw-section"><h2>🌌 路线图</h2>
+    <p>THE MOON（49个区域）仅仅是开始。</p>
+    <ul>
+      <li><strong>MARS</strong> — 火星81区域征服战（即将推出）</li>
+      <li><strong>DEEP SPACE</strong> — 深空120区域（即将推出）</li>
+    </ul></div>`},
+};
+function kwRenderPage(l){
+  const d=ABOUT[l]||ABOUT.en;
+  document.getElementById("p-title").textContent=d.title;
+  document.getElementById("p-sub").textContent=d.sub;
+  document.getElementById("p-body").innerHTML=d.body;
+  document.getElementById("p-cta").textContent=d.cta;
+}
+</script>
+</body>
+</html>
