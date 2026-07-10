@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Terms of Service — KINGDOM WARS</title>
+<link rel="icon" href="favicon.ico"/>
+<link rel="stylesheet" href="pages/_shared.css"/>
+</head>
+<body>
+<header id="kw-header"></header>
+<main class="kw-page">
+  <div class="kw-hero"><h1 id="p-title"></h1></div>
+  <div class="kw-updated" id="p-updated"></div>
+  <div id="p-body"></div>
+  <div class="kw-cta"><a href="index.html" id="p-cta"></a></div>
+</main>
+<footer id="kw-footer"></footer>
+<script src="pages/_shared.js"></script>
+<script>
+const TERMS = {
+  ko:{title:"이용약관",updated:"최종 수정일: 2027년 1월 1일",cta:"← 홈으로",
+    body:`
+    <div class="kw-section"><h2>1. 서비스 이용</h2>
+    <p>KINGDOM WARS(이하 "서비스")는 무료로 제공되는 브라우저 기반 전략 게임입니다. 본 서비스를 이용함으로써 귀하는 본 약관에 동의하는 것으로 간주됩니다.</p></div>
+    <div class="kw-section"><h2>2. 게임 진행 데이터</h2>
+    <p>게임 진행 상황은 귀하의 브라우저 로컬 저장소에 저장됩니다. 브라우저 데이터를 삭제하면 진행 상황이 사라질 수 있으며, 이에 대해 서비스는 책임지지 않습니다.</p></div>
+    <div class="kw-section"><h2>3. 금지 행위</h2>
+    <ul>
+      <li>서비스의 정상적인 운영을 방해하는 행위</li>
+      <li>자동화 도구, 봇, 치트를 이용한 부정 이용</li>
+      <li>서비스를 역공학하거나 무단 복제·배포하는 행위</li>
+    </ul></div>
+    <div class="kw-section"><h2>4. 지식재산권</h2>
+    <p>서비스에 포함된 모든 콘텐츠(디자인, 코드, 이미지, 게임 시스템)의 지식재산권은 KINGDOM WARS에 귀속됩니다.</p></div>
+    <div class="kw-section"><h2>5. 면책 조항</h2>
+    <p>본 게임은 오락 목적의 시뮬레이션이며, 실제 우주 정책·국가·군사 활동과 무관합니다. 서비스는 "있는 그대로" 제공되며, 서비스 이용으로 발생하는 손해에 대해 법이 허용하는 최대 범위에서 책임을 지지 않습니다.</p></div>
+    <div class="kw-section"><h2>6. 약관 변경</h2>
+    <p>본 약관은 사전 고지 후 변경될 수 있으며, 변경된 약관은 게시 시점부터 효력이 발생합니다.</p></div>`},
+  en:{title:"Terms of Service",updated:"Last updated: January 1, 2027",cta:"← Home",
+    body:`
+    <div class="kw-section"><h2>1. Use of Service</h2>
+    <p>KINGDOM WARS ("the Service") is a free, browser-based strategy game. By using the Service, you agree to these Terms.</p></div>
+    <div class="kw-section"><h2>2. Game Progress Data</h2>
+    <p>Your game progress is stored in your browser's local storage. Clearing your browser data may erase your progress, for which the Service is not responsible.</p></div>
+    <div class="kw-section"><h2>3. Prohibited Conduct</h2>
+    <ul>
+      <li>Interfering with the normal operation of the Service</li>
+      <li>Cheating via automation tools, bots, or exploits</li>
+      <li>Reverse-engineering, copying, or redistributing the Service without authorization</li>
+    </ul></div>
+    <div class="kw-section"><h2>4. Intellectual Property</h2>
+    <p>All content in the Service (design, code, images, game systems) is the intellectual property of KINGDOM WARS.</p></div>
+    <div class="kw-section"><h2>5. Disclaimer</h2>
+    <p>This game is an entertainment simulation and is unrelated to real space policy, nations, or military activity. The Service is provided "as is," and we disclaim liability for damages arising from its use to the maximum extent permitted by law.</p></div>
+    <div class="kw-section"><h2>6. Changes to Terms</h2>
+    <p>These Terms may change with prior notice; revised Terms take effect upon posting.</p></div>`},
+  ja:{title:"利用規約",updated:"最終更新日: 2027年1月1日",cta:"← ホーム",
+    body:`
+    <div class="kw-section"><h2>1. サービスの利用</h2>
+    <p>KINGDOM WARS（以下「本サービス」）は、無料で提供されるブラウザベースの戦略ゲームです。本サービスを利用することで、本規約に同意したものとみなされます。</p></div>
+    <div class="kw-section"><h2>2. ゲーム進行データ</h2>
+    <p>ゲームの進行状況はお使いのブラウザのローカルストレージに保存されます。ブラウザのデータを削除すると進行状況が失われる場合があり、本サービスはこれについて責任を負いません。</p></div>
+    <div class="kw-section"><h2>3. 禁止行為</h2>
+    <ul>
+      <li>本サービスの正常な運営を妨害する行為</li>
+      <li>自動化ツール、ボット、チートを利用した不正利用</li>
+      <li>本サービスをリバースエンジニアリング、無断で複製・配布する行為</li>
+    </ul></div>
+    <div class="kw-section"><h2>4. 知的財産権</h2>
+    <p>本サービスに含まれるすべてのコンテンツ（デザイン、コード、画像、ゲームシステム）の知的財産権はKINGDOM WARSに帰属します。</p></div>
+    <div class="kw-section"><h2>5. 免責事項</h2>
+    <p>本ゲームは娯楽目的のシミュレーションであり、実際の宇宙政策・国家・軍事活動とは無関係です。本サービスは「現状のまま」提供され、利用により生じた損害について法律が許す最大限の範囲で責任を負いません。</p></div>
+    <div class="kw-section"><h2>6. 規約の変更</h2>
+    <p>本規約は事前告知の上で変更されることがあり、変更後の規約は掲示時点から効力を生じます。</p></div>`},
+  zh:{title:"服务条款",updated:"最后更新: 2027年1月1日",cta:"← 主页",
+    body:`
+    <div class="kw-section"><h2>1. 服务使用</h2>
+    <p>KINGDOM WARS（以下简称"本服务"）是一款免费的基于浏览器的策略游戏。使用本服务即表示您同意本条款。</p></div>
+    <div class="kw-section"><h2>2. 游戏进度数据</h2>
+    <p>您的游戏进度存储在浏览器的本地存储中。清除浏览器数据可能会删除您的进度，本服务对此不承担责任。</p></div>
+    <div class="kw-section"><h2>3. 禁止行为</h2>
+    <ul>
+      <li>干扰本服务正常运营的行为</li>
+      <li>使用自动化工具、机器人或作弊程序进行不正当使用</li>
+      <li>对本服务进行逆向工程、擅自复制或分发</li>
+    </ul></div>
+    <div class="kw-section"><h2>4. 知识产权</h2>
+    <p>本服务中包含的所有内容（设计、代码、图像、游戏系统）的知识产权归KINGDOM WARS所有。</p></div>
+    <div class="kw-section"><h2>5. 免责声明</h2>
+    <p>本游戏为娱乐目的的模拟，与实际太空政策、国家或军事活动无关。本服务按"现状"提供，我们在法律允许的最大范围内对因使用本服务而产生的损害不承担责任。</p></div>
+    <div class="kw-section"><h2>6. 条款变更</h2>
+    <p>本条款可能在事先通知后变更，修订后的条款自公布之时起生效。</p></div>`},
+};
+function kwRenderPage(l){
+  const d=TERMS[l]||TERMS.en;
+  document.getElementById("p-title").textContent=d.title;
+  document.getElementById("p-updated").textContent=d.updated;
+  document.getElementById("p-body").innerHTML=d.body;
+  document.getElementById("p-cta").textContent=d.cta;
+}
+</script>
+</body>
+</html>
