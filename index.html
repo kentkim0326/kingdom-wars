@@ -700,8 +700,11 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   </div>
   <div class="fu3" style="text-align:center">
     <button class="btn-enter" onclick="goNation()"><span id="i-start">🚀 달 정복 개시</span></button>
-    <div style="margin-top:10px;font-size:.72rem;color:var(--muted)">
-      <a href="how_to_play.html" target="_blank" style="color:var(--accent);text-decoration:none"><span id="i-guide">📖 게임 가이드</span></a>
+    <div style="margin-top:14px;font-size:.72rem;color:var(--muted);display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="about.html" style="color:var(--muted);text-decoration:none" id="i-nav-about">소개</a>
+      <a href="how_to_play.html" style="color:var(--accent);text-decoration:none" id="i-guide">📖 플레이 방법</a>
+      <a href="terms.html" style="color:var(--muted);text-decoration:none" id="i-nav-terms">이용약관</a>
+      <a href="privacy.html" style="color:var(--muted);text-decoration:none" id="i-nav-privacy">개인정보</a>
     </div>
   </div>
 </div>
@@ -1221,6 +1224,8 @@ const KW_LANG = {
     timer_fmt:"다음 보너스: {m}:{s}",
   
     grade_s:"압도적 승리!",grade_a:"완벽한 승리",grade_b:"승리",grade_c:"신승",loot_coin:"코인",loot_reg:"레골리스",loot_title:"🎁 전리품",crit:"💥 크리티컬!",streak_lbl:"연승",streak_bonus:"전투력",streak_win:"연승",stats_title:"📊 전투 통계",stat_wins:"🏆 승리",stat_kills:"⚔️ 총 킬",stat_streak:"🔥 최고 연승",stat_lv:"⭐ 레벨",close:"닫기",new_tag:"NEW!",sector_take:"점령",
+  
+    nav_about:"소개",nav_terms:"이용약관",nav_privacy:"개인정보",
   },
   en:{
     moon_sub:"49 Sectors · Strategic Conquest",mars_sub:"Mars · 81 Sectors",space_sub:"Deep Space · 120 Sectors",
@@ -1279,6 +1284,8 @@ const KW_LANG = {
     timer_fmt:"Next bonus: {m}:{s}",
   
     grade_s:"Flawless Victory!",grade_a:"Perfect Win",grade_b:"Victory",grade_c:"Narrow Win",loot_coin:"Coins",loot_reg:"Regolith",loot_title:"🎁 Loot",crit:"💥 CRITICAL!",streak_lbl:"Streak",streak_bonus:"Power",streak_win:"Win Streak",stats_title:"📊 Battle Stats",stat_wins:"🏆 Wins",stat_kills:"⚔️ Total Kills",stat_streak:"🔥 Best Streak",stat_lv:"⭐ Level",close:"Close",new_tag:"NEW!",sector_take:"Captured",
+  
+    nav_about:"About",nav_terms:"Terms",nav_privacy:"Privacy",
   },
   ja:{
     moon_sub:"49セクター · 戦略征服戦",mars_sub:"火星 · 81セクター",space_sub:"深宇宙 · 120セクター",
@@ -1337,6 +1344,8 @@ const KW_LANG = {
     timer_fmt:"次のボーナス: {m}:{s}",
   
     grade_s:"圧倒的勝利！",grade_a:"完璧な勝利",grade_b:"勝利",grade_c:"辛勝",loot_coin:"コイン",loot_reg:"レゴリス",loot_title:"🎁 戦利品",crit:"💥 クリティカル！",streak_lbl:"連勝",streak_bonus:"戦闘力",streak_win:"連勝",stats_title:"📊 戦闘統計",stat_wins:"🏆 勝利",stat_kills:"⚔️ 総キル",stat_streak:"🔥 最高連勝",stat_lv:"⭐ レベル",close:"閉じる",new_tag:"NEW!",sector_take:"占領",
+  
+    nav_about:"概要",nav_terms:"利用規約",nav_privacy:"プライバシー",
   },
   zh:{
     moon_sub:"49扇区 · 战略征服战",mars_sub:"火星 · 81扇区",space_sub:"深空 · 120扇区",
@@ -1395,6 +1404,8 @@ const KW_LANG = {
     timer_fmt:"下次奖励: {m}:{s}",
   
     grade_s:"压倒性胜利！",grade_a:"完美胜利",grade_b:"胜利",grade_c:"险胜",loot_coin:"金币",loot_reg:"风化层",loot_title:"🎁 战利品",crit:"💥 暴击！",streak_lbl:"连胜",streak_bonus:"战斗力",streak_win:"连胜",stats_title:"📊 战斗统计",stat_wins:"🏆 胜利",stat_kills:"⚔️ 总击杀",stat_streak:"🔥 最高连胜",stat_lv:"⭐ 等级",close:"关闭",new_tag:"NEW!",sector_take:"占领",
+  
+    nav_about:"关于",nav_terms:"服务条款",nav_privacy:"隐私",
   }
 };
 let _L="ko";
@@ -1412,6 +1423,7 @@ function setLang(l){
     // INTRO
     "i-moon-sub":"moon_sub","i-mars-sub":"mars_sub","i-space-sub":"space_sub",
     "i-start":"start_btn","i-guide":"guide",
+    "i-nav-about":"nav_about","i-nav-terms":"nav_terms","i-nav-privacy":"nav_privacy",
     // NATION
     "i-n-title":"n_title","i-n-sub":"n_sub","i-n-next":"n_next",
     // COMMANDER
