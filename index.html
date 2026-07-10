@@ -1447,6 +1447,65 @@ function setLang(l){
   if(typeof updateMoraleUI==="function")updateMoraleUI();
   if(typeof updateConquestProgress==="function")updateConquestProgress();
   if(G&&G.nation){if(typeof renderUnits==="function")renderUnits();if(typeof showSelBig==="function")showSelBig();}
+  if(typeof loadNews==="function")loadNews(l);
+}
+
+
+// ═══════════════════════════════════════
+// 실시간 뉴스 티커 (Google News RSS, 언어별)
+// ═══════════════════════════════════════
+const NEWS_FEEDS = {
+  ko: "https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko",
+  en: "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
+  ja: "https://news.google.com/rss?hl=ja&gl=JP&ceid=JP:ja",
+  zh: "https://news.google.com/rss?hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+};
+
+// 폴백 뉴스 (API 실패시 우주 테마 유지)
+const FALLBACK_NEWS = {
+  ko: ["🚀 SpaceX 화성 유인 탐사 2027년 목표","🌙 NASA 아르테미스 달 착륙 예정","⚡ 달 He-3 매장량 100만 톤","🔬 달 토양 산소 추출 성공","🏗️ 달 게이트웨이 2027년 착공"],
+  en: ["🚀 SpaceX Mars mission targets 2027","🌙 NASA Artemis Moon landing scheduled","⚡ Lunar He-3 reserves hit 1M tons","🔬 Oxygen extracted from Moon soil","🏗️ Lunar Gateway construction 2027"],
+  ja: ["🚀 SpaceX火星有人探査2027年目標","🌙 NASAアルテミス月面着陸予定","⚡ 月のHe-3埋蔵量100万トン","🔬 月の土壌から酸素抽出成功","🏗️ 月ゲートウェイ2027年着工"],
+  zh: ["🚀 SpaceX火星载人探测2027目标","🌙 NASA阿尔忒弥斯登月计划","⚡ 月球氦-3储量达100万吨","🔬 月壤成功提取氧气","🏗️ 月球门户2027年动工"],
+};
+
+let _newsCache = {};
+
+async function loadNews(lang){
+  // 캐시 있으면 재사용 (10분)
+  if(_newsCache[lang] && Date.now()-_newsCache[lang].t < 600000){
+    renderNews(_newsCache[lang].items);
+    return;
+  }
+  // 먼저 폴백으로 즉시 표시
+  renderNews(FALLBACK_NEWS[lang]||FALLBACK_NEWS.en);
+  try{
+    const feed=NEWS_FEEDS[lang]||NEWS_FEEDS.en;
+    const proxy="https://api.allorigins.win/get?url="+encodeURIComponent(feed);
+    const res=await fetch(proxy,{signal:AbortSignal.timeout(8000)});
+    const data=await res.json();
+    const xml=data.contents;
+    const doc=new DOMParser().parseFromString(xml,"text/xml");
+    const items=[...doc.querySelectorAll("item")].slice(0,15).map(it=>{
+      let title=it.querySelector("title")?.textContent||"";
+      // "제목 - 언론사" 에서 언론사 제거
+      title=title.replace(/\s-\s[^-]+$/,"");
+      return "📰 "+title;
+    }).filter(t=>t.length>8);
+    if(items.length>=5){
+      _newsCache[lang]={items,t:Date.now()};
+      renderNews(items);
+    }
+  }catch(e){
+    // 폴백 유지
+    console.log("News load failed, using fallback");
+  }
+}
+
+function renderNews(items){
+  const el=document.getElementById("news-scroll");
+  if(!el)return;
+  el.innerHTML=items.flatMap(n=>[n,n]).map(n=>'<span style="white-space:nowrap">'+n+'</span>').join("");
 }
 
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));const _e=document.getElementById(id);if(_e)_e.classList.add("active");if(typeof updateSlideshowForScreen==="function")updateSlideshowForScreen(id);}
@@ -1476,11 +1535,7 @@ function goGame(){
   initMap();
   G.selUnit=SHIPS[0]; // 전투기 자동 선택 — 바로 배치/공격 가능
   setTimeout(function(){renderMissions();updateXPBar();},100);
-  document.getElementById("news-scroll").innerHTML=[
-    "🚀 SpaceX Starship 화성 유인 탐사 2027년 목표","🌙 NASA 아르테미스 달 착륙 예정",
-    "⚡ 달 He-3 매장량 100만 톤","🔬 달 토양 산소 추출 성공","🏗️ 달 게이트웨이 2027년 착공",
-    "⚔️ UN 우주 군사화 금지 논의","💫 민간 달 궤도 비행 2028년","🌌 제임스 웹 우주 관측 신기록",
-  ].flatMap(n=>[n,n]).map(n=>`<span style="white-space:nowrap">${n}</span>`).join("");
+  loadNews(_L||"ko"); // 실시간 뉴스 로드 (언어별)
   buildGrid();updateResUI();updateHUD();
   G.selUnit=SHIPS[0];renderUnits();showSelBig();
   log("sys","["+t("log_enter")+"] "+G.nation.f+" "+G.commander.name);
