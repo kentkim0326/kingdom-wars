@@ -732,10 +732,10 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     <div class="sp-title"><span id="i-c-starter">🎁 스타터 패키지</span></div>
     <div class="sp-items">
       <div class="sp-i"><div class="sp-icon">🚀</div><div class="sp-val"><span id="i-c-s1">전투기×3</span></div><div class="sp-lbl"><span id="i-c-s1l">즉시배치</span></div></div>
-      <div class="sp-i"><div class="sp-icon">🪙</div><div class="sp-val">1,200</div><div class="sp-lbl">코인</div></div>
+      <div class="sp-i"><div class="sp-icon">🪙</div><div class="sp-val">1,200</div><div class="sp-lbl" id="i-sp-coin">코인</div></div>
       <div class="sp-i"><div class="sp-icon">⚡</div><div class="sp-val">2,400</div><div class="sp-lbl">He-3</div></div>
-      <div class="sp-i"><div class="sp-icon">💎</div><div class="sp-val">80</div><div class="sp-lbl">레골리스</div></div>
-      <div class="sp-i"><div class="sp-icon">😤</div><div class="sp-val">100%</div><div class="sp-lbl">사기</div></div>
+      <div class="sp-i"><div class="sp-icon">💎</div><div class="sp-val">80</div><div class="sp-lbl" id="i-sp-reg">레골리스</div></div>
+      <div class="sp-i"><div class="sp-icon">😤</div><div class="sp-val">100%</div><div class="sp-lbl" id="i-sp-morale">사기</div></div>
     </div>
   </div>
   <button class="btn-cmd-ok" id="btn-cmd-ok" onclick="goGame()"><span id="i-c-go">🚀 출전!</span></button>
@@ -753,8 +753,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       <span class="streak-badge" id="streak-badge" style="display:none">🔥 1일</span>
     </div>
     <div class="hud-r">
-      <div class="hud-pill">🏳️<span class="rv" id="rs">0</span>섹터</div>
-      <div class="hud-pill">⚔️<span class="rv" id="rw">0</span>승</div>
+      <div class="hud-pill">🏳️<span class="rv" id="rs">0</span><span id="i-hud-sec">섹터</span></div>
+      <div class="hud-pill">⚔️<span class="rv" id="rw">0</span><span id="i-hud-wins">승</span></div>
       <div class="hud-pill">🛩️<span class="rv" id="sc-cnt">0</span></div>
       <button id="bgm-btn" onclick="toggleBGM()" style="padding:2px 7px;border:1px solid var(--border);border-radius:11px;background:transparent;color:var(--muted);font-size:.6rem;cursor:pointer">🔇</button>
     </div>
@@ -764,7 +764,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="morale-bar">
     <div class="morale-pill">
       <span style="font-size:.72rem">😤</span>
-      <span style="font-size:.6rem;color:var(--muted);min-width:28px">사기</span>
+      <span style="font-size:.6rem;color:var(--muted);min-width:28px" id="i-hud-morale">사기</span>
       <div class="morale-track"><div class="morale-fill" id="morale-fill" style="width:100%;background:var(--green)"></div></div>
       <span class="morale-val" id="morale-val" style="color:var(--green)">100%</span>
     </div>
@@ -781,9 +781,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   </div>
 
   <div class="res-bar">
-    <div class="res-item">⚡<span class="rv" id="res-he3">2,400</span><span style="color:var(--muted);font-size:.6rem">He-3</span><span class="res-rate" id="rate-he3">+0/턴</span></div>
-    <div class="res-item">💎<span class="rv" id="res-reg" style="color:var(--purple)">80</span><span style="color:var(--muted);font-size:.6rem">Reg</span><span class="res-rate" id="rate-reg">+0/턴</span></div>
-    <div class="res-item">🌊<span class="rv" id="res-h2o" style="color:var(--teal)">120</span><span style="color:var(--muted);font-size:.6rem">H₂O</span><span class="res-rate" id="rate-h2o">+0/턴</span></div>
+    <div class="res-item">⚡<span class="rv" id="res-he3">2,400</span><span style="color:var(--muted);font-size:.6rem">He-3</span><span class="res-rate" id="rate-he3">+0</span></div>
+    <div class="res-item">💎<span class="rv" id="res-reg" style="color:var(--purple)">80</span><span style="color:var(--muted);font-size:.6rem">Reg</span><span class="res-rate" id="rate-reg">+0</span></div>
+    <div class="res-item">🌊<span class="rv" id="res-h2o" style="color:var(--teal)">120</span><span style="color:var(--muted);font-size:.6rem">H₂O</span><span class="res-rate" id="rate-h2o">+0</span></div>
     <div class="res-item" style="margin-left:auto">🪙<span class="rv" id="rc">1,200</span></div>
   </div>
   <div class="news-ticker"><span class="news-lbl">🛸 SPACE</span><div class="news-scroll" id="news-scroll"></div></div>
@@ -792,7 +792,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
     <button class="vtbtn" id="vt0" onclick="switchView(0)"><span id="i-v-ship">🛸 내 함선</span></button>
     <button class="vtbtn active" id="vt2" onclick="switchView(2)"><span id="i-v-battle">⚔️ 전투 맵</span></button>
     <div class="turn-info">
-      <span style="color:var(--muted);font-size:.64rem">턴</span>
+      <span style="color:var(--muted);font-size:.64rem" id="i-turn-word">턴</span>
       <span class="turn-num" id="turn-num">1</span>
       <button class="btn-et" onclick="endTurn()"><span id="i-end-turn">턴 종료 ▶</span></button>
       <button class="btn-et" onclick="showBattleStats()" title="전투 통계" style="background:var(--panel);border:1px solid var(--accent)">📊</button>
@@ -827,7 +827,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       </div>
       <div class="unit-list" id="ulist"></div>
       <div class="ps"><button class="btn-buy" onclick="buyUnit()"><span id="i-btn-buy">+ 구매 500🪙</span></button>
-    <button class="btn-buy" onclick="openExchange()" style="margin-left:4px;background:var(--panel);border:1px solid var(--gold);color:var(--gold)">🏪 교환</button></div>
+    <button class="btn-buy" onclick="openExchange()" style="margin-left:4px;background:var(--panel);border:1px solid var(--gold);color:var(--gold)">🏪 <span id="i-exch-btn">교환</span></button></div>
       <div class="sel-big" id="sel-big">
         <div class="plbl"><span id="i-g-sel">선택된 유닛</span></div>
         <div id="sel-big-content" style="color:var(--muted);font-size:.68rem;text-align:center;padding:7px 0"><span id="i-g-sel-hint">클릭하여 선택</span></div>
@@ -848,9 +848,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
       <div class="ps" style="flex:1">
         <div id="streak-badge" style="display:none;text-align:center;padding:8px;margin-bottom:8px;background:linear-gradient(135deg,rgba(255,136,0,.2),rgba(255,58,58,.2));border:1px solid var(--orange);border-radius:10px">
           <div style="font-size:1.4rem;font-weight:900;color:var(--orange)" id="streak-num">🔥 0</div>
-          <div style="font-size:.6rem;color:var(--gold)" id="streak-mult">연승 보너스 +0%</div>
+          <div style="font-size:.6rem;color:var(--gold)" id="streak-mult"></div>
         </div>
-        <div class="plbl" style="color:var(--accent)">📋 미션</div>
+        <div class="plbl" style="color:var(--accent)">📋 <span id="i-mission-hdr">미션</span></div>
         <div id="mission-container"></div>
         <div class="plbl"><span id="i-g-log">전황</span></div>
         <div id="minilog" style="font-size:.6rem;color:var(--muted);line-height:1.7"></div>
@@ -1226,6 +1226,16 @@ const KW_LANG = {
     grade_s:"압도적 승리!",grade_a:"완벽한 승리",grade_b:"승리",grade_c:"신승",loot_coin:"코인",loot_reg:"레골리스",loot_title:"🎁 전리품",crit:"💥 크리티컬!",streak_lbl:"연승",streak_bonus:"전투력",streak_win:"연승",stats_title:"📊 전투 통계",stat_wins:"🏆 승리",stat_kills:"⚔️ 총 킬",stat_streak:"🔥 최고 연승",stat_lv:"⭐ 레벨",close:"닫기",new_tag:"NEW!",sector_take:"점령",
   
     nav_about:"소개",nav_terms:"이용약관",nav_privacy:"개인정보",
+  
+    hud_sec:"섹터",hud_wins:"승",hud_morale:"사기",
+  
+    turn_word:"턴",exch_btn:"교환",
+  
+    mission_hdr:"미션",
+  
+    sp_reg:"레골리스",
+  
+    sp_coin:"코인",
   },
   en:{
     moon_sub:"49 Sectors · Strategic Conquest",mars_sub:"Mars · 81 Sectors",space_sub:"Deep Space · 120 Sectors",
@@ -1286,6 +1296,16 @@ const KW_LANG = {
     grade_s:"Flawless Victory!",grade_a:"Perfect Win",grade_b:"Victory",grade_c:"Narrow Win",loot_coin:"Coins",loot_reg:"Regolith",loot_title:"🎁 Loot",crit:"💥 CRITICAL!",streak_lbl:"Streak",streak_bonus:"Power",streak_win:"Win Streak",stats_title:"📊 Battle Stats",stat_wins:"🏆 Wins",stat_kills:"⚔️ Total Kills",stat_streak:"🔥 Best Streak",stat_lv:"⭐ Level",close:"Close",new_tag:"NEW!",sector_take:"Captured",
   
     nav_about:"About",nav_terms:"Terms",nav_privacy:"Privacy",
+  
+    hud_sec:" Sectors",hud_wins:" Wins",hud_morale:"Morale",
+  
+    turn_word:"Turn",exch_btn:"Exchange",
+  
+    mission_hdr:"Missions",
+  
+    sp_reg:"Regolith",
+  
+    sp_coin:"Coins",
   },
   ja:{
     moon_sub:"49セクター · 戦略征服戦",mars_sub:"火星 · 81セクター",space_sub:"深宇宙 · 120セクター",
@@ -1346,6 +1366,16 @@ const KW_LANG = {
     grade_s:"圧倒的勝利！",grade_a:"完璧な勝利",grade_b:"勝利",grade_c:"辛勝",loot_coin:"コイン",loot_reg:"レゴリス",loot_title:"🎁 戦利品",crit:"💥 クリティカル！",streak_lbl:"連勝",streak_bonus:"戦闘力",streak_win:"連勝",stats_title:"📊 戦闘統計",stat_wins:"🏆 勝利",stat_kills:"⚔️ 総キル",stat_streak:"🔥 最高連勝",stat_lv:"⭐ レベル",close:"閉じる",new_tag:"NEW!",sector_take:"占領",
   
     nav_about:"概要",nav_terms:"利用規約",nav_privacy:"プライバシー",
+  
+    hud_sec:"セクター",hud_wins:"勝",hud_morale:"士気",
+  
+    turn_word:"ターン",exch_btn:"交換",
+  
+    mission_hdr:"ミッション",
+  
+    sp_reg:"レゴリス",
+  
+    sp_coin:"コイン",
   },
   zh:{
     moon_sub:"49扇区 · 战略征服战",mars_sub:"火星 · 81扇区",space_sub:"深空 · 120扇区",
@@ -1406,6 +1436,16 @@ const KW_LANG = {
     grade_s:"压倒性胜利！",grade_a:"完美胜利",grade_b:"胜利",grade_c:"险胜",loot_coin:"金币",loot_reg:"风化层",loot_title:"🎁 战利品",crit:"💥 暴击！",streak_lbl:"连胜",streak_bonus:"战斗力",streak_win:"连胜",stats_title:"📊 战斗统计",stat_wins:"🏆 胜利",stat_kills:"⚔️ 总击杀",stat_streak:"🔥 最高连胜",stat_lv:"⭐ 等级",close:"关闭",new_tag:"NEW!",sector_take:"占领",
   
     nav_about:"关于",nav_terms:"服务条款",nav_privacy:"隐私",
+  
+    hud_sec:"区域",hud_wins:"胜",hud_morale:"士气",
+  
+    turn_word:"回合",exch_btn:"兑换",
+  
+    mission_hdr:"任务",
+  
+    sp_reg:"风化层",
+  
+    sp_coin:"金币",
   }
 };
 let _L="ko";
@@ -1417,7 +1457,7 @@ function t(k,v){
 }
 
 // ═══ 게임 콘텐츠 런타임 번역 ═══
-const G_TR = {"전투기": {"en": "Fighter", "ja": "戦闘機", "zh": "战斗机"}, "구축함": {"en": "Destroyer", "ja": "駆逐艦", "zh": "驱逐舰"}, "순양함": {"en": "Cruiser", "ja": "巡洋艦", "zh": "巡洋舰"}, "전투함": {"en": "Battleship", "ja": "戦艦", "zh": "战舰"}, "모선": {"en": "Mothership", "ja": "母艦", "zh": "母舰"}, "레이저 메카": {"en": "Laser Mech", "ja": "レーザーメカ", "zh": "激光机甲"}, "미사일 메카": {"en": "Missile Mech", "ja": "ミサイルメカ", "zh": "导弹机甲"}, "장갑 메카": {"en": "Armored Mech", "ja": "装甲メカ", "zh": "装甲机甲"}, "격투 메카": {"en": "Melee Mech", "ja": "格闘メカ", "zh": "格斗机甲"}, "에이스 파일럿": {"en": "Ace Pilot", "ja": "エースパイロット", "zh": "王牌飞行员"}, "선제타격": {"en": "First Strike", "ja": "先制攻撃", "zh": "先制打击"}, "편대비행": {"en": "Formation", "ja": "編隊飛行", "zh": "编队飞行"}, "어뢰": {"en": "Torpedo", "ja": "魚雷", "zh": "鱼雷"}, "대잠": {"en": "Anti-Sub", "ja": "対潜", "zh": "反潜"}, "관통샷": {"en": "Piercing Shot", "ja": "貫通ショット", "zh": "穿透射击"}, "급강하": {"en": "Dive", "ja": "急降下", "zh": "俯冲"}, "기동회피": {"en": "Evasion", "ja": "機動回避", "zh": "机动回避"}, "광역포격": {"en": "Barrage", "ja": "広域砲撃", "zh": "范围炮击"}, "실드흡수": {"en": "Shield Drain", "ja": "シールド吸収", "zh": "护盾吸收"}, "반격": {"en": "Counter", "ja": "反撃", "zh": "反击"}, "필살기": {"en": "Ultimate", "ja": "必殺技", "zh": "必杀技"}, "철벽": {"en": "Iron Wall", "ja": "鉄壁", "zh": "铁壁"}, "전술방어": {"en": "Tactical Defense", "ja": "戦術防御", "zh": "战术防御"}, "함포폭격": {"en": "Naval Bombard", "ja": "艦砲爆撃", "zh": "舰炮轰炸"}, "격납출격": {"en": "Hangar Launch", "ja": "格納出撃", "zh": "机库出击"}, "함대결전": {"en": "Fleet Battle", "ja": "艦隊決戦", "zh": "舰队决战"}, "드론": {"en": "Drone", "ja": "ドローン", "zh": "无人机"}, "유도탄": {"en": "Guided Missile", "ja": "誘導弾", "zh": "制导弹"}, "과열": {"en": "Overheat", "ja": "オーバーヒート", "zh": "过热"}, "강타": {"en": "Smash", "ja": "強打", "zh": "重击"}, "관통": {"en": "Pierce", "ja": "貫通", "zh": "穿透"}, "미사일": {"en": "Missile", "ja": "ミサイル", "zh": "导弹"}, "레이저포": {"en": "Laser Cannon", "ja": "レーザー砲", "zh": "激光炮"}, "레이저": {"en": "Laser", "ja": "レーザー", "zh": "激光"}, "장갑": {"en": "Armor", "ja": "装甲", "zh": "装甲"}, "달의 지배자": {"en": "Lunar Ruler", "ja": "月の支配者", "zh": "月球统治者"}, "우주 패권자": {"en": "Space Hegemon", "ja": "宇宙覇者", "zh": "太空霸主"}, "태양계의 왕": {"en": "King of the Solar System", "ja": "太陽系の王", "zh": "太阳系之王"}, "달의 여왕": {"en": "Moon Queen", "ja": "月の女王", "zh": "月之女王"}, "달의 전설": {"en": "Moon Legend", "ja": "月の伝説", "zh": "月之传奇"}, "헬륨 사냥꾼": {"en": "Helium Hunter", "ja": "ヘリウムハンター", "zh": "氦猎人"}, "철의 군주": {"en": "Iron Lord", "ja": "鉄の君主", "zh": "钢铁君主"}, "철의 장군": {"en": "Iron General", "ja": "鉄の将軍", "zh": "钢铁将军"}, "첫 승리": {"en": "First Blood", "ja": "初勝利", "zh": "首胜"}, "정복자": {"en": "Conqueror", "ja": "征服者", "zh": "征服者"}, "대정복자": {"en": "Grand Conqueror", "ja": "大征服者", "zh": "大征服者"}, "부자": {"en": "Wealthy", "ja": "富豪", "zh": "富豪"}, "정찰왕": {"en": "Scout King", "ja": "偵察王", "zh": "侦察王"}, "연속 접속": {"en": "Daily Streak", "ja": "連続ログイン", "zh": "连续登录"}, "전략가": {"en": "Strategist", "ja": "戦略家", "zh": "战略家"}, "대전략가": {"en": "Grand Strategist", "ja": "大戦略家", "zh": "大战略家"}, "사기 충천": {"en": "High Morale", "ja": "士気高揚", "zh": "士气高涨"}, "수호자": {"en": "Guardian", "ja": "守護者", "zh": "守护者"}, "첫 전투에서 승리": {"en": "Win your first battle", "ja": "初戦闘で勝利", "zh": "赢得首场战斗"}, "5개 섹터 점령": {"en": "Capture 5 sectors", "ja": "5セクター占領", "zh": "占领5个区域"}, "15개 섹터 점령": {"en": "Capture 15 sectors", "ja": "15セクター占領", "zh": "占领15个区域"}, "He-3 10,000 보유": {"en": "Hold 10,000 He-3", "ja": "He-3を10,000保有", "zh": "持有10,000氦-3"}, "정찰 5회 성공": {"en": "Scout 5 times", "ja": "偵察5回成功", "zh": "侦察成功5次"}, "5일 연속 접속": {"en": "5-day login streak", "ja": "5日連続ログイン", "zh": "连续登录5天"}, "20턴 도달": {"en": "Reach turn 20", "ja": "20ターン到達", "zh": "到达第20回合"}, "50턴 도달": {"en": "Reach turn 50", "ja": "50ターン到達", "zh": "到达第50回合"}, "사기 100% 유지 5턴": {"en": "Keep 100% morale for 5 turns", "ja": "士気100%を5ターン維持", "zh": "保持100%士气5回合"}, "적 공격 3회 방어": {"en": "Defend 3 enemy attacks", "ja": "敵の攻撃を3回防御", "zh": "防御3次敌方攻击"}, "3개 섹터 점령": {"en": "Capture 3 sectors", "ja": "3セクター占領", "zh": "占领3个区域"}, "8개 섹터 점령": {"en": "Capture 8 sectors", "ja": "8セクター占領", "zh": "占领8个区域"}, "전체 정복": {"en": "Total Conquest", "ja": "全征服", "zh": "全面征服"}, "10턴 생존": {"en": "Survive 10 turns", "ja": "10ターン生存", "zh": "生存10回合"}, "He-3 5,000 모으기": {"en": "Gather 5,000 He-3", "ja": "He-3を5,000集める", "zh": "收集5,000氦-3"}, "용병 출현!": {"en": "Mercenaries!", "ja": "傭兵出現！", "zh": "雇佣兵出现！"}, "기술 돌파!": {"en": "Tech Breakthrough!", "ja": "技術突破！", "zh": "技术突破！"}, "유성우!": {"en": "Meteor Shower!", "ja": "流星群！", "zh": "流星雨！"}, "동맹 제안": {"en": "Alliance Offer", "ja": "同盟提案", "zh": "同盟提议"}, "에너지 폭풍!": {"en": "Energy Storm!", "ja": "エネルギー嵐！", "zh": "能量风暴！"}, "보물 발견!": {"en": "Treasure Found!", "ja": "宝物発見！", "zh": "发现宝藏！"}, "소행성 충돌!": {"en": "Asteroid Impact!", "ja": "小惑星衝突！", "zh": "小行星撞击！"}, "태양풍 발생": {"en": "Solar Wind", "ja": "太陽風発生", "zh": "太阳风"}, "UN 평화 협정": {"en": "UN Peace Treaty", "ja": "UN和平協定", "zh": "联合国和平协定"}, "용병 부대가 합류를 제안합니다.": {"en": "A mercenary unit offers to join.", "ja": "傭兵部隊が合流を提案します。", "zh": "雇佣兵部队提议加入。"}, "연구소에서 신기술을 개발했습니다!": {"en": "The lab developed new tech!", "ja": "研究所が新技術を開発しました！", "zh": "实验室开发了新技术！"}, "유성우가 쏟아집니다!": {"en": "Meteors rain down!", "ja": "流星群が降り注ぎます！", "zh": "流星倾泻而下！"}, "중립 세력이 동맹을 제안합니다.": {"en": "A neutral faction proposes an alliance.", "ja": "中立勢力が同盟を提案します。", "zh": "中立势力提议结盟。"}, "강력한 에너지 파동이 감지됩니다!": {"en": "A powerful energy surge detected!", "ja": "強力なエネルギー波動を検知！", "zh": "检测到强大能量波动！"}, "고대 유적에서 보물을 발견했습니다!": {"en": "Treasure found in ancient ruins!", "ja": "古代遺跡で宝物を発見！", "zh": "在古代遗迹中发现宝藏！"}, "달에 소행성이 충돌했습니다.": {"en": "An asteroid struck the Moon.", "ja": "月に小惑星が衝突しました。", "zh": "小行星撞击了月球。"}, "강력한 태양풍이 에너지 무기를 강화합니다.": {"en": "Solar wind boosts energy weapons.", "ja": "太陽風がエネルギー兵器を強化します。", "zh": "太阳风增强能量武器。"}, "UN이 긴급 평화 협정을 선포했습니다.": {"en": "The UN declared an emergency peace treaty.", "ja": "UNが緊急和平協定を宣言しました。", "zh": "联合国宣布紧急和平协定。"}, "강력한 연설로 군의 사기가 솟구칩니다!": {"en": "A powerful speech lifts morale!", "ja": "力強い演説で士気が高まります！", "zh": "激昂的演讲提振士气！"}, "대규모 H₂O 빙하가 발견되었습니다!": {"en": "A massive H₂O glacier discovered!", "ja": "大規模なH₂O氷河が発見されました！", "zh": "发现大规模H₂O冰川！"}, "새로운 레골리스 결정체 광맥!": {"en": "New regolith crystal vein!", "ja": "新しいレゴリス結晶鉱脈！", "zh": "新的风化层晶体矿脉！"}, "전투기 +2 즉시 획득": {"en": "Gain +2 Fighters instantly", "ja": "戦闘機+2を即獲得", "zh": "立即获得+2战斗机"}, "다음 3턴 전투력 +25%": {"en": "+25% power for next 3 turns", "ja": "次の3ターン戦闘力+25%", "zh": "接下来3回合战斗力+25%"}, "무작위 3섹터 자원 2배": {"en": "2x resources in 3 random sectors", "ja": "ランダム3セクター資源2倍", "zh": "随机3个区域资源翻倍"}, "빈 섹터 1개 무료 획득": {"en": "Gain 1 empty sector free", "ja": "空セクター1つ無料獲得", "zh": "免费获得1个空区域"}, "He-3 +500, 사기 +15%": {"en": "He-3 +500, Morale +15%", "ja": "He-3+500、士気+15%", "zh": "氦-3+500，士气+15%"}, "코인 +800": {"en": "Coins +800", "ja": "コイン+800", "zh": "金币+800"}, "H₂O +200 즉시 획득": {"en": "Gain H₂O +200 instantly", "ja": "H₂O+200を即獲得", "zh": "立即获得H₂O+200"}, "레골리스 +50 + 사기 +10": {"en": "Regolith +50 + Morale +10", "ja": "レゴリス+50＋士気+10", "zh": "风化层+50+士气+10"}, "사기 +30% 즉시 회복": {"en": "Restore Morale +30% instantly", "ja": "士気+30%即回復", "zh": "立即恢复士气+30%"}, "레이저 유닛 전투력 +30% (1턴)": {"en": "Laser units +30% power (1 turn)", "ja": "レーザーユニット戦闘力+30%（1ターン）", "zh": "激光兵种战斗力+30%（1回合）"}, "전 공격 정확도 -20% (1턴)": {"en": "All attacks -20% accuracy (1 turn)", "ja": "全攻撃命中-20%（1ターン）", "zh": "全攻击命中-20%（1回合）"}, "유닛 부족 - 구매/턴종료": {"en": "No units - buy/end turn", "ja": "ユニット不足-購入/ターン終了", "zh": "兵种不足-购买/结束回合"}, "유닛 선택 필요": {"en": "Select a unit", "ja": "ユニット選択が必要", "zh": "需要选择兵种"}, "유닛 없음": {"en": "No units", "ja": "ユニットなし", "zh": "无兵种"}, "섹터 선택 필요": {"en": "Select a sector", "ja": "セクター選択が必要", "zh": "需要选择区域"}, "출격 유닛 없음": {"en": "No units to deploy", "ja": "出撃ユニットなし", "zh": "无出击兵种"}, "He-3 부족": {"en": "Not enough He-3", "ja": "He-3不足", "zh": "氦-3不足"}, "코인 부족": {"en": "Not enough coins", "ja": "コイン不足", "zh": "金币不足"}, "자원 부족": {"en": "Not enough resources", "ja": "資源不足", "zh": "资源不足"}, "잠시 후": {"en": "Wait a moment", "ja": "しばらくお待ちを", "zh": "请稍候"}, "교환 완료": {"en": "Exchange complete", "ja": "交換完了", "zh": "兑换完成"}, "배치 완료!": {"en": "Deployed!", "ja": "配置完了！", "zh": "部署完成！"}, "정찰 성공!": {"en": "Scout success!", "ja": "偵察成功！", "zh": "侦察成功！"}, "레이더 설치!": {"en": "Radar installed!", "ja": "レーダー設置！", "zh": "雷达已安装！"}, "정찰기 없음": {"en": "No scouts", "ja": "偵察機なし", "zh": "无侦察机"}, "정찰기 획득!": {"en": "Scout gained!", "ja": "偵察機獲得！", "zh": "获得侦察机！"}, "보너스 수령!": {"en": "Bonus claimed!", "ja": "ボーナス受取！", "zh": "领取奖励！"}, "레벨 업!": {"en": "Level Up!", "ja": "レベルアップ！", "zh": "升级！"}, "유닛 획득!": {"en": "Unit acquired!", "ja": "ユニット獲得！", "zh": "获得兵种！"}, "격추됨!": {"en": "Shot down!", "ja": "撃墜！", "zh": "被击落！"}, "결사 항전!": {"en": "Last Stand!", "ja": "決死抗戦！", "zh": "殊死抵抗！"}, "턴은 2초에 1번": {"en": "1 turn per 2 seconds", "ja": "ターンは2秒に1回", "zh": "每2秒1回合"}, "필요: ": {"en": "Need: ", "ja": "必要: ", "zh": "需要: "}, " / 보유: ": {"en": " / Have: ", "ja": " / 保有: ", "zh": " / 持有: "}, "+버튼으로 유닛 수량을 선택하세요": {"en": "Use + to select unit quantity", "ja": "+ボタンでユニット数を選択", "zh": "用+按钮选择兵种数量"}, "패배...": {"en": "Defeat...", "ja": "敗北...", "zh": "失败..."}, "달 정복 완료!": {"en": "Moon Conquered!", "ja": "月征服完了！", "zh": "征服月球！"}, "다시 도전": {"en": "Try Again", "ja": "再挑戦", "zh": "再次挑战"}, "없음": {"en": "None", "ja": "なし", "zh": "无"}, "일반": {"en": "Normal", "ja": "通常", "zh": "普通"}, "회": {"en": "x", "ja": "回", "zh": "次"}, "전섹터": {"en": "All Sectors", "ja": "全セクター", "zh": "全区域"}, "크레이터": {"en": "Crater", "ja": "クレーター", "zh": "陨石坑"}, "지휘관": {"en": "Commander", "ja": "司令官", "zh": "指挥官"}, "정면 돌격": {"en": "Direct Assault", "ja": "正面突撃", "zh": "正面强攻"}, "정밀 타격": {"en": "Precision Strike", "ja": "精密打撃", "zh": "精准打击"}, "포위 공격": {"en": "Encirclement", "ja": "包囲攻撃", "zh": "包围攻击"}, "함선": {"en": "Ships", "ja": "艦船", "zh": "舰船"}, "에이스": {"en": "Aces", "ja": "エース", "zh": "王牌"}, "메카": {"en": "Mechs", "ja": "メカ", "zh": "机甲"}, "상성": {"en": "Matchup", "ja": "相性", "zh": "相克"}, "유닛": {"en": "Unit", "ja": "ユニット", "zh": "兵种"}, "전투력": {"en": "Power", "ja": "戦闘力", "zh": "战斗力"}, "별명": {"en": "Nickname", "ja": "ニックネーム", "zh": "昵称"}, "보유": {"en": "Owned", "ja": "保有", "zh": "持有"}, "사기": {"en": "Morale", "ja": "士気", "zh": "士气"}, "생산": {"en": "Output", "ja": "生産", "zh": "产出"}, "섹터": {"en": "Sector", "ja": "セクター", "zh": "区域"}, "소유": {"en": "Owner", "ja": "所有", "zh": "所有者"}, "승리": {"en": "Wins", "ja": "勝利", "zh": "胜利"}, "자원": {"en": "Resource", "ja": "資源", "zh": "资源"}, "점령 섹터": {"en": "Sectors Held", "ja": "占領セクター", "zh": "占领区域"}, "대한민국": {"en": "Korea", "ja": "韓国", "zh": "韩国"}, "미국": {"en": "USA", "ja": "アメリカ", "zh": "美国"}, "중국": {"en": "China", "ja": "中国", "zh": "中国"}, "일본": {"en": "Japan", "ja": "日本", "zh": "日本"}, "러시아": {"en": "Russia", "ja": "ロシア", "zh": "俄罗斯"}, "독일": {"en": "Germany", "ja": "ドイツ", "zh": "德国"}, "프랑스": {"en": "France", "ja": "フランス", "zh": "法国"}, "영국": {"en": "UK", "ja": "イギリス", "zh": "英国"}, "인도": {"en": "India", "ja": "インド", "zh": "印度"}, "브라질": {"en": "Brazil", "ja": "ブラジル", "zh": "巴西"}, "캐나다": {"en": "Canada", "ja": "カナダ", "zh": "加拿大"}, "호주": {"en": "Australia", "ja": "オーストラリア", "zh": "澳大利亚"}, "멕시코": {"en": "Mexico", "ja": "メキシコ", "zh": "墨西哥"}, "인도네시아": {"en": "Indonesia", "ja": "インドネシア", "zh": "印度尼西亚"}, "아르헨티나": {"en": "Argentina", "ja": "アルゼンチン", "zh": "阿根廷"}, "네덜란드": {"en": "Netherlands", "ja": "オランダ", "zh": "荷兰"}, "사우디": {"en": "Saudi Arabia", "ja": "サウジ", "zh": "沙特"}, "터키": {"en": "Turkey", "ja": "トルコ", "zh": "土耳其"}, "폴란드": {"en": "Poland", "ja": "ポーランド", "zh": "波兰"}, "스웨덴": {"en": "Sweden", "ja": "スウェーデン", "zh": "瑞典"}, "태국": {"en": "Thailand", "ja": "タイ", "zh": "泰国"}, "나이지리아": {"en": "Nigeria", "ja": "ナイジェリア", "zh": "尼日利亚"}, "이집트": {"en": "Egypt", "ja": "エジプト", "zh": "埃及"}, "남아공": {"en": "South Africa", "ja": "南アフリカ", "zh": "南非"}, "베트남": {"en": "Vietnam", "ja": "ベトナム", "zh": "越南"}, "이란": {"en": "Iran", "ja": "イラン", "zh": "伊朗"}, "이스라엘": {"en": "Israel", "ja": "イスラエル", "zh": "以色列"}, "파키스탄": {"en": "Pakistan", "ja": "パキスタン", "zh": "巴基斯坦"}, "우크라이나": {"en": "Ukraine", "ja": "ウクライナ", "zh": "乌克兰"}, "노르웨이": {"en": "Norway", "ja": "ノルウェー", "zh": "挪威"}, "필리핀": {"en": "Philippines", "ja": "フィリピン", "zh": "菲律宾"}, "카자흐스탄": {"en": "Kazakhstan", "ja": "カザフスタン", "zh": "哈萨克斯坦"}, "스페인": {"en": "Spain", "ja": "スペイン", "zh": "西班牙"}, "이탈리아": {"en": "Italy", "ja": "イタリア", "zh": "意大利"}, "고요": {"en": "Tranquility", "ja": "静けさ", "zh": "静海"}, "폭풍": {"en": "Storm", "ja": "嵐", "zh": "风暴"}, "위기해": {"en": "Sea of Crises", "ja": "危難の海", "zh": "危海"}, "샤클턴": {"en": "Shackleton", "ja": "シャクルトン", "zh": "沙克尔顿"}, "코페르니쿠스": {"en": "Copernicus", "ja": "コペルニクス", "zh": "哥白尼"}, "티코": {"en": "Tycho", "ja": "ティコ", "zh": "第谷"}, "플라톤": {"en": "Plato", "ja": "プラトン", "zh": "柏拉图"}, "아리스타르코스": {"en": "Aristarchus", "ja": "アリスタルコス", "zh": "阿里斯塔克斯"}, "비의海": {"en": "Sea of Rains", "ja": "雨の海", "zh": "雨海"}, "구름海": {"en": "Sea of Clouds", "ja": "雲の海", "zh": "云海"}, "지식海": {"en": "Sea of Knowledge", "ja": "知識の海", "zh": "知海"}, "프톨레마이오스": {"en": "Ptolemaeus", "ja": "プトレマイオス", "zh": "托勒密"}, "달뒷면": {"en": "Far Side", "ja": "月の裏側", "zh": "月背"}, "남극": {"en": "South Pole", "ja": "南極", "zh": "南极"}, "북극": {"en": "North Pole", "ja": "北極", "zh": "北极"}, "세레니티": {"en": "Serenity", "ja": "晴れの海", "zh": "澄海"}, "사빈": {"en": "Sabine", "ja": "サビーヌ", "zh": "萨拜因"}, "빌헬름": {"en": "Wilhelm", "ja": "ウィルヘルム", "zh": "威廉"}, "아이트켄": {"en": "Aitken", "ja": "エイトケン", "zh": "艾特肯"}, "허블": {"en": "Hubble", "ja": "ハッブル", "zh": "哈勃"}, "풍요海": {"en": "Sea of Fertility", "ja": "豊かの海", "zh": "丰海"}, "메시에": {"en": "Messier", "ja": "メシエ", "zh": "梅西耶"}, "페타비우스": {"en": "Petavius", "ja": "ペタヴィウス", "zh": "佩塔维乌斯"}, "란그레누스": {"en": "Langrenus", "ja": "ラングレヌス", "zh": "兰格伦"}, "스테비누스": {"en": "Stevinus", "ja": "ステヴィヌス", "zh": "斯蒂维纽斯"}, "풀처리무스": {"en": "Fracastorius", "ja": "フラカストリウス", "zh": "弗拉卡斯托里乌斯"}, "지오르다노": {"en": "Giordano", "ja": "ジョルダーノ", "zh": "焦尔达诺"}, "코롤레프": {"en": "Korolev", "ja": "コロリョフ", "zh": "科罗廖夫"}, "⚡레이저+15%": {"en": "⚡Laser +15%", "ja": "⚡レーザー+15%", "zh": "⚡激光+15%"}, "🛡️크레이터+20%": {"en": "🛡️Crater +20%", "ja": "🛡️クレーター+20%", "zh": "🛡️陨石坑+20%"}, "⭐에이스+20%": {"en": "⭐Ace +20%", "ja": "⭐エース+20%", "zh": "⭐王牌+20%"}, "⭐에이스+30%": {"en": "⭐Ace +30%", "ja": "⭐エース+30%", "zh": "⭐王牌+30%"}, "😤사기유지+10%": {"en": "😤Morale hold +10%", "ja": "😤士気維持+10%", "zh": "😤士气保持+10%"}, "😤사기+10%": {"en": "😤Morale +10%", "ja": "😤士気+10%", "zh": "😤士气+10%"}, "😤사기+15%": {"en": "😤Morale +15%", "ja": "😤士気+15%", "zh": "😤士气+15%"}, "😤사기+20%": {"en": "😤Morale +20%", "ja": "😤士気+20%", "zh": "😤士气+20%"}, "😤사기면역": {"en": "😤Morale immune", "ja": "😤士気免疫", "zh": "😤士气免疫"}, "😤사기최고유지": {"en": "😤Max morale hold", "ja": "😤士気最高維持", "zh": "😤士气最高保持"}, "😤사기회복": {"en": "😤Morale recovery", "ja": "😤士気回復", "zh": "😤士气恢复"}, "💨기동+15%": {"en": "💨Mobility +15%", "ja": "💨機動+15%", "zh": "💨机动+15%"}, "💨기동+20%": {"en": "💨Mobility +20%", "ja": "💨機動+20%", "zh": "💨机动+20%"}, "💨전투기+20%": {"en": "💨Fighter +20%", "ja": "💨戦闘機+20%", "zh": "💨战斗机+20%"}, "🚀모선+20%": {"en": "🚀Mothership +20%", "ja": "🚀母艦+20%", "zh": "🚀母舰+20%"}, "🛡️방어+10%": {"en": "🛡️Defense +10%", "ja": "🛡️防御+10%", "zh": "🛡️防御+10%"}, "⚔️근접+25%": {"en": "⚔️Melee +25%", "ja": "⚔️近接+25%", "zh": "⚔️近战+25%"}, "⚔️전투+10%": {"en": "⚔️Combat +10%", "ja": "⚔️戦闘+10%", "zh": "⚔️战斗+10%"}, "⚡자원+10%": {"en": "⚡Resource +10%", "ja": "⚡資源+10%", "zh": "⚡资源+10%"}, "⚡레이저+20%": {"en": "⚡Laser +20%", "ja": "⚡レーザー+20%", "zh": "⚡激光+20%"}, "💎레골리스+25%": {"en": "💎Regolith +25%", "ja": "💎レゴリス+25%", "zh": "💎风化层+25%"}, "💎레골리스+30%": {"en": "💎Regolith +30%", "ja": "💎レゴリス+30%", "zh": "💎风化层+30%"}, "💎희귀+15%": {"en": "💎Rare +15%", "ja": "💎レア+15%", "zh": "💎稀有+15%"}, "💰코인+15%": {"en": "💰Coin +15%", "ja": "💰コイン+15%", "zh": "💰金币+15%"}, "🎯미사일+25%": {"en": "🎯Missile +25%", "ja": "🎯ミサイル+25%", "zh": "🎯导弹+25%"}, "🎋기술+20%": {"en": "🎋Tech +20%", "ja": "🎋技術+20%", "zh": "🎋科技+20%"}, "🌙시야개방": {"en": "🌙Vision reveal", "ja": "🌙視界開放", "zh": "🌙视野开放"}, "🌙자원+25%": {"en": "🌙Resource +25%", "ja": "🌙資源+25%", "zh": "🌙资源+25%"}, "👥병력2배": {"en": "👥2x troops", "ja": "👥兵力2倍", "zh": "👥兵力翻倍"}, "🏯요새무료": {"en": "🏯Free fortress", "ja": "🏯要塞無料", "zh": "🏯免费要塞"}, "🔮이벤트예고": {"en": "🔮Event preview", "ja": "🔮イベント予告", "zh": "🔮事件预告"}, "💥크리티컬+15%": {"en": "💥Crit +15%", "ja": "💥クリティカル+15%", "zh": "💥暴击+15%"}, "점령": {"en": "Captured", "ja": "占領", "zh": "占领"}, "연승": {"en": "Win Streak", "ja": "連勝", "zh": "连胜"}, "전리품라벨": {"en": "🎁 Loot", "ja": "🎁 戦利品", "zh": "🎁 战利品"}, "점령로그": {"en": "Captured", "ja": "占領", "zh": "占领"}, "업적": {"en": "Achievement", "ja": "実績", "zh": "成就"}, "달성": {"en": "unlocked", "ja": "達成", "zh": "达成"}, "패배": {"en": "Defeat", "ja": "敗北", "zh": "失败"}, "정찰": {"en": "Scout", "ja": "偵察", "zh": "侦察"}, "구매": {"en": "Buy", "ja": "購入", "zh": "购买"}, "보너스": {"en": "Bonus", "ja": "ボーナス", "zh": "奖励"}, "경보": {"en": "Alert", "ja": "警報", "zh": "警报"}, "방어": {"en": "Defense", "ja": "防御", "zh": "防御"}, "함락": {"en": "Fallen", "ja": "陥落", "zh": "陷落"}, "레이더": {"en": "Radar", "ja": "レーダー", "zh": "雷达"}, "교환": {"en": "Exchange", "ja": "交換", "zh": "兑换"}, "생존왕": {"en": "Survivor", "ja": "生存王", "zh": "生存王"}, "베테랑": {"en": "Veteran", "ja": "ベテラン", "zh": "老兵"}, "전쟁 영웅": {"en": "War Hero", "ja": "戦争英雄", "zh": "战争英雄"}, "철벽 수비": {"en": "Iron Defense", "ja": "鉄壁の守り", "zh": "铁壁防守"}, "10개 섹터 점령": {"en": "Capture 10 sectors", "ja": "10セクター占領", "zh": "占领10个区域"}, "25개 섹터 점령": {"en": "Capture 25 sectors", "ja": "25セクター占領", "zh": "占领25个区域"}, "He-3 20,000 보유": {"en": "Hold 20,000 He-3", "ja": "He-3を20,000保有", "zh": "持有20,000氦-3"}, "30턴 도달": {"en": "Reach turn 30", "ja": "30ターン到達", "zh": "到达第30回合"}, "전 섹터 정복": {"en": "Conquer all sectors", "ja": "全セクター征服", "zh": "征服所有区域"}};
+const G_TR = {"자원 교환소": {"en": "Resource Exchange", "ja": "資源交換所", "zh": "资源交易所"}, "H₂O 얼음": {"en": "H₂O Ice", "ja": "H₂O氷", "zh": "H₂O冰"}, "레골리스": {"en": "Regolith", "ja": "レゴリス", "zh": "风化层"}, "He-3 광맥": {"en": "He-3 Vein", "ja": "He-3鉱脈", "zh": "氦-3矿脉"}, "턴": {"en": "turn", "ja": "ターン", "zh": "回合"}, "전투기": {"en": "Fighter", "ja": "戦闘機", "zh": "战斗机"}, "구축함": {"en": "Destroyer", "ja": "駆逐艦", "zh": "驱逐舰"}, "순양함": {"en": "Cruiser", "ja": "巡洋艦", "zh": "巡洋舰"}, "전투함": {"en": "Battleship", "ja": "戦艦", "zh": "战舰"}, "모선": {"en": "Mothership", "ja": "母艦", "zh": "母舰"}, "레이저 메카": {"en": "Laser Mech", "ja": "レーザーメカ", "zh": "激光机甲"}, "미사일 메카": {"en": "Missile Mech", "ja": "ミサイルメカ", "zh": "导弹机甲"}, "장갑 메카": {"en": "Armored Mech", "ja": "装甲メカ", "zh": "装甲机甲"}, "격투 메카": {"en": "Melee Mech", "ja": "格闘メカ", "zh": "格斗机甲"}, "에이스 파일럿": {"en": "Ace Pilot", "ja": "エースパイロット", "zh": "王牌飞行员"}, "선제타격": {"en": "First Strike", "ja": "先制攻撃", "zh": "先制打击"}, "편대비행": {"en": "Formation", "ja": "編隊飛行", "zh": "编队飞行"}, "어뢰": {"en": "Torpedo", "ja": "魚雷", "zh": "鱼雷"}, "대잠": {"en": "Anti-Sub", "ja": "対潜", "zh": "反潜"}, "관통샷": {"en": "Piercing Shot", "ja": "貫通ショット", "zh": "穿透射击"}, "급강하": {"en": "Dive", "ja": "急降下", "zh": "俯冲"}, "기동회피": {"en": "Evasion", "ja": "機動回避", "zh": "机动回避"}, "광역포격": {"en": "Barrage", "ja": "広域砲撃", "zh": "范围炮击"}, "실드흡수": {"en": "Shield Drain", "ja": "シールド吸収", "zh": "护盾吸收"}, "반격": {"en": "Counter", "ja": "反撃", "zh": "反击"}, "필살기": {"en": "Ultimate", "ja": "必殺技", "zh": "必杀技"}, "철벽": {"en": "Iron Wall", "ja": "鉄壁", "zh": "铁壁"}, "전술방어": {"en": "Tactical Defense", "ja": "戦術防御", "zh": "战术防御"}, "함포폭격": {"en": "Naval Bombard", "ja": "艦砲爆撃", "zh": "舰炮轰炸"}, "격납출격": {"en": "Hangar Launch", "ja": "格納出撃", "zh": "机库出击"}, "함대결전": {"en": "Fleet Battle", "ja": "艦隊決戦", "zh": "舰队决战"}, "드론": {"en": "Drone", "ja": "ドローン", "zh": "无人机"}, "유도탄": {"en": "Guided Missile", "ja": "誘導弾", "zh": "制导弹"}, "과열": {"en": "Overheat", "ja": "オーバーヒート", "zh": "过热"}, "강타": {"en": "Smash", "ja": "強打", "zh": "重击"}, "관통": {"en": "Pierce", "ja": "貫通", "zh": "穿透"}, "미사일": {"en": "Missile", "ja": "ミサイル", "zh": "导弹"}, "레이저포": {"en": "Laser Cannon", "ja": "レーザー砲", "zh": "激光炮"}, "레이저": {"en": "Laser", "ja": "レーザー", "zh": "激光"}, "장갑": {"en": "Armor", "ja": "装甲", "zh": "装甲"}, "달의 지배자": {"en": "Lunar Ruler", "ja": "月の支配者", "zh": "月球统治者"}, "우주 패권자": {"en": "Space Hegemon", "ja": "宇宙覇者", "zh": "太空霸主"}, "태양계의 왕": {"en": "King of the Solar System", "ja": "太陽系の王", "zh": "太阳系之王"}, "달의 여왕": {"en": "Moon Queen", "ja": "月の女王", "zh": "月之女王"}, "달의 전설": {"en": "Moon Legend", "ja": "月の伝説", "zh": "月之传奇"}, "헬륨 사냥꾼": {"en": "Helium Hunter", "ja": "ヘリウムハンター", "zh": "氦猎人"}, "철의 군주": {"en": "Iron Lord", "ja": "鉄の君主", "zh": "钢铁君主"}, "철의 장군": {"en": "Iron General", "ja": "鉄の将軍", "zh": "钢铁将军"}, "첫 승리": {"en": "First Blood", "ja": "初勝利", "zh": "首胜"}, "정복자": {"en": "Conqueror", "ja": "征服者", "zh": "征服者"}, "대정복자": {"en": "Grand Conqueror", "ja": "大征服者", "zh": "大征服者"}, "부자": {"en": "Wealthy", "ja": "富豪", "zh": "富豪"}, "정찰왕": {"en": "Scout King", "ja": "偵察王", "zh": "侦察王"}, "연속 접속": {"en": "Daily Streak", "ja": "連続ログイン", "zh": "连续登录"}, "전략가": {"en": "Strategist", "ja": "戦略家", "zh": "战略家"}, "대전략가": {"en": "Grand Strategist", "ja": "大戦略家", "zh": "大战略家"}, "사기 충천": {"en": "High Morale", "ja": "士気高揚", "zh": "士气高涨"}, "수호자": {"en": "Guardian", "ja": "守護者", "zh": "守护者"}, "첫 전투에서 승리": {"en": "Win your first battle", "ja": "初戦闘で勝利", "zh": "赢得首场战斗"}, "5개 섹터 점령": {"en": "Capture 5 sectors", "ja": "5セクター占領", "zh": "占领5个区域"}, "15개 섹터 점령": {"en": "Capture 15 sectors", "ja": "15セクター占領", "zh": "占领15个区域"}, "He-3 10,000 보유": {"en": "Hold 10,000 He-3", "ja": "He-3を10,000保有", "zh": "持有10,000氦-3"}, "정찰 5회 성공": {"en": "Scout 5 times", "ja": "偵察5回成功", "zh": "侦察成功5次"}, "5일 연속 접속": {"en": "5-day login streak", "ja": "5日連続ログイン", "zh": "连续登录5天"}, "20턴 도달": {"en": "Reach turn 20", "ja": "20ターン到達", "zh": "到达第20回合"}, "50턴 도달": {"en": "Reach turn 50", "ja": "50ターン到達", "zh": "到达第50回合"}, "사기 100% 유지 5턴": {"en": "Keep 100% morale for 5 turns", "ja": "士気100%を5ターン維持", "zh": "保持100%士气5回合"}, "적 공격 3회 방어": {"en": "Defend 3 enemy attacks", "ja": "敵の攻撃を3回防御", "zh": "防御3次敌方攻击"}, "3개 섹터 점령": {"en": "Capture 3 sectors", "ja": "3セクター占領", "zh": "占领3个区域"}, "8개 섹터 점령": {"en": "Capture 8 sectors", "ja": "8セクター占領", "zh": "占领8个区域"}, "전체 정복": {"en": "Total Conquest", "ja": "全征服", "zh": "全面征服"}, "10턴 생존": {"en": "Survive 10 turns", "ja": "10ターン生存", "zh": "生存10回合"}, "He-3 5,000 모으기": {"en": "Gather 5,000 He-3", "ja": "He-3を5,000集める", "zh": "收集5,000氦-3"}, "용병 출현!": {"en": "Mercenaries!", "ja": "傭兵出現！", "zh": "雇佣兵出现！"}, "기술 돌파!": {"en": "Tech Breakthrough!", "ja": "技術突破！", "zh": "技术突破！"}, "유성우!": {"en": "Meteor Shower!", "ja": "流星群！", "zh": "流星雨！"}, "동맹 제안": {"en": "Alliance Offer", "ja": "同盟提案", "zh": "同盟提议"}, "에너지 폭풍!": {"en": "Energy Storm!", "ja": "エネルギー嵐！", "zh": "能量风暴！"}, "보물 발견!": {"en": "Treasure Found!", "ja": "宝物発見！", "zh": "发现宝藏！"}, "소행성 충돌!": {"en": "Asteroid Impact!", "ja": "小惑星衝突！", "zh": "小行星撞击！"}, "태양풍 발생": {"en": "Solar Wind", "ja": "太陽風発生", "zh": "太阳风"}, "UN 평화 협정": {"en": "UN Peace Treaty", "ja": "UN和平協定", "zh": "联合国和平协定"}, "용병 부대가 합류를 제안합니다.": {"en": "A mercenary unit offers to join.", "ja": "傭兵部隊が合流を提案します。", "zh": "雇佣兵部队提议加入。"}, "연구소에서 신기술을 개발했습니다!": {"en": "The lab developed new tech!", "ja": "研究所が新技術を開発しました！", "zh": "实验室开发了新技术！"}, "유성우가 쏟아집니다!": {"en": "Meteors rain down!", "ja": "流星群が降り注ぎます！", "zh": "流星倾泻而下！"}, "중립 세력이 동맹을 제안합니다.": {"en": "A neutral faction proposes an alliance.", "ja": "中立勢力が同盟を提案します。", "zh": "中立势力提议结盟。"}, "강력한 에너지 파동이 감지됩니다!": {"en": "A powerful energy surge detected!", "ja": "強力なエネルギー波動を検知！", "zh": "检测到强大能量波动！"}, "고대 유적에서 보물을 발견했습니다!": {"en": "Treasure found in ancient ruins!", "ja": "古代遺跡で宝物を発見！", "zh": "在古代遗迹中发现宝藏！"}, "달에 소행성이 충돌했습니다.": {"en": "An asteroid struck the Moon.", "ja": "月に小惑星が衝突しました。", "zh": "小行星撞击了月球。"}, "강력한 태양풍이 에너지 무기를 강화합니다.": {"en": "Solar wind boosts energy weapons.", "ja": "太陽風がエネルギー兵器を強化します。", "zh": "太阳风增强能量武器。"}, "UN이 긴급 평화 협정을 선포했습니다.": {"en": "The UN declared an emergency peace treaty.", "ja": "UNが緊急和平協定を宣言しました。", "zh": "联合国宣布紧急和平协定。"}, "강력한 연설로 군의 사기가 솟구칩니다!": {"en": "A powerful speech lifts morale!", "ja": "力強い演説で士気が高まります！", "zh": "激昂的演讲提振士气！"}, "대규모 H₂O 빙하가 발견되었습니다!": {"en": "A massive H₂O glacier discovered!", "ja": "大規模なH₂O氷河が発見されました！", "zh": "发现大规模H₂O冰川！"}, "새로운 레골리스 결정체 광맥!": {"en": "New regolith crystal vein!", "ja": "新しいレゴリス結晶鉱脈！", "zh": "新的风化层晶体矿脉！"}, "전투기 +2 즉시 획득": {"en": "Gain +2 Fighters instantly", "ja": "戦闘機+2を即獲得", "zh": "立即获得+2战斗机"}, "다음 3턴 전투력 +25%": {"en": "+25% power for next 3 turns", "ja": "次の3ターン戦闘力+25%", "zh": "接下来3回合战斗力+25%"}, "무작위 3섹터 자원 2배": {"en": "2x resources in 3 random sectors", "ja": "ランダム3セクター資源2倍", "zh": "随机3个区域资源翻倍"}, "빈 섹터 1개 무료 획득": {"en": "Gain 1 empty sector free", "ja": "空セクター1つ無料獲得", "zh": "免费获得1个空区域"}, "He-3 +500, 사기 +15%": {"en": "He-3 +500, Morale +15%", "ja": "He-3+500、士気+15%", "zh": "氦-3+500，士气+15%"}, "코인 +800": {"en": "Coins +800", "ja": "コイン+800", "zh": "金币+800"}, "H₂O +200 즉시 획득": {"en": "Gain H₂O +200 instantly", "ja": "H₂O+200を即獲得", "zh": "立即获得H₂O+200"}, "레골리스 +50 + 사기 +10": {"en": "Regolith +50 + Morale +10", "ja": "レゴリス+50＋士気+10", "zh": "风化层+50+士气+10"}, "사기 +30% 즉시 회복": {"en": "Restore Morale +30% instantly", "ja": "士気+30%即回復", "zh": "立即恢复士气+30%"}, "레이저 유닛 전투력 +30% (1턴)": {"en": "Laser units +30% power (1 turn)", "ja": "レーザーユニット戦闘力+30%（1ターン）", "zh": "激光兵种战斗力+30%（1回合）"}, "전 공격 정확도 -20% (1턴)": {"en": "All attacks -20% accuracy (1 turn)", "ja": "全攻撃命中-20%（1ターン）", "zh": "全攻击命中-20%（1回合）"}, "유닛 부족 - 구매/턴종료": {"en": "No units - buy/end turn", "ja": "ユニット不足-購入/ターン終了", "zh": "兵种不足-购买/结束回合"}, "유닛 선택 필요": {"en": "Select a unit", "ja": "ユニット選択が必要", "zh": "需要选择兵种"}, "유닛 없음": {"en": "No units", "ja": "ユニットなし", "zh": "无兵种"}, "섹터 선택 필요": {"en": "Select a sector", "ja": "セクター選択が必要", "zh": "需要选择区域"}, "출격 유닛 없음": {"en": "No units to deploy", "ja": "出撃ユニットなし", "zh": "无出击兵种"}, "He-3 부족": {"en": "Not enough He-3", "ja": "He-3不足", "zh": "氦-3不足"}, "코인 부족": {"en": "Not enough coins", "ja": "コイン不足", "zh": "金币不足"}, "자원 부족": {"en": "Not enough resources", "ja": "資源不足", "zh": "资源不足"}, "잠시 후": {"en": "Wait a moment", "ja": "しばらくお待ちを", "zh": "请稍候"}, "교환 완료": {"en": "Exchange complete", "ja": "交換完了", "zh": "兑换完成"}, "배치 완료!": {"en": "Deployed!", "ja": "配置完了！", "zh": "部署完成！"}, "정찰 성공!": {"en": "Scout success!", "ja": "偵察成功！", "zh": "侦察成功！"}, "레이더 설치!": {"en": "Radar installed!", "ja": "レーダー設置！", "zh": "雷达已安装！"}, "정찰기 없음": {"en": "No scouts", "ja": "偵察機なし", "zh": "无侦察机"}, "정찰기 획득!": {"en": "Scout gained!", "ja": "偵察機獲得！", "zh": "获得侦察机！"}, "보너스 수령!": {"en": "Bonus claimed!", "ja": "ボーナス受取！", "zh": "领取奖励！"}, "레벨 업!": {"en": "Level Up!", "ja": "レベルアップ！", "zh": "升级！"}, "유닛 획득!": {"en": "Unit acquired!", "ja": "ユニット獲得！", "zh": "获得兵种！"}, "격추됨!": {"en": "Shot down!", "ja": "撃墜！", "zh": "被击落！"}, "결사 항전!": {"en": "Last Stand!", "ja": "決死抗戦！", "zh": "殊死抵抗！"}, "턴은 2초에 1번": {"en": "1 turn per 2 seconds", "ja": "ターンは2秒に1回", "zh": "每2秒1回合"}, "필요: ": {"en": "Need: ", "ja": "必要: ", "zh": "需要: "}, " / 보유: ": {"en": " / Have: ", "ja": " / 保有: ", "zh": " / 持有: "}, "+버튼으로 유닛 수량을 선택하세요": {"en": "Use + to select unit quantity", "ja": "+ボタンでユニット数を選択", "zh": "用+按钮选择兵种数量"}, "패배...": {"en": "Defeat...", "ja": "敗北...", "zh": "失败..."}, "달 정복 완료!": {"en": "Moon Conquered!", "ja": "月征服完了！", "zh": "征服月球！"}, "다시 도전": {"en": "Try Again", "ja": "再挑戦", "zh": "再次挑战"}, "없음": {"en": "None", "ja": "なし", "zh": "无"}, "일반": {"en": "Normal", "ja": "通常", "zh": "普通"}, "회": {"en": "x", "ja": "回", "zh": "次"}, "전섹터": {"en": "All Sectors", "ja": "全セクター", "zh": "全区域"}, "크레이터": {"en": "Crater", "ja": "クレーター", "zh": "陨石坑"}, "지휘관": {"en": "Commander", "ja": "司令官", "zh": "指挥官"}, "정면 돌격": {"en": "Direct Assault", "ja": "正面突撃", "zh": "正面强攻"}, "정밀 타격": {"en": "Precision Strike", "ja": "精密打撃", "zh": "精准打击"}, "포위 공격": {"en": "Encirclement", "ja": "包囲攻撃", "zh": "包围攻击"}, "함선": {"en": "Ships", "ja": "艦船", "zh": "舰船"}, "에이스": {"en": "Aces", "ja": "エース", "zh": "王牌"}, "메카": {"en": "Mechs", "ja": "メカ", "zh": "机甲"}, "상성": {"en": "Matchup", "ja": "相性", "zh": "相克"}, "유닛": {"en": "Unit", "ja": "ユニット", "zh": "兵种"}, "전투력": {"en": "Power", "ja": "戦闘力", "zh": "战斗力"}, "별명": {"en": "Nickname", "ja": "ニックネーム", "zh": "昵称"}, "보유": {"en": "Owned", "ja": "保有", "zh": "持有"}, "사기": {"en": "Morale", "ja": "士気", "zh": "士气"}, "생산": {"en": "Output", "ja": "生産", "zh": "产出"}, "섹터": {"en": "Sector", "ja": "セクター", "zh": "区域"}, "소유": {"en": "Owner", "ja": "所有", "zh": "所有者"}, "승리": {"en": "Wins", "ja": "勝利", "zh": "胜利"}, "자원": {"en": "Resource", "ja": "資源", "zh": "资源"}, "점령 섹터": {"en": "Sectors Held", "ja": "占領セクター", "zh": "占领区域"}, "대한민국": {"en": "Korea", "ja": "韓国", "zh": "韩国"}, "미국": {"en": "USA", "ja": "アメリカ", "zh": "美国"}, "중국": {"en": "China", "ja": "中国", "zh": "中国"}, "일본": {"en": "Japan", "ja": "日本", "zh": "日本"}, "러시아": {"en": "Russia", "ja": "ロシア", "zh": "俄罗斯"}, "독일": {"en": "Germany", "ja": "ドイツ", "zh": "德国"}, "프랑스": {"en": "France", "ja": "フランス", "zh": "法国"}, "영국": {"en": "UK", "ja": "イギリス", "zh": "英国"}, "인도": {"en": "India", "ja": "インド", "zh": "印度"}, "브라질": {"en": "Brazil", "ja": "ブラジル", "zh": "巴西"}, "캐나다": {"en": "Canada", "ja": "カナダ", "zh": "加拿大"}, "호주": {"en": "Australia", "ja": "オーストラリア", "zh": "澳大利亚"}, "멕시코": {"en": "Mexico", "ja": "メキシコ", "zh": "墨西哥"}, "인도네시아": {"en": "Indonesia", "ja": "インドネシア", "zh": "印度尼西亚"}, "아르헨티나": {"en": "Argentina", "ja": "アルゼンチン", "zh": "阿根廷"}, "네덜란드": {"en": "Netherlands", "ja": "オランダ", "zh": "荷兰"}, "사우디": {"en": "Saudi Arabia", "ja": "サウジ", "zh": "沙特"}, "터키": {"en": "Turkey", "ja": "トルコ", "zh": "土耳其"}, "폴란드": {"en": "Poland", "ja": "ポーランド", "zh": "波兰"}, "스웨덴": {"en": "Sweden", "ja": "スウェーデン", "zh": "瑞典"}, "태국": {"en": "Thailand", "ja": "タイ", "zh": "泰国"}, "나이지리아": {"en": "Nigeria", "ja": "ナイジェリア", "zh": "尼日利亚"}, "이집트": {"en": "Egypt", "ja": "エジプト", "zh": "埃及"}, "남아공": {"en": "South Africa", "ja": "南アフリカ", "zh": "南非"}, "베트남": {"en": "Vietnam", "ja": "ベトナム", "zh": "越南"}, "이란": {"en": "Iran", "ja": "イラン", "zh": "伊朗"}, "이스라엘": {"en": "Israel", "ja": "イスラエル", "zh": "以色列"}, "파키스탄": {"en": "Pakistan", "ja": "パキスタン", "zh": "巴基斯坦"}, "우크라이나": {"en": "Ukraine", "ja": "ウクライナ", "zh": "乌克兰"}, "노르웨이": {"en": "Norway", "ja": "ノルウェー", "zh": "挪威"}, "필리핀": {"en": "Philippines", "ja": "フィリピン", "zh": "菲律宾"}, "카자흐스탄": {"en": "Kazakhstan", "ja": "カザフスタン", "zh": "哈萨克斯坦"}, "스페인": {"en": "Spain", "ja": "スペイン", "zh": "西班牙"}, "이탈리아": {"en": "Italy", "ja": "イタリア", "zh": "意大利"}, "고요": {"en": "Tranquility", "ja": "静けさ", "zh": "静海"}, "폭풍": {"en": "Storm", "ja": "嵐", "zh": "风暴"}, "위기해": {"en": "Sea of Crises", "ja": "危難の海", "zh": "危海"}, "샤클턴": {"en": "Shackleton", "ja": "シャクルトン", "zh": "沙克尔顿"}, "코페르니쿠스": {"en": "Copernicus", "ja": "コペルニクス", "zh": "哥白尼"}, "티코": {"en": "Tycho", "ja": "ティコ", "zh": "第谷"}, "플라톤": {"en": "Plato", "ja": "プラトン", "zh": "柏拉图"}, "아리스타르코스": {"en": "Aristarchus", "ja": "アリスタルコス", "zh": "阿里斯塔克斯"}, "비의海": {"en": "Sea of Rains", "ja": "雨の海", "zh": "雨海"}, "구름海": {"en": "Sea of Clouds", "ja": "雲の海", "zh": "云海"}, "지식海": {"en": "Sea of Knowledge", "ja": "知識の海", "zh": "知海"}, "프톨레마이오스": {"en": "Ptolemaeus", "ja": "プトレマイオス", "zh": "托勒密"}, "달뒷면": {"en": "Far Side", "ja": "月の裏側", "zh": "月背"}, "남극": {"en": "South Pole", "ja": "南極", "zh": "南极"}, "북극": {"en": "North Pole", "ja": "北極", "zh": "北极"}, "세레니티": {"en": "Serenity", "ja": "晴れの海", "zh": "澄海"}, "사빈": {"en": "Sabine", "ja": "サビーヌ", "zh": "萨拜因"}, "빌헬름": {"en": "Wilhelm", "ja": "ウィルヘルム", "zh": "威廉"}, "아이트켄": {"en": "Aitken", "ja": "エイトケン", "zh": "艾特肯"}, "허블": {"en": "Hubble", "ja": "ハッブル", "zh": "哈勃"}, "풍요海": {"en": "Sea of Fertility", "ja": "豊かの海", "zh": "丰海"}, "메시에": {"en": "Messier", "ja": "メシエ", "zh": "梅西耶"}, "페타비우스": {"en": "Petavius", "ja": "ペタヴィウス", "zh": "佩塔维乌斯"}, "란그레누스": {"en": "Langrenus", "ja": "ラングレヌス", "zh": "兰格伦"}, "스테비누스": {"en": "Stevinus", "ja": "ステヴィヌス", "zh": "斯蒂维纽斯"}, "풀처리무스": {"en": "Fracastorius", "ja": "フラカストリウス", "zh": "弗拉卡斯托里乌斯"}, "지오르다노": {"en": "Giordano", "ja": "ジョルダーノ", "zh": "焦尔达诺"}, "코롤레프": {"en": "Korolev", "ja": "コロリョフ", "zh": "科罗廖夫"}, "⚡레이저+15%": {"en": "⚡Laser +15%", "ja": "⚡レーザー+15%", "zh": "⚡激光+15%"}, "🛡️크레이터+20%": {"en": "🛡️Crater +20%", "ja": "🛡️クレーター+20%", "zh": "🛡️陨石坑+20%"}, "⭐에이스+20%": {"en": "⭐Ace +20%", "ja": "⭐エース+20%", "zh": "⭐王牌+20%"}, "⭐에이스+30%": {"en": "⭐Ace +30%", "ja": "⭐エース+30%", "zh": "⭐王牌+30%"}, "😤사기유지+10%": {"en": "😤Morale hold +10%", "ja": "😤士気維持+10%", "zh": "😤士气保持+10%"}, "😤사기+10%": {"en": "😤Morale +10%", "ja": "😤士気+10%", "zh": "😤士气+10%"}, "😤사기+15%": {"en": "😤Morale +15%", "ja": "😤士気+15%", "zh": "😤士气+15%"}, "😤사기+20%": {"en": "😤Morale +20%", "ja": "😤士気+20%", "zh": "😤士气+20%"}, "😤사기면역": {"en": "😤Morale immune", "ja": "😤士気免疫", "zh": "😤士气免疫"}, "😤사기최고유지": {"en": "😤Max morale hold", "ja": "😤士気最高維持", "zh": "😤士气最高保持"}, "😤사기회복": {"en": "😤Morale recovery", "ja": "😤士気回復", "zh": "😤士气恢复"}, "💨기동+15%": {"en": "💨Mobility +15%", "ja": "💨機動+15%", "zh": "💨机动+15%"}, "💨기동+20%": {"en": "💨Mobility +20%", "ja": "💨機動+20%", "zh": "💨机动+20%"}, "💨전투기+20%": {"en": "💨Fighter +20%", "ja": "💨戦闘機+20%", "zh": "💨战斗机+20%"}, "🚀모선+20%": {"en": "🚀Mothership +20%", "ja": "🚀母艦+20%", "zh": "🚀母舰+20%"}, "🛡️방어+10%": {"en": "🛡️Defense +10%", "ja": "🛡️防御+10%", "zh": "🛡️防御+10%"}, "⚔️근접+25%": {"en": "⚔️Melee +25%", "ja": "⚔️近接+25%", "zh": "⚔️近战+25%"}, "⚔️전투+10%": {"en": "⚔️Combat +10%", "ja": "⚔️戦闘+10%", "zh": "⚔️战斗+10%"}, "⚡자원+10%": {"en": "⚡Resource +10%", "ja": "⚡資源+10%", "zh": "⚡资源+10%"}, "⚡레이저+20%": {"en": "⚡Laser +20%", "ja": "⚡レーザー+20%", "zh": "⚡激光+20%"}, "💎레골리스+25%": {"en": "💎Regolith +25%", "ja": "💎レゴリス+25%", "zh": "💎风化层+25%"}, "💎레골리스+30%": {"en": "💎Regolith +30%", "ja": "💎レゴリス+30%", "zh": "💎风化层+30%"}, "💎희귀+15%": {"en": "💎Rare +15%", "ja": "💎レア+15%", "zh": "💎稀有+15%"}, "💰코인+15%": {"en": "💰Coin +15%", "ja": "💰コイン+15%", "zh": "💰金币+15%"}, "🎯미사일+25%": {"en": "🎯Missile +25%", "ja": "🎯ミサイル+25%", "zh": "🎯导弹+25%"}, "🎋기술+20%": {"en": "🎋Tech +20%", "ja": "🎋技術+20%", "zh": "🎋科技+20%"}, "🌙시야개방": {"en": "🌙Vision reveal", "ja": "🌙視界開放", "zh": "🌙视野开放"}, "🌙자원+25%": {"en": "🌙Resource +25%", "ja": "🌙資源+25%", "zh": "🌙资源+25%"}, "👥병력2배": {"en": "👥2x troops", "ja": "👥兵力2倍", "zh": "👥兵力翻倍"}, "🏯요새무료": {"en": "🏯Free fortress", "ja": "🏯要塞無料", "zh": "🏯免费要塞"}, "🔮이벤트예고": {"en": "🔮Event preview", "ja": "🔮イベント予告", "zh": "🔮事件预告"}, "💥크리티컬+15%": {"en": "💥Crit +15%", "ja": "💥クリティカル+15%", "zh": "💥暴击+15%"}, "점령": {"en": "Captured", "ja": "占領", "zh": "占领"}, "연승": {"en": "Win Streak", "ja": "連勝", "zh": "连胜"}, "전리품라벨": {"en": "🎁 Loot", "ja": "🎁 戦利品", "zh": "🎁 战利品"}, "점령로그": {"en": "Captured", "ja": "占領", "zh": "占领"}, "업적": {"en": "Achievement", "ja": "実績", "zh": "成就"}, "달성": {"en": "unlocked", "ja": "達成", "zh": "达成"}, "패배": {"en": "Defeat", "ja": "敗北", "zh": "失败"}, "정찰": {"en": "Scout", "ja": "偵察", "zh": "侦察"}, "구매": {"en": "Buy", "ja": "購入", "zh": "购买"}, "보너스": {"en": "Bonus", "ja": "ボーナス", "zh": "奖励"}, "경보": {"en": "Alert", "ja": "警報", "zh": "警报"}, "방어": {"en": "Defense", "ja": "防御", "zh": "防御"}, "함락": {"en": "Fallen", "ja": "陥落", "zh": "陷落"}, "레이더": {"en": "Radar", "ja": "レーダー", "zh": "雷达"}, "교환": {"en": "Exchange", "ja": "交換", "zh": "兑换"}, "생존왕": {"en": "Survivor", "ja": "生存王", "zh": "生存王"}, "베테랑": {"en": "Veteran", "ja": "ベテラン", "zh": "老兵"}, "전쟁 영웅": {"en": "War Hero", "ja": "戦争英雄", "zh": "战争英雄"}, "철벽 수비": {"en": "Iron Defense", "ja": "鉄壁の守り", "zh": "铁壁防守"}, "10개 섹터 점령": {"en": "Capture 10 sectors", "ja": "10セクター占領", "zh": "占领10个区域"}, "25개 섹터 점령": {"en": "Capture 25 sectors", "ja": "25セクター占領", "zh": "占领25个区域"}, "He-3 20,000 보유": {"en": "Hold 20,000 He-3", "ja": "He-3を20,000保有", "zh": "持有20,000氦-3"}, "30턴 도달": {"en": "Reach turn 30", "ja": "30ターン到達", "zh": "到达第30回合"}, "전 섹터 정복": {"en": "Conquer all sectors", "ja": "全セクター征服", "zh": "征服所有区域"}};
 function gTr(ko){
   if(!ko) return ko;
   const l = (typeof _L!=="undefined"?_L:"ko");
@@ -1440,6 +1480,8 @@ function setLang(l){
     "i-moon-sub":"moon_sub","i-mars-sub":"mars_sub","i-space-sub":"space_sub",
     "i-start":"start_btn","i-guide":"guide",
     "i-nav-about":"nav_about","i-nav-terms":"nav_terms","i-nav-privacy":"nav_privacy",
+    "i-hud-sec":"hud_sec","i-hud-wins":"hud_wins","i-hud-morale":"hud_morale","i-sp-morale":"hud_morale",
+    "i-turn-word":"turn_word","i-exch-btn":"exch_btn","i-mission-hdr":"mission_hdr","i-sp-reg":"sp_reg","i-sp-coin":"sp_coin",
     // NATION
     "i-n-title":"n_title","i-n-sub":"n_sub","i-n-next":"n_next",
     // COMMANDER
@@ -1654,7 +1696,7 @@ function buildGrid(){
       d.innerHTML=`<span class="sec-id">${String(i+1).padStart(2,"0")}</span>
         <span class="sec-ti">${si.icon||""}${G.radars[i]?"📡":""}</span>
         <div class="expand-hint"><div class="expand-pulse"></div></div>
-        <div style="font-size:.38rem;color:rgba(80,120,180,.5);margin-top:16px">${si.label||"일반"}</div>
+        <div style="font-size:.38rem;color:rgba(80,120,180,.5);margin-top:16px">${gTr(si.label||"일반")}</div>
         <div style="font-size:.36rem;color:rgba(60,100,160,.4)">${gTr(SNAMES[i])}</div>`;
       d.onclick=()=>clickSec(i);
     }else{
@@ -1721,12 +1763,12 @@ function clickSec(i){
 function updateRSec(i){
   const s=G.sectors[i];const si=SEC_RES[SEC_TYPES[i]||"neutral"];
   document.getElementById("r-sec-info").innerHTML=`
-    <div class="rrow"><span class="rk">섹터</span><span class="rv2" style="font-size:.65rem">${gTr(SNAMES[i])}</span></div>
-    <div class="rrow"><span class="rk">자원</span><span class="rv2" style="color:${si.color||"var(--muted)"}">${si.label||"일반"}</span></div>
-    <div class="rrow"><span class="rk">생산</span><span class="rv2" style="color:var(--green)">⚡+${si.prod.he3}/턴</span></div>
-    ${s?`<div class="rrow"><span class="rk">소유</span><span class="rv2">${s.flag} ${s.name}</span></div>
+    <div class="rrow"><span class="rk">${gTr("섹터")}</span><span class="rv2" style="font-size:.65rem">${gTr(SNAMES[i])}</span></div>
+    <div class="rrow"><span class="rk">${gTr("자원")}</span><span class="rv2" style="color:${si.color||"var(--muted)"}">${gTr(si.label||"일반")}</span></div>
+    <div class="rrow"><span class="rk">${gTr("생산")}</span><span class="rv2" style="color:var(--green)">⚡+${si.prod.he3}/${gTr("턴")}</span></div>
+    ${s?`<div class="rrow"><span class="rk">${gTr("소유")}</span><span class="rv2">${s.flag} ${s.name}</span></div>
     <div class="rrow"><span class="rk">HP</span><span class="rv2" style="color:${s.own==="me"?"var(--green)":"var(--red)"}">${s.hp}%</span></div>
-    <div class="rrow"><span class="rk">전투력</span><span class="rv2" style="color:var(--gold)">⚔️${s.pow}</span></div>`:""}`;
+    <div class="rrow"><span class="rk">${gTr("전투력")}</span><span class="rv2" style="color:var(--gold)">⚔️${s.pow}</span></div>`:""}`;
 }
 
 // ══ SAO ══════════════════════════════════════════════
@@ -1749,7 +1791,7 @@ function showSAO(i){
       <div class="sao-row"><span class="sao-lbl">소유</span>
         <span class="sao-val" style="color:${!s?"var(--muted)":s.own==="me"?"var(--green)":"var(--red)"}">
           ${!s?t("sao_unocc"):s.own==="me"?G.nation.f+" "+t("sao_my"):s.flag+" "+s.name}</span></div>
-      <div class="sao-row"><span class="sao-lbl">${t("sao_res")}</span><span class="sao-val" style="color:${si.color||"var(--muted)"}">${si.label}</span></div>
+      <div class="sao-row"><span class="sao-lbl">${t("sao_res")}</span><span class="sao-val" style="color:${si.color||"var(--muted)"}">${gTr(si.label)}</span></div>
       <div class="sao-row"><span class="sao-lbl">${t("sao_prod")}</span><span class="sao-val" style="color:var(--green)">+${si.prod.he3} He-3</span></div>
       ${s?`<div class="sao-row"><span class="sao-lbl">${t("sao_hp")}</span><span class="sao-val" style="color:${s.own==="me"?"var(--green)":"var(--red)"}">${s.hp}%</span></div>`:""}
     </div>`;
@@ -1758,7 +1800,7 @@ function showSAO(i){
     intel.innerHTML=`<div class="sao-intel-t">🛩️ ${t("sao_scout_done")}</div>
       <div style="display:flex;justify-content:space-between;font-size:.64rem;margin-bottom:2px"><span>유닛</span><span>${scouted.ue} (${scouted.ct})</span></div>
       <div style="display:flex;justify-content:space-between;font-size:.64rem;margin-bottom:2px"><span>전투력</span><span style="color:var(--red)">⚔️${scouted.pow}</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:.64px"><span>상성</span><span style="color:${cm.mod>1?"var(--green)":cm.mod<1?"var(--red)":"var(--muted)"}">${cm.lbl}</span></div>`;}
+      <div style="display:flex;justify-content:space-between;font-size:.64px"><span>${gTr("상성")}</span><span style="color:${cm.mod>1?"var(--green)":cm.mod<1?"var(--red)":"var(--muted)"}">${cm.lbl}</span></div>`;}
   else intel.style.display="none";
   const acts=document.getElementById("sao-acts");acts.innerHTML="";
   const u=G.selUnit;const moraleMod=G.morale>=70?1:G.morale>=50?.8:.6; // morale affects combat
@@ -2022,7 +2064,7 @@ function launchFM(){
   const won=Math.random()<attPow/(attPow+defPow);
   closeFM();renderUnits();showSelBig();updateResUI();
   sfx("attack");
-  const ml=G.fmMode==="smart"?"정밀 타격":G.fmMode==="surround"?"포위 공격":"정면 돌격";
+  const ml=G.fmMode==="smart"?gTr("정밀 타격"):G.fmMode==="surround"?gTr("포위 공격"):gTr("정면 돌격");
   const mc=G.fmMode==="smart"?"#ffd700":G.fmMode==="surround"?"#aa44ff":"var(--red)";
   document.getElementById("btag-el").innerHTML=`<span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:.66rem;font-weight:700;background:${mc}22;border:1px solid ${mc};color:${mc};margin-bottom:9px">${ml}</span>`;
   const $=id=>document.getElementById(id);
@@ -2149,8 +2191,8 @@ function showBonusModal(isLogin=false,streak=1){
   const bonuses=[];
   const heBonus=300+streak*50;const regBonus=15+streak*5;const moraleBonus=20;
   bonuses.push({icon:"⚡",label:"He-3",val:"+"+heBonus});
-  bonuses.push({icon:"💎",label:"레골리스",val:"+"+regBonus});
-  bonuses.push({icon:"😤",label:"사기",val:"+"+moraleBonus+"%"});
+  bonuses.push({icon:"💎",label:gTr("레골리스"),val:"+"+regBonus});
+  bonuses.push({icon:"😤",label:gTr("사기"),val:"+"+moraleBonus+"%"});
   if(streak>=3)bonuses.push({icon:"🔥",label:t("bonus_streak",{v:streak}),val:"×1.5"});
   if(streak>=7)bonuses.push({icon:"⭐",label:t("bonus_weekly"),val:"🪙 +500"});
   document.getElementById("bonus-title").textContent=isLogin?t("bonus_title",{v:streak}):t("bonus_hourly");
@@ -2337,7 +2379,7 @@ function getBattleEffects(u, s, mode) {
   }
   // 콤보 (연승시 확률 증가)
   if (G._lastWin && Math.random() < 0.15) {
-    effects.push({type:"combo", mult:1.25, text:"🔥 " + (G._combo||1) + "연승 콤보!"});
+    effects.push({type:"combo", mult:1.25, text:"🔥 " + (G._combo||1) + gTr("연승")});
   }
   // 상성 보너스 텍스트
   const cm = getCM(u.ctype, s.ct);
@@ -2395,11 +2437,11 @@ function openExchange() {
   m.style.display = "flex";
   m.querySelector(".ebg").onclick = () => { m.style.display = "none"; };
   const body = m.querySelector(".ebody") || m;
-  body.innerHTML = "<div class=\"ev-title\">🏪 자원 교환소</div>" +
+  body.innerHTML = "<div class=\"ev-title\">🏪 "+gTr("자원 교환소")+"</div>" +
     "<div class=\"ex-row\" onclick=\"exchange('he3','coins',500,100)\">⚡ He-3 500 → 🪙 코인 100</div>" +
     "<div class=\"ex-row\" onclick=\"exchange('coins','he3',200,600)\">🪙 코인 200 → ⚡ He-3 600</div>" +
-    "<div class=\"ex-row\" onclick=\"exchange('reg','he3',50,800)\">💎 레골리스 50 → ⚡ He-3 800</div>" +
-    "<div class=\"ex-row\" onclick=\"exchange('he3','reg',1000,30)\">⚡ He-3 1000 → 💎 레골리스 30</div>" +
+    "<div class=\"ex-row\" onclick=\"exchange('reg','he3',50,800)\">💎 "+gTr("레골리스")+" 50 → ⚡ He-3 800</div>" +
+    "<div class=\"ex-row\" onclick=\"exchange('he3','reg',1000,30)\">⚡ He-3 1000 → 💎 "+gTr("레골리스")+" 30</div>" +
     "<div style=\"text-align:center;margin-top:12px\"><button class=\"btn-ok\" onclick=\"document.getElementById('emodal').style.display='none'\">닫기</button></div>";
 }
 
@@ -2520,7 +2562,7 @@ function switchView(v){
 function updateHUD(){
   if(!G.nation||!G.commander)return;
   document.getElementById("hud-av").textContent=G.commander.av;document.getElementById("hud-cn").textContent=G.commander.name;document.getElementById("hflag").textContent=G.nation.f;
-  document.getElementById("lp-av").textContent=G.commander.av;document.getElementById("lp-name").textContent=G.commander.name;document.getElementById("lp-title").textContent=G.commander.title;
+  document.getElementById("lp-av").textContent=G.commander.av;document.getElementById("lp-name").textContent=G.commander.name;document.getElementById("lp-title").textContent='"'+gTr(G.commander.title.replace(/"/g,""))+'"';
   const sb=document.getElementById("streak-badge");if(sb&&G.loginStreak>1){sb.style.display="inline";sb.textContent=`🔥 ${G.loginStreak}일`;}
 }
 function updateResUI(){
@@ -2530,22 +2572,22 @@ function updateResUI(){
   document.getElementById("res-he3").textContent=G.he3.toLocaleString();document.getElementById("res-reg").textContent=G.reg;document.getElementById("res-h2o").textContent=G.h2o;
   document.getElementById("rc").textContent=G.coins.toLocaleString();document.getElementById("rs").textContent=owned.length;document.getElementById("rw").textContent=G.wins;
   document.getElementById("sc-cnt").textContent=G.scoutCount;document.getElementById("sc-owned").textContent=G.scoutCount;document.getElementById("rad-placed").textContent=Object.keys(G.radars).length;
-  document.getElementById("rate-he3").textContent=`+${he}/턴`;document.getElementById("rate-reg").textContent=`+${reg}/턴`;document.getElementById("rate-h2o").textContent=`+${h2o}/턴`;
+  document.getElementById("rate-he3").textContent=`+${he}/${gTr("턴")}`;document.getElementById("rate-reg").textContent=`+${reg}/${gTr("턴")}`;document.getElementById("rate-h2o").textContent=`+${h2o}/${gTr("턴")}`;
 }
 function updateShipView(){
   if(!G.nation||!G.commander)return;const u=G.selUnit||SHIPS[0];const nc=G.commander.g==="female"?"#f9a":"#5af";
   document.getElementById("cmd-disp").innerHTML=`
     <div class="cmd-port"><span class="cmd-emo" style="color:${nc}">${G.commander.av}</span>
       <div style="font-size:.8rem;font-weight:700;color:${nc};margin-bottom:2px">${G.commander.name}</div>
-      <div style="font-size:.62rem;color:var(--gold);font-style:italic">${G.commander.title}</div></div>
+      <div style="font-size:.62rem;color:var(--gold);font-style:italic">"${gTr(G.commander.title.replace(/"/g,""))}"</div></div>
     <div class="cmd-ship-area">
       <img class="cmd-ship-img" src="${u.img}" alt="${u.name}" onerror="this.textContent='${u.emoji}';this.style.fontSize='5rem';this.style.display='block'"/>
       <div style="font-size:.76rem;font-weight:700;color:var(--accent);margin-top:6px">${u.emoji} ${gTr(u.name)}</div>
       <div class="sv-stats">
-        <div class="sv-stat"><div class="sv-stat-v">⚔️${u.pow}</div><div class="sv-stat-l">전투력</div></div>
-        <div class="sv-stat"><div class="sv-stat-v">${Object.values(G.sectors).filter(s=>s.own==="me").length}</div><div class="sv-stat-l">점령 섹터</div></div>
-        <div class="sv-stat"><div class="sv-stat-v">${G.wins}</div><div class="sv-stat-l">승리</div></div>
-        <div class="sv-stat"><div class="sv-stat-v" style="color:${G.morale>=70?"var(--green)":G.morale>=50?"var(--gold)":"var(--red)"}">${G.morale}%</div><div class="sv-stat-l">사기</div></div>
+        <div class="sv-stat"><div class="sv-stat-v">⚔️${u.pow}</div><div class="sv-stat-l">${gTr("전투력")}</div></div>
+        <div class="sv-stat"><div class="sv-stat-v">${Object.values(G.sectors).filter(s=>s.own==="me").length}</div><div class="sv-stat-l">${gTr("점령 섹터")}</div></div>
+        <div class="sv-stat"><div class="sv-stat-v">${G.wins}</div><div class="sv-stat-l">${gTr("승리")}</div></div>
+        <div class="sv-stat"><div class="sv-stat-v" style="color:${G.morale>=70?"var(--green)":G.morale>=50?"var(--gold)":"var(--red)"}">${G.morale}%</div><div class="sv-stat-l">${gTr("사기")}</div></div>
       </div>
     </div>`;
 }
@@ -2595,11 +2637,11 @@ function showSelBig(){
     <img class="sel-big-img" src="${u.img}" alt="${u.name}" onerror="this.style.display='none'"/>
     <div class="sel-big-name"><span class="rbadge ${rb}" style="position:relative;top:0;right:0">${u.rarity}</span> ${u.emoji} ${gTr(u.name)}</div>
     <div class="sel-big-pow">⚔️ ${u.pow}</div>
-    <div class="sbr"><span class="sbk">보유</span><span class="sbv">×${u.count}</span></div>
-    <div class="sbr"><span class="sbk">승리</span><span class="sbv">🏆${wins}</span></div>
-    ${nick?`<div class="sbr"><span class="sbk">별명</span><span class="sbv" style="color:var(--gold)">"${nick}"</span></div>`:""}
-    <div class="sel-big-cnt"><div class="ch-s">✅ ${u.strong||"—"}</div><div class="ch-w">❌ ${u.weak||"—"}</div></div>
-    ${u.skills?`<div style="margin-top:4px">${u.skills.map(s=>`<span class="skill-chip">${s}</span>`).join("")}</div>`:""}`;
+    <div class="sbr"><span class="sbk">${gTr("보유")}</span><span class="sbv">×${u.count}</span></div>
+    <div class="sbr"><span class="sbk">${gTr("승리")}</span><span class="sbv">🏆${wins}</span></div>
+    ${nick?`<div class="sbr"><span class="sbk">${gTr("별명")}</span><span class="sbv" style="color:var(--gold)">"${nick}"</span></div>`:""}
+    <div class="sel-big-cnt"><div class="ch-s">✅ ${gTr(u.strong)||"—"}</div><div class="ch-w">❌ ${gTr(u.weak)||"—"}</div></div>
+    ${u.skills?`<div style="margin-top:4px">${u.skills.map(s=>`<span class="skill-chip">${gTr(s)}</span>`).join("")}</div>`:""}`;
 }
 let rpT=null;
 function reward(icon,title,desc){clearTimeout(rpT);const p=document.getElementById("rpopup");document.getElementById("rp-icon").textContent=icon;document.getElementById("rp-title").textContent=title;document.getElementById("rp-desc").textContent=desc;const c=icon==="⚠️"?"var(--red)":"var(--accent)";p.style.border=`2px solid ${c}`;p.style.boxShadow=`0 0 36px ${c}44`;p.classList.add("show");rpT=setTimeout(()=>p.classList.remove("show"),2400)}
